@@ -9,6 +9,8 @@
 
       echo 'Hello world!';
 
+      echo '<p>Tak to bychom měli typickou ukázku...</p>';//můžeme generovat také libovolné částí HTML kódu
+
     ?>
   </body>
 </html>

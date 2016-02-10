@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Jednoduchá ukázka bootstrapu</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/bootstrap.css" rel="stylesheet">
+    <link href="bootstrap/bootstrap-theme.css" rel="stylesheet">
+    <script type="text/javascript" src="bootstrap/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="bootstrap/bootstrap.min.js"></script>
+    <style type="text/css">
+      body{
+        padding-top: 60px;
+      }
+      article{
+        background: greenyellow;
+      }
+      aside{
+        background: yellow;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Navigace</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Ukázka použití bootstrapu</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+
+        <article class="col-sm-9 col-xs-12">
+          <h1>Ukázka bootstrapu</h1>
+        </article>
+
+        <aside class="col-sm-3 hidden-xs">
+          Doplňkový obsah...
+        </aside>
+
+      </div>
+
+    </div>
+
+
+  </body>
+</html>

@@ -21,6 +21,7 @@
   * vytvořený soubor nahrajeme na server a načteme přes prohlížeč
   * pro výuku budeme využívat server [eso.vse.cz](http://eso.vse.cz) - viz [info k přístupům](../00-zakladni-info/server-eso.md)
   * nezapomeňte, že i **výstup vygenerovaný pomocí PHP musí být validní** - viz [validátor](https://validator.w3.org/)
+  * volitelně lze PHP skripty spustit i z konzole
 * v řadě syntaxe PHP podobná Javě
   * podobné
     * stejné zápisy komentářů
@@ -94,6 +95,14 @@
   $str = (string)$s;
   $pole = (array)$objekt; //lze využít i pro přetypování pole na objekt (a naopak)
 ```
+* je samozřejmě možné zjistit, jestli je daná proměnná definována a také ji volitelně smazat (jako by nikdy definovaná nebyla)
+```php
+  $existuje = isset($a);//funkce isset zjistí, jestli je daná proměnná definována
+  $prazdna = empty($a);//funkce empty zjistí, jestli je daná proměnná definována a není prázdná
+  unset($a); //smaže proměnnou $a
+```
+
+* [příklad proměnné](./01-promenne.php)
 
 #### Textové řetězce
 * řetězce zapisujeme v jednoduchých či dvojitých uvozovkách
