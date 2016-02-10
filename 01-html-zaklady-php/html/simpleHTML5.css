@@ -1,0 +1,89 @@
+/* Jednoduché styly k simpleHTML5 stránce */
+
+body{
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    background: white;
+    margin: 0;
+    padding: 0;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: underline;
+    color: navy;
+}
+
+div#container{
+    border: 1px solid navy;
+    width: 960px;
+    margin: 0 auto;
+    position: relative;
+}
+
+header{
+    background: navy;
+    padding: 30px;
+    margin-bottom: 10px;
+}
+header .nadpis{
+    color: white;
+    font-size: 32px;
+    display: block;
+}
+
+section#main{
+    width: 690px;
+    float: left;
+    padding: 0 20px 20px 20px;
+}
+section#main table{
+    border-spacing: 0;
+    border: 1px solid gray;
+}
+section#main table th,section#main table td{
+    border: 1px solid gray;
+    padding: 20px;
+}
+
+nav{
+    width: 260px;
+    float: right;
+    padding-right: 10px;
+}
+nav ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+nav ul li{
+    border: 1px solid gray;
+    margin: 3px 0;
+}
+nav ul li > a{
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    background: white;
+}
+
+nav ul li > a:hover{
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+    background: navy;
+}
+
+footer{
+    clear: both;
+    margin: 20px 0 0 0;
+    color: white;
+    font-size: 10px;
+    text-align: right;
+    padding: 10px;
+    background: navy;
+}
