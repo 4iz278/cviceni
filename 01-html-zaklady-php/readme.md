@@ -23,6 +23,7 @@
     * volitelné využívání objektů
     * netypovost proměnných
     * nemožnost vícenásobných definic stejných funkcí s různými atributy
+    * magické funkce
 
 ### Vložení PHP do webových stránek
 ```php
@@ -74,7 +75,41 @@
 
 #### Operátory
 *
+
 #### Podmínky
+*
+
 #### Cykly
+##### Cyklus s podmínkou na začátku (while)
+* asi nejčastěji využívaný
+```php
+while(podmínka){
+  //příkazy v cyklu
+}
+```
+
+##### Cyklus s podmínkou na konci (do-while)
+
+##### Cyklus s daným počtem opakování (for)
+
+##### Cyklus pro procházení polí a kolekcí (foreach)
+* bude vysvětlen společně s problematikou polí
+
+##### Řídící příkazy cyklu
+
+
 #### Funkce
+
+
 #### Konstanty
+* využíváme pro globální označení konkrétní hodnoty, které jsou využívány na více místech kódu
+* pro definici vlastních konstant využíváme funkci **define**
+  * volitelně nemusí být názvy konstant case sensitive
+```php
+define("KONSTANTA", "hodnota");
+define("KONSTANTA2", "hodnota", true);//konstanta bez rozlišení velikosti písmen v názvu
+```
+* v PHP je k dispozici řada předdefinovaných konstant
+  * např. **__DIR__**, **PHP_VERSION**, **__FILE__** atd.
+  * [PHP manuál - konstanty](http://php.net/manual/en/reserved.constants.php)
+  * [PHP manuál - magické konstanty](http://php.net/manual/en/language.constants.predefined.php)

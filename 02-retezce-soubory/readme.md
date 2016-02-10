@@ -2,6 +2,9 @@
 
 ## Pole
 
+
+### Foreach cyklus
+
 ## GET, POST
 
 ## Řetězcové funkce
