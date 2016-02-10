@@ -174,7 +174,6 @@ $x = ( $a=="tykani" ? "Ahoj" : "Dobrý den" );
 * [příklad podmínky](./01-podminky.php)
 
 #### Cykly
-* [příklad cykly](./01-cykly.php)
 ##### Cyklus s podmínkou na začátku (while)
 * asi nejčastěji využívaný
 * nepoužívejte cykly, které mají na začátku v podmínce napsané jen *true*!!!
@@ -183,6 +182,7 @@ while(podmínka){
   //příkazy v cyklu
 }
 ```
+* [příklad cykly](./01-cykly.php)
 
 ##### Cyklus s podmínkou na konci (do-while)
 * proběhne alespoň jednou
@@ -191,6 +191,7 @@ do{
   //příkazy v cyklu
 }while(podmínka);
 ```
+* [příklad cykly](./01-cykly.php)
 
 ##### Cyklus s daným počtem opakování (for)
 ```php
