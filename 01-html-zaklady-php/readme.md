@@ -41,8 +41,40 @@
 ### Základní syntaktické konstrukce
 #### Komentáře
 #### Proměnné
+* všechny proměnné jde poznat podle znaku **$**, kterým začíná jejich název
+* proměnné není nutné deklarovat, prostě rovnou přiřadíme do dané proměnné hodnotu
+* **názvy proměnných**
+  * v názvu se smí vyskytovat pouze písmena, číslice a podtržítka
+  * PHP rozlišuje velikost písmen v názvu proměnné
+  * název musí začínat písmenem či podtržítkem
+  * obvykle využíváme velbloudí nebo podtržítkovou notaci
+* PHP používá **automatické přetypovávání čísel a řetězců**
+* **pozor na boolean hodnoty**
+  * jako *false* jsou vyhodnoceny proměnné s hodnotou *false*, *null*, 0, *""* (prázdný řetězec)
+  * všechny ostatní hodnoty jsou při přetypování na boolean vyhodnoceny jako *true*
+```php
+  $a = 10;
+  $b = '1';
+  echo $a + $b;
+```
+* pozor, PHP hledá proměnné v kódu a řetězcích
+  * zápis **$$a** bude vyhodnocen tím způsobem, že PHP nejprve nahradí *$a* textovou hodnotou dané proměnné (např. *"b"*) a poté bude pracovat s výslednou proměnnou (např. *$b*)
+  * název funkce může být uložen také v proměnné - např. **$a()** spustí funkci, jejíž název je uložen v proměnné *$a*
+
 #### Textové řetězce
+* řetězce zapisujeme v jednoduchých či dvojitých uvozovkách
+  * ve dvojitých uvozovkách jsou vyhledávány
+    * proměnné => jsou nahrazeny svojí textovou hodnotou
+    * řídící znaky - např. **\n**, **\r**, **\t**
+  * řetězec v jednoduchých uvozovkách je prostě řetězcem, PHP v něm nehledá nic jiného vyjma zpětných lomítek a dalších jednoduchých uvozovek
+  * uvozovky jsou backslashovat
+```php
+  echo "The \"best\" paper is $paperName";
+```
+
 #### Operátory
+*
 #### Podmínky
 #### Cykly
-
+#### Funkce
+#### Konstanty

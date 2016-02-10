@@ -2,3 +2,4 @@
 
 * definice tříd, rozhraní atd.
 * namespaces
+* file systém
