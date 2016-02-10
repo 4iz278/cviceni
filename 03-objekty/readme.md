@@ -3,3 +3,7 @@
 * definice tříd, rozhraní atd.
 * namespaces
 * file systém
+
+
+TODO:
+- zvážit iterátory
