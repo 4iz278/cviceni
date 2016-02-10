@@ -174,6 +174,7 @@ $x = ( $a=="tykani" ? "Ahoj" : "Dobrý den" );
 * [příklad podmínky](./01-podminky.php)
 
 #### Cykly
+* [příklad cykly](./01-cykly.php)
 ##### Cyklus s podmínkou na začátku (while)
 * asi nejčastěji využívaný
 * nepoužívejte cykly, které mají na začátku v podmínce napsané jen *true*!!!
