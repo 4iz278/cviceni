@@ -5,7 +5,9 @@
   * pokud budete hledat podklady k HTML či CSS, mrkněte na [podklady k předmětu 4iz268](https://github.com/4iz268/cviceni)
 
 ### Opakování základů HTML a CSS
-* TODO
+* [příklad jednoduchá xHTML stránka](./html/simpleXHTML.html)
+* [příklad jednoduchá HTML 5 stránka](./html/simpleHTML5.html)
+* [příklad bootstrap](./html/boostrap.html)
 
 
 ## PHP
@@ -18,6 +20,7 @@
 * obvykle spouštěno přes webový server (typicky Apache)
   * vytvořený soubor nahrajeme na server a načteme přes prohlížeč
   * pro výuku budeme využívat server [eso.vse.cz](http://eso.vse.cz) - viz [info k přístupům](../00-zakladni-info/server-eso.md)
+  * nezapomeňte, že i **výstup vygenerovaný pomocí PHP musí být validní** - viz [validátor](https://validator.w3.org/)
 * v řadě syntaxe PHP podobná Javě
   * podobné
     * stejné zápisy komentářů
@@ -49,6 +52,22 @@
 
 ### Základní syntaktické konstrukce
 #### Komentáře
+* pomáhají se vyznat v kódu
+* dokumentační komentáře umožňují napovídání v rámci IDE (popisy proměnných a jejich datové typy)
+```php
+// jednořádkový komentář
+# jednořádkový komentář
+/*
+  víceřádkový komentář
+*/
+/**
+ * dokumentační komentář funkce
+ * @param int|string $vstup
+ * @return bool
+ */
+/** @var $x dokumentační komentář proměnné */
+```
+
 #### Proměnné
 * všechny proměnné jde poznat podle znaku **$**, kterým začíná jejich název
 * proměnné není nutné deklarovat, prostě rovnou přiřadíme do dané proměnné hodnotu
@@ -69,6 +88,12 @@
 * pozor, PHP hledá proměnné v kódu a řetězcích
   * zápis **$$a** bude vyhodnocen tím způsobem, že PHP nejprve nahradí *$a* textovou hodnotou dané proměnné (např. *"b"*) a poté bude pracovat s výslednou proměnnou (např. *$b*)
   * název funkce může být uložen také v proměnné - např. **$a()** spustí funkci, jejíž název je uložen v proměnné *$a*
+* kromě implicitního přetypování lze v PHP samozřejmě vynutit i přetypování ruční
+```php
+  $x = intval($x); //dále např. floatval()
+  $str = (string)$s;
+  $pole = (array)$objekt; //lze využít i pro přetypování pole na objekt (a naopak)
+```
 
 #### Textové řetězce
 * řetězce zapisujeme v jednoduchých či dvojitých uvozovkách
@@ -85,10 +110,36 @@
 
 #### Operátory
 ##### Základní operátory
-TODO
+| Operátor           | Popis                                               | Příklad                              |
+|--------------------|-----------------------------------------------------|--------------------------------------|
+| =                  | přiřazení hodnoty do proměnné                       | $promenna = "hodnota";               |
+| +                  | sčítání                                             | $vysledek = $a + $b;                 |
+| -                  | odečítání                                           | $vysledek = $a - $b;                 |
+| *                  | násobení                                            | $vysledek = $a * $b;                 |
+| /                  | dělení                                              | $vysledek = $a / $b;                 |
+| %                  | modulo (zbytek po celočíselném dělení)              | $vysledek = $a % 10;                 |
+| **                 | exponent (jen v PHP 5.6+)                           | $vysledek = $a ** 2;                 |
+| .                  | spojení řetězců                                     | $text = $a.$b;                       |
+| +=, -=, *=, /=, .= | zkrácené operátory upravující hodnotu dané proměnné | $a+=10; (= ekvivalentní k $a=$a+10;) |
+| ++                 | zvětšení hodnoty proměnné o 1                       | $a++; --$b;                          |
+| --                 | zmenšení hodnoty proměnné o 1                       | $a--; --$b;                          |
 
-##### Logické operátory
-TODO
+##### Porovnávací a logické operátory
+| Operátor | Popis                                                   | Příklad   |
+|----------|---------------------------------------------------------|-----------|
+| ==       | operátor porovnání                                      | $a == $b  |
+| !=       | operátor nerovnosti (alternativně lze zapsat pomocí <>) | $a != $b  |
+| ===      | operátor porovnání včetně kontroly datového typu        | $a === $b |
+| !==      | operátor nerovnosti včetně kontroly datového typu       | $a !== $b |
+| >        | větší než                                               | $a > $b   |
+| <        | menší než                                               | $a < $b   |
+| >=, <=   | operátory větší/rovno, menší/rovno                      | $a >= $b  |
+| &&       | logické AND                                             | $a && $b  |
+| ||       | logické OR                                              | $a || $b  |
+| and      | logické AND                                             | $a and $b |
+| or       | logické OR                                              | $a or $b  |
+| xor      | logické XOR                                             | $a xor $b |
+| !        | negace                                                  | !$a       |
 
 #### Podmínky
 ##### Jednoduchá podmínka
