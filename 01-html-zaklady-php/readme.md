@@ -243,6 +243,11 @@ switch ($promenna){
 * u funkcí je podporována typová kontrola parametrů, pokud jimi mají být instance tříd
 * funkce mohou mít také volitelné parametry, které mají rovnou přiřazenou nějakou hodnotu
 ```php
+  /**
+   * Ukázková funkce
+   * @param string $a
+   * @param string $b="x"
+   */
   function mojeFunkce($a, $b="x"){
     echo 'hodnota A byla '.$a.', hodnota B byla '.$b;
   }
