@@ -101,6 +101,11 @@
   $prazdna = empty($a);//funkce empty zjistí, jestli je daná proměnná definována a není prázdná
   unset($a); //smaže proměnnou $a
 ```
+* pro ladění se hodí také možnost nechat si vypsat informace o proměnné včetně jejího obsahu, či zastavit běh celého skriptu
+```php
+  var_dump($promenna); //vypíše obsah proměnné
+  exit(); //ukončí běh skriptu
+```
 
 * [příklad proměnné](./01-promenne.php)
 
