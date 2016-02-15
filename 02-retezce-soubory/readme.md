@@ -4,7 +4,8 @@
 * pole = v podstatě "tabulka hodnot", ve které jsou jednotlivé buňky označeny buď čísly, nebo názvy
   * číselné indexování začíná *0*
 * s ohledem na práci s datovými typy v PHP může každá buňka obsahovat něco jiného
-*
+* vícedimenzionální (vícenásobné) pole = pole, ve kterém je v každé buňce uloženo další pole
+
 ### Definice nového pole
 * funkce *array()*
 * v nových verzích PHP je možné využívat definici pomocí *[]*
@@ -24,18 +25,35 @@
   unset($pole["klic"]); //smaže konkrétní prvek z pole
 ```
 * s prvky jde pracovat také pomocí funkcí
-  * **array_pop($pole)** - odebere poslední prvek z pole, vrací jeho hodnotu
-  * **array_push($pole, $hodnota)** - přidá prvek na konec pole
-  * **array_shift($pole)**  - odebere první prvek z pole, vrací jeho hodnotu
-  * **array_unshift($pole, $hodnota)** - přidá prvek na začátek pole
+  * **array_pop($pole)**
+    * odebere poslední prvek z pole, vrací jeho hodnotu
+  * **array_push($pole, $hodnota)**
+    * přidá prvek na konec pole
+  * **array_shift($pole)**
+    * odebere první prvek z pole, vrací jeho hodnotu
+  * **array_unshift($pole, $hodnota)**
+    * přidá prvek na začátek pole
 
 ### Funkce pro práci s poli
-* **count($pole)** - vrací počet prvků v poli
-* **array_kez_exists($klic, $pole)** - funkce pro kontrolu, jestli je v poli daný klíč
-* **array_merge($pole, $pole2)** - funkce pro sloučení dvou polí
-* **sort($pole)** - funkce pro seřazení indexovaného pole podle hodnot
-* **uasort()** - funkce pro seřazení indexovaného pole pomocí uživatelem definované funkce - viz [w3schools](http://www.w3schools.com/php/func_array_uasort.asp)
-* **uksort()** - funkce pro seřazení asociačního pole pomocí uživatelem definované funkce - viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
+* **count($pole)**
+  * vrací počet prvků v poli
+
+* **array_kez_exists($klic, $pole)**
+  * funkce pro kontrolu, jestli je v poli daný klíč
+
+* **array_merge($pole, $pole2)**
+  * funkce pro sloučení dvou polí
+
+* **sort($pole)**
+  * funkce pro seřazení indexovaného pole podle hodnot
+
+* **uasort()**
+  * funkce pro seřazení indexovaného pole pomocí uživatelem definované funkce
+  * viz [w3schools](http://www.w3schools.com/php/func_array_uasort.asp)
+
+* **uksort()**
+  * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce
+  * viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
 
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
@@ -72,6 +90,89 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 * [příklad GET](./get.php)
 
 ## Řetězcové funkce
+* **strlen($retezec)**
+  * funkce vracející počet znaků aktuálního řetězce
+
+* **trim** - funkce pro odstranění znaků ze začátku a konce řetězce
+  * ve výchozím stavu odstraňuje "prázdné" znaky, ale lze zadat, co se má odstranit
+  * existují také funkce **ltrim** a **rtrim**
+```php
+$str  = trim($str); //odstraní prázdné znaky z konců řetězce
+$str2 = trim($str,"\n\r\t ;x"); //odstraní nové řádky,tabulátory, mezery, středníky a písmeno x
+$str3 = trim($binary, "\x00..\x1F"); //odstraní znaky s binárním kódem 0-31 (včetně)
+```
+
+* **strpos($haystack, $needle [,$offset])**
+  * funkce pro zjištění pozice podřetězce v řetězci
+  * parametr *$offset* je jen volitelný
+  * pozor, ve výsledku je nutné rozlišovat hodnoty *0* a *false* (použijte operátor  ===, event. !==)
+  * *zkuste si tuto funkci najít v PHP manuálu...*
+
+* **substr($string, $start[, $length])**
+  * vrací část řetězce
+  * parametr *$length* je jen volitelný (pokud není uveden, je vrácen celý zbytek řetězce)
+```php
+$cast = substr("Lorem ipsum...",5);
+```
+
+* **str_replace($search, $replace, $subject[, $count])**
+  * umí nahradit zadaný řetězec jiným řetězcem
+  * pokud zadáme jako parametry pole, umí provést víc nahrazení najednou
+  * pokud je zadána proměnná do parametru *$count*, je do ní uložen počet provedených nahrazení
+```php
+echo str_replace("jmeno", "Pepo", "Ahoj jmeno");
+echo str_replace(['ipsum','dolor'], ['A','B'], "Lorem ipsum dolor sit amet, consectetuer adipiscing elit...");
+```
+
+* **strtolower($retezec)**, **strtoupper($retezec)**, **ucfirst($retezec)**, **ucwords($retezec)**
+  * funkce pro změnu velikosti znaků (pozor, vyzkoušejte, jestli na daném serveru fungují korektně s českými znaky)
+
+* **strip_tags($retezec[, $povoleneTagy])**
+  * funkce pro odstranění HTML značek
+  * volitelně je možné některé značky povolit
+```php
+$upravene = strip_tags($retezec,'<em><strong>');
+```
+
+* **htmlspecialchars($retezec)**
+  * funkce pro nahrazení speciálních znaků HTML entitami
+  * jedná se o často využívanou funkci - měli bychom ji aplikovat na data, která byla získána od uživatele a vypisujeme je na výstup!
+```php
+echo '<input type="text" name="x1" value="'.htmlspecialchars($_REQUEST['x1']).'">;
+```
+
+* **addslashes($retezec)**, **stripslashes($retezec)**
+  * funkce pro přidání/odebrání zpětných lomítek u znaků *'*, *"* a *\\*
+  * *DÚ: Proč bychom neměli na serveru zapínat direktivu "MAGIC_QUOTES_GPC"?*
+
+* **explode($oddelovac, $retezec, $limit)**
+  * funkce pro rozdělení řetězce do pole (podle zadaného oddělovače)
+  * parametr *$limit* je volitelný, určuje maximální počet částí, na které bude řetězec rozdělen
+
+* **implode($spojovac, $pole)**
+  * spojí prvky z pole do řetězce
+  * funkce má alias **join($spojovac, $pole)**
+
+* **strrev($retezec)**
+  * obrátí pořadí znaků v řetězci
+
+* **nl2br($retezec)**
+  * nahradí konce řádků html značkou *<br>*
+
+* **str_word_count($retezec)**
+  * vrací počet slov v řetězci
+
+* **urlencode($retezec)**, **urldecode($retezec)**, **rawurlencode($retezec)**, **rawurldecode($retezec)**
+  * funkce pro zakódování/dekódování URL adres (jak jistě víte, některé znaky se v nich vyskytovat nemohou...)
+
+* **iconv**
+  * funkce pro změnu kódování řetězce
+```php
+echo iconv("UTF-8", "ISO-8859-2//TRANSLIT", "10 €"); //vypíše 10 EUR
+echo iconv("UTF-8", "ISO-8859-2//IGNORE", "10 €"); //vypíše 10
+```
+
+### mb_ funkce
 TODO
 
 ## Práce se soubory
