@@ -281,6 +281,7 @@ if ($file){
   * viz [PHP manuál - fgetcsv](http://php.net/manual/en/function.fgetcsv.php)
   * viz [PHP manuál - fputcsv](http://php.net/manual/en/function.fputcsv.php)
 
+
 * [příklad čtení souboru](./fread.php)
 * [příklad zápisu do souboru](./fwrite.php)
 * [příklad čtení CSV](./csv/fgetcsv.php)
