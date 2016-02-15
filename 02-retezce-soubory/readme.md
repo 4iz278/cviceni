@@ -233,7 +233,57 @@ readfile("soubor.txt");
 * [příklad readfile](./readfile/index.php)
 
 ### Soubory - čtení, zápis
-TODO
+* základní postup je
+  1. otevření souboru (s příslušným modifikátorem přístupu)
+  2. potřebné manipulace s obsahem (čtení, zápis)
+  3. zavření souboru
+
+```php
+$file = @fopen('data.txt','r');  //otevření souboru pro čtení
+if ($file){
+  while(!feof($file)){   //nedošli jsme zatím na konec souboru?
+    $row = fgets($file); //načtení řádku
+    //zpracování...
+  }
+  fclose($file);
+}
+```
+
+####Potřebné funkce
+* **fopen($jmenoSouboru, $pristup)**
+  * modifikátory přístupu *r*, *w*, *a*, *r+*, *w+*, *a+*
+
+* **feof($file)**
+  * funkce pro zjištění, zda jsme došli na konec souboru
+
+* **fread($file, $delka)**
+  * čtení ze souboru (pro binární data)
+
+* **fgets($file[, $maximalniDelka])**
+  * čtení souboru po řádcích
+
+* **fwrite($file, $data[, $delka])**
+  * zápis dat do souboru
+  * pokud zadáme délku, jsou data buď příslušně zkrácena, nebo doplněna mezerami na danou délku
+
+* **fclose($file)**
+  * zavře soubor
+  * pokud dosud nebyla dozapsána nějaká data (jsou zatím v bufferu), dojde k tomu před uzavřením souboru
+
+* **fseek($file, $offset[, $whence])**
+  * funkce pro přesun pointeru v souboru
+  * *$offset* je určen počtem bytů od začátku souboru
+  * volitelně jde zadat parametr *$whence*
+    * SEEK_CUR - offset bude počítán od aktuální pozice, offset pak může být i záporný
+
+* máme i funkce pro přímou práci s CSV soubory
+  * *Co je to CSV soubor?*
+  * viz [PHP manuál - fgetcsv](http://php.net/manual/en/function.fgetcsv.php)
+  * viz [PHP manuál - fputcsv](http://php.net/manual/en/function.fputcsv.php)
+
+* [příklad čtení souboru](./fread.php)
+* [příklad zápisu do souboru](./fwrite.php)
+* [příklad čtení CSV](./csv/fgetcsv.php)
 
 ## Příklad na procvičení
 TODO

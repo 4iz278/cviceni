@@ -1,9 +1,14 @@
-# 3. Objekty v PHP
+# 3. Objekty v PHP, soubory
 
-* definice tříd, rozhraní atd.
-* namespaces
-* file systém
+## Práce se souborovým systémem
+TODO
+
+## Třídy, rozhraní atd.
+TODO
 
 
 TODO:
+* definice tříd, rozhraní atd.
+* namespaces
+* file systém
 - zvážit iterátory
