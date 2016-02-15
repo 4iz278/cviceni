@@ -173,7 +173,16 @@ echo iconv("UTF-8", "ISO-8859-2//IGNORE", "10 €"); //vypíše 10
 ```
 
 ### mb_ funkce
-TODO
+* aplikace dnes často píšeme v UTF-8 - pokud chceme pracovat s řetězci na úrovni znaků, je vhodné použít místo původní funkce její *mb_ alternativu*
+* např.:
+```php
+$delka = mb_strlen($retezec, "utf-8" );
+```
+* pokud nechceme zadávat kódování u každé MB funkce, je možné nejdřív nastavit výchozí kódování - např. pomocí
+```php
+/* Set internal character encoding to UTF-8 */
+mb_internal_encoding("UTF-8");
+```
 
 ## Práce se soubory
 * PHP podporuje velké množství funkcí pro práci se soubory
