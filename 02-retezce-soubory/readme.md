@@ -40,8 +40,24 @@
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
 ### Foreach cyklus
-TODO
+* cyklus umožňující projití všech prvků v poli (či kolekci)
+```php
+foreach($pole as $hodnota){
+  //zpracování jednotlivých položek
+  echo $hodnota;
+}
 
+foreach($pole as $klic => $hodnota){
+  //zpracování jednotlivých položek (máme k dispozici i klíče)
+}
+```
+* pokud chceme mít možnost zapisovat do daných proměnných, musíme před ně doplnit *&* (aby byly do cyklu předány jako reference)
+```php
+foreach($pole as &$hodnota){
+  $hodnota = "xxx";//pokud byla proměnná předána referencí, půjde do ní zapisovat
+}
+```
+* nepoužívejte ve foreach cyklu unset na prvek pole
 
 ## GET, POST, REQUEST
 * pokud nemá stránka jen něco vypisovat, ve většině případů potřebujeme pracovat se vstupními daty
