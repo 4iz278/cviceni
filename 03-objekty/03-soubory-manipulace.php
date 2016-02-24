@@ -27,3 +27,8 @@
   rmdir($path.DIRECTORY_SEPARATOR.'testovaciAdresarX');//smaže adresář
 
   #endregion manipulace s adresáři
+
+  #region TEMP
+  echo tmpfile(); //funkce tmpfile() vygeneruje unikátní temp soubor
+  echo tempnam(__DIR__,"TMP0"); //funkce tempnam() vytvoří dočasný soubor v zadaném adresáři, 2. parametr = prefix názvu souboru
+  #endregion TEMP
