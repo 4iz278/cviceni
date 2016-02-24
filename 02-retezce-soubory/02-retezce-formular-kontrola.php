@@ -1,33 +1,44 @@
-<!DOCTYPE html>
+<?php
+  if (!empty($_POST)){
+    $chyby='';
+
+    if (strpos(trim(@$_POST['jmeno']),' ')===false){
+      $chyby.='<p>Je nutné zadat jméno a příjmení! (min. 2 slova)</p>';
+    }
+    if (mb_strlen(trim(@$_POST['adresa']),'utf8')>5){
+      $chyby.='<p>Je nutné zadat adresu!</p>';
+    }
+
+    if (!$chyby){
+      echo 'Jméno: '.$_POST['jmeno']."\n";
+      echo 'Adresa: '.$_POST['adresa']."\n";
+      exit();
+    }
+  }
+
+?><!DOCTYPE html>
 <html>
 <head>
-  <title>Ukázka HTML formuláře</title>
-  <meta charset="UTF-8"/>
-  <style type="text/css">
-
-  </style>
+  <title>Ukázka HTML formuláře s jednoduchou kontrolou</title>
+  <meta charset="UTF-8" />
 </head>
 <body>
 
-<h1>Ukázka jednoduchého formuláře posílaného metodou POST</h1>
+<h1>Ukázka formuláře s jednoduchou kontrolou</h1>
+<?php
+  if (!empty($chyby)){
+    echo '<div style="color: red;">'.$chyby.'</div>';
+  }
+?>
 <form method="post">
-  <label for="jmeno" >Jméno</label>
+  <label for="jmeno" >Jméno a příjmení:</label>
   <input type="text" name="jmeno" id="jmeno" value="<?php echo htmlspecialchars(@$_POST['jmeno']);?>" />
-  <label for="prijmeni" >Příjmení</label>
-  <input type="text" name="prijmeni" id="prijmeni" value="<?php echo htmlspecialchars(@$_POST['prijmeni']);?>" />
-  <label for="vek" >Věk</label>
-  <input type="number" name="vek" id="vek" value="<?php echo htmlspecialchars(@$_POST['vek']);?>" min="0" max="150" step="1" />
-  <label for="mail">E-mail</label>
-  <input type="email" name="mail" id="mail" value="<?php echo htmlspecialchars(@$_POST['mail'])?>"/>
+  <br />
+  <label for="adresa">Adresa:</label>
+  <textarea id="adresa" name="adresa"><?php echo htmlspecialchars_decode(@$_POST['adresa'])?></textarea>
+  <br />
   <input type="submit" value="Odeslat..."/>
 </form>
-
-<?php
-
-//TODO
-
-?>
-
 
 </body>
 </html>

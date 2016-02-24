@@ -3,9 +3,6 @@
   <head>
     <title>Ukázka HTML formuláře</title>
     <meta charset="UTF-8"/>
-    <style type="text/css">
-
-    </style>
   </head>
   <body>
 
