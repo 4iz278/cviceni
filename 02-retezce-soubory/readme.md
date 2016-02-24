@@ -55,6 +55,7 @@
   * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce
   * viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
 
+* [příklad array](./array.php)
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
 ### Foreach cyklus
@@ -75,7 +76,8 @@ foreach($pole as &$hodnota){
   $hodnota = "xxx";//pokud byla proměnná předána referencí, půjde do ní zapisovat
 }
 ```
-* nepoužívejte ve foreach cyklu unset na prvek pole
+* nepoužívejte ve foreach cyklu *unset* na prvek pole
+* [příklad foreach](./foreach.php)
 
 ## GET, POST, REQUEST
 * pokud nemá stránka jen něco vypisovat, ve většině případů potřebujeme pracovat se vstupními daty
@@ -87,7 +89,11 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 ```
 * v PHP máme k dispozici globální proměnné **$_GET**, **$_POST** a **$_REQUEST**
   * jedná se o pole, ve kterých máme připravený uživatelský vstup
+* data získáváme od uživatelů nejčastěji z URL adres a pomocí formulářů
+  * pokud nevíte jak napsat formulář, zkuste mrknout na [podklady z 4iz268](https://github.com/4iz268/cviceni/tree/master/10-formulare)
+
 * [příklad GET](./get.php)
+* [příklad formulář](./formular.php)
 
 ## Řetězcové funkce
 * **strlen($retezec)**
@@ -184,6 +190,8 @@ $delka = mb_strlen($retezec, "utf-8" );
 mb_internal_encoding("UTF-8");
 ```
 
+* [příklad řetězce](./retezce.php)
+
 ## Práce se soubory
 * PHP podporuje velké množství funkcí pro práci se soubory
 * pokud je povolený *fopen wrapper*, je možné pracovat se vzdálenými soubory obdobně, jako by šlo o soubory lokální
@@ -223,6 +231,9 @@ $soubor = file_get_contents('soubor.txt');
 ```php
 file_put_contents('soubor.txt',$data,FILE_APPEND);//připojení obsahu na konec souboru
 ```
+
+* [příklad file content](./file-content.php)
+
 
 #### readfile
 * funkce pro odeslání obsahu souboru na výstup (např. pro zabezpečené stahování PHP souborů)
@@ -287,4 +298,13 @@ if ($file){
 * [příklad čtení CSV](./csv/fgetcsv.php)
 
 ## Příklad na procvičení
-TODO
+> Vytvořte jednoduchou knihu návštěv, která bude mít všechna data uložena v textovém souboru.
+> Chcete trochu napovědět?
+> - stránka bude obsahovat formulář, pomocí kterého uživatel zadá své jméno, text příspěvku a e-mail (volitelný)
+> - pod formulářem budou vypsány již existující příspěvky
+> - data v souboru budou uložena v podobě, ve které se budou přímo zobrazovat na webu
+>   - nezapomeňte na to, že uživatelé (a roboti) zadávají často do formulářů věci, které tam nepatří...
+> - pro vložení aktuálního data využijte konstrukci
+> ```php
+> $datum = date('d.m.Y H:i:s');
+> ```
