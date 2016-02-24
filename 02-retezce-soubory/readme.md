@@ -38,7 +38,7 @@
 * **count($pole)**
   * vrací počet prvků v poli
 
-* **array_kez_exists($klic, $pole)**
+* **array_key_exists($klic, $pole)**
   * funkce pro kontrolu, jestli je v poli daný klíč
 
 * **array_merge($pole, $pole2)**
