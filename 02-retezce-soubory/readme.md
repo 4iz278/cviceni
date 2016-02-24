@@ -59,8 +59,8 @@
   * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce (porovnává klíče)
   * viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
 
-* [příklad array](./array.php)
-* [příklad array-uasort](./array-uasort.php)
+* [příklad array](./02-array.php)
+* [příklad array-uasort](./02-array-uasort.php)
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
 ### Foreach cyklus
@@ -82,7 +82,7 @@ foreach($pole as &$hodnota){
 }
 ```
 * nepoužívejte ve foreach cyklu *unset* na prvek pole
-* [příklad foreach](./foreach.php)
+* [příklad foreach](./02-foreach.php)
 
 ## GET, POST, REQUEST
 * pokud nemá stránka jen něco vypisovat, ve většině případů potřebujeme pracovat se vstupními daty
@@ -97,8 +97,8 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 * data získáváme od uživatelů nejčastěji z URL adres a pomocí formulářů
   * pokud nevíte jak napsat formulář, zkuste mrknout na [podklady z 4iz268](https://github.com/4iz268/cviceni/tree/master/10-formulare)
 
-* [příklad GET request](./get.php)
-* [příklad formulář s metodou POST](./formular.php)
+* [příklad GET request](./02-get.php)
+* [příklad formulář s metodou POST](./02-formular-post.php)
 * [opakování z 4iz268 - Základní formulářové prvky](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-prvky.html)
 * [opakování z 4iz268 - Nové formulářové prvky v HTML 5](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-nove-prvky-html5.html)
 
@@ -197,7 +197,7 @@ $delka = mb_strlen($retezec, "utf-8" );
 mb_internal_encoding("UTF-8");
 ```
 
-* [příklad řetězce](./retezce.php)
+* [příklad řetězce](./02-retezce.php)
 * [příklad formuláře s jednoduchou kontrolou](./02-retezce-formular-kontrola.php)
 
 ## Práce se soubory
@@ -220,7 +220,7 @@ require "connection.inc.php";
 include_once "connection.inc.php"; //funkce s "_once" načtou soubor jen v tom případě, že dosud nebyl načten
 require_once "connection.inc.php";
 ```
-* [příklad include](./include/index.php)
+* [příklad include](./02-include/index.php)
 
 ### Načtení/uložení celého souboru
 * celý obsah souboru je možné načíst či uložit pomocí jednoho zavolání funkce
@@ -240,7 +240,7 @@ $soubor = file_get_contents('soubor.txt');
 file_put_contents('soubor.txt',$data,FILE_APPEND);//připojení obsahu na konec souboru
 ```
 
-* [příklad file content](./file-content.php)
+* [příklad file content](./02-file-content.php)
 
 
 #### readfile
@@ -249,7 +249,7 @@ file_put_contents('soubor.txt',$data,FILE_APPEND);//připojení obsahu na konec 
 ```php
 readfile("soubor.txt");
 ```
-* [příklad readfile](./readfile/index.php)
+* [příklad readfile](./02-readfile/index.php)
 
 ### Soubory - čtení, zápis
 * základní postup je
@@ -268,7 +268,14 @@ if ($file){
 }
 ```
 
-####Potřebné funkce
+#### Kontrola existence a zapisovatelnosti souboru
+* **file_exists($jmenoSouboru)**
+  * funkce pro kontrolu, zda daný soubor existuje
+
+* **is_writable($jmenoSouboru)**
+  * funkce pro kontrolu, zda je možné zapisovat do daného souboru
+
+#### Potřebné funkce
 * **fopen($jmenoSouboru, $pristup)**
   * modifikátory přístupu *r*, *w*, *a*, *r+*, *w+*, *a+*
 
@@ -301,9 +308,11 @@ if ($file){
   * viz [PHP manuál - fputcsv](http://php.net/manual/en/function.fputcsv.php)
 
 
-* [příklad čtení souboru](./fread.php)
-* [příklad zápisu do souboru](./fwrite.php)
-* [příklad čtení CSV](./csv/fgetcsv.php)
+* [příklad čtení souboru](./02-fread.php)
+* [příklad zápisu do souboru](./02-fwrite.php)
+* [příklad čtení CSV](./02-csv/fgetcsv.php)
+* [příklad kontrola zapisovatelnosti souboru](./02-file-exists.php)
+
 
 ## Příklad na procvičení
 > Vytvořte jednoduchou knihu návštěv, která bude mít všechna data uložena v textovém souboru.
