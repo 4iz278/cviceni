@@ -46,3 +46,14 @@
   var_dump($arr6);
 
 #endregion posle s různými dat. typy
+
+#region join,explode
+  $str = '1;2;5;4;3';
+  $strArr = explode(';',$str);  //rozdělíme řetězec do buněk pole
+  var_dump($strArr);
+
+  sort($strArr);
+
+  $str = join('|',$strArr); //spojíme hodnoty z pole do řetězce
+  var_dump($str);
+#endregion join,explode
