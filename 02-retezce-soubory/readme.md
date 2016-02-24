@@ -47,15 +47,20 @@
 * **sort($pole)**
   * funkce pro seřazení indexovaného pole podle hodnot
 
+* **usort()**
+  * funkce pro seřazení indexovaného pole pomocí uživatelem definované funkce (porovnává hodnoty, upraví indexy)
+  * viz [w3schools](http://www.w3schools.com/php/func_array_uasort.asp)
+
 * **uasort()**
-  * funkce pro seřazení indexovaného pole pomocí uživatelem definované funkce
+  * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce (porovnává hodnoty)
   * viz [w3schools](http://www.w3schools.com/php/func_array_uasort.asp)
 
 * **uksort()**
-  * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce
+  * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce (porovnává klíče)
   * viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
 
 * [příklad array](./array.php)
+* [příklad array-uasort](./array-uasort.php)
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
 ### Foreach cyklus
