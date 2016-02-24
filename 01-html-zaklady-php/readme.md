@@ -135,7 +135,7 @@
 | **                 | exponent (jen v PHP 5.6+)                           | $vysledek = $a ** 2;                 |
 | .                  | spojení řetězců                                     | $text = $a.$b;                       |
 | +=, -=, *=, /=, .= | zkrácené operátory upravující hodnotu dané proměnné | $a+=10; (= ekvivalentní k $a=$a+10;) |
-| ++                 | zvětšení hodnoty proměnné o 1                       | $a++; --$b;                          |
+| ++                 | zvětšení hodnoty proměnné o 1                       | $a++; ++$b;                          |
 | --                 | zmenšení hodnoty proměnné o 1                       | $a--; --$b;                          |
 
 ##### Porovnávací a logické operátory
