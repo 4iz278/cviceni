@@ -325,3 +325,6 @@ if ($file){
 > ```php
 > $datum = date('d.m.Y H:i:s');
 > ```
+
+## DÚ
+> Zjistěte, k čemu je dobrá a jak se používá funkce **sprintf()**.
