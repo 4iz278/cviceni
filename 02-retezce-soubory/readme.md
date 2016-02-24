@@ -97,8 +97,10 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 * data získáváme od uživatelů nejčastěji z URL adres a pomocí formulářů
   * pokud nevíte jak napsat formulář, zkuste mrknout na [podklady z 4iz268](https://github.com/4iz268/cviceni/tree/master/10-formulare)
 
-* [příklad GET](./get.php)
-* [příklad formulář](./formular.php)
+* [příklad GET request](./get.php)
+* [příklad formulář s metodou POST](./formular.php)
+* [opakování z 4iz268 - Základní formulářové prvky](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-prvky.html)
+* [opakování z 4iz268 - Nové formulářové prvky v HTML 5](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-nove-prvky-html5.html)
 
 ## Řetězcové funkce
 * **strlen($retezec)**
@@ -196,6 +198,7 @@ mb_internal_encoding("UTF-8");
 ```
 
 * [příklad řetězce](./retezce.php)
+* [příklad formuláře s jednoduchou kontrolou](./02-retezce-formular-kontrola.php)
 
 ## Práce se soubory
 * PHP podporuje velké množství funkcí pro práci se soubory
