@@ -7,7 +7,7 @@
 ### Opakování základů HTML a CSS
 * [příklad jednoduchá xHTML stránka](./html/simpleXHTML.html)
 * [příklad jednoduchá HTML 5 stránka](./html/simpleHTML5.html)
-* [příklad bootstrap](./html/boostrap.html)
+* [příklad bootstrap](./html/bootstrap.html)
 
 
 ## PHP
@@ -149,7 +149,7 @@
 | <        | menší než                                               | $a < $b   |
 | >=, <=   | operátory větší/rovno, menší/rovno                      | $a >= $b  |
 | &&       | logické AND                                             | $a && $b  |
-| ||       | logické OR                                              | $a || $b  |
+| \|\|     | logické OR                                              | $a || $b  |
 | and      | logické AND                                             | $a and $b |
 | or       | logické OR                                              | $a or $b  |
 | xor      | logické XOR                                             | $a xor $b |
