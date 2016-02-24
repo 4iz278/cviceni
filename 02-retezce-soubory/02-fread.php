@@ -1,6 +1,6 @@
 <?php
 
-  $file = @fopen('csv/example.csv', 'r');//otevření souboru v režimu pro čtení
+  $file = @fopen('02-csv/example.csv', 'r');//otevření souboru v režimu pro čtení
 
   if($file){  //kontrola, jestli se podařilo soubor otevřít
 
