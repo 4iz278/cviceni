@@ -51,4 +51,4 @@
   var_dump($test2->calculate());
   var_dump($test2);
 
-  $test3 = new Trida1();//tohle asi neprojde, že...??? (proč?)
+  $test3 = new Trida1();//TODO tohle asi neprojde, že...??? (proč?)

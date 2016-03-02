@@ -29,6 +29,7 @@
   * je možné dynamicky definovat properties
   * PHP nepodporuje! vícenásobné definice metod
   * lze využívat *magické metody* (ale o tom až na [4. cvičení](../04-objekty-II-validace))
+  * **v PHP nejsou třídy automaticky potomkem žádné třídy!** (žádná výchozí třída *Object*)
 * budeme se bavit jen o objektech v PHP 5 (potažmo 7), ne v PHP 4 - tam se používaly jiné definice
 * PHP nevyžaduje, aby byla každá třída v samostatném souboru (ale bývá to dobrým zvykem)
   * v souvislosti s tím PHP neobsahuje standardní mechanismus pro načítání tříd, příslušné zdrojové kódy musí být načteny před použitím objektu
