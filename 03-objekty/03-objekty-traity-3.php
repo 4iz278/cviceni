@@ -1,6 +1,6 @@
 <?php
 
-//XXX
+/** Ukázka kompozice třídy z většího množství traitů za využití možnosti řešení konfliktních názvů */
 
 trait Trait1{
   public function test(){
