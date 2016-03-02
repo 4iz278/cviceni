@@ -31,7 +31,7 @@ echo "ahoj";
 
 <?php
 
-echo "<p>Jinak musime mit stredniky"
+echo "<p>Jinak musime mit stredniky";
 	
 echo "<p>dalsi prikaz";
 
