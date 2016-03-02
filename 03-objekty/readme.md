@@ -175,8 +175,10 @@ class TridaX{
 }
 ```
 
-* [příklad jmenné prostory 1](./03-jmenne-prostory.php)
+* [příklad jmenné prostory 1](./03-jmenne-prostory-1.php)
 * [příklad jmenné prostory 2](./03-jmenne-prostory-2.php)
+* [příklad jmenné prostory 3 - více souborů](./03-jmenne-prostory-3)
+* [PHP manuál - vyhodnování jmen v závislosti na jmenných prostorech](http://php.net/manual/en/language.namespaces.rules.php)
 
 ## Chyby a výjimky
 * **chyba != výjimka**
@@ -212,3 +214,11 @@ try{
 
 * [příklad exceptions](./03-exceptions.php)
 * [PHP manuál - vlastní výjimky](http://php.net/manual/en/language.exceptions.extending.php)
+
+## Příklad na procvičení
+> Navrhněte základní strukturu objektů pro zachycení cvičení na VŠ
+>  * cvičení absolvuje větší množství studentů
+>  * cvičení má učitele
+>  * cvičení má vztah k nějaké učebně
+>  * pro definici tříd Student a Ucitel využijte společnou rodičovskou třídu
+>  * zkuste vytvořit instance daných tříd...
