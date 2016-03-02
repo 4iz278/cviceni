@@ -148,7 +148,8 @@ $mojeTrida->vypis();
 ```
 
 * [příklad traity - jednoduchý](./03-objekty-traity-1.php)
-* [příklad traity - pokročilý](./03-objekty-traity-2.php)
+* [příklad traity - jednoduchý s dědičností](./03-objekty-traity-2.php)
+* [příklad traity - pokročilý](./03-objekty-traity-3.php)
 
 ### Jmenné prostory (namespaces)
 * jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
