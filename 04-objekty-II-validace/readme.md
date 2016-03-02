@@ -31,7 +31,32 @@ spl_autoload_register(function($name){
 
 ### Composer
 * pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru
-TODO
+* **composer = správce závislostí pro PHP projekty**
+  * viz http://getcomposer.com
+  * distribuován v podobě PHAR archívu (= ZIP archív s instrukcemi pro spuštění zahrnutých PHP skriptů)
+* jako správce balíčků se používá [Packagist](https://packagist.org/), nebo GITové úložiště (nejčastěji GitHub)
+* postup použití:
+  1. stáhneme/nainstalujeme composer
+  2. definujeme soubor **composer.json**
+    * v rámci tohoto souboru jsou definovány všechny závislosti
+    * alternativně se dá composer kompletně ovládat konzolovými příkazy
+  3. necháme composer stáhnout veškeré potřebné balíčky
+  4. v rámci aplikace načítáme jen jeden soubor (*autoload.php*), v rámci kterého jsou vygenerovány instrukce pro načítání všech zahrnutých tříd
+
+```json
+{
+  "name": "4iz278/03-composer-example-project",
+  "description": "Ukázkový project",
+  "require": {
+    "mpdf/mpdf": "v6.0.0"
+  }
+}
+```
+```
+php composer.phar update
+```
+
+* [příklad composer](./04-composer-example-project)
 
 ## Validace formulářů
 TODO

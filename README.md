@@ -22,8 +22,10 @@ Web předmětu: **http://4iz278.github.io**
   * výjimky
 4. [Objekty v PHP II., validace formulářů](./04-objekty-II-validace)
   * class loader
-  * praktická aplikace
+  * magické metody objektů
   * validace formulářů
+  * composer
+  * praktická aplikace
 5. [SQL](./05-sql)
   * Opakování základů SQL
   * MariaDB na serveru eso.vse.cz
