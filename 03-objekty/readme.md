@@ -179,6 +179,8 @@ class TridaX{
 
 * [příklad error - zavináč](./03-error-zavinac.php)
 * [příklad error handler](./03-error-handler.php)
+* [příklad error_reporting](./03-error-reporting.php)
+* [příklad error_reporting](./03-error-htaccess.txt)
 
 ### Exceptions
 * výjimka (Exception) = instance třídy vygenerovaná v případě odchycení nestandartního stavu aplikace
