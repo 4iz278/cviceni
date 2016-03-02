@@ -14,9 +14,12 @@ Web předmětu: **http://4iz278.github.io**
   * řetězcové funkce
   * include, require
   * GET, POST
+  * čtení a zápis souborů
 3. [Objekty v PHP](./03-objekty)
+  * práce s file systémem
   * definice tříd, rozhraní atd.
   * namespaces
+  * výjimky
 4. [Objekty v PHP II., validace formulářů](./04-objekty-II-validace)
   * class loader
   * praktická aplikace

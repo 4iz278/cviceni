@@ -83,13 +83,118 @@ JmenoTridy::$a = 1; //přístup k statické proměnné třídy
 JmenoTridy::statickaFunkce() //zavolání statické metody
 ```
 
-TODO příklady
+* [příklad objekty - základ](./03-objekty-zaklad.php)
 
 ### Abstraktní třídy, rozhraní, dědičnost
-TODO
+* **Pamatujete si z Javy něco o dědičnosti?**
+* **rozhraní** = "šablona" toho, jaké metody musí daná třída obsahovat
+  * umožňují jednotný přístup k jednotlivým třídám
+* **abstraktní třída** = třída, ve které nejsou definovány některé metody
+  * nelze od ní přímo vytvořit instanci - abstraktní metody jsou dodefinovány v potomkovi
+
+```php
+interface X{
+  public function a();
+}
+abstract class Class1{
+  public function b(){
+    //...
+  }
+  public abstract function c();
+}
+class Class2 extends Class1 implements X{
+  public function a(){
+    //...
+  }
+  public function c(){
+    //...
+  }
+}
+```
+
+* [příklad objekty - dědičnost](./03-objekty-dedicnost.php)
+* [příklad objekty - interface](./03-objekty-interface.php)
+* [příklad objekty - abstraktní třídy](./03-objekty-abstract-class.php)
 
 ### Traity
-TODO
+* trait = v podstatě *kousek definice třídy*, podporováno v PHP 5.4+
+* umožňují vyřešit problém nemožnosti vícenásobné dědičnosti
+* umožňují zapojovat do tříd jen ty funkcionality, které daná třída opravdu potřebuje (například v případě tříd controllerů/presenterů v MVC/MVP)
+* definujeme v nich metody a properties, které následně chceme vložit do většího množství tříd
+* trait definujeme podobně, jako třídu; do tříd jej zapojujeme pomocí příkazu **use**
+* třída může použít libovolné množství traitů, je ale nutné dávat pozor na konfliktní metody a proměnné (lze vyřešit jejich přejmenováním)
+
+```php
+trait DemoTrait{
+  public function vypis(){
+    echo 'lorem ipsum...';
+  }
+}
+class MojeTrida{
+  use DemoTrait;
+}
+$mojeTrida = new MojeTrida();
+$mojeTrida->vypis();
+```
+
+* [příklad traity - jednoduchý](./03-objekty-traity-1.php)
+* [příklad traity - pokročilý](./03-objekty-traity-2.php)
 
 ### Jmenné prostory (namespaces)
-TODO
+* jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
+* jedná se o obdobu "balíčků" z Javy
+* umožňují snazší skládání částí kódu např. z různých knihoven
+* jejich **použití je volitelné**
+  * pokud nechcete, tak je ve vlastním kódu využívat nemusíte (pokud nepoužijete kód, který je již obsahuje)
+  * lze do nich rozdělovat libovolné částí kódu - nejen definice tříd, ale také
+
+```php
+namespace MojeAplikace; //všechen následující kód bude ve jmenném prostoru "MojeAplikace"
+
+use MojeAplikace\Model\User; //import třídy Users ze jmenného prostoru \MojeAplikace\Model (budeme ji volat jen jako "Users")
+
+function f1(){
+  \PDF\Generator::output();//zavolání statické metody na třídě \PDF\Generator (absolutní cesta)
+}
+
+class TridaX{
+  public function getNewUser(){
+    return new User();//používáme třídu Users
+  }
+}
+```
+
+* [příklad jmenné prostory 1](./03-jmenne-prostory.php)
+* [příklad jmenné prostory 2](./03-jmenne-prostory-2.php)
+
+## Chyby a výjimky
+* **chyba != výjimka**
+
+### Chyby a jejich odchytávání
+* některé typy chyb již známe - např. se nepovede otevřít zvolený soubor, vypisujeme neexistující proměnnou atp.
+* PHP obsahuje definici 8 konstant určujících úroveň generování chyb (E_NOTICE, E_WARNING, ... E_ALL)
+* vyhazování chyb do výstupu závisí na nastavení PHP
+* **chyby neslouží k řízení průběhu programu!**
+* nejsou odchytitelné klasickými konstrukcemi známými např. z Javy, ale můžeme je ošetřit vlastní funkcí, nebo je skrýt
+
+* [příklad error - zavináč](./03-error-zavinac.php)
+* [příklad error handler](./03-error-handler.php)
+
+### Exceptions
+* výjimka (Exception) = instance třídy vygenerovaná v případě odchycení nestandartního stavu aplikace
+  * lze definovat vlastní odvozené třídy
+* lze je využít k řízení kódu programu, lze je odchytit pomocí try-catch bloku
+* většina výchozích PHP funkcí výjimky nepoužívá
+
+```php
+try{
+  //kód, u kterého je možný výskyt výjimky
+}catch(\Exception $e){
+  //kód obsahující ošetření výjimky
+}finally{
+  //kód provedený po try bloku a případném provedení kódu pro ošetření výjimky
+  //podpora v PHP 5.5+
+}
+```
+
+* [příklad ](./03-exceptions.php)
