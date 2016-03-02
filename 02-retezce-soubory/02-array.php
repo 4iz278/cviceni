@@ -5,7 +5,7 @@
   $arr2 = ["a","b","c"];     //zkrácená verze zápisu pomocí hranatých závorek (hezčí, ale nefunkční na starých verzích PHP)
 
   var_dump($arr);
-  var_dump($arr);
+  var_dump($arr2);
 
 #region manipulace s prvky
 
