@@ -16,7 +16,7 @@
     /**
      * @return int
      */
-    protected function getRandomNumber(){
+    public function getRandomNumber(){
       return rand(1,10);
     }
   }
@@ -35,3 +35,7 @@
 
   $objekt=new MojeTrida();
   $objekt->echoX();
+
+  echo PHP_EOL; //konstanta obsahující znak pro ukončení řádky (ve výchozím stavu \n)
+
+  echo $objekt->getRandomNumber();
