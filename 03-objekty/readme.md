@@ -172,7 +172,7 @@ class TridaX{
 
 ### Chyby a jejich odchytávání
 * některé typy chyb již známe - např. se nepovede otevřít zvolený soubor, vypisujeme neexistující proměnnou atp.
-* PHP obsahuje definici 8 konstant určujících úroveň generování chyb (E_NOTICE, E_WARNING, ... E_ALL)
+* PHP obsahuje definici řady konstant určujících úroveň generování chyb (např. *E_NOTICE*, *E_WARNING*, ... *E_ALL*), v souvislosti s přechody mezi různými verzi PHP je důležitá také chyba *E_DEPRECATED*
 * vyhazování chyb do výstupu závisí na nastavení PHP
 * **chyby neslouží k řízení průběhu programu!**
 * nejsou odchytitelné klasickými konstrukcemi známými např. z Javy, ale můžeme je ošetřit vlastní funkcí, nebo je skrýt
@@ -199,4 +199,5 @@ try{
 }
 ```
 
-* [příklad ](./03-exceptions.php)
+* [příklad exceptions](./03-exceptions.php)
+* [PHP manuál - vlastní výjimky](http://php.net/manual/en/language.exceptions.extending.php)
