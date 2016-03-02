@@ -112,9 +112,18 @@ class Class2 extends Class1 implements X{
 }
 ```
 
+* v PHP samozřejmě existují také možnosti pro ověření, jestli je daný objekt instancí zvolené třídy a zjištění, zda daná třída existuje
+
+```php
+  if ($x instanceof MojeTrida){
+    //...
+  }
+```
+
 * [příklad objekty - dědičnost](./03-objekty-dedicnost.php)
 * [příklad objekty - interface](./03-objekty-interface.php)
 * [příklad objekty - abstraktní třídy](./03-objekty-abstract-class.php)
+* [příklad objekty - instanceof](./03-objekty-instanceof.php)
 
 ### Traity
 * trait = v podstatě *kousek definice třídy*, podporováno v PHP 5.4+
