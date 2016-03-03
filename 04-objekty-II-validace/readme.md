@@ -44,7 +44,7 @@
 
 * až se budeme bavit o formátu JSON ([10. cvičení](./10-json-xml)), vzpomeňte si ještě na podobné rozhraní - *JsonSerializable*
 
-###
+### Další magické funkce
 * **__clone()**
   * funkce volaná v případě, že chceme vytvořit klon daného objektu (samostatnou kopii)
   * běžně se při přiřazení objekty přiřazují referencí, pokud chceme samostatnou kopii, je nutné objekt naklonovat
@@ -117,7 +117,42 @@ php composer.phar update
 * [příklad composer](./04-composer-example-project)
 
 ## Validace formulářů
-TODO
+* o tom, jak získat data z formulářů, jsme se už bavili - viz [2. cvičení](./02-retezce-soubory) - zatím jsme je ale moc nekontrolovali...
+
+### Základní zásady
+* **Všechny vstupy od uživatele je nutné kontrolovat** - ať už byly odeslány formulářem, nebo v URL uvedené v rámci odkazu!
+* kontrolovat data můžeme také např. v HTML5 či JavaScriptu, ale přesto je znovu musíme kontrolovat i na serveru!
+* chyby musíme uživateli zobrazovat v přehledné a hlavně srozumitelné podobě
+  * žádné hlášky ve stylu "Ve formuláři je chyba."
+
+* **pokud odesíláme formulář pomocí POSTu, je nutné po jeho úspěšném zpracování provést redirect!**
+  * i v případě, kdy přesměrováváme na ten samý skript
+
+```php
+header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné přesměrování
+```
+
+### Postup implementace validace
+1. kontrola v rámci HTML/HTML 5 formuláře
+   * nedá se na ni sice úplně spolehnout, ale je to nejrychlejší varianta, jak "omezit" kreativitu uživatele
+   * např. vhodná formulářá pole (datum, čas), omezení délky atd.
+2. volitelná kontrola v JavaScriptu
+   * vhodná hlavně u dynamicky načítaných formulářů, jinak není úplně nezbytná
+   * může být výrazně interaktivnější, než kontrola na serveru (např. se uživatel dozví o chybě hned při zadání chybné hodnoty)
+3. kontrola dat na serveru
+   * ať už byla data získána z GETu, nebo POSTu
+4. zobrazení formuláře k opravě
+   * musí v něm být ty hodnoty, které nám uživatel poslal! (aspoň ty, které byly správně)
+
+
+* [příklad validace - xHTML](./04-validace-html.php)
+* [příklad validace - HTML 5](./04-validace-html5.php)
+* [příklad validace - souhrnné hlášení chyb](./04-validace-souhrnna.php)
+* [příklad validace - hlášení chyb u jednotlivých inputů](./04-validace-inputy.php)
+
+
+* [podklady k formulářům v JavaScriptu](https://github.com/4iz268/cviceni/tree/master/10-formulare)
+
 
 ## Praktická aplikace
 TODO
