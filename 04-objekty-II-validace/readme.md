@@ -157,7 +157,8 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
 * [příklad validace - souhrnné hlášení chyb](./04-validace-souhrnna.php)
 * [příklad validace - hlášení chyb u jednotlivých inputů](./04-validace-inputy.php)
 * [podklady k formulářům v JavaScriptu](https://github.com/4iz268/cviceni/tree/master/10-formulare)
-
+* [w3schools - Filter functions](http://www.w3schools.com/php/php_ref_filter.asp)
+* [PHP manuál - preg_match](http://php.net/manual/en/function.preg-match.php)
 
 
 ## Praktická aplikace
