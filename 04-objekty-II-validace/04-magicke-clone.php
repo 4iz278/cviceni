@@ -35,3 +35,6 @@
 
   var_dump($objekt1);
   var_dump($objekt2);
+
+
+  var_dump($objekt1 == $objekt2);//TODO proč tohle porovnání nefunguje? Vždyť jde o klony stejného objektu, ne? :)
