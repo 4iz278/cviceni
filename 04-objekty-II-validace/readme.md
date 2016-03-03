@@ -146,11 +146,18 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
 4. zobrazení formuláře k opravě
    * musí v něm být ty hodnoty, které nám uživatel poslal! (aspoň ty, které byly správně)
 
+### Užitečné validační funkce
+* **preg_match($pattern, $text)**
+  * funkce pro kontrolu, zda zadaný text odpovídá požadovanému regulárnímu výrazu
+* **filter_var($text, $filtr)**
+  * funkce pro validaci a případné "pročištění" vstupu (např. e-mailu)
+
 
 * [příklad validace - HTML 5](./04-validace-html5.php)
 * [příklad validace - souhrnné hlášení chyb](./04-validace-souhrnna.php)
 * [příklad validace - hlášení chyb u jednotlivých inputů](./04-validace-inputy.php)
 * [podklady k formulářům v JavaScriptu](https://github.com/4iz268/cviceni/tree/master/10-formulare)
+
 
 
 ## Praktická aplikace
