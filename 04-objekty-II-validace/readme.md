@@ -1,6 +1,5 @@
 # 4. Objekty v PHP II., validace formulářů
 
-
 ## Magické metody objektů
 * **to, že v rámci daného objektu daná vlastnost (proměnná, funkce) neexistuje, ještě neznamená, že s ní nejde praxovat**
 * "magické funkce" poznáte podle toho, že začínají na *__* (dvě podtržítka)
@@ -19,6 +18,8 @@
 * **__unset(jmenoPromenne)**
   * funkce zavolaná v situaci, kdy zavoláme *unset()* na neexistující či nepřístupné proměnné
 
+* drobné upozornění - PHP brání rekurzivnímu zacyklení v rámci magických metod - tj. pokud v rámci __get zkusíme přistupovat k neexistující proměnné, nedojde k rekurzivnímu volání (je možné ho vynutit jen ručním zavoláním __get())
+
 * [příklad neexistující proměnné](./04-magicke-promenne.php)
 * [příklad simulace properties](./04-magicke-getset.php)
 
@@ -32,8 +33,16 @@
 
 ### Serializace a "uspávání" objektů
 * **Co to je serializace?**
-* **__sleep()**
-* **__wakeup()**
+* aktuálně máme v PHP na výběr 2 varianty podpory serializace v rámci definice třídy
+  * třída bude implementovat rozhsaní **Serializable** (poskytuje víc variability)
+  * implementovat magické metody **__sleep()** a **__wakeup()** (jednodušší)
+* z hlediska následného využití je to vlastně jedno :)
+
+* [příklad sleep-wake up](./04-sleep-wakeup.php)
+* [příklad Serializable - jednoduché pole](./04-serializable-v2.php)
+* [příklad Serializable - asociační pole](./04-serializable.php)
+
+* až se budeme bavit o formátu JSON ([10. cvičení](./10-json-xml)), vzpomeňte si ještě na podobné rozhraní - *JsonSerializable*
 
 ###
 * **__clone()**
