@@ -124,6 +124,8 @@ php composer.phar update
 * kontrolovat data můžeme také např. v HTML5 či JavaScriptu, ale přesto je znovu musíme kontrolovat i na serveru!
 * chyby musíme uživateli zobrazovat v přehledné a hlavně srozumitelné podobě
   * žádné hlášky ve stylu "Ve formuláři je chyba."
+* u důležitějších formulářů je vhodné aplikovat CSRF ochranu (Cross-Site Request Forgery) - ale to až budeme umět používat *session*...
+
 
 * **pokud odesíláme formulář pomocí POSTu, je nutné po jeho úspěšném zpracování provést redirect!**
   * i v případě, kdy přesměrováváme na ten samý skript
@@ -152,4 +154,13 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
 
 
 ## Praktická aplikace
-TODO
+> Vaším úkolem je vytvořit aplikaci pro správu seznamu zaměstnanců, který je uložen v CSV souboru.
+> * využijte přiložený soubor [adresar.csv](./04-ukol/adresar.csv)
+>   * soubor je v kódování utf-8
+> * požadovaná funkcionalita aplikace
+>   * načtení položek se záznamy o zaměstnancích s možností jejich seřazení podle jména, bydliště, nadřízeného atp.
+>   * zobrazení zaměstnanců formou tabulky
+>   * formulář pro úpravu existujícího zaměstnance a přidání zaměstnance nového
+>     * povinnými údaji jsou u každého zaměstnance jméno, příjmení, obec, psc
+>     * zaměstanec, který je dělníkem, musí mít zadaného nadřízeného (vybraného se selectu, ne zapsaného ručně!)
+> * pokud možno napište aplikaci za využití objektů (tj. záznam každého zaměstnance bude instancí objektu)

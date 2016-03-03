@@ -1,0 +1,21 @@
+Jméno;Příjmení;Pohlaví;Ulice;Obec;PSČ;Telefon;E-mail;Pozice;Nadřízený
+Miroslav;Mička;M;Adélčina  1;Praha;19600;;micka@x.cz;dělník;Petr Almer
+Petr;Almer;M;;Praha;11000;;almer@x.cz;mistr;
+Jaroslav;Dlouhý;M;;Praha;11000;784927040;dlouhy@x.cz;dělník;Petr Almer
+Vasyl;Ferenčuk;M;;Praha;11000;;;dělník;Petr Almer
+František;Mrázek;M;Alšova 1;Beroun;26601;432156322;;dělník;Petr Almer
+Jindřich;Valenta;M;28. října 99;Praha;11000;;;dělník;Petr Almer
+Dalibor;Vykydal;M;28. října 99;Praha;11000;;;dělník;Jiří Zelníček
+Jiří;Zelníček;M;28. října 99;Praha;11000;;zelnicek@x.cz;mistr;
+Andrej;Zabloudil;M;28. října 99;Praha;11000;;;dělník;Jiří Zelníček
+Vlastimil;Tomšovic;M;;Praha;11000;;;dělník;Jiří Zelníček
+Věra;Černá;Ž;;Jirny;11000;;cerna@x.cz;dělník;Jiří Zelníček
+Leona;Vysmátá;Ž;;Praha;11000;;;dělník;Jiří Zelníček
+Miloslava Hýblová;Svozilová;Ž;;Praha;11000;790274920;;dělník;Jiří Zelníček
+Michaela;Holubová;Ž;;Zdice;11000;;holubova@x.cz;dělník;Jiří Zelníček
+Anna;Pokorná;Ž;T.G.M. 1;Příbram;26101;;pokorna@x.cz;dělník;Jiří Zelníček
+Zuzana;Nevidová;Ž;Akademická 1;Praha;108 00;837920108;;dělník;Dagmar Šimánková
+Marie;Žáková;Ž;Akademická 2;Praha;11000;;;dělník;Dagmar Šimánková
+Dagmar;Šimánková;Ž;Akademická 3;Praha;11000;;simankova@x.cz;mistr;
+Eva;Bělašková;Ž;Akademická 4;Praha;11000;;belaskova@x.cz;dělník;Dagmar Šimánková
+Jarmila;Vrbová;Ž;Akademická 5;Praha;11000;;;dělník;Dagmar Šimánková
