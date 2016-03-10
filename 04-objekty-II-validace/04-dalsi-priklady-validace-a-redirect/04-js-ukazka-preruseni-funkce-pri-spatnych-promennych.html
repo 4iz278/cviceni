@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+</head>
+<body>
+			
+	<script>
+
+		
+	function validateForm() {
+		//pozor, prerusi funkci
+		alert(neexistuje.neco);
+			
+		//sem se to uz nedostane
+		return false;
+			
+	}
+	</script>
+    
+      
+	<form action="neco.php" method="POST" onsubmit="return validateForm()">
+		Jméno: <br>
+		<input type="text" name="name" id="name" value=""><br>
+		<input type="submit">
+                
+	</form>
+            
+          
+</body>
+</html>

@@ -1,0 +1,2 @@
+php_value date.timezone 'Europe/Prague'
+Options +Indexes
