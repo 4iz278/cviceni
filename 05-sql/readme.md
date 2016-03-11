@@ -26,6 +26,8 @@ show tables; # vypise tabulky v db, asi zadne nebudete mit
 
 [UPDATE](./05-4-update.sql)
 
-[DELETE](./05-5-delete.sql)
+[BEGIN COMMIT ROLLBACK](./05-5-transactions.sql)
+
+[DELETE](./05-6-delete.sql)
 
 * phpMyAdmin
