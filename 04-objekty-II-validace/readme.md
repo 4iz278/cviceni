@@ -80,7 +80,7 @@ spl_autoload_register(function($name){
   * pole zaregistrovaných funkcí je možné získat pomocí *spl_autoload_functions()*, zvolenou funkci je možné odstranit pomocí *spl_autoload_unregister()*
 
 * [příklad autoload](./04-autoload)
-* [příklad autoload funkce pracující se jmennými prostory](./04-autoload-namespaces.php)
+* [příklad autoload funkce pracující se jmennými prostory](./04-autoload-namespaces)
 
 ### Načítání tříd při použítí frameworku
 * v podstatě všechny PHP frameworky zahrnuje nějakou vlastní podobu autoloadu => **při použití frameworku neimplementujeme vlastní autoload**
@@ -90,7 +90,7 @@ spl_autoload_register(function($name){
 ### Composer
 * pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru
 * **composer = správce závislostí pro PHP projekty**
-  * viz http://getcomposer.com
+  * viz http://getcomposer.org
   * distribuován v podobě PHAR archívu (= ZIP archív s instrukcemi pro spuštění zahrnutých PHP skriptů)
 * jako správce balíčků se používá [Packagist](https://packagist.org/), nebo GITové úložiště (nejčastěji GitHub)
 * postup použití:
