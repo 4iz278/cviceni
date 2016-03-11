@@ -18,6 +18,14 @@ mysql -pHESLO xhraj18 # pripojit se na vasi databazi (nazev databaze je stejny j
 show tables; # vypise tabulky v db, asi zadne nebudete mit
 ```
 
-* Opakování základů SQL
-* MariaDB na serveru eso.vse.cz
+[CREATE TABLE](./05-1-create-table.sql)
+
+[INSERT](./05-2-insert.sql)
+
+[SELECT](./05-3-select.sql)
+
+[UPDATE](./05-4-update.sql)
+
+[DELETE](./05-5-delete.sql)
+
 * phpMyAdmin
