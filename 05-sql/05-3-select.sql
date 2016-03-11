@@ -6,6 +6,7 @@ SELECT * FROM clients;
 SELECT * FROM addresses;
 
 --JOIN VS LEFT VS RIGHT JOIN
+
 --vysvetlete rozdil mezi JOIN, LEFT JOIN a RIGHT JOIN
 
 SELECT * FROM clients JOIN addresses ON clients.id=addresses.client_id;
