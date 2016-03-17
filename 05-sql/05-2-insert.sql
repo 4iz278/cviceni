@@ -118,6 +118,8 @@ VALUES
 )
 ;
 
+--ulozeni telefonu bez klienta
+--Myslite, ze ma tohle smysl? Uvedte vyhody/nevyhody. Udelali byste to stejne?
 INSERT INTO phones
 (
 	phone
@@ -131,8 +133,8 @@ VALUES
 
 
 --pozor na dlouhe texty !!!
---mysql natvrdo zkrati dlouhy string, nevyhazuje chybu
-
+--mysql natvrdo zkrati dlouhy string, nevyhazuje chybu! Uvedte vyhody/nevyhody.
+--text o Mustangu je prevzat z Wikipedia :)
 INSERT INTO clients
 (
 	name,
@@ -150,8 +152,8 @@ VALUES
 ;
 
 
---zkracena verze zapisu
---0 misto auto increment, 1 uz neprojde (duplicita)
+--zkracena verze zapisu, bez uvedeni sloupcu, data se ukladaji dle definice sloupcu v tabulce
+--0 je misto auto increment, 1 uz neprojde (duplicita)
 --pozor na michani sloupecku - ukladani probiha do sloupcu definovanych ve strukture tabulky !!!
 --doporucujeme radeji pouzivat delsi (spolehlivejsi zapis) - problem je v tom, ze si musime pamatovat/zobrazit poradi sloupcu
 INSERT INTO clients
@@ -177,8 +179,12 @@ VALUES
 )
 ;
 
---zkusit doma, cast: http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html
+--cast, pretypovani na jiny datovy typ
+--nastudovat, zkusit doma, cast: http://dev.mysql.com/doc/refman/5.5/en/cast-functions.html
+
+--projde tohle? Proc?
 SELECT '1000' =  1000;
 
+--a projde tohle? Proc?
 SELECT '1000.00' =  1000;
 

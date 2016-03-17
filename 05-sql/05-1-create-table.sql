@@ -1,6 +1,6 @@
 --CREATE TABLE: http://dev.mysql.com/doc/refman/5.5/en/create-table.html
 --DATOVE TYPY: http://dev.mysql.com/doc/refman/5.5/en/data-types.html
---Server version na serveru eso.vse.cz: 5.5.39-MariaDB-log - MariaDB Server
+--Server version: 10.0.21-MariaDB-log MariaDB Server
 --varchar 65,535 od 5.0.3
 --datovy typ serial: SERIAL is an alias for BIGINT UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE.
 
@@ -22,6 +22,7 @@ CHARACTER SET utf8
 DESC clients;
 
 --vypis vsechny zaznamy z tabulky
+--zatim zadne nejsou
 SELECT * FROM clients;
 
 --ukaz indexy na tabulce

@@ -1,6 +1,5 @@
 --DELETE, viz http://dev.mysql.com/doc/refman/5.5/en/delete.html
 
-
 --musi se tady pouzivat transakce? Proc ano/ne?
 BEGIN;
 

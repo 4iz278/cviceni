@@ -18,6 +18,8 @@ mysql -pHESLO xhraj18 # pripojit se na vasi databazi (nazev databaze je stejny j
 show tables; # vypise tabulky v db, asi zadne nebudete mit
 ```
 
+## SQL příkazy
+
 [CREATE TABLE](./05-1-create-table.sql)
 
 [INSERT](./05-2-insert.sql)
@@ -26,8 +28,20 @@ show tables; # vypise tabulky v db, asi zadne nebudete mit
 
 [UPDATE](./05-4-update.sql)
 
-[BEGIN COMMIT ROLLBACK](./05-5-transactions.sql)
+[TRANSACTIONS](./05-5-transactions.sql)
 
 [DELETE](./05-6-delete.sql)
 
-* phpMyAdmin
+[CASCADE](./05-7-cascade.sql)
+
+
+## phpMyAdmin
+
+Webová aplikace pro správu MySQL/Maria DB databáze.
+
+Pro připojení použijte váš xname a heslo k mysql db ze souboru mysql-heslo.txt na serveru eso.vse.cz
+
+https://eso.vse.cz/phpmysqladmin/
+
+Varování o neplatném certifikátu ignorujte, není zakoupen od certifikační autoritity, #lame.
+

@@ -21,7 +21,7 @@ COMMIT;
 
 
 
---pouziti predchozi hodnoty
+--pouziti soucasne hodnoty jako zakladu pro novou hodnotu
 
 BEGIN;
 
