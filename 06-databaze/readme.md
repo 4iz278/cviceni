@@ -4,12 +4,12 @@ Jako ukázku práce s databází vytvoříme jednoduchou aplikaci, demonstrujíc
 
 ## 1. Zdroje pro cvičení:
 
-* http://php.net/manual/en/class.pdo.php - třída PDO pro abstraktní práci nad databází
+* http://php.net/manual/en/class.pdo.php - třída PDO pro abstraktní práci nad databází.
 * http://php.net/manual/en/book.mysqli.php - MySQL Improved Extension - funkce pro práci s mysql. Lze používat PDO NEBO mysqli, ale nemíchat obojí!
-* http://php.net/manual/en/ref.mysql.php - klasické a staré mysql funkce, nepoužívat, musíme ošetřovat vstupy, je to složité, preferovat PDO nebo mysqli
-* http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers - rozdíly mezi mysql funkcemi a PDO
-* http://wiki.hashphp.org/Validation - ukázka SQL injectu a validace vstupů do DB
-* http://www.generatedata.com/ - generátor testovacích dat pro různé databáze
+* http://php.net/manual/en/ref.mysql.php - klasické a staré mysql funkce, nepoužívat, musíme ošetřovat vstupy, je to složité, preferovat PDO nebo mysqli.
+* http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers - rozdíly mezi mysql funkcemi a PDO.
+* http://wiki.hashphp.org/Validation - ukázka SQL injectu a validace vstupů do DB.
+* http://www.generatedata.com - generátor testovacích dat pro různé databáze.
 
 ## 2. Vytvoření db schématu
 
@@ -46,9 +46,9 @@ Vstupy posílané do DB je třeba ošetřit, jinak hrozí SQL inject útok.
 
 Porovnejte a zkuste tyto příklady:
 
-* [open](./06-app/new_open.php) - neošetřené vstupy, zkuste si SQL inject útok
+* [open](./06-app/new_open.php) - neošetřené vstupy, zkuste si SQL inject útok.
 * [mysql_real_escape_string](./06-app/new_escape.php) - ruční ošetření vstupů přes funkci [mysql_real_escape_string](http://php.net/mysql_real_escape_string). Pozn. Srovnejte ještě s deprecated funkcí [mysql_escape_string](http://php.net/mysql_escape_string).
-* [PDO parameters](./06-app/new_prepare.php) - vstupy přes PDO parametry, automaticky chráněno proti SQL inject útokům
+* [PDO parameters](./06-app/new_prepare.php) - vstupy přes PDO parametry, automaticky chráněno proti SQL inject útokům.
 
 ![Exploits of a mom](./exploits-of-a-mom.png)
 
