@@ -62,7 +62,7 @@ Vstupy posílané do DB je třeba ošetřit, jinak hrozí SQL inject útok.
 Porovnejte a zkuste tyto příklady pro přidání nového klienta do databáze:
 
 * [open to attacks](./06-app/new_open.php) - neošetřené vstupy, **zkuste si SQL inject útok**.
-* [mysql_real_escape_string](./06-app/new_escape.php) - ruční ošetření vstupů přes funkci [mysql_real_escape_string](http://php.net/mysql_real_escape_string). Pozn. Srovnejte ještě s deprecated funkcí [mysql_escape_string](http://php.net/mysql_escape_string).
+* [mysql_real_escape_string](./06-app/new_escape.php) - ruční ošetření vstupů přes funkci [mysql_real_escape_string](http://php.net/mysql_real_escape_string). Srovnejte ještě s deprecated funkcí [mysql_escape_string](http://php.net/mysql_escape_string). **Obě funkce jsou deprecated, používat PDO nebo mysqli!**
 * [PDO parameters](./06-app/new_prepare.php) - vstupy přes PDO parametry, automaticky chráněno proti SQL inject útokům.
 
 [Detailní ukázka SQL inject útoku včetně zobrazení, co se přesně posílá do databáze.](./06-app/mysql_real_escape_string.php)

@@ -62,7 +62,7 @@ require 'db.php';
 		<a href="new_open.php">New Client (Open to SQL Inject Attack)</a><br/><br/>
 		<a href="new_escape.php">New Client (Safe, escaped)</a><br/><br/>
 		<a href="new_prepare.php">New Client (Safe, prepare)</a><br/><br/>
-		<a href="mysql_escape_string.php">mysql_escape_string function demonstration</a><br/><br/>
+		<a href="mysql_real_escape_string.php">mysql_real_escape_string function demonstration</a><br/><br/>
 		<a href="index_with_pagination.php">index with pagination</a><br/><br/>
 		<a href="index.php">index without pagination</a>
 		
