@@ -65,6 +65,8 @@ Porovnejte a zkuste tyto příklady:
 * [mysql_real_escape_string](./06-app/new_escape.php) - ruční ošetření vstupů přes funkci [mysql_real_escape_string](http://php.net/mysql_real_escape_string). Pozn. Srovnejte ještě s deprecated funkcí [mysql_escape_string](http://php.net/mysql_escape_string).
 * [PDO parameters](./06-app/new_prepare.php) - vstupy přes PDO parametry, automaticky chráněno proti SQL inject útokům.
 
+[Detailní ukázka SQL inject útoku včetně zobrazení, co se přesně posílá do databáze](./06-app/mysql_real_escape_string_.php)
+
 ![Exploits of a mom](./exploits-of-a-mom.png)
 
 
