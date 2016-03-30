@@ -39,6 +39,17 @@ Funkční aplikaci pak najdete na adrese:
 
 https://eso.vse.cz/~xhraj18/ (použijte váš vlastní xname :)
 
+CRUD případy užití:
+
+* [create](./06-app/new_prepare.php) - vytvoření nového klienta
+* [read](./06-app/index.php) - výpis klientů
+* [update](./06-app/update.php) - úprava klienta
+* [delete](./06-app/delete.php) - smazání klienta
+
+### Poznámky k aplikaci
+
+* Pro mazání bychom měli používat HTTP POST (proč?). V příkladu je použit HTTP GET. Co třeba web roboti?
+* Po přidání/úpravě/mazání záznamu je třeba udělat HTTP redirect pomocí hlavičky Location. Proč?
 
 ## 6. SQL inject útok
 
