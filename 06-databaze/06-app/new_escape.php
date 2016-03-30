@@ -4,10 +4,10 @@ require 'db.php';
 	
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-	$first_name = mysql_escape_string($_POST['first_name']);
-	$last_name = mysql_escape_string($_POST['last_name']);
-	$salary = mysql_escape_string((float)$_POST['salary']);
-	$note = mysql_escape_string($_POST['note']);
+	$first_name = mysql_real_escape_string($_POST['first_name']);
+	$last_name = mysql_real_escape_string($_POST['last_name']);
+	$salary = mysql_real_escape_string((float)$_POST['salary']);
+	$note = mysql_real_escape_string($_POST['note']);
 	
 	$db->exec("INSERT INTO clients(first_name, last_name, salary, note) VALUES ('$first_name', '$last_name', '$salary', '$note')");
 
