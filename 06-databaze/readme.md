@@ -29,6 +29,8 @@ Pro práci s DB budeme používat třídu [PDO](http://php.net/manual/en/class.p
 
 [db.php](./06-app/db.php)
 
+**Nezapomeňte v souboru nastavit váš xname a heslo pro připojení do db!**
+
 Další možností je používat [mysqli](http://php.net/manual/en/book.mysqli.php).
 
 ## 5. Práce s aplikací
