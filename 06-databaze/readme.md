@@ -42,15 +42,18 @@ https://eso.vse.cz/~xhraj18/ (použijte váš vlastní xname :)
 CRUD případy užití:
 
 * [create](./06-app/new_prepare.php) - vytvoření nového klienta
-* [read](./06-app/index.php) - výpis klientů
+* [read - index](./06-app/index.php) - výpis klientů
+* [read - index with pagination](./06-app/index_with_pagination.php) - výpis klientů se stránkováním
 * [update](./06-app/update.php) - úprava klienta
 * [delete](./06-app/delete.php) - smazání klienta
 
-### Poznámky k aplikaci
+### Poznámky a otázky k aplikaci
 
 * Pro mazání bychom měli používat HTTP POST (proč?). V příkladu je použit HTTP GET. Co třeba web roboti?
 * Po přidání/úpravě/mazání záznamu je třeba udělat HTTP redirect pomocí hlavičky Location. Proč?
 * Create/update děláme pomocí PDO parametrů. Lze je mít i pojmenované  - named parameters, viz kód v [create](./06-app/new_prepare.php).
+* Před delete je vhodné potvrzení ze strany uživatele, že chce záznam skutečně smazat. Jak to jde udělat?
+* Záznamy v tabulce je vhodné stránkovat, viz [index with pagination](./06-app/index_with_pagination.php). Jaké to má výhody/nevýhody? (tiskové sestavy, hledání fulltextem na stránce pomocí CTRL+F...)
 
 ## 6. SQL inject útok
 
