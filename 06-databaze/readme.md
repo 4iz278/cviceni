@@ -2,7 +2,7 @@
 
 Jako ukázku práce s databází vytvoříme jednoduchou aplikaci, demonstrující základní práci nad daty - Create, Read, Update, Delete (zkráceně CRUD aplikace).
 
-1. Zdroje pro cvičení:
+## 1. Zdroje pro cvičení:
 
 * http://php.net/manual/en/class.pdo.php - třída PDO pro abstraktní práci nad databází
 * http://php.net/manual/en/book.mysqli.php - MySQL Improved Extension - funkce pro práci s mysql. Lze používat PDO NEBO mysqli, ale nemíchat obojí!
@@ -11,19 +11,19 @@ Jako ukázku práce s databází vytvoříme jednoduchou aplikaci, demonstrujíc
 * http://wiki.hashphp.org/Validation - ukázka SQL injectu a validace vstupů do DB
 * http://www.generatedata.com/ - generátor testovacích dat pro různé databáze
 
-## 1. Vytvoření db schématu
+## 2. Vytvoření db schématu
 
 Vytvořte na serveru eso.vse.cz ve vaší MySQL databázi tabulku clients:
 
-[CREATE TABLE](./06-schema.sql)
+[create table clients](./06-schema.sql)
 
-## 2. Naplnění testovacími daty
+## 3. Naplnění testovacími daty
 
 Naplňte vytvořenou tabulku testovacími daty. Testovací data lze vygenerovat např. aplikací http://www.generatedata.com/
 
-[INSERT DATA](./06-data.sql)
+[insert test data](./06-data.sql)
 
-## 3. Připojení k databázi
+## 4. Připojení k databázi
 
 Pro práci s DB budeme používat třídu [PDO](http://php.net/manual/en/class.pdo.php), která je abstraktním objektem nad jakoukoli databází:
 
@@ -31,7 +31,7 @@ Pro práci s DB budeme používat třídu [PDO](http://php.net/manual/en/class.p
 
 Další možností je používat [mysqli](http://php.net/manual/en/book.mysqli.php).
 
-## 4. Práce s aplikací
+## 5. Práce s aplikací
 
 Zkopírujte scripty z adresáře 06-data do vašeho adresáře na serveru eso.vse.cz.
 
@@ -40,7 +40,7 @@ Funkční aplikaci pak najdete na adrese:
 https://eso.vse.cz/~xhraj18/ (použijte váš vlastní xname :)
 
 
-## 5. SQL inject útok
+## 6. SQL inject útok
 
 Vstupy posílané do DB je třeba ošetřit, jinak hrozí SQL inject útok.
 
