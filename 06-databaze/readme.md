@@ -50,6 +50,7 @@ CRUD případy užití:
 
 * Pro mazání bychom měli používat HTTP POST (proč?). V příkladu je použit HTTP GET. Co třeba web roboti?
 * Po přidání/úpravě/mazání záznamu je třeba udělat HTTP redirect pomocí hlavičky Location. Proč?
+* Create/update děláme pomocí PDO parametrů. Lze je mít i pojmenované  - named parameters, viz kód v [create](./06-app/new_prepare.php).
 
 ## 6. SQL inject útok
 
