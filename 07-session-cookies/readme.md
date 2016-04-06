@@ -91,8 +91,8 @@ Případy užití:
 * Session nastartujeme (do cookie uložíme/přečteme **PHPSESSID** a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
 * Session data zrušíme pomocí funkce **session_destroy()**. Cookie zůstane, ale nemá už přiřazena data na serveru.
 * To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží/přečte **PHPSESSID** a zpřístupní session data patřící k této náhodné hodnotě.
-* **Otázka: Co by se stalo, pokud by hodnota session_id šla jednoduše odhadnout?**
-* **Otázka: Jaké jsou obecné vlastnosti pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
+* **Otázka: Co by se stalo, pokud by hodnota PHPSESSID šla jednoduše odhadnout?**
+* **Otázka: Jaké jsou obecná kriteria pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
 * **Otázka: Co se stane, pokud ručně přepíšeme/smažeme v cookie hodnotu PHPSESSID? Přidejte zboží do košíku a smažte cookie PHPSESSID.**
 * **Práce se sessions** - viz [buy](./07-app/buy.php), [cart](./07-app/cart.php) a [remove](./07-app/remove.php).
 
