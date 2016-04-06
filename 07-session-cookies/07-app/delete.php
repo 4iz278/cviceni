@@ -16,7 +16,7 @@ header('Location: index.php');
 <head>
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 
 <body>

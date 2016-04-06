@@ -2,7 +2,7 @@
 
 require 'db.php';
 
-$name = $_COOKIE['name'];
+$name = @$_COOKIE['name'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 
 <body>
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		My Name<br/>
 		<input type="text" name="name" value="<?= $name ?>"><br/><br/>
 		
-		<input type="submit" value="Save"> or <a href="/">Cancel</a>
+		<input type="submit" value="Save"> or <a href="./">Cancel</a>
 		
 	</form>
 

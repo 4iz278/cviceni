@@ -35,7 +35,7 @@ $goods = $stmt->fetchAll();
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
 	
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
 	
 </head>
 
@@ -43,7 +43,7 @@ $goods = $stmt->fetchAll();
 	
 	<?php include 'navbar.php' ?>
 	
-	<h1>Goods we've got</h1>
+	<h1>Goods index</h1>
 	
 	Total goods: <?= $count ?>
 	
@@ -53,54 +53,58 @@ $goods = $stmt->fetchAll();
 	
 	<br/><br/>
 	
-	<table>
-
-		<tr>
+	<?php if ($count > 0) { ?>
 		
-			<th></th>			
-			<th>Name</th>
-			<th>Price</th>
-			<th>Description</th>
-			<th></th>			
-			
-		
-		</tr>
-	
-		<?php foreach($goods as $row) { ?>
+		<table>
 
 			<tr>
-				<td class="center">
-					<a href='buy.php?id=<?= $row['id'] ?>'>Buy</a>
-				</td>
-				
-				<td><?= $row['name'] ?></td>
-				<td class="right"><?= $row['price'] ?></td>
-				<td><?= $row['description'] ?></td>
-				
-				<td class="center">
-					<a href='update.php?id=<?= $row['id'] ?>'>Edit</a> | 
-					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>
-				</td>
-				
-			</tr>
 		
-			<?php } ?>
+				<th></th>			
+				<th>Name</th>
+				<th>Price</th>
+				<th>Description</th>
+				<th></th>			
+			
+		
+			</tr>
+	
+			<?php foreach($goods as $row) { ?>
+
+				<tr>
+					<td class="center">
+						<a href='buy.php?id=<?= $row['id'] ?>'>Buy</a>
+					</td>
+				
+					<td><?= $row['name'] ?></td>
+					<td class="right"><?= $row['price'] ?></td>
+					<td><?= $row['description'] ?></td>
+				
+					<td class="center">
+						<a href='./update.php?id=<?= $row['id'] ?>'>Edit</a> | 
+						<a href='./delete.php?id=<?= $row['id'] ?>'>Delete</a>
+					</td>
+				
+				</tr>
+		
+				<?php } ?>
 
 		</table>
 		
 		<br/>
 		
 		<div class="pagination">	
-			<?php for($i=1; $i<=ceil($count/10); $i++) { ?>
+		<?php for($i=1; $i<=ceil($count/10); $i++) { ?>
 
-				<a class="<?= $offset/10+1==$i ? "active" : ""  ?>" href="index.php?offset=<?= ($i-1)*10 ?>"><?= $i ?></a>
-			
-				<?php } ?>
-			</div>
-		
-			<br/>
+		<a class="<?= $offset/10+1==$i ? "active" : ""  ?>" href="./index.php?offset=<?= ($i-1)*10 ?>"><?= $i ?></a>
 
-		</body>
+		<?php } ?>
+		</div>
 
-		</html>
+		<br/>
+
+		<?php } ?>
+
+</body>
+
+</html>
 

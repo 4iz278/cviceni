@@ -37,7 +37,7 @@ if (is_array($ids) && count($ids)>0) {
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
 	
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
 	
 </head>
 
@@ -47,7 +47,7 @@ if (is_array($ids) && count($ids)>0) {
 		
 	<h1>My shopping cart</h1>
 	
-	Total goods selected: <?= count($goods) ?>
+	Total goods selected: <?= @count($goods) ?>
 	
 	<br/><br/>
 	
@@ -55,7 +55,7 @@ if (is_array($ids) && count($ids)>0) {
 	
 	<br/><br/>
 
-	<?php if($goods) { ?>
+	<?php if(@$goods) { ?>
 
 		
 		<table>
@@ -98,8 +98,6 @@ if (is_array($ids) && count($ids)>0) {
 				<?php } ?>
 
 			</table>
-		
-		
 		
 
 			<?php } else { ?>
