@@ -88,7 +88,7 @@ Případy užití:
 * Sessions se ukládají do cookie nebo se posílají jako parametr v URL.
 * V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string, viz příklad [serialize](./07-app/serialize.php).
 * Pokud nastartujeme session, uloží se do cookie browseru session id, které se v PHP jmenuje **PHPSESSID** s náhodně generovaným řetězcem, který je těžké odhadnout. Zkontrolujte v browseru (Firefox - Firebug, Chrome - Developer Tools).
-* Session nastartujeme (do cookie uložíme/přečteme PHPSESSID a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
+* Session nastartujeme (do cookie uložíme/přečteme **PHPSESSID** a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
 * Session data zrušíme pomocí funkce **session_destroy()**. Cookie zůstane, ale nemá už přiřazena data na serveru.
 * To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží/přečte **PHPSESSID** a zpřístupní session data patřící k této náhodné hodnotě.
 * **Otázka: Co by se stalo, pokud by hodnota session_id šla jednoduše odhadnout?**
