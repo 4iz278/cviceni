@@ -83,7 +83,7 @@ Případy užití:
 ## 7. Sessions
 
 * HTTP protokol je stateless (nepamatuje si stav requestu=požadavku konkrétního uživatele, který prochází aplikaci), tzn. že každý HTTP request je považován za nový, unikátní, bez návaznosti na requesty předchozí.
-* Sessions přidávání zdání "stateful", aplikace si pak může "pamatovat" uživatele, který ji prochází.
+* Sessions přidávají zdání "stateful", aplikace si pak může "pamatovat" uživatele, který ji prochází.
 * Session si ze představit jako unikátní ID, ke kterému jsou na serveru uložena nějaká data (v paměti, na disku, záleží na implementaci či nastavení jazyka).
 * Sessions se ukládají do cookie nebo se posílají jako parametr v URL.
 * V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string, viz příklad [serialize](./07-app/serialize.php).
