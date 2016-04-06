@@ -44,6 +44,7 @@ Případy užití:
 * [cart](./07-app/cart.php) - výpis zboží přidaného do košíku (demonstrace práce se sessions).
 * [remove](./07-app/remove.php) - smazání zboží z košíku (demonstrace práce se sessions).
 * [me](./07-app/me.php) - údaje o uživateli (demonstrace práce s cookies).
+* [logout](./07-app/logout.php) - simulace odhlášení, zruší session (demonstrace práce se sessions).
 
 Část pro správce:
 
@@ -83,15 +84,16 @@ Případy užití:
 
 * HTTP protokol je stateless (nepamatuje si stav requestu=požadavku konkrétního uživatele, který prochází aplikaci), tzn. že každý HTTP request je považován za nový, unikátní, bez návaznosti na requesty předchozí.
 * Sessions přidávání zdání "stateful", aplikace si pak může "pamatovat" uživatele, který ji prochází.
-* Session si ze představit jako unikátní ID, pomocí kterého server pozná, že aplikaci používá ten samý uživatel.
+* Session si ze představit jako unikátní ID, ke kterému jsou na serveru uložena nějaká data (v paměti, na disku, záleží na implementaci či nastavení jazyka).
 * Sessions se ukládají do cookie nebo se posílají jako parametr v URL.
 * V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string).
 * Pokud nastartujeme session, uloží se do cookie browseru session id, které se v PHP jmenuje **PHPSESSID** s náhodně generovaným řetězcem, který je těžké odhadnout. Zkontrolujte v browseru (Firefox - Firebug, Chrome - Developer Tools).
 * Session nastartujeme (do cookie uložíme/přečteme PHPSESSID a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
-* Session data zrušíme pomocí funkce **session_destroy()**.
-* To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží a a zpřístupní session id.
+* Session data zrušíme pomocí funkce **session_destroy()**. Cookie zůstane, ale nemá už přiřazena data na serveru.
+* To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží/přečte **PHPSESSID** a zpřístupní session data patřící k této náhodné hodnotě.
 * **Otázka: Co by se stalo, pokud by hodnota session_id šla jednoduše odhadnout?**
 * **Otázka: Jaké jsou obecné vlastnosti pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
+* **Otázka: Co se stane, pokud ručně přepíšeme v cookie hodnotu PHPSESSID? Přidejte zboží do košíku a zkuste změnit hodnotu PHPSESSID. Co se stane?**
 * **Práce se sessions** - viz [buy](./07-app/buy.php), [cart](./07-app/cart.php) a [remove](./07-app/remove.php).
 
 ## 8. Domácí úkol
