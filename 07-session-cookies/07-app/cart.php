@@ -4,7 +4,7 @@ session_start();
 
 require 'db.php';
 
-$ids = $_SESSION['cart'];
+$ids = @$_SESSION['cart'];
 
 if (is_array($ids) && count($ids)>0) {
 
