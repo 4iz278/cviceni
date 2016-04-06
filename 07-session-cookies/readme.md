@@ -1,6 +1,6 @@
 # 7. Session, cookies
 
-Pro ukázku vytvoříme aplikaci e-shopu (CRUD), používající sessions pro nákupní košík a cookies pro přihlášeného uživatele.
+Pro ukázku vytvoříme aplikaci e-shopu (CRUD), používající sessions pro nákupní košík a cookies pro ukládání jména uživatele.
 
 ## 1. Zdroje pro cvičení:
 
