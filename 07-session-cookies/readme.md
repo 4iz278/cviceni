@@ -39,17 +39,17 @@ Případy užití:
 
 Část pro uživatele:
 
-* [index](./07-app/index.php) - výpis zboží v e-shopu
-* [buy](./07-app/buy.php) - přidání zboží do košíku dle ID (demonstrace práce se sessions)
-* [cart](./07-app/cart.php) - výpis zboží přidaného do košíku (demonstrace práce se sessions)
-* [remove](./07-app/remove.php) - smazání zboží z košíku (demonstrace práce se sessions)
-* [me](./07-app/me.php) - údaje o uživateli (demonstrace práce s cookies)
+* [index](./07-app/index.php) - výpis zboží v e-shopu.
+* [buy](./07-app/buy.php) - přidání zboží do košíku dle ID (demonstrace práce se sessions).
+* [cart](./07-app/cart.php) - výpis zboží přidaného do košíku (demonstrace práce se sessions).
+* [remove](./07-app/remove.php) - smazání zboží z košíku (demonstrace práce se sessions).
+* [me](./07-app/me.php) - údaje o uživateli (demonstrace práce s cookies).
 
 Část pro správce:
 
-* [new](./07-app/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
-* [delete](./07-app/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
-* [update](./07-app/update.php) - úprava zboží v e-shopu
+* [new](./07-app/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi.
+* [delete](./07-app/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi.
+* [update](./07-app/update.php) - úprava zboží v e-shopu.
 
 
 ### Poznámky a otázky k aplikaci
@@ -77,20 +77,20 @@ Případy užití:
 * **Otázka: Co by se stalo, kdyby neexistovala kontrola na propojení cookie a serveru, který ji poslal a každý server by mohl číst každou cookie?**
 * **Otázka: Může uživatel přečíst/přepsat hodnoty v cookies?**
 * Podívejte se na cookies uložené v browseru (Firefox - Firebug, Chrome - Developer Tools).
-* **Práce s cookies** - viz [me](./07-app/me.php)
+* **Práce s cookies** - viz [me](./07-app/me.php).
 
 ## 7. Sessions
 
 * HTTP protokol je stateless (nepamatuje si stav requestu=požadavku konkrétního uživatele, který prochází aplikaci), tzn. že každý HTTP request je považován za nový, unikátní, bez návaznosti na requesty předchozí.
 * Sessions přidávání zdání "stateful", aplikace si pak může "pamatovat" uživatele, který ji prochází.
-* Session si ze představit jako unikátní ID, pomocí kterého server pozná, že aplikaci používá ten samý uživatel
+* Session si ze představit jako unikátní ID, pomocí kterého server pozná, že aplikaci používá ten samý uživatel.
 * Sessions se ukládají do cookie nebo se posílají jako parametr v URL.
 * V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string).
 * Pokud nastartujeme session, uloží se do cookie browseru session id, které se v PHP jmenuje **PHPSESSID** s náhodně generovaným řetězcem, který je těžké odhadnout. Zkontrolujte v browseru (Firefox - Firebug, Chrome - Developer Tools).
 * To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží a a zpřístupní session id.
 * **Otázka: Co by se stalo, pokud by hodnota session_id šla jednoduše odhadnout?**
 * **Otázka: Jaké jsou obecné vlastnosti pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
-* **Práce se sessions** - viz [buy](./07-app/buy.php), [cart](./07-app/cart.php) a [remove](./07-app/remove.php)
+* **Práce se sessions** - viz [buy](./07-app/buy.php), [cart](./07-app/cart.php) a [remove](./07-app/remove.php).
 
 ## 8. Domácí úkol
 
