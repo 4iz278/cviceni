@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		$stmt = $db->prepare("SELECT * FROM users WHERE email = ? LIMIT 1"); //limit 1 jen jako vykonnostni optimalizace, 2 stejne maily se v db nepotkaji
 		$stmt->execute(array($email));
-		$existing_user = $stmt->fetchAll()[0];
+		$existing_user = @$stmt->fetchAll()[0];
 	
 		if(password_verify($password, $existing_user["password"])){
 	
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
-	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 	<br/>
 
-	<a href="/users/signup.php">Don't have an account yet? Sign up!</a>
+	<a href="signup.php">Don't have an account yet? Sign up!</a>
 
 </body>
 

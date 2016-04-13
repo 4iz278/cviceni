@@ -82,11 +82,8 @@ $clients = $stmt->fetchAll();
 				<td><?= $row['description'] ?></td>
 				
 				<td class="center">
-					<?php if (isset($_SERVER['PHP_AUTH_USER'])) { ?>
 					<a href='update.php?id=<?= $row['id'] ?>'>Edit</a> | 
-					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>
-					<?php } ?>
-				
+					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>			
 				</td>
 				
 			</tr>

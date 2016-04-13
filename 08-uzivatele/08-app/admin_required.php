@@ -6,8 +6,8 @@
 $valid_passwords = array ("admin" => "shelby", "jirka"=>"gt");
 $valid_users = array_keys($valid_passwords);
 
-$user = $_SERVER['PHP_AUTH_USER'];
-$password = $_SERVER['PHP_AUTH_PW'];
+$user = @$_SERVER['PHP_AUTH_USER'];
+$password = @$_SERVER['PHP_AUTH_PW'];
 
 $validated = (in_array($user, $valid_users)) && ($password == $valid_passwords[$user]);
 

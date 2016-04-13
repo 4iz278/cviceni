@@ -2,6 +2,8 @@
 # pripojeni do db
 require 'db.php';
 
+require 'user_required.php';
+
 # pristup jen pro admina
 require 'admin_required.php';
 
@@ -31,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
-	<link rel="stylesheet" type="text/css" href="/css/styles.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
