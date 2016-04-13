@@ -77,7 +77,7 @@ Případy užití:
 
 ## 6. Hashování hesla
 
-* Hash = výstup hashovací funkce = digest = otisk dat = jednosměrný otisk nějakých dat pomocí známého matematického algoritmu. Pro člověka se špatně pamatuje. Vypadá jako náhodná data. Hash jednoho  algoritmu bude mít stejnou délku pro jakkoli dlouhá vstupní data. Z výsledného hashe je prakticky nemožné (či velmi obtížstyles.css) určit vstupní data. I malá změna vstupních dat zcela změní výsledný hash. Pro různá vstupní data by neměly existovat stejné hashe (prolomeno u MD5 a SHA1).
+* **Hash = výstup hashovací funkce = digest = otisk dat = jednosměrný otisk nějakých dat pomocí známého matematického algoritmu.** Pro člověka se špatně pamatuje. Vypadá jako náhodná data. Hash jednoho  algoritmu bude mít stejnou délku pro jakkoli dlouhá vstupní data. Z výsledného hashe je prakticky nemožné (či velmi obtížstyles.css) určit vstupní data. I malá změna vstupních dat zcela změní výsledný hash. Pro různá vstupní data by neměly existovat stejné hashe (prolomeno u MD5 a SHA1).
 * Příklady hashovacích funkcí - MD5, SHA1, SHA256, komplet seznam viz [funkce hash](./08-schema.sql) http://php.net/manual/en/function.hash.php
 * **Pokud nevíte, kterou hashovací funkci použít, SHA256 a SHA512 jsou OK. Neberte MD5, ani SHA1.**
 * Při hashování je vhodné použít **salt (sůl)** = náhodná data, která jsou přimíchána do výsledného hashe (nebo uložena bokem) z původních dat. Smyslem je zamezit útokům pomocí tzv. **rainbow table (duhová tabulka)** - tzv. reverzní hashing = předvypočtené slovníky výsledků hashovacích funkcí, ze kterých lze odvodit původní vstupní data = ideální pro zjištění hesla, pokud se útočník nějak dostane k hashům.
