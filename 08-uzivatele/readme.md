@@ -70,7 +70,7 @@ Případy užití:
 * Jen admin může měnit katalog zboží. Viz [admin required](./08-app/admin_required.php). Tato část používá HTTP autentizaci.
 * Aplikace nemá ošetřené vstupy (prázdné heslo), pouze zamezuje SQL inject útoku. Do it yourself - udělejte si sami doma :)
 * **Otázky:**
-  * Je Hstyles.css autentizace bezpečná? Pod jakým protokolem musí aplikace běžet, aby HTTP hlavičky nešlo odposlouchávat?
+  * Je HTTP autentizace bezpečná? Pod jakým protokolem musí aplikace běžet, aby HTTP hlavičky nešlo odposlouchávat?
   * Jaké jsou výhody/nevýhody používání HTTP autentizace?
   * Jak se jde odhlásit z HTTP autentizace?
   * Jaké jsou formy HTTP autentizace? (Basic, Digest). Jak se liší?
