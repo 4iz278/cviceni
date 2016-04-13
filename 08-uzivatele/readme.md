@@ -42,7 +42,7 @@ Případy užití:
 Část pro nepřihlášeného uživatele/databázová autentizace:
 
 * [signup](./08-app/signup.php) - registrace nového uživatele, demonstrace práce s funkcí [password_hash](http://php.net/manual/en/function.password-hash.php).
-* [signin](./08-app/signup.php) - přihlášení existujícího uživatele, demonstrace práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
+* [signin](./08-app/signin.php) - přihlášení existujícího uživatele, demonstrace práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
 
 Část pro přihlášeného uživatele:
 
@@ -66,7 +66,7 @@ Případy užití:
 
 ### Poznámky a otázky k aplikaci
 
-* Aplikaci může používat jen přihlášený uživatel - pokud není přihlášen, aplikace provede HTTP redirect na [signin](./08-app/signup.php) stránku. Viz [user required](./08-app/user_required.php).
+* Aplikaci může používat jen přihlášený uživatel - pokud není přihlášen, aplikace provede HTTP redirect na [signin](./08-app/signin.php) stránku. Viz [user required](./08-app/user_required.php).
 * Jen admin může měnit katalog zboží. Viz [admin required](./08-app/admin_required.php). Tato část používá HTTP autentizaci.
 * Aplikace nemá ošetřené vstupy (prázdné heslo), pouze zamezuje SQL inject útoku. Do it yourself - udělejte si sami doma :)
 * **Otázky:**
