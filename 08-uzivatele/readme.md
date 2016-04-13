@@ -41,7 +41,7 @@ Případy užití:
 
 Část pro nepřihlášeného uživatele/databázová autentizace:
 
-* [signup](./08-app/signup.php) - registrace nového uživatele, demonstrace práce s funkcí [password_hash](http://php.net/manual/en/function.password-verify.php).
+* [signup](./08-app/signup.php) - registrace nového uživatele, demonstrace práce s funkcí [password_hash](http://php.net/manual/en/function.password-hash.php).
 * [signin](./08-app/signup.php) - přihlášení existujícího uživatele, demonstrace práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
 
 Část pro přihlášeného uživatele:
