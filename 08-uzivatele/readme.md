@@ -72,8 +72,8 @@ Případy užití:
 * **Otázky:**
   * Je HTTP autentizace bezpečná? Pod jakým protokolem musí aplikace běžet, aby HTTP hlavičky nešlo odposlouchávat?
   * Jaké jsou výhody/nevýhody používání HTTP autentizace?
-	* Jak se jde odhlásit z HTTP autentizace?
-	* Jaké jsou formy HTTP autentizace? (Basic, Digest). Jak se liší?
+  * Jak se jde odhlásit z HTTP autentizace?
+  * Jaké jsou formy HTTP autentizace? (Basic, Digest). Jak se liší?
 
 ## 6. Hashování hesla
 
@@ -88,7 +88,7 @@ Případy užití:
 * **Otázky:**
   * Které hashovací funkce nemáme používat? Proč?
   * Co se stane, když útočník bude znát hash hesla? Jde z něj vypočítat či určit původní heslo? Jak?
-	* Co je duhová tabulka (rainbow table)?
+  * Co je duhová tabulka (rainbow table)?
   * Musíme solit?
   * Co se stane, pokud útočník bude znát jen sůl?
   * Je možné mít sůl pokaždé stejnou? Nebo pokaždé jinou? Jaké jsou výhody/nevýhody?
@@ -101,7 +101,8 @@ Případy užití:
 * Analogie s řidičským průkazem - kdo je řidič? Jméno, příjmení, fotka. Pokud nás zastaví, zda jsme to my.
 * Různé formy - záleží na tom, kde jsou umístěna data o uživatelích:
   * databázová - ověření vůči datům v databázi - viz [signin](./08-app/signup.php) a [user required](./08-app/user_required.php).
-	* HTTP autentizace - podpora přímo v protokolu HTTP pomocí HTTP hlaviček, viz [admin required](./08-app/admin_required.php).
+  * HTTP autentizace - podpora přímo v protokolu HTTP pomocí HTTP hlaviček, viz [admin required](./08-app/admin_required.php).
+  * další, např. LDAP, NDS v Novell Intranetware, Active Directory od Microsoftu...
 
 ## 8. Autorizace
 
