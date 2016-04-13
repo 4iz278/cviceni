@@ -41,16 +41,16 @@ Případy užití:
 
 Část pro nepřihlášeného uživatele/databázová autentizace:
 
-* [signup](./08-app/signup.php) - registrace nového uživatele, demonstrace práce s funkcí [password_hash](http://php.net/manual/en/function.password-hash.php).
-* [signin](./08-app/signin.php) - přihlášení existujícího uživatele, demonstrace práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
+* [signup](./08-app/signup.php) - registrace nového uživatele, ukázka práce s funkcí [password_hash](http://php.net/manual/en/function.password-hash.php).
+* [signin](./08-app/signin.php) - přihlášení existujícího uživatele, ukázka práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
 
 Část pro přihlášeného uživatele:
 
 * [index](./08-app/index.php) - výpis zboží v e-shopu.
-* [buy](./08-app/buy.php) - přidání zboží do košíku dle ID (demonstrace práce se sessions).
-* [cart](./08-app/cart.php) - výpis zboží přidaného do košíku (demonstrace práce se sessions).
-* [remove](./08-app/remove.php) - smazání zboží z košíku (demonstrace práce se sessions).
-* [signout](./08-app/signout.php) - odhlášení, zruší session (demonstrace práce se sessions).
+* [buy](./08-app/buy.php) - přidání zboží do košíku dle ID (ukázka práce se sessions).
+* [cart](./08-app/cart.php) - výpis zboží přidaného do košíku (ukázka práce se sessions).
+* [remove](./08-app/remove.php) - smazání zboží z košíku (ukázka práce se sessions).
+* [signout](./08-app/signout.php) - odhlášení, zruší session (ukázka práce se sessions).
 
 Část pro administátora (správce):
 
@@ -61,7 +61,7 @@ Případy užití:
 Část pro autorizaci a HTTP autentizaci:
 
 * [user required](./08-app/user_required.php) - soubor pro require, vynucení přihlášení uživatele.
-* [admin required](./08-app/admin_required.php) - soubor pro require, vynucení přihlášení administrátora, demonstrace HTTP autentizace.
+* [admin required](./08-app/admin_required.php) - soubor pro require, vynucení přihlášení administrátora, ukázka HTTP autentizace.
 
 
 ### Poznámky a otázky k aplikaci
