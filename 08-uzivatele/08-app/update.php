@@ -1,6 +1,9 @@
 <?php
-
+# pripojeni do db
 require 'db.php';
+
+# pristup jen pro admina
+require 'admin_required.php';
 
 $stmt = $db->prepare("SELECT * FROM goods WHERE id=?");
 $stmt->execute(array($_GET['id']));
@@ -28,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
 	<meta charset="utf-8" />
 	<title>PHP Shopping App</title>
-	<link rel="stylesheet" type="text/css" href="/styles.css">
+	<link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
 
 <body>

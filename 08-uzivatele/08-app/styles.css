@@ -24,6 +24,10 @@ th, td{
 	text-align: center;
 }
 
+.left {
+	text-align: left;
+}
+
 input, textarea{
 	font-size: medium;
 }
@@ -67,6 +71,9 @@ div.pagination a {
 	color: DodgerBlue !important;
 }
 
+.gray{
+	color: gray;
+}
 
 
 

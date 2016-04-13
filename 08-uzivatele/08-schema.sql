@@ -1,0 +1,21 @@
+CREATE TABLE goods
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+	description TEXT,
+	price NUMERIC(10,2) NOT NULL DEFAULT 0
+)
+CHARACTER SET utf8
+;
+
+
+CREATE TABLE users
+(
+	id SERIAL PRIMARY KEY,
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL
+)
+CHARACTER SET utf8
+;
+
+CREATE UNIQUE INDEX in_users_email ON users(email);
