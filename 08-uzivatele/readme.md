@@ -113,7 +113,8 @@ Případy užití:
 ## 9. Domácí úkol
 
 1. Nastudujte HTTP Digest autentizaci. Viz [http auth](http://php.net/manual/en/features.http-auth.php).
-2. Upravte aplikaci tak, aby byl i administrátor ověřován pomocí databáze. Zrušte HTTP autentizaci.
+2. Upravte aplikaci tak, aby byl i administrátor ověřován pomocí databáze
+3. Zrušte HTTP autentizaci.
 
 
 
