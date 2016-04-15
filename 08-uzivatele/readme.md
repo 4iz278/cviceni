@@ -104,6 +104,10 @@ Případy užití:
   * HTTP autentizace - podpora přímo v protokolu HTTP pomocí HTTP hlaviček, viz [admin required](./08-app/admin_required.php).
   * další, např. LDAP, NDS v Novell Intranetware, Active Directory od Microsoftu...
 
+* zabezpečení pomocí HTTP autentizaci lze realizovat i mimo kód aplikace - pomocí souborů **.htaccess** a **.htpasswd**
+    * k dispozici celá řada generátorů - viz např. [.htaccess Tools](http://www.htaccesstools.com/htpasswd-generator/)
+    * lze využít např. pro jednoduché znepřístupnění aplikace při vývoji na serveru dostupném přes internet
+
 ## 8. Autorizace
 
 * **Autorizace = co můžu dělat, jaká mám oprávnění, kam mám přístup.**
