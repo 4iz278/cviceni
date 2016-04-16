@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    targetNamespace="https://github.com/4iz278/cviceni/objednavka"
+    xmlns:objednavka="https://github.com/4iz278/cviceni/objednavka">
+
+    <xs:element name="adresa" type="objednavka:adresaTyp"/>
+
+    <xs:element name="objednavka" type="objednavka:objednavkaTyp">
+        <xs:key name="typAdresy">
+            <xs:selector xpath="objednavka:adresa"/>
+            <xs:field xpath="@typ"/>
+        </xs:key>
+    </xs:element>
+
+    <xs:complexType name="objednavkaTyp">
+        <xs:sequence>
+            <xs:element ref="objednavka:adresa" minOccurs="1" maxOccurs="2"/>
+            <xs:element name="zpracovatel" type="xs:string"/>
+            <xs:element name="polozky" type="objednavka:polozkyTyp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="adresaTyp">
+        <xs:sequence>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="jmeno" type="xs:string"/>
+                    <xs:element name="prijmeni" type="xs:string"/>
+                </xs:sequence>
+                <xs:element name="nazev" type="xs:string"/>
+            </xs:choice>
+            <xs:element name="ulice" type="xs:string" minOccurs="0"/>
+            <xs:element name="mesto" type="xs:string"/>
+            <xs:element name="psc" type="objednavka:pscTyp"/>
+        </xs:sequence>
+        <xs:attribute name="typ" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="fakturacni"/>
+                    <xs:enumeration value="dorucovaci"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="pscTyp">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="polozkyTyp">
+        <xs:sequence>
+            <xs:element name="polozka" maxOccurs="unbounded" minOccurs="0"
+                type="objednavka:polozkaTyp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="polozkaTyp">
+        <xs:sequence>
+            <xs:element name="nazev" type="xs:string"/>
+            <xs:element name="cena" type="objednavka:cenaTyp"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="cenaTyp">
+        <xs:simpleContent>
+            <xs:extension base="xs:positiveInteger">
+                <xs:attribute name="mena" type="objednavka:menaTyp" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="menaTyp">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="CZK"/>
+            <xs:enumeration value="USD"/>
+            <xs:enumeration value="EUR"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
+</xs:schema>

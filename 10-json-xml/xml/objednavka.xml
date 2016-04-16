@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objednavka xmlns="https://github.com/4iz278/cviceni/objednavka" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/4iz278/cviceni/objednavka objednavka.xsd">
+    <adresa typ="fakturacni">
+        <nazev>XYZ s.r.o.</nazev>
+        <ulice>Václavák</ulice>
+        <mesto>Praha</mesto>
+        <psc>11000</psc>
+    </adresa>
+    <adresa typ="dorucovaci">
+        <jmeno>Josef</jmeno>
+        <prijmeni>Novák</prijmeni>
+        <mesto>Dlouhá Lhota 10</mesto>
+        <psc>26301</psc>
+    </adresa>
+    <zpracovatel>Tom Jan</zpracovatel>
+    <polozky>
+        <polozka>
+            <nazev>Papíry</nazev>
+            <cena mena="CZK">100</cena>
+        </polozka>
+        <polozka>
+            <nazev>Toner</nazev>
+            <cena mena="EUR">40</cena>
+        </polozka>
+    </polozky>
+</objednavka>

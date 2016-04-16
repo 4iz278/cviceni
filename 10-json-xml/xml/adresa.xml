@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adresa xmlns="https://github.com/4iz278/cviceni/objednavka" typ="fakturacni">
+    <nazev>XYZ s.r.o.</nazev>
+    <ulice>Václavák</ulice>
+    <mesto>Praha</mesto>
+    <psc>11000</psc>
+</adresa>
