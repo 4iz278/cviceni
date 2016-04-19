@@ -73,6 +73,7 @@ Případy užití:
   * Jaký způsob zamykání byste zvolili pro vaši semestrální práci (pokud již máte téma) a proč?
   * Musíme zamykání záznamů použít vždy? Kdy ano a kdy ne?
   * Jak se dá vyřešit v aplikaci konflikt v případě použití optimistického zámku? Jak se může aplikace zachovat?
+  * Ukázka optimistického zamykání [update optimistic](./09-app/update_optimistic.php) používá předání data a času poslední editace přes formulářové hidden pole *last_updated_at*. Tato data však mohou být při odeslání formuláře změněna/podstrčena uživatelem. Jak se jde proti tomu bránit? Má smysl to ošetřovat? Kdy ano/ne?
 
 ##  Domácí úkol
 
