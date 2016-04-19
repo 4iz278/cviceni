@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		<input type="hidden" name="last_updated_at" value="<?= $goods['last_updated_at'] ?>">
 		
-		<input type="submit" value="Save"> or <a href="/">Cancel</a>
+		<input type="submit" value="Save"> or <a href="index.php">Cancel</a>
 		
 	</form>
 

@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		<input type="hidden" name="id" value="<?= $goods['id'] ?>">
 				
-		<input type="submit" value="Save"> or <a href="/">Cancel</a>
+		<input type="submit" value="Save"> or <a href="index.php">Cancel</a>
 		
 	</form>
 
