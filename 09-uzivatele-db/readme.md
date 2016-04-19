@@ -1,12 +1,12 @@
 # 9. Uživatelé a DB, víceuživatelský přístup, práce s datem/časem, OAuth
 
 Do našeho e-shopu přidáme zamykání záznamů pro případ, kdyby jeden záznam potřebovalo upravovat více uživatelů najednou.
-Dále se naučíme pracovat s funkcemi pro datum a čas a naučíme se přihlásit se do aplikace pomocí Facebooku (OAuth protokol).
+Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme se přihlásit se do aplikace pomocí Facebooku (OAuth protokol).
 
 ## 1. Zdroje pro cvičení:
 
 * https://docs.jboss.org/jbossas/docs/Server_Configuration_Guide/4/html/TransactionJTA_Overview-Pessimistic_and_optimistic_locking.html - optimistické vs pesimistické zamykání (optimistic vs pessimistic lock)
-* http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - inicializace datového typu timestamp v MySQL.
+* http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - výchozí inicializace datového typu timestamp v MySQL.
 * http://php.net/manual/en/intro.datetime.php - úvod do práce s datem/časem v PHP.
 * http://php.net/manual/en/ref.datetime.php - funkce pro práci s datem/časem v PHP.
 * http://php.net/manual/en/class.dateinterval.php - práce s intervaly data/času v PHP.
@@ -59,24 +59,22 @@ Případy užití:
 * [remove](./09-app/remove.php) - smazání zboží z košíku.
 * [signout](./09-app/signout.php) - odhlášení uživatele.
 
-Části pro přihlášeného uživatele relevantní pro toto cvičení:
+**Části pro přihlášeného uživatele relevantní pro toto cvičení**:
 
-* [update](./09-app/update.php) - optimistic lock
-* [update with locking](./09-app/update_with_locking.php) - pessimistic lock
-
-
+* [update optimistic](./09-app/update_optimistic.php) - optimistic lock
+* [update pessimistic](./09-app/update_pessimistic.php) - pessimistic lock
 
 ### Poznámky a otázky k aplikaci
 
+* **Optimistic lock = optimistické zamykání** - více uživatelů může začít měnit stejný záznam, ale předpokládáme, že nakonec se záznam nezmění. Při uložení zkontrolujeme čas poslední aktualizace a pokud se změnil od doby, kdy jsme začali záznam editovat (=záznam byl v mezičase upraven někým jiným), nepovolíme uložení. Není velký overkill pro systém. Má smysl v případě, pokud víme, že uživatelé začnou úpravu záznamu, ale většinou nakonec nic nezmění (záznamy se mění jen sporadicky). Viz soubor [update optimistic](./09-app/update_optimistic.php).
+* **Pessimistic lock = pesimistické zamykání** - při začátku editace záznamu zamkneme záznam pro všechny ostatní uživatele. Ostatní uživatelé musí počkat, než dokončíme editaci. Velký overkill pro systém. Má smysl v případě, že většina pokusů o úpravu záznamu skončí jeho změnou (záznamy se aktualizují často). Viz soubor [update pessimistic](./09-app/update_pessimistic.php).
+
 * **Otázky:**
-  * 
-
-
+  * Jaký způsob zamykání byste zvolili pro vaši semestrální práci (pokud již máte téma) a proč?
+  * Musíme zamykání záznamů použít vždy? Kdy ano a kdy ne?
+  * Jak se dá vyřešit v aplikaci konflikt v případě použití optimistického zámku? Jak se může aplikace zachovat?
 
 ##  Domácí úkol
 
-1. 
-
-TODO
-
+Upravte řešení optimistického zamykání záznamů v [ukázkové aplikaci pro 9. cvičení](./09-app/) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
 

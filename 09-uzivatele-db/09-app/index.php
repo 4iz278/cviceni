@@ -82,9 +82,9 @@ $clients = $stmt->fetchAll();
 				<td><?= $row['description'] ?></td>
 				
 				<td class="center">
-					<a href='update.php?id=<?= $row['id'] ?>'>Edit</a> | 
-					<a href='update_with_locking.php?id=<?= $row['id'] ?>'>Edit With Locking</a> | 
-					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>			
+					<a href='update_optimistic.php?id=<?= $row['id'] ?>'>Edit (optimistic lock)</a> | 
+					<a href='update_pessimistic.php?id=<?= $row['id'] ?>'>Edit (pessimistic lock)</a> | 
+					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>
 				</td>
 				
 			</tr>
