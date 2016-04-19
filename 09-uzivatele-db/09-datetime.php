@@ -19,7 +19,7 @@ date_default_timezone_set('UTC');
 # vytiskne aktualni den v tydnu
 echo date("l");
 
-echo "<br>"
+echo "<br>";
 
 # vytiskne dnesni datum a cas ve formatu W3C
 echo date(DATE_W3C);
@@ -38,7 +38,7 @@ echo date(DATE_W3C);
 # DATE_RSS - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000)
 # DATE_W3C - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00)
 
-echo "<br>"
+echo "<br>";
 
 echo date(DATE_W3C);
 
