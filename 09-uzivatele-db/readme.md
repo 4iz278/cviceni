@@ -6,11 +6,15 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 ## 1. Zdroje pro cvičení:
 
 * https://docs.jboss.org/jbossas/docs/Server_Configuration_Guide/4/html/TransactionJTA_Overview-Pessimistic_and_optimistic_locking.html - optimistické vs pesimistické zamykání (optimistic vs pessimistic lock)
+* https://www.ietf.org/rfc/rfc0822.txt - RFC 822, obsahuje jeden ze standardů formátu data a času
+* https://www.ietf.org/rfc/rfc2822.txt - RFC 2822, obsahuje další ze standardů formátu data a času
 * http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - výchozí inicializace datového typu timestamp v MySQL.
 * http://php.net/manual/en/intro.datetime.php - úvod do práce s datem/časem v PHP.
+* http://php.net/manual/en/function.date.php - funkce date.
+* http://php.net/manual/en/function.date-default-timezone-set.php - nastavení default časové zóny
 * http://php.net/manual/en/ref.datetime.php - funkce pro práci s datem/časem v PHP.
 * http://php.net/manual/en/class.dateinterval.php - práce s intervaly data/času v PHP.
-* http://php.net/manual/en/timezones.php - podporované časové zóny v PHP (naše je **Europe/Prague**).
+* http://php.net/manual/en/timezones.php - podporované časové zóny v PHP (naše je **Europe/Prague**)
 
 ## 2. Vytvoření db schématu
 
@@ -74,6 +78,23 @@ Případy užití:
   * Musíme zamykání záznamů použít vždy? Kdy ano a kdy ne?
   * Jak se dá vyřešit v aplikaci konflikt v případě použití optimistického zámku? Jak se může aplikace zachovat?
   * Ukázka optimistického zamykání [update optimistic](./09-app/update_optimistic.php) používá předání data a času poslední editace přes formulářové hidden pole *last_updated_at*. Tato data však mohou být při odeslání formuláře změněna/podstrčena uživatelem. Jak se jde proti tomu bránit? Má smysl to ošetřovat? Kdy ano/ne?
+
+
+## 6. Práce s datem/časem v PHP
+* Před voláním [PHP funkcí pro datum a čas](http://php.net/manual/en/ref.datetime.php) musíme nastavit časovou zónu, jinak PHP bude vyhazovat varování - buď funkcí [date_default_timezone_set](http://php.net/manual/en/function.date-default-timezone-set.php), nebo INI nastavením *date.timezone* (viz soubor [.htaccess](./.htaccess) a nastavení *php_value date.timezone 'Europe/Prague'*, případně globálně v souboru *php.ini*.
+* Konstanty standardů a formátů pro datum a čas, viz http://php.net/manual/en/class.datetime.php, primární zdroje na standardy viz Google ;)
+  * **DATE_ATOM** - Atom (example: 2005-08-15T15:52:01+00:00)
+  * **DATE_COOKIE** - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC)
+  * **DATE_ISO8601** - ISO-8601 (example: 2005-08-15T15:52:01+0000)
+  * **DATE_RFC822** - RFC 822 (example: Mon, 15 Aug 05 15:52:01 +0000)
+  * **DATE_RFC850** - RFC 850 (example: Monday, 15-Aug-05 15:52:01 UTC)
+  * **DATE_RFC1036** - RFC 1036 (example: Mon, 15 Aug 05 15:52:01 +0000)
+  * **DATE_RFC1123** - RFC 1123 (example: Mon, 15 Aug 2005 15:52:01 +0000)
+  * **DATE_RFC2822** - RFC 2822 (example: Mon, 15 Aug 2005 15:52:01 +0000)
+  * **DATE_RFC3339** - RFC 3339 (example: 2005-08-15T15:52:01+00:00) - stejný formát jako ATOM
+  * **DATE_RSS** - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000)
+  * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00)
+ * **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
 
 ##  Domácí úkol
 
