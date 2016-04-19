@@ -81,9 +81,9 @@ $clients = $stmt->fetchAll();
 				<td class="right"><?= $row['price'] ?></td>
 				<td><?= $row['description'] ?></td>
 				
-				<td class="center">
-					<a href='update_optimistic.php?id=<?= $row['id'] ?>'>Edit (optimistic lock)</a> | 
-					<a href='update_pessimistic.php?id=<?= $row['id'] ?>'>Edit (pessimistic lock)</a> | 
+				<td class="center" nowrap>
+					<a href='update_optimistic.php?id=<?= $row['id'] ?>'>Edit (optimistic lock)</a><br>
+					<a href='update_pessimistic.php?id=<?= $row['id'] ?>'>Edit (pessimistic lock)</a><br>
 					<a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>
 				</td>
 				

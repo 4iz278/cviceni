@@ -5,7 +5,7 @@ require 'db.php';
 # pristup jen pro prihlaseneho uzivatele
 require 'user_required.php';
 
-$ids = $_SESSION['cart'];
+$ids = @$_SESSION['cart'];
 
 if (is_array($ids) && count($ids)>0) {
 
@@ -48,7 +48,7 @@ if (is_array($ids) && count($ids)>0) {
 		
 	<h1>My shopping cart</h1>
 	
-	Total goods selected: <?= count($goods) ?>
+	Total goods selected: <?= @count($goods) ?>
 	
 	<br/><br/>
 	
@@ -56,7 +56,7 @@ if (is_array($ids) && count($ids)>0) {
 	
 	<br/><br/>
 
-	<?php if($goods) { ?>
+	<?php if(@$goods) { ?>
 
 		
 		<table>
