@@ -82,11 +82,4 @@ $interval =  date_diff($b, $a);
 echo "<br>";
 echo date_interval_format($interval, "%a days");
 
-
-
-
-
-
-
-
 ?>
