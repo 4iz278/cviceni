@@ -20,6 +20,10 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 * http://php.net/manual/en/ref.datetime.php - funkce pro práci s datem/časem v PHP.
 * http://php.net/manual/en/class.dateinterval.php - práce s intervaly data/času v PHP.
 * http://php.net/manual/en/timezones.php - podporované časové zóny v PHP (naše je **Europe/Prague**)
+* http://php.net/manual/en/datetime.add.php - sčítání data a času
+* http://php.net/manual/en/function.date-create.php - vytvoření objektu data a času
+* http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvoření intervalu (objekt pro sčítání k objektu data/času) z řetězce
+* http://php.net/manual/en/function.time.php - aktuální čas
 
 ## 2. Vytvoření db schématu
 
