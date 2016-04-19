@@ -88,18 +88,31 @@ Případy užití:
 ## 6. Práce s datem/časem v PHP
 * Před voláním [PHP funkcí pro datum a čas](http://php.net/manual/en/ref.datetime.php) musíme nastavit časovou zónu, jinak PHP bude vyhazovat varování - buď funkcí [date_default_timezone_set](http://php.net/manual/en/function.date-default-timezone-set.php), nebo INI nastavením *date.timezone* (viz soubor [.htaccess](./.htaccess) a nastavení *php_value date.timezone 'Europe/Prague'*, případně globálně v souboru *php.ini*.
 * Konstanty standardů a formátů pro datum a čas, viz http://php.net/manual/en/class.datetime.php, primární zdroje na standardy viz zdroje nahoře , popř. Google ;)
-  * **DATE_ATOM** - Atom (example: 2005-08-15T15:52:01+00:00)
-  * **DATE_COOKIE** - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC)
-  * **DATE_ISO8601** - ISO-8601 (example: 2005-08-15T15:52:01+0000)
-  * **DATE_RFC822** - RFC 822 (example: Mon, 15 Aug 05 15:52:01 +0000)
-  * **DATE_RFC850** - RFC 850 (example: Monday, 15-Aug-05 15:52:01 UTC)
-  * **DATE_RFC1036** - RFC 1036 (example: Mon, 15 Aug 05 15:52:01 +0000)
-  * **DATE_RFC1123** - RFC 1123 (example: Mon, 15 Aug 2005 15:52:01 +0000)
-  * **DATE_RFC2822** - RFC 2822 (example: Mon, 15 Aug 2005 15:52:01 +0000)
+  * **DATE_ATOM** - Atom (example: 2005-08-15T15:52:01+00:00), formát **Y-m-d\TH:i:sP**
+  * **DATE_COOKIE** - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC), formát **l, d-M-Y H:i:s T**
+  * **DATE_ISO8601** - ISO-8601 (example: 2005-08-15T15:52:01+0000), formát **Y-m-d\TH:i:sO**
+  * **DATE_RFC822** - RFC 822 (example: Mon, 15 Aug 05 15:52:01 +0000), formát **D, d M y H:i:s O**
+  * **DATE_RFC850** - RFC 850 (example: Monday, 15-Aug-05 15:52:01 UTC), formát **l, d-M-y H:i:s T**
+  * **DATE_RFC1036** - RFC 1036 (example: Mon, 15 Aug 05 15:52:01 +0000), formát **D, d M y H:i:s O**
+  * **DATE_RFC1123** - RFC 1123 (example: Mon, 15 Aug 2005 15:52:01 +0000), formát **D, d M Y H:i:s O**
+  * **DATE_RFC2822** - RFC 2822 (example: Mon, 15 Aug 2005 15:52:01 +0000), formát **D, d M Y H:i:s O**
   * **DATE_RFC3339** - RFC 3339 (example: 2005-08-15T15:52:01+00:00) - stejný formát jako ATOM
-  * **DATE_RSS** - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000)
-  * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00)
+  * **DATE_RSS** - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000), formát **D, d M Y H:i:s O**
+  * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00), formát **Y-m-d\TH:i:sP**
 * **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
+
+
+const string ATOM = "Y-m-d\TH:i:sP" ;
+const string COOKIE = "l, d-M-Y H:i:s T" ;
+const string ISO8601 = "Y-m-d\TH:i:sO" ;
+const string RFC822 = "D, d M y H:i:s O" ;
+const string RFC850 = "l, d-M-y H:i:s T" ;
+const string RFC1036 = "D, d M y H:i:s O" ;
+const string RFC1123 = "D, d M Y H:i:s O" ;
+const string RFC2822 = "D, d M Y H:i:s O" ;
+const string RFC3339 = "Y-m-d\TH:i:sP" ;
+const string RSS = "D, d M Y H:i:s O" ;
+const string W3C = "Y-m-d\TH:i:sP" ;
 
 ##  Domácí úkol
 
