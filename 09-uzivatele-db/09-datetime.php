@@ -13,8 +13,6 @@
 # http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvoøení intervalu (objekt pro sèítání k objektu data/èasu) z øetìzce
 # http://php.net/manual/en/function.time.php - aktuální èas
 
-
-
 # casovou zonu jsme uz nastavili v souboru .htaccess (na Europe/Prague), takhle ji muzeme zmenit treba na UTC
 date_default_timezone_set('UTC');
 
