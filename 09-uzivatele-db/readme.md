@@ -94,7 +94,7 @@ Případy užití:
   * **DATE_RFC3339** - RFC 3339 (example: 2005-08-15T15:52:01+00:00) - stejný formát jako ATOM
   * **DATE_RSS** - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000)
   * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00)
- * **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
+* **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
 
 ##  Domácí úkol
 
