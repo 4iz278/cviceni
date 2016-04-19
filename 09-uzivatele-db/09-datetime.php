@@ -2,21 +2,24 @@
 	
 # ukazka funkci pro praci s datem/casem
 
-# http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - výchozí inicializace datového typu timestamp v MySQL.
 # http://php.net/manual/en/intro.datetime.php - úvod do práce s datem/èasem v PHP.
+# http://php.net/manual/en/function.date.php - funkce date.
 # http://php.net/manual/en/function.date-default-timezone-set.php - nastavení default èasové zóny
 # http://php.net/manual/en/ref.datetime.php - funkce pro práci s datem/èasem v PHP.
 # http://php.net/manual/en/class.dateinterval.php - práce s intervaly data/èasu v PHP.
-# http://php.net/manual/en/timezones.php - podporované èasové zóny v PHP (na¹e je Europe/Prague).
+# http://php.net/manual/en/timezones.php - podporované èasové zóny v PHP (na¹e je **Europe/Prague**)
+# http://php.net/manual/en/datetime.add.php - sèítání data a èasu
+# http://php.net/manual/en/function.date-create.php - vytvoøení objektu data a èasu
+# http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvoøení intervalu (objekt pro sèítání k objektu data/èasu) z øetìzce
+# http://php.net/manual/en/function.time.php - aktuální èas
+
 
 
 # casovou zonu jsme uz nastavili v souboru .htaccess (na Europe/Prague), takhle ji muzeme zmenit treba na UTC
-
 date_default_timezone_set('UTC');
 
-# http://php.net/manual/en/function.date.php - funkce date
-
 # vytiskne aktualni den v tydnu
+# http://php.net/manual/en/function.date.php - funkce date
 echo date("l");
 
 echo "<br>";
