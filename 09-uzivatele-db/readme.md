@@ -6,8 +6,13 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 ## 1. Zdroje pro cvičení:
 
 * https://docs.jboss.org/jbossas/docs/Server_Configuration_Guide/4/html/TransactionJTA_Overview-Pessimistic_and_optimistic_locking.html - optimistické vs pesimistické zamykání (optimistic vs pessimistic lock)
-* https://www.ietf.org/rfc/rfc0822.txt - RFC 822, obsahuje jeden ze standardů formátu data a času
-* https://www.ietf.org/rfc/rfc2822.txt - RFC 2822, obsahuje další ze standardů formátu data a času
+* http://www.iso.org/iso/home/standards/iso8601.htm  - ISO 8601 - Date and time format
+* https://www.ietf.org/rfc/rfc0822.txt - RFC 822 - STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES
+* https://www.ietf.org/rfc/rfc850.txt - RFC 850 - Standard for Interchange of USENET Messages (obsolete)
+* https://www.ietf.org/rfc/rfc1036.txt - RFC 1036 - Standard for Interchange of USENET Messages
+* https://www.ietf.org/rfc/rfc1123.txt - RFC 1123 - Requirements for Internet Hosts -- Application and Support
+* https://www.ietf.org/rfc/rfc2822.txt - RFC 2822 -  Internet Message Format
+* https://www.ietf.org/rfc/rfc3339.txt - RFC 3339 -  Date and Time on the Internet: Timestamps
 * http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - výchozí inicializace datového typu timestamp v MySQL.
 * http://php.net/manual/en/intro.datetime.php - úvod do práce s datem/časem v PHP.
 * http://php.net/manual/en/function.date.php - funkce date.
@@ -82,7 +87,7 @@ Případy užití:
 
 ## 6. Práce s datem/časem v PHP
 * Před voláním [PHP funkcí pro datum a čas](http://php.net/manual/en/ref.datetime.php) musíme nastavit časovou zónu, jinak PHP bude vyhazovat varování - buď funkcí [date_default_timezone_set](http://php.net/manual/en/function.date-default-timezone-set.php), nebo INI nastavením *date.timezone* (viz soubor [.htaccess](./.htaccess) a nastavení *php_value date.timezone 'Europe/Prague'*, případně globálně v souboru *php.ini*.
-* Konstanty standardů a formátů pro datum a čas, viz http://php.net/manual/en/class.datetime.php, primární zdroje na standardy viz Google ;)
+* Konstanty standardů a formátů pro datum a čas, viz http://php.net/manual/en/class.datetime.php, primární zdroje na standardy viz zdroje nahoře , popř. Google ;)
   * **DATE_ATOM** - Atom (example: 2005-08-15T15:52:01+00:00)
   * **DATE_COOKIE** - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC)
   * **DATE_ISO8601** - ISO-8601 (example: 2005-08-15T15:52:01+0000)
