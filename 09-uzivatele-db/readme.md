@@ -114,7 +114,7 @@ Případy užití:
   * **app-id (id naší aplikace)**
   * **app-secret (tajný klíč k naší aplikaci)**
   * Tyto klíče nastavíme v souborech [09-facebook/login.php](./09-facebook/login.php) a [09-facebook/fb-callback.php](./09-facebook/fb-callback.php).
-* Stáhneme si Facebook PHP SDK z https://github.com/facebook/facebook-php-sdk-v4/archive/5.0.0.zip
+* Stáhneme si Facebook PHP SDK z https://github.com/facebook/facebook-php-sdk-v4/archive/5.0.0.zip a rozbalíme do web rootu naší aplikace, ukázka viz [adresář 09-facebook](./09-facebook/).
 * V našem scriptu si vyžádáme autoloader, který registruje potřebné soubory:
 ```php
 require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
@@ -123,7 +123,7 @@ require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
 * Facebook si vyžádá souhlas s autentizací uživatele.
 * Pokud uživatel souhlasil, Facebook zavolá nazpět námi předanou URL (callback URL) společně s tokenem (řetězcem s omezenou platností), který lze použít pro další komunikaci s Facebookem (získání dat o uživateli, apod.).
 * **Viz [Facebook login](./09-facebook/login.php) a [Facebook callback](./09-facebook/fb-callback.php)**.
-
+* **Funkční ukázka k dispozici na http://eso.vse.cz/~xhraj18/09-facebook/login.php**
 
 ##  8. Domácí úkol
 
