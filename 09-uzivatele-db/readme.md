@@ -113,19 +113,19 @@ Případy užití:
 * Registrujeme naši aplikaci u Facebooku: Facebook/v levé záložce Developer/Manage Apps/zelené tlačítko Add a New App/typ Website/napsat název aplikace a vyplnit kontaktní údaje, (není to testovací aplikace)/tlačítko Skip Quick Start a získat klíče:
   * **app-id (id naší aplikace)**
   * **app-secret (tajný klíč k naší aplikaci)**
-  * tyto klíče nastavíme v souborech [09-facebook/login.php](./09-facebook/login.php) a [09-facebook/fb-callback.php](./09-facebook/fb-callback.php)
-* stáhneme si Facebook PHP SDK z https://github.com/facebook/facebook-php-sdk-v4/archive/5.0.0.zip
-* v našem scriptu si vyžádáme autoloader, který registruje potřebné soubory:
+  * Tyto klíče nastavíme v souborech [09-facebook/login.php](./09-facebook/login.php) a [09-facebook/fb-callback.php](./09-facebook/fb-callback.php).
+* Stáhneme si Facebook PHP SDK z https://github.com/facebook/facebook-php-sdk-v4/archive/5.0.0.zip
+* V našem scriptu si vyžádáme autoloader, který registruje potřebné soubory:
 ```php
 require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
 ```
-* pošleme uživatele na Facebook pro autentizační klíč (pokud uživatel není do Facebooku přihlášen, musí se nejdříve přihlásit)
-* Facebook si vyžádá souhlas s autentizací uživatele
-* Pokud uživatel souhlasil, Facebook zavolá nazpět námi předanou URL (callback URL) společně s tokenem (řetězcem s omezenou platností), který lze použít pro další komunikaci s Facebookem (získání dat o uživateli, apod.)
-* **viz [Facebook login](./09-facebook/login.php) a [Facebook callback](./09-facebook/fb-callback.php)**
+* Pošleme uživatele na Facebook pro autentizační klíč (pokud uživatel není do Facebooku přihlášen, musí se nejdříve přihlásit).
+* Facebook si vyžádá souhlas s autentizací uživatele.
+* Pokud uživatel souhlasil, Facebook zavolá nazpět námi předanou URL (callback URL) společně s tokenem (řetězcem s omezenou platností), který lze použít pro další komunikaci s Facebookem (získání dat o uživateli, apod.).
+* **Viz [Facebook login](./09-facebook/login.php) a [Facebook callback](./09-facebook/fb-callback.php)**.
 
 
 ##  Domácí úkol
 
 1. Upravte řešení optimistického zamykání záznamů v [ukázkové aplikaci pro 9. cvičení](./09-app/) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
-2. (Obtížnější) Přidejte do našeho e-shopu přihlášení pomocí Facebooku (nutno přes Graph API Facebooku získat email uživatele, viz https://developers.facebook.com/docs/reference/php)
+2. (Obtížnější) Přidejte do našeho e-shopu přihlášení pomocí Facebooku (nutno přes Graph API Facebooku získat email uživatele, viz https://developers.facebook.com/docs/reference/php).
