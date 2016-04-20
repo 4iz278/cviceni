@@ -125,7 +125,7 @@ require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
 * **Viz [Facebook login](./09-facebook/login.php) a [Facebook callback](./09-facebook/fb-callback.php)**.
 
 
-##  Domácí úkol
+##  8. Domácí úkol
 
 1. Upravte řešení optimistického zamykání záznamů v [ukázkové aplikaci pro 9. cvičení](./09-app/) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
 2. (Obtížnější) Přidejte do našeho e-shopu přihlášení pomocí Facebooku (nutno přes Graph API Facebooku získat email uživatele, viz https://developers.facebook.com/docs/reference/php).
