@@ -122,7 +122,7 @@ require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
 * pošleme uživatele na Facebook pro autentizační klíč (pokud uživatel není do Facebooku přihlášen, musí se nejdříve přihlásit)
 * Facebook si vyžádá souhlas s autentizací uživatele
 * Pokud uživatel souhlasil, Facebook zavolá nazpět námi předanou URL (callback URL) společně s tokenem (řetězcem s omezenou platností), který lze použít pro další komunikaci s Facebookem (získání dat o uživateli, apod.)
-* **viz [Facebook login](./09-facebook/login.php)** a [Facebook callback](./09-facebook/fb-callback.php)**
+* **viz [Facebook login](./09-facebook/login.php) a [Facebook callback](./09-facebook/fb-callback.php)**
 
 
 ##  Domácí úkol
