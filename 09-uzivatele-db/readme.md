@@ -24,6 +24,8 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 * http://php.net/manual/en/function.date-create.php - vytvoření objektu data a času
 * http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvoření intervalu (objekt pro sčítání k objektu data/času) z řetězce
 * http://php.net/manual/en/function.time.php - aktuální čas
+* Facebook PHP SDK: https://developers.facebook.com/docs/reference/php
+* Facebook PHP SDK, přihlášení přes OAuth: https://developers.facebook.com/docs/php/howto/example_facebook_login
 
 ## 2. Vytvoření db schématu
 
@@ -105,7 +107,25 @@ Případy užití:
   * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00), formát **Y-m-d\TH:i:sP**
 * **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
 
+
+## 7. OAuth - přihlášení pomocí Facebooku
+
+* Registrujeme naši aplikaci u Facebooku: Facebook/v levé záložce Developer/Manage Apps/zelené tlačítko Add a New App/typ Website/napsat název aplikace a vyplnit kontaktní údaje, (není to testovací aplikace)/tlačítko Skip Quick Start a získat klíče:
+  * **app-id (id naší aplikace)**
+  * **app-secret (tajný klíč k naší aplikaci)**
+  * tyto klíče nastavíme v souborech [09-facebook/login.php](./09-facebook/login.php) a [09-facebook/fb-callback.php](./09-facebook/fb-callback.php)
+* stáhneme si Facebook PHP SDK z https://github.com/facebook/facebook-php-sdk-v4/archive/5.0.0.zip
+* v našem scriptu si vyžádáme autoloader, který registruje potřebné soubory:
+```php
+require_once __DIR__ . './facebook-php-sdk-v4-5.0.0/src/Facebook/autoload.php';
+```
+* pošleme uživatele na Facebook pro autentizační klíč (pokud uživatel není do Facebooku přihlášen, musí se nejdříve přihlásit)
+* Facebook si vyžádá souhlas s autentizací uživatele
+* Pokud uživatel souhlasil, Facebook zavolá nazpět námi předanou URL (callback URL) společně s tokenem (řetězcem s omezenou platností), který lze použít pro další komunikaci s Facebookem (získání dat o uživateli, apod.)
+* **viz [Facebook login](./09-facebook/login.php)** a [Facebook callback](./09-facebook/fb-callback.php)**
+
+
 ##  Domácí úkol
 
-Upravte řešení optimistického zamykání záznamů v [ukázkové aplikaci pro 9. cvičení](./09-app/) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
-
+1. Upravte řešení optimistického zamykání záznamů v [ukázkové aplikaci pro 9. cvičení](./09-app/) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
+2. (Obtížnější) Přidejte do našeho e-shopu přihlášení pomocí Facebooku (nutno přes Graph API Facebooku získat email uživatele, viz https://developers.facebook.com/docs/reference/php)
