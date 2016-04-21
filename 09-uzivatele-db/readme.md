@@ -106,6 +106,7 @@ Případy užití:
   * **DATE_RSS** - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000), formát **D, d M Y H:i:s O**
   * **DATE_W3C** - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00), formát **Y-m-d\TH:i:sP**
 * **[ukázky použití funkcí pro datum a čas](./09-datetime.php)**
+* [class DateTime](http://php.net/manual/en/class.datetime.php)
 
 
 ## 7. OAuth - přihlášení pomocí Facebooku
