@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ukázka AJAXového volání</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('#osoba').change(function(){//reakce na událost změny hodnoty selectu
+
+                var vybranaPolozka=$(this).val();
+                console.log('vybrano: '+vybranaPolozka);
+
+                nactiData(vybranaPolozka);
+
+            });
+
+            nactiOsoby();
+
+        });
+
+        /**
+         *  Funkce pro načtení seznamu osob
+         */
+        function nactiOsoby(){
+            $.getJSON("seznam.php",function(data){
+                var select=$('#osoba');
+                select.html('<option value="">--vyberte--</option>');//vymažeme položky ze selectu
+                $.each(data, function(index, hodnota){
+                    var element=$('<option></option>');//konstruujeme nový element pomocí jQuery
+                    element.attr('value',index);//přidáváme atribut value
+                    element.text(hodnota);//přidáváme textovou hodnotu
+                    select.append(element);//připojíme obsah do selectu
+                });
+            });
+        }
+
+        /**
+         * Funkce pro načtení údajů jedné osoby
+         * @param idOsoby : int
+         */
+        function nactiData(idOsoby) {
+            $.getJSON("osoba.php?"+$.param({'id':idOsoby}),function(data){
+                console.log(data);
+
+                $('#osobaJmeno').text(data.jmeno);
+                $('#osobaPrijmeni').text(data.prijmeni);
+                var spolecnost=data.hasOwnProperty('spolecnost') ? data.spolecnost : '';
+                $('#osobaSpolecnost').text(spolecnost);
+                var adresa=data.hasOwnProperty('adresa') ? data.adresa : '';
+                $('#osobaAdresa').text(adresa);
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+    <h1>Ukázka AJAXově načítaného adresáře</h1>
+    <form><label for="osoba">Osoba:</label> <select id="osoba"></select></form>
+
+    <table>
+        <tr>
+            <th>Jméno:</th>
+            <td id="osobaJmeno"></td>
+        </tr>
+        <tr>
+            <th>Příjmení:</th>
+            <td id="osobaPrijmeni"></td>
+        </tr>
+        <tr>
+            <th>Společnost:</th>
+            <td id="osobaSpolecnost"></td>
+        </tr>
+        <tr>
+            <th>Adresa:</th>
+            <td id="osobaAdresa"></td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

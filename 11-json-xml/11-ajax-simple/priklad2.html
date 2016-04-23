@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ukázka AJAXového volání</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){ //anonymní funkce známe už z PHP :)
+            //následující kód bude vykonán až po načtení stránky - připojíme funkce k událostem kliknutí na odkazy
+
+            for(var i=1; i<=3; i++){//takovouhle konstrukci cyklu máme v PHP taky :)
+
+                var selektor='a#odkaz'+i;//v javascriptu řetězce spojujeme pomocí +, ne tečkou
+                $(selektor).click(function(){
+                    var odkaz = $(this); //pomocí $(this) získáme pomocí jquery aktuální objekt (v tomto případě element, na kterém byla vyvolána událost
+                    var id=odkaz.attr('id');//pomocí funkce attr jde zjistit hodnotu konkrétního atributu
+
+                    console.log("kliknuto na "+id);
+
+                    $("#obsah").load(
+                        "data.php",
+                        {"odkaz":id} //parametry pro poslání v rámci požadavku (poslaná metodou POST)
+                    );
+
+                    /*alternativní poslání metodou GET - buď s parametry poskládanými pomocí jQuery, nebo s URL sestavenou ručně
+
+                    $("#obsah").load(
+                            "data.php?" + $.param{"odkaz":id} //parametry pro poslání v rámci požadavku (poslaná metodou GET)
+                    );
+
+                    $("#obsah").load("data.php?odkaz="+encodeURIComponent(id));//TODO: co by mohla dělat funkce encodeURIComponent?
+
+                    */
+
+                });
+            }
+
+        });
+    </script>
+</head>
+<body>
+
+    <h1>Ukázka základního AJAXového načtení dat</h1>
+    <ul>
+        <li><a href="#obsah" id="odkaz1">1. ukázka</a></li>
+        <li><a href="#obsah" id="odkaz2">2. ukázka</a></li>
+        <li><a href="#obsah" id="odkaz3">3. ukázka</a></li>
+    </ul>
+    <div id="obsah">
+
+    </div>
+
+
+</body>
+</html>

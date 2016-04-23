@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?><adresar>
+    <osoba id="1">
+        <jmeno>Guinevere</jmeno>
+        <prijmeni>Sweeney</prijmeni>
+        <adresa>P.O. Box 497, 2253 Diam Avenue</adresa>
+        <spolecnost>Senectus Institute</spolecnost>
+    </osoba>
+    <osoba id="2">
+        <jmeno>Jelani</jmeno>
+        <prijmeni>Brock</prijmeni>
+        <adresa>404-4837 Purus Rd.</adresa>
+        <spolecnost>Euismod Limited</spolecnost>
+    </osoba>
+    <osoba id="3">
+        <jmeno>Noelani</jmeno>
+        <prijmeni>Stanley</prijmeni>
+        <adresa>6226 Malesuada Avenue</adresa>
+        <spolecnost>Lectus Foundation</spolecnost>
+    </osoba>
+    <osoba id="4">
+        <jmeno>Simon</jmeno>
+        <prijmeni>Cross</prijmeni>
+        <adresa>Ap #598-9797 Pellentesque. Av.</adresa>
+        <spolecnost>Diam Associates</spolecnost>
+    </osoba>
+    <osoba id="5">
+        <jmeno>Zorita</jmeno>
+        <prijmeni>Atkins</prijmeni>
+        <adresa>2760 Cras Avenue</adresa>
+        <spolecnost>Dolor Corporation</spolecnost>
+    </osoba>
+</adresar>
