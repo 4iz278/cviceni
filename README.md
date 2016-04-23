@@ -40,19 +40,20 @@ Web předmětu: **http://4iz278.github.io**
   * autorizace, autentizace
   * lokální přihlašování
 9. [Uživatelé a DB](./09-uzivatele-db)
-  * OAuth, OpenID
-  * datum a čas
-  * praktická aplikace na práci s databází
-10. [JSON, XML](./10-json-xml)
-  * strukturované datové formáty
   * víceuživatelský přístup k DB
-11. [CRUD aplikace](./11-crud)
-  * aplikace s REST API
-12. [Jiné výstupy, SEO URL](./12-vystupy-seo)
-  * mPDF, grafické výstupy
+  * OAuth
+  * datum a čas
+10. [MVC, SEO URL, poslání e-mailu](./10-mvc)
+  * návrhový vzor MVC
+  * objektová tvorba aplikací
   * .htaccess
   * posílání e-mailů
-
+11. [JSON, XML](./10-json-xml)
+  * strukturované datové formáty
+  * AJAX
+  * mPDF
+12. [CRUD aplikace](./11-crud)
+  * aplikace s REST API
 
 ## Co naleznete v tomto úložišti?
 
