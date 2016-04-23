@@ -24,9 +24,15 @@ if (!empty($xml->osoba)){
             if (!empty($osoba->spolecnost)){
                 $result['spolecnost']=(string)$osoba->spolecnost;
             }
-            echo json_encode($result);
             break;
         }
     }
 }
 
+if (!empty($result)){
+    echo json_encode($result);
+}else{
+    //nebyla nalezena daná osoba
+    header("HTTP/1.0 404 Not Found");
+    exit();
+}
