@@ -1,0 +1,10 @@
+#
+# Tento soubor obvykle obsahuje nastavení jen pro daný vývojový/produkční server
+# Záměrně v tomto případě nepoužíváme Nette database (vlastní databázová vrstva), ale PDO, které už známe
+#
+
+parameters:
+    pdo:
+        connectionString: 'mysql:host=127.0.0.1;dbname=xname;charset=utf8'
+        username: root
+        password: null

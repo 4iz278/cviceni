@@ -1,0 +1,13 @@
+{block content}
+
+  <h1 n:block="title">Přehled článků</h1>
+
+  {if !empty($articles)}
+    <ul>
+      {foreach $articles as $article}
+        <a href="{link Article:view id=>$article['id']}">{$article['title']}</a>
+      {/foreach}
+    </ul>
+  {else}
+    <p>Nebyly nalezeny žádné články</p>
+  {/if}
