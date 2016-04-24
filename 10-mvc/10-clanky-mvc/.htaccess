@@ -1,0 +1,19 @@
+php_flag display_errors on
+
+
+RewriteEngine on
+RewriteBase /~xname/clanky
+
+ErrorDocument 404 /error/notFound
+
+#specialni presmerovani
+RewriteRule ^index.php$ / [R=301,L]
+
+#presmerovani pro specificke soubory
+RewriteRule ^resources/ - [L,QSA]
+RewriteRule ^favicon.ico$ /resources/favicon.ico [R=301,L]
+RewriteRule \.(js|ico|gif|jpg|jpeg|png|css|swf|pdf|doc|xls|txt)$ - [L,QSA]
+
+#obecna presmerovani pro controllery
+RewriteRule ^(.*)/(.*) bootstrap.php?controller=$1&action=$2 [L,QSA]
+RewriteRule ^(.*) bootstrap.php?controller=$1 [L,QSA]
