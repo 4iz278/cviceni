@@ -12,17 +12,51 @@
     * i v případě neobjektových aplikací je kladen důraz na oddělení business logiky aplikace od prezentační vrstvy (např. za využití šablonovacího systému)
 
 ## Obsah dnešního cvičení
-* naučíme se používat .htaccess
+* naučíme se používat .htaccess (budeme dělat hezké SEO adresy)
+* naučíme se posílat maily (není to nic těžkého...)
 * budeme se věnovat návrhovým vzorům pro tvorbu objektových aplikací
-* naučíme se posílat maily
 
 ### Příprava
 * nahrajte na server eso.vse.cz podklady k dnešnímu cvičení
 * importujte do databáze obsah souboru [10-db.sql](10-db.sql)
 
+---
+
 ## .htaccess
+* soubor pro konfiguraci webového serveru, ovlivňuje nastavení daného adresáře a všech podadresářů
+* v případě spuštění php jako modulu v apache lze v rámci něj měnit i nastavení PHP
+* zatím jsme ho využili pro podporu jednoduché HTTP autentifikace
+
+### Mod rewrite
 TODO
 
+### Ostatní nastavení
+TODO
+
+---
+
+## Posílání e-mailů z PHP
+* **K čemu je dobré posílat e-maily z PHP?** (A co bychom naopak dělat neměli?)
+* pro opravdu jednoduché poslání e-mailu je k dispozici funkce *mail()*
+    ```php
+      mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutné do nich zadat např. info o odesílateli...
+    ```
+    * posílá maily pomocí sendmailu
+    * pokud se s posláním e-mailu nechce moc "babrat", tak se hodí jen pro jednoduché textové upozornění...
+
+* pro pokročilejší maily s přílohami atp. je k dispozici řada knihoven, pomocí kterých si e-mail postupně seskládáte
+    * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
+        * jednoduchá, srozumitelná knihovna umožňující poslat např. HTML mail s přílohami nejen sendmailem, ale i přes SMTP server
+        * pro základní použití stačí jen jeden soubor, pro komplexní instalaci využijte *composer* (o tom jsme se bavili na [4. cvičení](../04-objekty-II-validace#composer))
+    * [Nette\Mail](https://doc.nette.org/cs/2.3/mailing)
+    * [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
+
+### Příklady
+* [příklad mail()](./10-maily/example1.php)
+* [příklad PHPMailer](./10-maily/example2.php)
+* příklad praktického poslání mailu najdete i v následujících ukázkách aplikací (u registrace uživatele...)
+
+---
 
 ## Model-View-Controller, respektive Model-View-Presenter
 * ale **MVC už známe z Javy**, ne?
@@ -42,6 +76,13 @@ TODO
     * **model**
         * část mající za úkol pracovat s daty (s dabází, soubory atd.)
         * obsahuje značnou část business logiky
+        * v pokročilejších implementacích se model dál dělí do vrstev (mluvíme o *"vícevrstvém modelu"*)
+            * pro práci s databází to může vypadat např. tak, že máme
+                * repository (třída pracující přímo s databází)
+                * mapper (třída zajišťující mapování objektů na databázové entity)
+                * facade (třída zprostředkovávající funkcionalitu modelu pro controller/view)
+
+              výhodou je to, že lze v případě potřeby upravit jen konkrétní vrstvu. V souvislosti s využíváním frameworku pro objektově-relační mapování pak mají jednotlivé třídy minimalistickou implementaci (většinu věcí buď dědí od nějaké generické třídy, nebo využíváme konfiguraci pomocí anotací v komentářích)
 
 * další zdroje:
     * [Model-View-Presenter (MVP) - Nette](https://doc.nette.org/cs/0.9/model-view-presenter)
@@ -92,6 +133,22 @@ TODO
             * jednoduchá možnost následného zAJAXovatění aplikace
             * není závislý na jedné konkrétní databázové vrstvě
             * má Tracy (laděnku) - opravdu přehledné vysvětlování chyb
-            * pokud využijete třídu Nette\Object, je podporována implementace properties á la c#
-    * v rámci ukázkových aplikací záměrně využíváme ...
-TODO
+            * všechny šablony se píší v *latte* (šablonovací systém podobný např. *smarty*), který za vás zajistí bezpečnost znaků na výstupu
+            * pokud využijete třídu Nette\Object, je podporováno využívání properties á la c#
+            * nezáleží na přesném umístění tříd v souborech, autoload najde všechny třídy, které umístíte do adresáře s aplikací
+    * v rámci ukázkových aplikací *záměrně využíváme pro práci s databází jen PDO*
+        * už ho známe a umíme s ním pracovat
+        * pokud byste chtěli něco s většími možnostmi, tak v Nette je vlastní databázová vrstva, případně se dá používat nějaká vrstva pro objektově-relační mapování (asi nejznámnější je *Doctrine*, či lze využít např. jednoduchý *LeanMapper*)
+
+* **příklad Zobrazení článků**
+    * aplikace načítající články z databáze a zobrazující je na webu
+    * základní implementace využívající přímo data získaná z DB (bez tříd pro jednotlivé entity)
+    * [jednoduché MVC](./10-clanky-mvc)
+    * [implementace v Nette](./10-clanky-nette)
+
+* **příklad Blog**
+    * příklad jednoduchého blogu zobrazujícího články dle kategorií
+    * obsahuje autentizaci a autorizaci uživatelů
+    * využívá definované třídy pro články, kategorie, uživatele atd.
+    * [jednoduché MVC](./10-blog-mvc)
+    * [implementace v Nette](./10-blog-nette)
