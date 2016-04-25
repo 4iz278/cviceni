@@ -1,0 +1,7 @@
+# pomocí htaccessu jde přidávat hlavičky do odpovědí
+
+# hlavička pro vynucení poslední verze jádra IE (nemusíte pak mít doctype html5 či uvádět meta tag)
+Header set X-UA-Compatible "IE=Edge,chrome=1"
+
+# povolení AJAXového přístupu i z jiných webů, než jen z vlastní domény
+Header set Access-Control-Allow-Origin: *

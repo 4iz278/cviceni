@@ -1,0 +1,4 @@
+# Ukázka konfigurace vlastních chybových dokumentů
+
+ErrorDocument 404 404.html
+ErrorDocument 403 403.html

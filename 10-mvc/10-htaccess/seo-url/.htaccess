@@ -1,0 +1,18 @@
+#nejdřív zapneme podporu modu rewrite
+RewriteEngine on
+
+#následující direktiva povoluje symbolické odkazy (často už je ale zapnuta v konfiguraci serveru)
+Options +FollowSymlinks
+
+#nastavíme "base" url pro přesměrování
+#RewriteBase /10-htaccess
+
+#jednoduché pravidlo, které vytvoří hezčí adresy
+#(.*) představuje zástupný znak (
+RewriteRule    ^clanek-(.*)    clanky.php?id=$1
+
+RewriteCond %{HTTP_HOST} ^example.com
+RewriteRule (.*) http://www.example.com/$1 [R=301,QSA,L]
+
+#Zakázání stahování souborů začínajících tečkou
+RewriteRule /\.|^\. - [F]

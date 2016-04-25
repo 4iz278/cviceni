@@ -1,0 +1,21 @@
+RewriteEngine on
+#následující direktiva povoluje symbolické odkazy (často už je ale zapnuta v konfiguraci serveru)
+Options +FollowSymlinks
+
+# Přesměrování webu na URL začínající na WWW
+RewriteCond %{HTTP_HOST} ^example\.com [NC]
+RewriteRule (.*) http://www.example.com/$1 [R=301,QSA,L]
+
+# Obecná definice přesměrování webu, který začíná na www, na variantu bez této subdomény
+# Z výkonnostního hlediska je ale vhodnější tu mít podmínku rovnou napsanou
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,QSA,L]
+
+# Podmínka a přesměrování vynucující použití https
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+#Přesměrování všech "nepřílohových" požadavků na index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz)$ index.php [L]

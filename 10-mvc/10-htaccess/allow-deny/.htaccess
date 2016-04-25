@@ -1,0 +1,12 @@
+# Ukázka omezení přístupu
+
+Order deny, allow
+
+# zakázání přístupu všem
+Deny from all
+
+# povolení přístupu z jedné adresy
+Allow from 127.0.0.1
+
+# povolení přístupu z části školní sítě (ze všech takto začínajících IP adres)
+Allow from 146.102

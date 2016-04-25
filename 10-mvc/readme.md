@@ -23,16 +23,38 @@
 ---
 
 ## .htaccess
-* soubor pro konfiguraci webového serveru, ovlivňuje nastavení daného adresáře a všech podadresářů
+* soubor pro konfiguraci webového serveru Apache, ovlivňuje nastavení daného adresáře a všech podadresářů
 * v případě spuštění php jako modulu v apache lze v rámci něj měnit i nastavení PHP
 * zatím jsme ho využili pro podporu jednoduché HTTP autentifikace
 
 ### Mod rewrite
-TODO
+* server může vracet odpovědi na požadavky, u kterých na serveru odpovídající soubory neexistují
+* základním nastavením je např. preferování URL s nebo bez "www"
 
-### Ostatní nastavení
-TODO
+```apache
+RewriteEngine on #zap
+RewriteBase /10-htaccess
 
+RewriteCond selektorPodminky podminka
+RewriteRule pozadovanaUrl vracenySkript [modifikátory]
+```
+* doporučené modifikátory
+    * **R** - přesměrování (bez jeho uvedení jde o "podstrkávání" - uživatel se nedozví, že server vrací něco jiného, než je požadováno)
+    * **R=301** - redirect permanent
+    * **QSA** - k výsledné URL bude připojena původní část za otazníkem
+    * **L** - poslední přesměrování v seznamu
+    * **F** - zakázání získání souboru
+
+* mrkněte se rovnou na [příklad .htaccess - SEO URL](./10-htaccess/seo-url)
+* [další příklady rewritu v .htaccessu](./10-htaccess/rewrite/.htaccess)
+* [zabezpečení pomocí rewritu v .htaccessu](./10-htaccess/rewrite-security/.htaccess)
+
+### Další nastavení
+* [příklad přidání hlaviček do výstupu](./10-htaccess/headers/.htaccess)
+* [příklad konfigurace PHP](./10-htaccess/php/.htaccess)
+* [příklad zapnutí gzip komprese](./10-htaccess/komprese/.htaccess)
+* [příklad zakázání přístupu](./10-htaccess/allow-deny/.htaccess)
+* [příklad chybové dokumenty](./10-htaccess/error-document/.htaccess)
 ---
 
 ## Posílání e-mailů z PHP
