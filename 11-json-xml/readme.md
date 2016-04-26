@@ -144,4 +144,18 @@ $.getJSON('URL', function(data){
 * [příklad AJAX - složitější](./11-ajax-complex)
 
 ## Generování PDF
-*
+* **K čemu by mohl být vhodný výstup v PDF?**
+* PHP neumí přímo generovat PDF výstup, ale existuje celá řada knihoven - např.
+    * [TCPDF](http://www.tcpdf.org/)
+        * asi nejkomplexnější knihovna pro generování PDF výstupu
+        * zvládá i dokumenty podepsané certifikátem atd.
+        * lze generovat části popsané pomocí HTML (ale s minimální podporou stylů) a části popsané pomocí speciálních konstrukcí
+        * [ukázkové příklady na webu TCPDF](http://www.tcpdf.org/examples.php)
+    * [mPDF](http://mpdf.github.io/)
+        * knihovna pro jednoduché generování PDF výstupu z HTML
+        * [ukázkové příklady na GitHubu](https://github.com/mpdf/mpdf/tree/development/examples)
+    * [FPDF](http://www.fpdf.org/)
+
+* [příklady mPDF](./11-mpdf)
+    * pozor, ze složky mPDF byla kvůli velikosti odstraněna nevyužívaná písma, barevné profily a zdroje pro QR kódy
+* [příklady TCPDF](./11-tcpdf)

@@ -1,0 +1,14 @@
+{
+  "name": "4iz278/03-composer-example-project",
+  "description": "Ukázkový project",
+  "minimum-stability": "stable",
+  "license": "bsd3",
+  "authors": [
+    {
+      "name": "Stanislav Vojíř"
+    }
+  ],
+  "require": {
+    "mpdf/mpdf": "^6.0"
+  }
+}
