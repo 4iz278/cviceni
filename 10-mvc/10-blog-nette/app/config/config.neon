@@ -1,0 +1,28 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+
+
+php:
+	date.timezone: Europe/Prague
+
+
+application:
+	errorPresenter: Error
+	mapping:
+		*: Blog\*Module\Presenters\*Presenter
+
+
+session:
+	expiration: 14 days
+
+
+services:
+	router: Blog\RouterFactory::createRouter
+	pdo: \PDO(%pdo.connectionString%,%pdo.username%,%pdo.password%)
+	authorizator: Blog\Model\Authorizator
+	- Blog\Model\ArticlesModel
+	- Blog\Model\UsersModel
+	- Blog\Model\CategoriesModel

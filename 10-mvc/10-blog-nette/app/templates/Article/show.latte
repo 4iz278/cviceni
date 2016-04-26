@@ -1,0 +1,18 @@
+{block content}
+  <article>
+    <h1 n:block="title">{$article->title}</h1>
+
+    {if $user->isAllowed('article','edit')}
+      <a href="{link Article:edit id=>$article->id}">upravit článek</a>
+    {/if}
+
+    <dl class="articleInfo">
+      <dt>Kategorie:</dt>
+      <dd><a href="{link Article:list category=>$article->category}">{$article->categoryName}</a></dd>
+      <dt>Autor:</dt>
+      <dd>{$article->authorName}</dd>
+    </dl>
+
+    {$article->perex|noescape}
+    {$article->content|noescape}
+  </article>

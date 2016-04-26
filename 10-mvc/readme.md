@@ -32,7 +32,7 @@
 * základním nastavením je např. preferování URL s nebo bez "www"
 
 ```apache
-RewriteEngine on #zap
+RewriteEngine on
 RewriteBase /10-htaccess
 
 RewriteCond selektorPodminky podminka
@@ -55,6 +55,7 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
 * [příklad zapnutí gzip komprese](./10-htaccess/komprese/.htaccess)
 * [příklad zakázání přístupu](./10-htaccess/allow-deny/.htaccess)
 * [příklad chybové dokumenty](./10-htaccess/error-document/.htaccess)
+
 ---
 
 ## Posílání e-mailů z PHP
@@ -172,5 +173,8 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
     * příklad jednoduchého blogu zobrazujícího články dle kategorií
     * obsahuje autentizaci a autorizaci uživatelů
     * využívá definované třídy pro články, kategorie, uživatele atd.
+    * pro vyzkoušení jsou k dispozici uživatelské účty:
+        * e-mail "xadmin@vse.cz", heslo "xadmin"
+        * e-mail "xname@vse.cz", heslo "xname"
     * [jednoduché MVC](./10-blog-mvc)
     * [implementace v Nette](./10-blog-nette)

@@ -1,0 +1,80 @@
+bgColor = white
+fontColor = #6e6e6e
+contrastColor= #006fb2
+
+*
+  box-sizing border-box
+
+body
+  font-family Tahoma, sans-serif
+  font-size 13px
+  background bgColor
+  color fontColor
+  border 1px solid rgba(0,0,0,0.19)
+  width 960px
+  margin 10px auto
+  -webkit-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+  -moz-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+  box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+
+  a
+    color contrastColor
+    text-decoration underline
+    &:hover
+      text-decoration none
+
+  header
+    border-bottom 1px solid contrastColor
+    position relative
+
+    h1
+      padding 20px 0 20px 20px
+      a
+        color contrastColor
+        font-weight normal
+        text-decoration none
+        font-size 36px
+        margin 0
+
+    div#currentUser
+      position absolute
+      bottom 10px
+      right 10px
+
+  nav
+    border-bottom 1px solid contrastColor
+    ul
+      list-style none
+      padding 0 10px
+      li
+        display inline-block
+        a
+          display block
+          padding 8px 15px
+          text-decoration none
+          color contrastColor
+          &.active
+            background contrastColor
+            color bgColor
+
+  section#main
+    padding 10px 20px
+    min-height 200px
+    h1
+      font-size 24px
+      font-weight normal
+      text-decoration none
+    h2
+      font-weight normal
+
+    article
+      dl.articleInfo
+        dt
+          display inline
+          padding 0
+          margin 0
+        dd
+          padding 0 10px 0 0
+          margin 0
+          display inline
+          font-weight bold

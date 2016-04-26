@@ -1,0 +1,18 @@
+{block content}
+
+  <h1 n:block="title">{$category->name}</h1>
+
+  {if $user->isAllowed('article','add')}
+    <a href="{link Article:add category=>$category->id}">přidat článek...</a>
+  {/if}
+
+  {if !empty($articles)}
+    {foreach $articles as $article}
+      <article>
+        <h2><a href="{link Article:show id=>$article->id}">{$article->title}</a></h2>
+        {$article->perex|noescape}
+      </article>
+    {/foreach}
+  {else}
+    <p>Nebyly nalezeny žádné články</p>
+  {/if}
