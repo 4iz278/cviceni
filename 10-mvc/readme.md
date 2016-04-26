@@ -166,6 +166,7 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
 * **příklad Zobrazení článků**
     * aplikace načítající články z databáze a zobrazující je na webu
     * základní implementace využívající přímo data získaná z DB (bez tříd pro jednotlivé entity)
+    * pozor: *pro spuštění Nette aplikace je potřeba načíst její podadresář www* (tj. například http://eso.vse.cz/~xname/10-blog-nette/www)
     * [jednoduché MVC](./10-clanky-mvc)
     * [implementace v Nette](./10-clanky-nette)
 
