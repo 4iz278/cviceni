@@ -179,3 +179,7 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
         * e-mail "xname@vse.cz", heslo "xname"
     * [jednoduché MVC](./10-blog-mvc)
     * [implementace v Nette](./10-blog-nette)
+
+
+## Domácí úkol
+> Vyberte si jednu z variant aplikace "blog" a doplňte do ní možnost přidávání komentářů pro registrované uživatele.
