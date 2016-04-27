@@ -48,11 +48,11 @@ Web předmětu: **http://4iz278.github.io**
   * objektová tvorba aplikací
   * .htaccess
   * posílání e-mailů
-11. [JSON, XML](./10-json-xml)
+11. [JSON, XML](./11-json-xml)
   * strukturované datové formáty
   * AJAX
   * mPDF
-12. [CRUD aplikace](./11-crud)
+12. [CRUD aplikace](./12-crud)
   * aplikace s REST API
 
 ## Co naleznete v tomto úložišti?
