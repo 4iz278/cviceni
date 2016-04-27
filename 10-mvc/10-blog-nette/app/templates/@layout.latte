@@ -19,7 +19,7 @@
 	<header>
     <h1><a href="{link Homepage:}">Jednoduchý blog</a></h1>
     <div id="currentUser">
-      {if $user->isLoggedIn()}{dump $user}
+      {if $user->isLoggedIn()}
         Přihlášený uživatel: <strong>{$user->identity->name}</strong> ({$user->identity->email})
         <a href="{link User:logout}">Odhlásit se...</a>
       {else}

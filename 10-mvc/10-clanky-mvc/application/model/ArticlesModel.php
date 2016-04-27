@@ -14,10 +14,10 @@ class ArticlesModel extends BaseModel{
    */
   public function findAll($category=null){
     if ($category>0){
-      $query=$this->pdo->prepare('SELECT * FROM articles WHERE category=:category;');
+      $query=self::$pdo->prepare('SELECT * FROM articles WHERE category=:category;');
       $query->execute([':category'=>$category]);
     }else{
-      $query=$this->pdo->prepare('SELECT * FROM articles');
+      $query=self::$pdo->prepare('SELECT * FROM articles');
       $query->execute();
     }
     return $query->fetchAll(PDO::FETCH_ASSOC);
@@ -29,7 +29,7 @@ class ArticlesModel extends BaseModel{
    * @return array
    */
   public function find($id){
-    $query=$this->pdo->prepare('SELECT * FROM articles WHERE id=:id LIMIT 1;');
+    $query=self::$pdo->prepare('SELECT * FROM articles WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetch(PDO::FETCH_ASSOC);
   }
@@ -40,7 +40,7 @@ class ArticlesModel extends BaseModel{
    * @return bool
    */
   public function delete($id){
-    $query=$this->pdo->prepare('DELETE FROM articles WHERE id=:id LIMIT 1;');
+    $query=self::$pdo->prepare('DELETE FROM articles WHERE id=:id LIMIT 1;');
     return $query->execute([':id'=>$id]);
   }
 

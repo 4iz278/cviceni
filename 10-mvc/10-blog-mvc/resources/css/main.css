@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Tahoma, sans-serif;
+  font-size: 13px;
+  background: #fff;
+  color: #6e6e6e;
+  border: 1px solid rgba(0,0,0,0.19);
+  width: 960px;
+  margin: 10px auto;
+  -webkit-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+  -moz-box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+  box-shadow: 3px 3px 2px 0px rgba(0,0,0,0.19);
+}
+body a {
+  color: #006fb2;
+  text-decoration: underline;
+}
+body a:hover {
+  text-decoration: none;
+}
+body header {
+  border-bottom: 1px solid #006fb2;
+  position: relative;
+}
+body header h1 {
+  padding: 20px 0 20px 20px;
+}
+body header h1 a {
+  color: #006fb2;
+  font-weight: normal;
+  text-decoration: none;
+  font-size: 36px;
+  margin: 0;
+}
+body header div#currentUser {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+body nav {
+  border-bottom: 1px solid #006fb2;
+}
+body nav ul {
+  list-style: none;
+  padding: 0 10px;
+}
+body nav ul li {
+  display: inline-block;
+}
+body nav ul li a {
+  display: block;
+  padding: 8px 15px;
+  text-decoration: none;
+  color: #006fb2;
+}
+body nav ul li a.active {
+  background: #006fb2;
+  color: #fff;
+}
+body section#main {
+  padding: 10px 20px;
+  min-height: 200px;
+}
+body section#main h1 {
+  font-size: 24px;
+  font-weight: normal;
+  text-decoration: none;
+}
+body section#main h2 {
+  font-weight: normal;
+}
+body section#main article dl.articleInfo dt {
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+body section#main article dl.articleInfo dd {
+  padding: 0 10px 0 0;
+  margin: 0;
+  display: inline;
+  font-weight: bold;
+}

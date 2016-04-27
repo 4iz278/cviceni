@@ -1,6 +1,13 @@
 <?php
 
+namespace Blog\Model;
 
+use \PDO;
+
+/**
+ * Class BaseModel
+ * @package Blog\Model
+ */
 abstract class BaseModel{
   /** @var PDO */
   protected static $pdo;
