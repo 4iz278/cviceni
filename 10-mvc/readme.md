@@ -73,6 +73,7 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
         * pro základní použití stačí jen jeden soubor, pro komplexní instalaci využijte *composer* (o tom jsme se bavili na [4. cvičení](../04-objekty-II-validace#composer))
     * [Nette\Mail](https://doc.nette.org/cs/2.3/mailing)
     * [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
+    * [PEAR::Mail](http://pear.php.net/package/Mail)
 
 ### Příklady
 * [příklad mail()](./10-maily/example1.php)

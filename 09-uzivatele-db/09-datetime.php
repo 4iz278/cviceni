@@ -14,7 +14,7 @@
 # http://php.net/manual/en/function.time.php - aktuální èas
 
 # casovou zonu jsme uz nastavili v souboru .htaccess (na Europe/Prague), takhle ji muzeme zmenit treba na UTC
-date_default_timezone_set('UTC');
+date_default_timezone_set('Europe/Prague');
 
 # vytiskne aktualni den v tydnu
 # http://php.net/manual/en/function.date.php - funkce date
