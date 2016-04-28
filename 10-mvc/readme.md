@@ -74,6 +74,14 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
     * [Nette\Mail](https://doc.nette.org/cs/2.3/mailing)
     * [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
     * [PEAR::Mail](http://pear.php.net/package/Mail)
+ 
+### SMTP servery jako SaaS
+* [Amazon SES](https://aws.amazon.com/ses/) - další SMTP jako SaaS, pod Amazon Web Services, **doporučuji, levný, spolehlivý**
+* [Sendgrid](https://sendgrid.com/) - SMTP server jako SaaS, velké objemy (i miliony mailů měsíčně), **drahý, ale spolehlivý**
+* [MailChimp](http://mailchimp.com/) - kompletní odesílání mailů jako SaaS, **tvorba šablon, WYSIWYG editor, plánovač odesílání, tracking doručení i přečtení mailu příjemcem, garantuje doručení, velmi drahý**
+* **obecné doporučení: neprovozujte vlastní SMTP server, musí se záplatovat, škálovat, balancovat, a pravděpodobně skončíte na blacklistu**
+
+**Otázka:** Jak lze poznat, že uživatel dostal do schránky mail, nebo si ho dokonce přečetl?
 
 ### Příklady
 * [příklad mail()](./10-maily/example1.php)
