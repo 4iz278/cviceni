@@ -4,9 +4,10 @@
 ## Zdroje pro cvičení
 
 * curl pro Windows: http://curl.haxx.se/dlwiz/?type=bin
-* **[10. cvičení z kurzu 4IZ268 - Formuláře](https://github.com/4iz268/cviceni/tree/master/10-formulare)**
-* **[11. cvičení z kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax)**
-* **[12. cvičení z kurzu 4IZ268 - API](https://github.com/4iz268/cviceni/tree/master/12-api)**
+* **[10. cvičení z předchozího kurzu 4IZ268 - Formuláře](https://github.com/4iz268/cviceni/tree/master/10-formulare)**
+* **[11. cvičení z předchozího kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax)**
+* **[12. cvičení z předchozího kurzu 4IZ268 - API](https://github.com/4iz268/cviceni/tree/master/12-api)**
+* **[11. cvičení z tohoto kurzu - XML, JSON](../11-json-xml)**
 * http://api.jquery.com/jquery.ajax/
 
 ## CRUD
@@ -208,6 +209,35 @@ X-Powered-By: Phusion Passenger 4.0.57
 Server: nginx/1.6.2 + Phusion Passenger 4.0.57
 Access-Control-Allow-Origin: *
 ```
+
+## Ukázky server/client API
+
+**Vstupní podmínkou k této části jsou znalosti AJAX metod pomocí JQuery, viz [11. cvičení z předchozího kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax) a JSON, viz  [11. cvičení - JSON, XML](../11-json-xml)**
+
+## AJAX JSON client pro již existující API
+
+
+
+
+##  Vlastní JSON server API
+
+Napíšeme si vlastní API, které vrací data v JSON formátu.
+
+http://eso.vse.cz/~xhraj18/12-server.php
+
+```
+curl -I http://eso.vse.cz/~xhraj18/12-server.php
+HTTP/1.1 200 OK
+Date: Mon, 09 May 2016 20:32:08 GMT
+Server: Apache/2.4.16 (Fedora) OpenSSL/1.0.1k-fips mod_nss/2.4.10 NSS/3.17.1 Basic ECC PHP/5.6.15 mod_perl/2.0.9 Perl/v5.18.4
+X-Powered-By: PHP/5.6.15
+Content-Type: application/json;charset=utf-8
+```
+
+## AJAX JSON client pro naše API
+
+Napíšeme si klienta k našemu API - AJAX, JSON, JQuery. Získaná data zobrazíme do HTML tabulky.
+
 
 
 ## Domácí úkol
