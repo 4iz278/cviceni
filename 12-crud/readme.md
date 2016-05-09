@@ -3,8 +3,6 @@
 
 ## Zdroje pro cvièení
 
-### U¾iteèné zdroje :)
-
 * curl pro Windows: http://curl.haxx.se/dlwiz/?type=bin
 * **[10. cvièení z kurzu 4IZ268 - Formuláøe](https://github.com/4iz268/cviceni/tree/master/10-formulare)**
 * **[11. cvièení z kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax)**
