@@ -256,7 +256,7 @@ curl -I http://eso.vse.cz/~xhraj18/12-server.php
 [{"id":1,"first_name":"Jimmy","last_name":"Hendrix","address":"All Along the Watchtower 1, Los Angeles, CA"},{"id":2,"first_name":"John","last_name":"Frusciante","address":"Californication & Hump de Bumb Street 33, Venice Beach, CA"}]
 ```
 
-#### 2. Upravte  soubor [12-server.php](./12-server.php), aby přijímal tyto requesty:
+#### 2. Upravte  soubor [12-server.php](./12-server.php) tak, aby přijímal tyto requesty:
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
 * POST: Bude možno uložit nový záznam - vytvořte formulář, který bude odesílat data přes HTTP POST a na serveru se uloží do DB.
