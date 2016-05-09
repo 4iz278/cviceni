@@ -227,9 +227,9 @@ Access-Control-Allow-Origin: *
 
 *Všimněte si, že pro klienta nepotřebujeme PHP, vše děláme jen v HTML a jQuery.*
 
-###  Vlastní JSON server API
+###  Vlastní JSON API
 
-#### 1. Napíšeme si vlastní API, které vrací data v JSON formátu:
+#### 1. Napíšeme si vlastní server API, které vrací data v JSON formátu:
 
 [Výchozí zdroják k serverové části](./12-server.php)
 
@@ -256,12 +256,12 @@ curl -I http://eso.vse.cz/~xhraj18/12-server.php
 [{"id":1,"first_name":"Jimmy","last_name":"Hendrix","address":"All Along the Watchtower 1, Los Angeles, CA"},{"id":2,"first_name":"John","last_name":"Frusciante","address":"Californication & Hump de Bumb Street 33, Venice Beach, CA"}]
 ```
 
-#### 2. Upravte  soubor [12-server.php](./12-server.php) tak, aby přijímal tyto requesty:
+#### 2. Upravte  serverovou část [12-server.php](./12-server.php) tak, aby přijímala tyto requesty:
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
 * POST: Bude možno přidat nový záznam pomocí HTTP POST (data odeslaná z formuláře z klientské části, kterou si sami dopíšete, viz. bod 3.)
 
-#### 3. Napište klientské rozhraní pro CRUD k serverové části
+#### 3. Napište CRUD klientskou část 
 
 Do toho :).
 
