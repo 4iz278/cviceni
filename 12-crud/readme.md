@@ -223,7 +223,7 @@ Access-Control-Allow-Origin: *
 
 Napíšeme si vlastní API, které vrací data v JSON formátu.
 
-[Zdrojáky k serverové části](../12-server.php)
+[Zdrojáky k serverové části](./12-server.php)
 
 Výsledek: http://eso.vse.cz/~xhraj18/12-server.php
 
