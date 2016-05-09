@@ -233,7 +233,7 @@ Access-Control-Allow-Origin: *
 
 [Výchozí zdroják k serverové části](./12-server.php)
 
-Request: http://eso.vse.cz/~xhraj18/12-server.php
+Request & response: http://eso.vse.cz/~xhraj18/12-server.php
 
 Hlavička:
 
