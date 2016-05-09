@@ -51,9 +51,11 @@ Typické a přímočaré propojení s CRUD:
 * API "voláme" pomocí nějaké služby, dnes typicky přes REST skrze HTTP request.
 
 
-## Ukázka REST API pro existující aplikaci
+## Ukázka dokumentace REST API pro existující aplikaci
 
-**Poznámka: opakování z kurzu 4IZ268: https://github.com/4iz268/cviceni/tree/master/12-api**
+**Opakování z kurzu 4IZ268: https://github.com/4iz268/cviceni/tree/master/12-api**
+
+Pokud budete psát vlastní API, je třeba ho dobře zdokumentovat. Následuje příklad dokumentace k existujícímu API včetně ukázek.
 
 ### URL aplikace
 
@@ -210,7 +212,7 @@ Server: nginx/1.6.2 + Phusion Passenger 4.0.57
 Access-Control-Allow-Origin: *
 ```
 
-## Ukázky server/client API
+## Praktické ukázky server/client API
 
 **Vstupní podmínkou k této části jsou znalosti:**
 
