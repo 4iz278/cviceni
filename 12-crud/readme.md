@@ -36,6 +36,8 @@ Typické a přímočaré propojení s CRUD:
 * **PUT** = **U**pdate
 * **DELETE** = **D**elete
 
+http://www.restapitutorial.com/lessons/whatisrest.html#
+
 ### Otázky
 
 * Jaké HTTP metody můžeme používat v HTML?
