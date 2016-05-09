@@ -27,7 +27,7 @@ Typické a pøímoèaré propojení s CRUD:
 ### Otázky
 
 * Jaké HTTP metody mù¾eme pou¾ívat v HTML?
-* Jak byste vyøe¹ili odeslání nìjakých dat pøes HTTP metodu, kterou HTML nepodporuje (napø. jak poslat HTTP PUT pro update záznamu pomocí HTML formuláøe)?
+* Jak byste vyøe¹ili odeslání nìjakých dat pøes HTTP metodu, kterou HTML nepodporuje (napø. jak poslat HTTP PUT pro update záznamu pomocí HTML formuláøe)? Zajímá mì **øe¹ení na serveru** (jako autoøi API) a **øe¹ení na klientovi** (HTML).
 
 ## API
 
