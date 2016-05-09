@@ -9,6 +9,8 @@
 * **[12. cvičení z předchozího kurzu 4IZ268 - API](https://github.com/4iz268/cviceni/tree/master/12-api)**
 * **[11. cvičení z tohoto kurzu - XML, JSON](../11-json-xml)**
 * http://api.jquery.com/jquery.ajax/
+* What is REST - http://www.restapitutorial.com/lessons/whatisrest.html#
+* Representational State Transfer(REST) - http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
 
 ## CRUD
 
@@ -35,8 +37,6 @@ Typické a přímočaré propojení s CRUD:
 * **GET** = **R**ead
 * **PUT** = **U**pdate
 * **DELETE** = **D**elete
-
-http://www.restapitutorial.com/lessons/whatisrest.html#
 
 ### Otázky
 
