@@ -256,12 +256,12 @@ curl -I http://eso.vse.cz/~xhraj18/12-server.php
 [{"id":1,"first_name":"Jimmy","last_name":"Hendrix","address":"All Along the Watchtower 1, Los Angeles, CA"},{"id":2,"first_name":"John","last_name":"Frusciante","address":"Californication & Hump de Bumb Street 33, Venice Beach, CA"}]
 ```
 
-#### 2. Upravte  serverovou část [12-server.php](./12-server.php) tak, aby přijímala tyto requesty:
+#### 2. Upravte  server API [12-server.php](./12-server.php) tak, aby přijímalo tyto requesty:
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
 * POST: Bude možno přidat nový záznam pomocí HTTP POST (data odeslaná z formuláře z klientské části, kterou si sami dopíšete, viz. bod 3.)
 
-#### 3. Napište CRUD klientskou část 
+#### 3. Napište klienta pro server API s CRUD operacemi
 
 Do toho :).
 
