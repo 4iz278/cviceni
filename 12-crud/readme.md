@@ -229,12 +229,16 @@ Access-Control-Allow-Origin: *
 
 ### 1. Napíšeme si vlastní API, které vrací data v JSON formátu:
 
-[Základní zdrojáky k serverové části](./12-server.php)
+[Výchozí zdroják k serverové části](./12-server.php)
 
 Request: http://eso.vse.cz/~xhraj18/12-server.php
 
+Hlavička:
+
 ```
 curl -I http://eso.vse.cz/~xhraj18/12-server.php
+```
+```
 HTTP/1.1 200 OK
 Date: Mon, 09 May 2016 20:32:08 GMT
 Server: Apache/2.4.16 (Fedora) OpenSSL/1.0.1k-fips mod_nss/2.4.10 NSS/3.17.1 Basic ECC PHP/5.6.15 mod_perl/2.0.9 Perl/v5.18.4
@@ -242,11 +246,15 @@ X-Powered-By: PHP/5.6.15
 Content-Type: application/json;charset=utf-8
 ```
 
+Tělo:
+```
+curl -I http://eso.vse.cz/~xhraj18/12-server.php
+```
 ```json
 [{"id":1,"first_name":"Jimmy","last_name":"Hendrix","address":"All Along the Watchtower 1, Los Angeles, CA"},{"id":2,"first_name":"John","last_name":"Frusciante","address":"Californication & Hump de Bumb Street 33, Venice Beach, CA"}]
 ```
 
-### 2. Upravte teď soubor [12-server.php](./12-server.php):
+### 2. Upravte  soubor [12-server.php](./12-server.php):
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
 * POST: Bude možno uložit nový záznam - vytvořte formulář, který bude odesílat data přes HTTP POST a na serveru se uloží do DB.
