@@ -212,14 +212,14 @@ Server: nginx/1.6.2 + Phusion Passenger 4.0.57
 Access-Control-Allow-Origin: *
 ```
 
-## Praktické ukázky server/client API
+## Další praktické ukázky server/client API
 
 **Vstupní podmínkou k této části jsou znalosti:**
 
 * AJAX funkcí pomocí jQuery, viz [11. cvičení z předchozího kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax) 
 * JSON, viz [11. cvičení - JSON, XML](../11-json-xml)
 
-## AJAX JSON client pro externí API
+### AJAX JSON client pro externí API
 
 * [index](./12-client/index.html) - výpis a mazání klientů.
 * [new](./12-client/new.html) - přidání nového klienta.
@@ -227,9 +227,9 @@ Access-Control-Allow-Origin: *
 
 *Všimněte si, že pro klienta nepotřebujeme PHP, vše děláme jen v HTML a jQuery.*
 
-##  Vlastní JSON server API
+###  Vlastní JSON server API
 
-### 1. Napíšeme si vlastní API, které vrací data v JSON formátu:
+#### 1. Napíšeme si vlastní API, které vrací data v JSON formátu:
 
 [Výchozí zdroják k serverové části](./12-server.php)
 
@@ -256,12 +256,12 @@ curl -I http://eso.vse.cz/~xhraj18/12-server.php
 [{"id":1,"first_name":"Jimmy","last_name":"Hendrix","address":"All Along the Watchtower 1, Los Angeles, CA"},{"id":2,"first_name":"John","last_name":"Frusciante","address":"Californication & Hump de Bumb Street 33, Venice Beach, CA"}]
 ```
 
-### 2. Upravte  soubor [12-server.php](./12-server.php):
+#### 2. Upravte  soubor [12-server.php](./12-server.php):
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
 * POST: Bude možno uložit nový záznam - vytvořte formulář, který bude odesílat data přes HTTP POST a na serveru se uloží do DB.
 
-### 3. Napište klientské rozhraní pro CRUD k serverové části
+#### 3. Napište klientské rozhraní pro CRUD k serverové části
 
 Do toho :).
 
