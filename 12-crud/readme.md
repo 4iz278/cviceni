@@ -1,72 +1,72 @@
 # 12. CRUD aplikace, REST API
 
 
-## Zdroje pro cvièení
+## Zdroje pro cviÄenÃ­
 
 * curl pro Windows: http://curl.haxx.se/dlwiz/?type=bin
-* **[10. cvièení z kurzu 4IZ268 - Formuláøe](https://github.com/4iz268/cviceni/tree/master/10-formulare)**
-* **[11. cvièení z kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax)**
-* **[12. cvièení z kurzu 4IZ268 - API](https://github.com/4iz268/cviceni/tree/master/12-api)**
+* **[10. cviÄenÃ­ z kurzu 4IZ268 - FormulÃ¡Å™e](https://github.com/4iz268/cviceni/tree/master/10-formulare)**
+* **[11. cviÄenÃ­ z kurzu 4IZ268 - Ajax](https://github.com/4iz268/cviceni/tree/master/11-ajax)**
+* **[12. cviÄenÃ­ z kurzu 4IZ268 - API](https://github.com/4iz268/cviceni/tree/master/12-api)**
 * http://api.jquery.com/jquery.ajax/
 
 ## CRUD
 
-**CRUD** = **C**reate, **R**ead, **U**pdate, **D**elete = programovı pøístup/idiom pro práce s daty. Èasto ve vztahu k nìjakému objektu, kterı jde Vytvoøit, Èíst, Aktualizovat a Mazat.
+**CRUD** = **C**reate, **R**ead, **U**pdate, **D**elete = programovÃ½ pÅ™Ã­stup/idiom pro prÃ¡ce s daty. ÄŒasto ve vztahu k nÄ›jakÃ©mu objektu, kterÃ½ jde VytvoÅ™it, ÄŒÃ­st, Aktualizovat a Mazat.
 
 ## REST
 
-**REST** = **RE**presentational **S**tate **T**ransfer = architektonickı pøístup, kterı umo¾òuje pracovat se stránkami a mìnit jejich stav. URI stránky je typicky namapováno na nìjakı objekt a pomocí HTTP metod (GET, POST, PUT, DELETE) mìníme stav tohoto objektu.
-** REST není protokol, jen zpùsob komunikace. REST se èasto pou¾ívá pod HTTP protokolem.
+**REST** = **RE**presentational **S**tate **T**ransfer = architektonickÃ½ pÅ™Ã­stup, kterÃ½ umoÅ¾Åˆuje pracovat se strÃ¡nkami a mÄ›nit jejich stav. URI strÃ¡nky je typicky namapovÃ¡no na nÄ›jakÃ½ objekt a pomocÃ­ HTTP metod (GET, POST, PUT, DELETE) mÄ›nÃ­me stav tohoto objektu.
+** REST nenÃ­ protokol, jen zpÅ¯sob komunikace. REST se Äasto pouÅ¾Ã­vÃ¡ pod HTTP protokolem.
 
-Pro pøenos dat se obvykle pou¾ívá XML nebo JSON.
+Pro pÅ™enos dat se obvykle pouÅ¾Ã­vÃ¡ XML nebo JSON.
 
-Pøíklad: 
+PÅ™Ã­klad: 
 
-* **GET https://hradil.vse.cz/api/clients/1.json** - zobrazí detail pro klienta s ID 1.
-* **GET https://hradil.vse.cz/api/clients.json** - zobrazí vıpis v¹ech klientù
-* **POST https://hradil.vse.cz/api/clients.json** - zalo¾í nového klienta, v tìle HTTP metody jsou data (jméno: Adam, pøíjmení: Shelby)
-* **PUT https://hradil.vse.cz/api/clients/1.json** - aktualizuje klienta s ID 1, v tìle HTTP metody jsou nová data (jméno: Adam, pøíjmení: Shelby)
-* **DELETE https://hradil.vse.cz/api/clients/1.json** - sma¾e klienta Adama
+* **GET https://hradil.vse.cz/api/clients/1.json** - zobrazÃ­ detail pro klienta s ID 1.
+* **GET https://hradil.vse.cz/api/clients.json** - zobrazÃ­ vÃ½pis vÅ¡ech klientÅ¯
+* **POST https://hradil.vse.cz/api/clients.json** - zaloÅ¾Ã­ novÃ©ho klienta, v tÄ›le HTTP metody jsou data (jmÃ©no: Adam, pÅ™Ã­jmenÃ­: Shelby)
+* **PUT https://hradil.vse.cz/api/clients/1.json** - aktualizuje klienta s ID 1, v tÄ›le HTTP metody jsou novÃ¡ data (jmÃ©no: Adam, pÅ™Ã­jmenÃ­: Shelby)
+* **DELETE https://hradil.vse.cz/api/clients/1.json** - smaÅ¾e klienta Adama
 
-Typické a pøímoèaré propojení s CRUD:
+TypickÃ© a pÅ™Ã­moÄarÃ© propojenÃ­ s CRUD:
 
 * **POST** = **C**reate
 * **GET** = **R**ead
 * **PUT** = **U**pdate
 * **DELETE** = **D**elete
 
-### Otázky
+### OtÃ¡zky
 
-* Jaké HTTP metody mù¾eme pou¾ívat v HTML?
-* Jak byste vyøe¹ili odeslání nìjakıch dat pøes HTTP metodu, kterou HTML nepodporuje (napø. jak poslat HTTP PUT pro update záznamu pomocí HTML formuláøe)? Zajímá mì **øe¹ení na serveru** (jako autoøi API) a **øe¹ení na klientovi** (HTML).
+* JakÃ© HTTP metody mÅ¯Å¾eme pouÅ¾Ã­vat v HTML?
+* Jak byste vyÅ™eÅ¡ili odeslÃ¡nÃ­ nÄ›jakÃ½ch dat pÅ™es HTTP metodu, kterou HTML nepodporuje (napÅ™. jak poslat HTTP PUT pro update zÃ¡znamu pomocÃ­ HTML formulÃ¡Å™e)? ZajÃ­mÃ¡ mÄ› **Å™eÅ¡enÃ­ na serveru** (jako autoÅ™i API) a **Å™eÅ¡enÃ­ na klientovi** (HTML).
 
 ## API
 
-* **API** = Application Program Interface = aplikaèní programové rozhraní = popis, jak pracovat s cizím programem tak, jak to jeho autor dovolil. Umo¾òuje napojit se na nìjakou aplikaci typicky *zvenèí* a propojit ji s na¹í aplikací nebo ji na dálku ovládat. V pøípadì webu je API typicky tøeba, abychom dokázali vyu¾ívat nìjaké slu¾by, které jsme sami nenapsali, ale chceme je mít v na¹í aplikaci, napø. pou¾ít mapy od Google pro plánovaní trasy v na¹í aplikaci, posílat automaticky pøíspìvky na Twitter, komentáøe u¾ivatelù v na¹í aplikaci ukládat rovnou na zeï ve Facebooku, ovìøit u¾ivatele pomocí jiné slu¾by, apod.
-* API pí¹e autor pùvodního programu.
-* API jako jedno z mála potøebuje dobrou a podrobnou (programátorskou) dokumentaci.
-* API není pro koncové u¾ivatele, ale pro programátory.
-* API je dálkovı ovladaè k cizímu programu.
-* API "voláme" pomocí nìjaké slu¾by, dnes typicky pøes REST skrze HTTP request.
+* **API** = Application Program Interface = aplikaÄnÃ­ programovÃ© rozhranÃ­ = popis, jak pracovat s cizÃ­m programem tak, jak to jeho autor dovolil. UmoÅ¾Åˆuje napojit se na nÄ›jakou aplikaci typicky *zvenÄÃ­* a propojit ji s naÅ¡Ã­ aplikacÃ­ nebo ji na dÃ¡lku ovlÃ¡dat. V pÅ™Ã­padÄ› webu je API typicky tÅ™eba, abychom dokÃ¡zali vyuÅ¾Ã­vat nÄ›jakÃ© sluÅ¾by, kterÃ© jsme sami nenapsali, ale chceme je mÃ­t v naÅ¡Ã­ aplikaci, napÅ™. pouÅ¾Ã­t mapy od Google pro plÃ¡novanÃ­ trasy v naÅ¡Ã­ aplikaci, posÃ­lat automaticky pÅ™Ã­spÄ›vky na Twitter, komentÃ¡Å™e uÅ¾ivatelÅ¯ v naÅ¡Ã­ aplikaci uklÃ¡dat rovnou na zeÄ ve Facebooku, ovÄ›Å™it uÅ¾ivatele pomocÃ­ jinÃ© sluÅ¾by, apod.
+* API pÃ­Å¡e autor pÅ¯vodnÃ­ho programu.
+* API jako jedno z mÃ¡la potÅ™ebuje dobrou a podrobnou (programÃ¡torskou) dokumentaci.
+* API nenÃ­ pro koncovÃ© uÅ¾ivatele, ale pro programÃ¡tory.
+* API je dÃ¡lkovÃ½ ovladaÄ k cizÃ­mu programu.
+* API "volÃ¡me" pomocÃ­ nÄ›jakÃ© sluÅ¾by, dnes typicky pÅ™es REST skrze HTTP request.
 
 
-## Ukázka REST API pro existující aplikaci
+## UkÃ¡zka REST API pro existujÃ­cÃ­ aplikaci
 
-**Poznámka: opakování z kurzu 4IZ268: https://github.com/4iz268/cviceni/tree/master/12-api**
+**PoznÃ¡mka: opakovÃ¡nÃ­ z kurzu 4IZ268: https://github.com/4iz268/cviceni/tree/master/12-api**
 
 ### URL aplikace
 
 https://hradil.vse.cz/api/clients
 
-Aplikace má i HTML rozhraní, ve kterém lze provádìt v¹echny popsané akce.
+Aplikace mÃ¡ i HTML rozhranÃ­, ve kterÃ©m lze provÃ¡dÄ›t vÅ¡echny popsanÃ© akce.
 
-### Zabezpeèení
+### ZabezpeÄenÃ­
 
-**Aplikace nemá autentizaci ani autorizaci. V¹ichni mají pøístup ke v¹emu a data lze sdílet mezi sebou.**
+**Aplikace nemÃ¡ autentizaci ani autorizaci. VÅ¡ichni majÃ­ pÅ™Ã­stup ke vÅ¡emu a data lze sdÃ­let mezi sebou.**
 
-**Pro filtrování dat lze pou¾ít parametr xname.**
+**Pro filtrovÃ¡nÃ­ dat lze pouÅ¾Ã­t parametr xname.**
 
-### Pøíklady
+### PÅ™Ã­klady
 
 ```bash
 curl -H "Content-Type: application/json" -X GET https://hradil.vse.cz/api/clients.json?xname=xhraj18
@@ -80,28 +80,28 @@ curl -H "Content-Type: application/json" -X PUT -d '{"first_name":"Jimmy","last_
 curl -H "Content-Type: application/json" -X DELETE https://hradil.vse.cz/api/clients/1.json
 ```
 
-### Formát JSON dat
+### FormÃ¡t JSON dat
 
-* id - String, generuje se automaticky pøi ulo¾ení
-* xname - String, nepovinné, identifikace studenta
-* first_name - String, nepovinné, jméno klienta
-* last_name - String, nepovinné, pøíjmení klienta
-* street - String, nepovinné, ulice klienta
-* zip - String, nepovinné, PSÈ klienta
-* town - String, nepovinné, mìsto klienta
+* id - String, generuje se automaticky pÅ™i uloÅ¾enÃ­
+* xname - String, nepovinnÃ©, identifikace studenta
+* first_name - String, nepovinnÃ©, jmÃ©no klienta
+* last_name - String, nepovinnÃ©, pÅ™Ã­jmenÃ­ klienta
+* street - String, nepovinnÃ©, ulice klienta
+* zip - String, nepovinnÃ©, PSÄŒ klienta
+* town - String, nepovinnÃ©, mÄ›sto klienta
 
 
-### GET index, vıpis v¹ech klientù
+### GET index, vÃ½pis vÅ¡ech klientÅ¯
 
-Pro filtrování záznamù pro konkrétního u¾ivatele (studenta) lze pou¾ít parametr xname.
+Pro filtrovÃ¡nÃ­ zÃ¡znamÅ¯ pro konkrÃ©tnÃ­ho uÅ¾ivatele (studenta) lze pouÅ¾Ã­t parametr xname.
 
-V pøíkladu jsme jako xname pou¾ili xhraj18, student pou¾ije svoje vlastní.
+V pÅ™Ã­kladu jsme jako xname pouÅ¾ili xhraj18, student pouÅ¾ije svoje vlastnÃ­.
 
 ```bash
 curl -H "Content-Type: application/json" -X GET https://hradil.vse.cz/api/clients.json?xname=xhraj18
 ```
 
-Vrací pole:
+VracÃ­ pole:
 
 ```json
 [{"first_name":"Jimmy","id":1,"last_name":"Hendrix","street":"Heaven Gate 1","town":"LA","xname":"xhraj18","zip":"10000"}]
@@ -109,30 +109,30 @@ Vrací pole:
 
 ### GET show, detail klienta
 
-Vy¾aduje id klienta.
+VyÅ¾aduje id klienta.
 
 
 ```bash
 curl -H "Content-Type: application/json" -X GET https://hradil.vse.cz/api/clients/1.json
 ```
 
-Vrací 1 záznam:
+VracÃ­ 1 zÃ¡znam:
 
 ```json
 {"first_name":"Jimmy","id":1,"last_name":"Hendrix","street":"Heaven Gate 1","town":"LA","xname":"xhraj18","zip":"10000"}
 ```
 
-### POST create, ulo¾ení nového klienta
+### POST create, uloÅ¾enÃ­ novÃ©ho klienta
 
-Id klienta se generuje automaticky pøi ulo¾ení, neposíláme.
+Id klienta se generuje automaticky pÅ™i uloÅ¾enÃ­, neposÃ­lÃ¡me.
 
-Jako xname pou¾ije student svoje xname, v pøíkladu pou¾íváme xhraj18.
+Jako xname pouÅ¾ije student svoje xname, v pÅ™Ã­kladu pouÅ¾Ã­vÃ¡me xhraj18.
 
 ```bash
 curl -H "Content-Type: application/json" -X POST -d '{"first_name":"Jimmy","last_name":"Hendrix", "street":"Heaven Gate 1","town":"LA","xname":"xhraj18","zip":"10000"}' https://hradil.vse.cz/api/clients.json
 ```
 
-Vrací 1 záznam vèetnì právì vygenerovaného id:
+VracÃ­ 1 zÃ¡znam vÄetnÄ› prÃ¡vÄ› vygenerovanÃ©ho id:
 
 ```json
 {"first_name":"Jimmy","id":1,"last_name":"Hendrix","street":"Heaven Gate 1","town":"LA","xname":"xhraj18","zip":"10000"}
@@ -140,41 +140,41 @@ Vrací 1 záznam vèetnì právì vygenerovaného id:
 
 ### PUT update, aktualizace klienta
 
-Vy¾aduje id klienta.
+VyÅ¾aduje id klienta.
 
 ```
 curl -H "Content-Type: application/json" -X PUT -d '{"first_name":"Jimmy","last_name":"Page", "street":"3651 Lindell Rd. Suite D1024","town":"Las Vegas","xname":"xhraj18","zip":"89103"}' https://hradil.vse.cz/api/clients/1.json
 ```
 
-Nevrací nic.
+NevracÃ­ nic.
 
 
-### DELETE, smazání klienta
+### DELETE, smazÃ¡nÃ­ klienta
 
-Vy¾aduje id klienta.
+VyÅ¾aduje id klienta.
 
 ```
 curl -H "Content-Type: application/json" -X DELETE https://hradil.vse.cz/api/clients/1.json
 ```
 
-Nevrací nic.
+NevracÃ­ nic.
 
 
-### Poznámky pro vıvojáøe API (serverová èást)
+### PoznÃ¡mky pro vÃ½vojÃ¡Å™e API (serverovÃ¡ ÄÃ¡st)
 
-Server musí do response pøidávat hlavièku:
+Server musÃ­ do response pÅ™idÃ¡vat hlaviÄku:
 
 ```
 Access-Control-Allow-Origin: *
 ```
 
-Jinak browser vyhodí bezpeènostní chybu:
+Jinak browser vyhodÃ­ bezpeÄnostnÃ­ chybu:
 
 ```
 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at https://hradil.vse.cz/api/clients.json?xname=xhraj18. (Reason: CORS header 'Access-Control-Allow-Origin' missing).
 ```
 
-V Apache se hlavièka pøidá do souboru **.htaccess**, v Nginx pod location v souboru **nginx.conf**, napø.
+V Apache se hlaviÄka pÅ™idÃ¡ do souboru **.htaccess**, v Nginx pod location v souboru **nginx.conf**, napÅ™.
 
 ```
 location ~ ^/api(/.*|$) {
@@ -188,7 +188,7 @@ location ~ ^/api(/.*|$) {
 ```
 
 
-Ukázka správné a kompletní hlavièky:
+UkÃ¡zka sprÃ¡vnÃ© a kompletnÃ­ hlaviÄky:
 
 ```
 curl -I -k -H "Content-Type: application/json" -X GET https://hradil.vse.cz/api/clients.json?xname=xhraj18
@@ -210,6 +210,6 @@ Access-Control-Allow-Origin: *
 ```
 
 
-## Domácí úkol
+## DomÃ¡cÃ­ Ãºkol
 
-* Napi¹te klienta pro jakékoli volnì dostupné API (Google Maps, Seznam Mapy, Twitter, Facebook, Pinterest, Instagram... nebo i jakékoli jiné).
+* NapiÅ¡te klienta pro jakÃ©koli volnÄ› dostupnÃ© API (Google Maps, Seznam Mapy, Twitter, Facebook, Pinterest, Instagram... nebo i jakÃ©koli jinÃ©).
