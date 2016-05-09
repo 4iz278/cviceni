@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	
+	<meta charset="utf-8" />
+
+	<title>Clients App - new</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<script>
+	
+	$(document).ready(function(){
+		
+		// vytahni z URL id klienta
+		var id = getParameterByName('id')
+				
+		// posli HTTP GET request pro klientana server API
+		// nacti kontakt do formu
+		$.ajax({
+			type : "GET",
+			url :  "https://hradil.vse.cz/api/clients/"+id+".json",
+			success: function(data){ //pokud vse dobre dopadne...
+
+				$("#first_name").val(data.first_name);
+				$("#last_name").val(data.last_name);
+		
+				$("#street").val(data.street);
+				$("#zip").val(data.zip);
+				$("#town").val(data.town);
+
+			},
+			error: function(){ //nejaka chyba
+				alert("Error!") //zobraz info
+			}
+		});
+		
+		
+		
+	});
+	
+	
+	//vytahni id z query
+	// http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+	
+	//aktualizuj kontakt
+	function updateContact() {
+		
+		// vytahni z URL id klienta
+		var id = getParameterByName('id')
+	
+		//vezmi hodnoty z formu
+		var $first_name = $("#first_name");
+		var $last_name = $("#last_name");
+		
+		var $street = $("#street");
+		var $zip = $("#zip");
+		var $town = $("#town");
+	
+		//vytvor si JSON
+		var contact = {
+			xname: 'xhraj18',
+			first_name: $first_name.val(),
+			last_name: $last_name.val(),
+			street: $street.val(),
+			zip: $zip.val(),
+			town: $town.val()
+		}
+		
+		//posli HTTP PUT request na server API
+		$.ajax({
+			type : "PUT",
+			url :  "https://hradil.vse.cz/api/clients/"+id+".json",
+			data : contact,
+			success: function(){ //pokud vse dobre dopadne...
+				alert("Client updated."); //zobraz info, ze klient byl ulozen
+				window.location.replace("./index.html"); //jdi na vypis klientu
+			},
+			error: function(){ //nejaka chyba
+				alert("Error!") //zobraz info
+			}
+		});
+		
+	}
+		
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="container">
+
+		<br>
+		<a href="index.html">Contact List</a> | 
+		<a href="new.html">New Contact</a>
+		<hr>
+		
+		<h1>Edit Contact</h1>
+		
+		<form id="form">
+			
+			<label>First Name</label><br>
+			<input type="input" name="first_name" id="first_name"><br>
+			
+			<label>Last Name</label><br>
+			<input type="input" name="last_name" id="last_name"><br>
+			
+			<label>Street</label><br>
+			<input type="input" name="street" id="street"><br>
+			
+			<label>ZIP</label><br>
+			<input type="input" name="zip" id="zip"><br>
+			
+			<label>Town</label><br>
+			<input type="input" name="town" id="town">
+			
+			<br>
+			<br>
+			<input type="button" value="Update Contact" class="btn btn-primary btn-lg" onclick="updateContact()">
+		</form>
+		
+	</div>
+
+
+</body>
+
+</html>
+
+

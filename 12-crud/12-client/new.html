@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	
+	<meta charset="utf-8" />
+
+	<title>Clients App - new</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<script>
+	
+	
+	//uloz novy kontakt
+	function createContact() {
+	
+		//vezmi hodnoty z formu
+		var $first_name = $("#first_name");
+		var $last_name = $("#last_name");
+		
+		var $street = $("#street");
+		var $zip = $("#zip");
+		var $town = $("#town");
+	
+		//vytvor si JSON
+		var contact = {
+			xname: 'xhraj18',
+			first_name: $first_name.val(),
+			last_name: $last_name.val(),
+			street: $street.val(),
+			zip: $zip.val(),
+			town: $town.val()
+		}
+		
+		//posli HTTP POST request na server API
+		$.ajax({
+			type : "POST",
+			url :  'https://hradil.vse.cz/api/clients.json',
+			data : contact,
+			success: function(){ //pokud vse dobre dopadne...
+				alert("Client saved."); //zobraz info, ze klient byl ulozen
+				window.location.replace("./index.html"); //jdi na vypis klientu
+			},
+			error: function(){ //nejaka chyba
+				alert("Error!") //zobraz info
+			}
+		});
+		
+	}
+		
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="container">
+
+		<br>
+		<a href="index.html">Contact List</a> | 
+		<a href="new.html">New Contact</a>
+		<hr>
+		
+		<h1>New Contact</h1>
+		
+		<form id="form">
+			
+			<label>First Name</label><br>
+			<input type="input" name="first_name" id="first_name"><br>
+			
+			<label>Last Name</label><br>
+			<input type="input" name="last_name" id="last_name"><br>
+			
+			<label>Street</label><br>
+			<input type="input" name="street" id="street"><br>
+			
+			<label>ZIP</label><br>
+			<input type="input" name="zip" id="zip"><br>
+			
+			<label>Town</label><br>
+			<input type="input" name="town" id="town">
+			
+			<br>
+			<br>
+			<input type="button" value="Save Contact" class="btn btn-primary btn-lg" onclick="createContact()">
+		</form>
+		
+	</div>
+
+
+</body>
+
+</html>
+
+

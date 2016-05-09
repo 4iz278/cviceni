@@ -17,7 +17,7 @@ echo json_encode([
 		'id' => 2,
 		'first_name'=> "John",
 		'last_name'=> "Frusciante",
-		'address' => "Californication & Hup de Bumb Street 33, Venice Beach, CA"
+		'address' => "Californication & Hump de Bumb Street 33, Venice Beach, CA"
 	]
 ]);
 ?>

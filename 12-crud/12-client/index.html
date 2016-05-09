@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	
+	<meta charset="utf-8" />
+
+	<title>Clients App - index</title>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+	<script>
+	
+	
+	$(document).ready(function(){
+		
+		// vypis seznam kontaktu do tabulky
+		
+		// posli HTTP GET request na server, JSON
+		$.getJSON( "https://hradil.vse.cz/api/clients.json?xname=xhraj18" ).done(function( data ) { //callback, pokud vse dopadlo OK
+			
+			//zparsuj ziskana data z JSONu
+			$.each( data, function( key, val ) {		
+				// kazdy kontakt pridej do noveho radku tabulky
+				$("#contacts-body").append("<tr><td>"+val.id+"</td><td>"+val.first_name+"</td><td>"+val.last_name+"</td><td>"+val.street+"</td><td>"+val.zip+"</td><td>"+val.town+"</td><td><a href='./edit.html?id="+val.id+"' >Edit</td><td><a onclick='deleteContact("+val.id+")'>Delete</td></tr>");
+			});
+			
+		});
+	});
+
+
+	//smaz kontakt
+	function deleteContact(id) {
+		//posli HTTP DELETE request na server API
+		$.ajax({
+			type : "DELETE",
+			url :  "https://hradil.vse.cz/api/clients/"+id+".json",
+			success: function(){ //pokud vse dobre dopadne...
+				alert("Client deleted."); //zobraz info, ze klient byl smazan
+				window.location.replace("./index.html"); //jdi na vypis klientu
+			},
+			error: function(){ //nejaka chyba
+				alert("Error!") //zobraz info
+			}
+		});
+
+}
+
+	</script>
+
+</head>
+
+<body>
+
+
+	<div class="container">
+		
+		<br>
+		<a href="index.html">Contact List</a> | 
+		<a href="new.html">New Contact</a>
+		<hr>
+
+		<h1>Contact List</h1>
+	
+		<table class="table table-bordered table-striped">
+
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Street</th>
+					<th>ZIP</th>
+					<th>Town</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+				
+			<tbody id="contacts-body">
+			</tbody>
+			
+		</table>
+	
+		
+	</div>
+	
+	
+	<script src="https://hradil.vse.cz/api/clients.json?xname=xhraj18?callback=parseContacts"></script>
+
+
+</body>
+
+</html>
+
+
