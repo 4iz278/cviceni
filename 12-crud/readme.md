@@ -12,7 +12,7 @@
 
 ## CRUD
 
-**CRUD** = **C**reate, **R**ead, **U**pdate, **D**elete = programový přístup/idiom pro práce s daty. Často ve vztahu k nějakému objektu, který jde Vytvořit, Číst, Aktualizovat a Mazat.
+**CRUD** = **C**reate, **R**ead, **U**pdate, **D**elete = programový přístup/idiom pro práci s daty. Často ve vztahu k nějakému objektu, který jde Vytvořit, Číst, Aktualizovat a Mazat.
 
 ## REST
 
