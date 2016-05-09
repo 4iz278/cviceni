@@ -259,7 +259,7 @@ curl -I http://eso.vse.cz/~xhraj18/12-server.php
 #### 2. Upravte  soubor [12-server.php](./12-server.php) tak, aby přijímal tyto requesty:
 
 * GET: Data se budou načítat z DB (dle formátu statických dat v příkladu vytvořte vhodnou DB strukturu).
-* POST: Bude možno uložit nový záznam - vytvořte formulář, který bude odesílat data přes HTTP POST a na serveru se uloží do DB.
+* POST: Bude možno přidat nový záznam pomocí HTTP POST (data odeslaná z formuláře z klientské části, kterou si sami dopíšete, viz. bod 3.)
 
 #### 3. Napište klientské rozhraní pro CRUD k serverové části
 
