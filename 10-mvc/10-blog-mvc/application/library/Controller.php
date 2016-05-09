@@ -25,7 +25,7 @@ abstract class Controller{
     $controllerName=substr($controllerName,0,strlen($controllerName)-10);
     $controllerName=str_replace('\\Controllers\\','\\Views\\',$controllerName);
 
-    $viewName=$controllerName.'_'.$viewName.'View';
+    $viewName=$controllerName.'_'.ucfirst($viewName).'View';
     return new $viewName();
   }
 
