@@ -17,7 +17,7 @@
 ## REST
 
 **REST** = **RE**presentational **S**tate **T**ransfer = architektonický přístup, který umožňuje pracovat se stránkami a měnit jejich stav. URI stránky je typicky namapováno na nějaký objekt a pomocí HTTP metod (GET, POST, PUT, DELETE) měníme stav tohoto objektu.
-** REST není protokol, jen způsob komunikace. REST se často používá pod HTTP protokolem.
+REST není protokol, jen způsob komunikace. REST se často používá pod HTTP protokolem.
 
 Pro přenos dat se obvykle používá XML nebo JSON.
 
