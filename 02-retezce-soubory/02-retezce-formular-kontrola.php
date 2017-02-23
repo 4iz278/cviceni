@@ -5,7 +5,7 @@
     if (strpos(trim(@$_POST['jmeno']),' ')===false){
       $chyby.='<p>Je nutné zadat jméno a příjmení! (min. 2 slova)</p>';
     }
-    if (mb_strlen(trim(@$_POST['adresa']),'utf8')>5){
+    if (mb_strlen(trim(@$_POST['adresa']),'utf8')<5){
       $chyby.='<p>Je nutné zadat adresu!</p>';
     }
 
