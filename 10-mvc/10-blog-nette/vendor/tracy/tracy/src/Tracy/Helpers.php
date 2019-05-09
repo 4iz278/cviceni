@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Tracy;
 
 
@@ -16,19 +18,19 @@ class Helpers
 
 	/**
 	 * Returns HTML link to editor.
-	 * @return string
 	 */
-	public static function editorLink($file, $line = NULL)
+	public static function editorLink(string $file, int $line = null): string
 	{
-		if ($editor = self::editorUri($file, $line)) {
+		$file = strtr($origFile = $file, Debugger::$editorMapping);
+		if ($editor = self::editorUri($origFile, $line)) {
 			$file = strtr($file, '\\', '/');
-			if (preg_match('#(^[a-z]:)?/.{1,50}$#i', $file, $m) && strlen($file) > strlen($m[0])) {
+			if (preg_match('#(^[a-z]:)?/.{1,40}$#i', $file, $m) && strlen($file) > strlen($m[0])) {
 				$file = '...' . $m[0];
 			}
 			$file = strtr($file, '/', DIRECTORY_SEPARATOR);
 			return self::formatHtml('<a href="%" title="%">%<b>%</b>%</a>',
 				$editor,
-				$file . ($line ? ":$line" : ''),
+				$origFile . ($line ? ":$line" : ''),
 				rtrim(dirname($file), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
 				basename($file),
 				$line ? ":$line" : ''
@@ -41,61 +43,75 @@ class Helpers
 
 	/**
 	 * Returns link to editor.
-	 * @return string
 	 */
-	public static function editorUri($file, $line = NULL)
+	public static function editorUri(string $file, int $line = null, string $action = 'open', string $search = '', string $replace = ''): ?string
 	{
-		if (Debugger::$editor && $file && is_file($file)) {
-			return strtr(Debugger::$editor, array('%file' => rawurlencode($file), '%line' => $line ? (int) $line : 1));
+		if (Debugger::$editor && $file && ($action === 'create' || is_file($file))) {
+			$file = strtr($file, '/', DIRECTORY_SEPARATOR);
+			$file = strtr($file, Debugger::$editorMapping);
+			return strtr(Debugger::$editor, [
+				'%action' => $action,
+				'%file' => rawurlencode($file),
+				'%line' => $line ?: 1,
+				'%search' => rawurlencode($search),
+				'%replace' => rawurlencode($replace),
+			]);
 		}
+		return null;
 	}
 
 
-	public static function formatHtml($mask)
+	public static function formatHtml(string $mask): string
 	{
 		$args = func_get_args();
-		return preg_replace_callback('#%#', function () use (& $args, & $count) {
-			return htmlspecialchars($args[++$count], ENT_IGNORE | ENT_QUOTES, 'UTF-8');
+		return preg_replace_callback('#%#', function () use (&$args, &$count): string {
+			return self::escapeHtml($args[++$count]);
 		}, $mask);
 	}
 
 
-	public static function findTrace(array $trace, $method, & $index = NULL)
+	public static function escapeHtml($s): string
 	{
-		$m = explode('::', $method);
+		return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+	}
+
+
+	public static function findTrace(array $trace, $method, int &$index = null): ?array
+	{
+		$m = is_array($method) ? $method : explode('::', $method);
 		foreach ($trace as $i => $item) {
-			if (isset($item['function']) && $item['function'] === end($m)
+			if (
+				isset($item['function'])
+				&& $item['function'] === end($m)
 				&& isset($item['class']) === isset($m[1])
-				&& (!isset($item['class']) || $item['class'] === $m[0] || $m[0] === '*' || is_subclass_of($item['class'], $m[0]))
+				&& (!isset($item['class']) || $m[0] === '*' || is_a($item['class'], $m[0], true))
 			) {
 				$index = $i;
 				return $item;
 			}
 		}
+		return null;
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public static function getClass($obj)
+	public static function getClass($obj): string
 	{
-		return current(explode("\x00", get_class($obj)));
+		return explode("\x00", get_class($obj))[0];
 	}
 
 
 	/** @internal */
-	public static function fixStack($exception)
+	public static function fixStack(\Throwable $exception): \Throwable
 	{
 		if (function_exists('xdebug_get_function_stack')) {
-			$stack = array();
+			$stack = [];
 			foreach (array_slice(array_reverse(xdebug_get_function_stack()), 2, -1) as $row) {
-				$frame = array(
+				$frame = [
 					'file' => $row['file'],
 					'line' => $row['line'],
-					'function' => isset($row['function']) ? $row['function'] : '*unknown*',
-					'args' => array(),
-				);
+					'function' => $row['function'] ?? '*unknown*',
+					'args' => [],
+				];
 				if (!empty($row['class'])) {
 					$frame['type'] = isset($row['type']) && $row['type'] === 'dynamic' ? '->' : '::';
 					$frame['class'] = $row['class'];
@@ -103,7 +119,7 @@ class Helpers
 				$stack[] = $frame;
 			}
 			$ref = new \ReflectionProperty('Exception', 'trace');
-			$ref->setAccessible(TRUE);
+			$ref->setAccessible(true);
 			$ref->setValue($exception, $stack);
 		}
 		return $exception;
@@ -111,20 +127,16 @@ class Helpers
 
 
 	/** @internal */
-	public static function fixEncoding($s)
+	public static function fixEncoding(string $s): string
 	{
-		if (PHP_VERSION_ID < 50400) {
-			return @iconv('UTF-16', 'UTF-8//IGNORE', iconv('UTF-8', 'UTF-16//IGNORE', $s)); // intentionally @
-		} else {
-			return htmlspecialchars_decode(htmlspecialchars($s, ENT_NOQUOTES | ENT_IGNORE, 'UTF-8'), ENT_NOQUOTES);
-		}
+		return htmlspecialchars_decode(htmlspecialchars($s, ENT_NOQUOTES | ENT_IGNORE, 'UTF-8'), ENT_NOQUOTES);
 	}
 
 
 	/** @internal */
-	public static function errorTypeToString($type)
+	public static function errorTypeToString(int $type): string
 	{
-		$types = array(
+		$types = [
 			E_ERROR => 'Fatal Error',
 			E_USER_ERROR => 'User Error',
 			E_RECOVERABLE_ERROR => 'Recoverable Error',
@@ -140,73 +152,121 @@ class Helpers
 			E_STRICT => 'Strict standards',
 			E_DEPRECATED => 'Deprecated',
 			E_USER_DEPRECATED => 'User Deprecated',
-		);
-		return isset($types[$type]) ? $types[$type] : 'Unknown error';
+		];
+		return $types[$type] ?? 'Unknown error';
 	}
 
 
 	/** @internal */
-	public static function getSource()
+	public static function getSource(): string
 	{
 		if (isset($_SERVER['REQUEST_URI'])) {
 			return (!empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'off') ? 'https://' : 'http://')
-				. (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '')
+				. ($_SERVER['HTTP_HOST'] ?? '')
 				. $_SERVER['REQUEST_URI'];
 		} else {
-			return empty($_SERVER['argv']) ? 'CLI' : 'CLI: ' . implode(' ', $_SERVER['argv']);
+			return 'CLI (PID: ' . getmypid() . ')'
+				. ': ' . implode(' ', array_map([self::class, 'escapeArg'], $_SERVER['argv']));
 		}
 	}
 
 
 	/** @internal */
-	public static function improveException($e)
+	public static function improveException(\Throwable $e): void
 	{
 		$message = $e->getMessage();
 		if (!$e instanceof \Error && !$e instanceof \ErrorException) {
 			// do nothing
 		} elseif (preg_match('#^Call to undefined function (\S+\\\\)?(\w+)\(#', $message, $m)) {
-			$funcs = get_defined_functions();
-			$funcs = array_merge($funcs['internal'], $funcs['user']);
+			$funcs = array_merge(get_defined_functions()['internal'], get_defined_functions()['user']);
 			$hint = self::getSuggestion($funcs, $m[1] . $m[2]) ?: self::getSuggestion($funcs, $m[2]);
-			$message .= ", did you mean $hint()?";
+			$message = "Call to undefined function $m[2](), did you mean $hint()?";
+			$replace = ["$m[2](", "$hint("];
 
-		} elseif (preg_match('#^Call to undefined method (\S+)::(\w+)#', $message, $m)) {
-			$hint = self::getSuggestion(get_class_methods($m[1]), $m[2]);
+		} elseif (preg_match('#^Call to undefined method ([\w\\\\]+)::(\w+)#', $message, $m)) {
+			$hint = self::getSuggestion(get_class_methods($m[1]) ?: [], $m[2]);
 			$message .= ", did you mean $hint()?";
+			$replace = ["$m[2](", "$hint("];
 
 		} elseif (preg_match('#^Undefined variable: (\w+)#', $message, $m) && !empty($e->context)) {
 			$hint = self::getSuggestion(array_keys($e->context), $m[1]);
 			$message = "Undefined variable $$m[1], did you mean $$hint?";
+			$replace = ["$$m[1]", "$$hint"];
 
-		} elseif (preg_match('#^Undefined property: (\S+)::\$(\w+)#', $message, $m)) {
+		} elseif (preg_match('#^Undefined property: ([\w\\\\]+)::\$(\w+)#', $message, $m)) {
 			$rc = new \ReflectionClass($m[1]);
 			$items = array_diff($rc->getProperties(\ReflectionProperty::IS_PUBLIC), $rc->getProperties(\ReflectionProperty::IS_STATIC));
 			$hint = self::getSuggestion($items, $m[2]);
 			$message .= ", did you mean $$hint?";
+			$replace = ["->$m[2]", "->$hint"];
 
-		} elseif (preg_match('#^Access to undeclared static property: (\S+)::\$(\w+)#', $message, $m)) {
+		} elseif (preg_match('#^Access to undeclared static property: ([\w\\\\]+)::\$(\w+)#', $message, $m)) {
 			$rc = new \ReflectionClass($m[1]);
 			$items = array_intersect($rc->getProperties(\ReflectionProperty::IS_PUBLIC), $rc->getProperties(\ReflectionProperty::IS_STATIC));
 			$hint = self::getSuggestion($items, $m[2]);
 			$message .= ", did you mean $$hint?";
+			$replace = ["::$$m[2]", "::$$hint"];
 		}
 
 		if (isset($hint)) {
 			$ref = new \ReflectionProperty($e, 'message');
-			$ref->setAccessible(TRUE);
+			$ref->setAccessible(true);
 			$ref->setValue($e, $message);
+			$e->tracyAction = [
+				'link' => self::editorUri($e->getFile(), $e->getLine(), 'fix', $replace[0], $replace[1]),
+				'label' => 'fix it',
+			];
 		}
+	}
+
+
+	/** @internal */
+	public static function improveError(string $message, array $context = []): string
+	{
+		if (preg_match('#^Undefined variable: (\w+)#', $message, $m) && $context) {
+			$hint = self::getSuggestion(array_keys($context), $m[1]);
+			return $hint ? "Undefined variable $$m[1], did you mean $$hint?" : $message;
+
+		} elseif (preg_match('#^Undefined property: ([\w\\\\]+)::\$(\w+)#', $message, $m)) {
+			$rc = new \ReflectionClass($m[1]);
+			$items = array_diff($rc->getProperties(\ReflectionProperty::IS_PUBLIC), $rc->getProperties(\ReflectionProperty::IS_STATIC));
+			$hint = self::getSuggestion($items, $m[2]);
+			return $hint ? $message . ", did you mean $$hint?" : $message;
+		}
+		return $message;
+	}
+
+
+	/** @internal */
+	public static function guessClassFile(string $class): ?string
+	{
+		$segments = explode(DIRECTORY_SEPARATOR, $class);
+		$res = null;
+		$max = 0;
+		foreach (get_declared_classes() as $class) {
+			$parts = explode(DIRECTORY_SEPARATOR, $class);
+			foreach ($parts as $i => $part) {
+				if ($part !== $segments[$i] ?? null) {
+					break;
+				}
+			}
+			if ($i > $max && ($file = (new \ReflectionClass($class))->getFileName())) {
+				$max = $i;
+				$res = array_merge(array_slice(explode(DIRECTORY_SEPARATOR, $file), 0, $i - count($parts)), array_slice($segments, $i));
+				$res = implode(DIRECTORY_SEPARATOR, $res) . '.php';
+			}
+		}
+		return $res;
 	}
 
 
 	/**
 	 * Finds the best suggestion.
-	 * @return string|NULL
 	 * @internal
 	 */
-	public static function getSuggestion(array $items, $value)
+	public static function getSuggestion(array $items, string $value): ?string
 	{
-		$best = NULL;
+		$best = null;
 		$min = (strlen($value) / 4 + 1) * 10 + .1;
 		foreach (array_unique($items, SORT_REGULAR) as $item) {
 			$item = is_object($item) ? $item->getName() : $item;
@@ -218,4 +278,43 @@ class Helpers
 		return $best;
 	}
 
+
+	/** @internal */
+	public static function isHtmlMode(): bool
+	{
+		return empty($_SERVER['HTTP_X_REQUESTED_WITH']) && empty($_SERVER['HTTP_X_TRACY_AJAX'])
+			&& PHP_SAPI !== 'cli'
+			&& !preg_match('#^Content-Type: (?!text/html)#im', implode("\n", headers_list()));
+	}
+
+
+	/** @internal */
+	public static function isAjax(): bool
+	{
+		return isset($_SERVER['HTTP_X_TRACY_AJAX']) && preg_match('#^\w{10,15}\z#', $_SERVER['HTTP_X_TRACY_AJAX']);
+	}
+
+
+	/** @internal */
+	public static function getNonce(): ?string
+	{
+		return preg_match('#^Content-Security-Policy(?:-Report-Only)?:.*\sscript-src\s+(?:[^;]+\s)?\'nonce-([\w+/]+=*)\'#mi', implode("\n", headers_list()), $m)
+			? $m[1]
+			: null;
+	}
+
+
+	/**
+	 * Escape a string to be used as a shell argument.
+	 */
+	private static function escapeArg(string $s): string
+	{
+		if (preg_match('#^[a-z0-9._=/:-]+\z#i', $s)) {
+			return $s;
+		}
+
+		return defined('PHP_WINDOWS_VERSION_BUILD')
+			? '"' . str_replace('"', '""', $s) . '"'
+			: escapeshellarg($s);
+	}
 }

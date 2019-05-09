@@ -1,6 +1,7 @@
 {
 	"name": "nette/finder",
-	"description": "Nette Finder: Files Searching",
+	"description": "🔍 Nette Finder: find files and directories with an intuitive API.",
+	"keywords": ["nette", "filesystem", "iterator", "glob"],
 	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"authors": [
@@ -14,11 +15,12 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.1",
-		"nette/utils": "~2.2"
+		"php": ">=7.1",
+		"nette/utils": "^2.4 || ~3.0.0"
 	},
 	"require-dev": {
-		"nette/tester": "~1.4"
+		"nette/tester": "^2.0",
+		"tracy/tracy": "^2.3"
 	},
 	"conflict": {
 		"nette/nette": "<2.2"
@@ -26,5 +28,10 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.5-dev"
+		}
+	}
 }

@@ -17,22 +17,20 @@ interface IComponent
 	const NAME_SEPARATOR = '-';
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
 	function getName();
 
 	/**
-	 * Returns the container if any.
-	 * @return IContainer|NULL
+	 * Returns the parent container if any.
+	 * @return IContainer|null
 	 */
 	function getParent();
 
 	/**
 	 * Sets the parent of this component.
-	 * @param  IContainer
-	 * @param  string
-	 * @return void
+	 * @param  string  $name
+	 * @return static
 	 */
-	function setParent(IContainer $parent = NULL, $name = NULL);
-
+	function setParent(IContainer $parent = null, $name = null);
 }

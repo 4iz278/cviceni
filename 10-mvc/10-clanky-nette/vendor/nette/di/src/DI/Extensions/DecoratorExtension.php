@@ -15,22 +15,23 @@ use Nette;
  */
 class DecoratorExtension extends Nette\DI\CompilerExtension
 {
-	public $defaults = array(
-		'setup' => array(),
-		'tags' => array(),
-		'inject' => NULL,
-	);
+	public $defaults = [
+		'setup' => [],
+		'tags' => [],
+		'inject' => null,
+	];
 
 
 	public function beforeCompile()
 	{
-		foreach ($this->getConfig() as $class => $info) {
-			$info = $this->validateConfig($this->defaults, $info, $this->prefix($class));
-			if ($info['inject'] !== NULL) {
+		foreach ($this->getConfig() as $type => $info) {
+			$info = $this->validateConfig($this->defaults, $info, $this->prefix($type));
+			if ($info['inject'] !== null) {
 				$info['tags'][InjectExtension::TAG_INJECT] = $info['inject'];
 			}
-			$this->addSetups($class, (array) $info['setup']);
-			$this->addTags($class, (array) $info['tags']);
+			$info = Nette\DI\Helpers::filterArguments($info);
+			$this->addSetups($type, (array) $info['setup']);
+			$this->addTags($type, (array) $info['tags']);
 		}
 	}
 
@@ -39,6 +40,9 @@ class DecoratorExtension extends Nette\DI\CompilerExtension
 	{
 		foreach ($this->findByType($type) as $def) {
 			foreach ($setups as $setup) {
+				if (is_array($setup)) {
+					$setup = new Nette\DI\Statement(key($setup), array_values($setup));
+				}
 				$def->addSetup($setup);
 			}
 		}
@@ -47,7 +51,7 @@ class DecoratorExtension extends Nette\DI\CompilerExtension
 
 	public function addTags($type, array $tags)
 	{
-		$tags = Nette\Utils\Arrays::normalize($tags, TRUE);
+		$tags = Nette\Utils\Arrays::normalize($tags, true);
 		foreach ($this->findByType($type) as $def) {
 			$def->setTags($def->getTags() + $tags);
 		}
@@ -56,13 +60,9 @@ class DecoratorExtension extends Nette\DI\CompilerExtension
 
 	private function findByType($type)
 	{
-		$type = ltrim($type, '\\');
 		return array_filter($this->getContainerBuilder()->getDefinitions(), function ($def) use ($type) {
-			return $def->getClass() === $type || is_subclass_of($def->getClass(), $type)
-				|| (PHP_VERSION_ID < 50307 && array_key_exists($type, class_implements($def->getClass())))
-				|| $def->getImplement() === $type || is_subclass_of($def->getImplement(), $type)
-				|| (PHP_VERSION_ID < 50307 && $def->getImplement() && array_key_exists($type, class_implements($def->getImplement())));
+			return is_a($def->getImplement(), $type, true)
+				|| ($def->getImplementMode() !== $def::IMPLEMENT_MODE_GET && is_a($def->getType(), $type, true));
 		});
 	}
-
 }

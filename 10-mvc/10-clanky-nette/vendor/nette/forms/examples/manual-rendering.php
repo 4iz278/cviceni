@@ -23,14 +23,14 @@ $form->addText('name')
 $form->addText('age')
 	->setRequired('Enter your age');
 
-$form->addRadioList('gender', NULL, array(
+$form->addRadioList('gender', null, [
 	'm' => 'male',
 	'f' => 'female',
-));
+]);
 
 $form->addText('email')
-	->addCondition($form::FILLED)
-		->addRule($form::EMAIL, 'Incorrect email address');
+	->setRequired(false)
+	->addRule($form::EMAIL, 'Incorrect email address');
 
 $form->addSubmit('submit');
 

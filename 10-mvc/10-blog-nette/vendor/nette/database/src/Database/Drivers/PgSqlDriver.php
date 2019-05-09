@@ -13,8 +13,10 @@ use Nette;
 /**
  * Supplemental PostgreSQL database driver.
  */
-class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDriver
+class PgSqlDriver implements Nette\Database\ISupplementalDriver
 {
+	use Nette\SmartObject;
+
 	/** @var Nette\Database\Connection */
 	private $connection;
 
@@ -27,8 +29,8 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 
 	public function convertException(\PDOException $e)
 	{
-		$code = isset($e->errorInfo[0]) ? $e->errorInfo[0] : NULL;
-		if ($code === '0A000' && strpos($e->getMessage(), 'truncate') !== FALSE) {
+		$code = isset($e->errorInfo[0]) ? $e->errorInfo[0] : null;
+		if ($code === '0A000' && strpos($e->getMessage(), 'truncate') !== false) {
 			return Nette\Database\ForeignKeyConstraintViolationException::from($e);
 
 		} elseif ($code === '23502') {
@@ -52,9 +54,6 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	/********************* SQL ****************d*g**/
 
 
-	/**
-	 * Delimites identifier for use in a SQL statement.
-	 */
 	public function delimite($name)
 	{
 		// @see http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS
@@ -62,54 +61,39 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Formats boolean for use in a SQL statement.
-	 */
 	public function formatBool($value)
 	{
 		return $value ? 'TRUE' : 'FALSE';
 	}
 
 
-	/**
-	 * Formats date-time for use in a SQL statement.
-	 */
 	public function formatDateTime(/*\DateTimeInterface*/ $value)
 	{
 		return $value->format("'Y-m-d H:i:s'");
 	}
 
 
-	/**
-	 * Formats date-time interval for use in a SQL statement.
-	 */
 	public function formatDateInterval(\DateInterval $value)
 	{
 		throw new Nette\NotSupportedException;
 	}
 
 
-	/**
-	 * Encodes string for use in a LIKE statement.
-	 */
 	public function formatLike($value, $pos)
 	{
-		$bs = substr($this->connection->quote('\\', \PDO::PARAM_STR), 1, -1); // standard_conforming_strings = on/off
-		$value = substr($this->connection->quote($value, \PDO::PARAM_STR), 1, -1);
-		$value = strtr($value, array('%' => $bs . '%', '_' => $bs . '_', '\\' => '\\\\'));
+		$bs = substr($this->connection->quote('\\'), 1, -1); // standard_conforming_strings = on/off
+		$value = substr($this->connection->quote($value), 1, -1);
+		$value = strtr($value, ['%' => $bs . '%', '_' => $bs . '_', '\\' => '\\\\']);
 		return ($pos <= 0 ? "'%" : "'") . $value . ($pos >= 0 ? "%'" : "'");
 	}
 
 
-	/**
-	 * Injects LIMIT/OFFSET to the SQL query.
-	 */
-	public function applyLimit(& $sql, $limit, $offset)
+	public function applyLimit(&$sql, $limit, $offset)
 	{
 		if ($limit < 0 || $offset < 0) {
 			throw new Nette\InvalidArgumentException('Negative offset or limit.');
 		}
-		if ($limit !== NULL) {
+		if ($limit !== null) {
 			$sql .= ' LIMIT ' . (int) $limit;
 		}
 		if ($offset) {
@@ -118,9 +102,6 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Normalizes result row.
-	 */
 	public function normalizeRow($row)
 	{
 		return $row;
@@ -130,22 +111,19 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	/********************* reflection ****************d*g**/
 
 
-	/**
-	 * Returns list of tables.
-	 */
 	public function getTables()
 	{
-		$tables = array();
+		$tables = [];
 		foreach ($this->connection->query("
 			SELECT DISTINCT ON (c.relname)
 				c.relname::varchar AS name,
-				c.relkind = 'v' AS view,
+				c.relkind IN ('v', 'm') AS view,
 				n.nspname::varchar || '.' || c.relname::varchar AS \"fullName\"
 			FROM
 				pg_catalog.pg_class AS c
 				JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
 			WHERE
-				c.relkind IN ('r', 'v')
+				c.relkind IN ('r', 'v', 'm')
 				AND n.nspname = ANY (pg_catalog.current_schemas(FALSE))
 			ORDER BY
 				c.relname
@@ -157,12 +135,9 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Returns metadata for all columns in a table.
-	 */
 	public function getColumns($table)
 	{
-		$columns = array();
+		$columns = [];
 		foreach ($this->connection->query("
 			SELECT
 				a.attname::varchar AS name,
@@ -200,12 +175,9 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Returns metadata for all indexes in a table.
-	 */
 	public function getIndexes($table)
 	{
-		$indexes = array();
+		$indexes = [];
 		foreach ($this->connection->query("
 			SELECT
 				c2.relname::varchar AS name,
@@ -231,9 +203,6 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Returns metadata for all foreign keys in a table.
-	 */
 	public function getForeignKeys($table)
 	{
 		/* Does't work with multicolumn foreign keys */
@@ -258,19 +227,17 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	}
 
 
-	/**
-	 * Returns associative array of detected types (IReflection::FIELD_*) in result set.
-	 */
 	public function getColumnTypes(\PDOStatement $statement)
 	{
-		return Nette\Database\Helpers::detectTypes($statement);
+		static $cache;
+		$item = &$cache[$statement->queryString];
+		if ($item === null) {
+			$item = Nette\Database\Helpers::detectTypes($statement);
+		}
+		return $item;
 	}
 
 
-	/**
-	 * @param  string
-	 * @return bool
-	 */
 	public function isSupported($item)
 	{
 		return $item === self::SUPPORT_SEQUENCE || $item === self::SUPPORT_SUBSELECT || $item === self::SUPPORT_SCHEMA;
@@ -284,7 +251,6 @@ class PgSqlDriver extends Nette\Object implements Nette\Database\ISupplementalDr
 	 */
 	private function delimiteFQN($name)
 	{
-		return implode('.', array_map(array($this, 'delimite'), explode('.', $name)));
+		return implode('.', array_map([$this, 'delimite'], explode('.', $name)));
 	}
-
 }

@@ -15,10 +15,12 @@ use Nette;
  */
 class DIExtension extends Nette\DI\CompilerExtension
 {
-	public $defaults = array(
-		'debugger' => FALSE,
-		'accessors' => FALSE,
-	);
+	public $defaults = [
+		'debugger' => true,
+		'accessors' => false,
+		'excluded' => [],
+		'parentClass' => null,
+	];
 
 	/** @var bool */
 	private $debugMode;
@@ -27,48 +29,39 @@ class DIExtension extends Nette\DI\CompilerExtension
 	private $time;
 
 
-	public function __construct($debugMode = FALSE)
+	public function __construct($debugMode = false)
 	{
 		$this->debugMode = $debugMode;
-		$this->time = microtime(TRUE);
+		$this->time = microtime(true);
 	}
 
 
 	public function loadConfiguration()
 	{
 		$config = $this->validateConfig($this->defaults);
-		if ($config['accessors']) {
-			$this->getContainerBuilder()->parameters['container']['accessors'] = TRUE;
-		}
+		$builder = $this->getContainerBuilder();
+		$builder->addExcludedClasses($config['excluded']);
 	}
 
 
 	public function afterCompile(Nette\PhpGenerator\ClassType $class)
 	{
+		if ($this->config['parentClass']) {
+			$class->setExtends($this->config['parentClass']);
+		}
+
 		$initialize = $class->getMethod('initialize');
-		$container = $this->getContainerBuilder();
+		$builder = $this->getContainerBuilder();
 
 		if ($this->debugMode && $this->config['debugger']) {
 			Nette\Bridges\DITracy\ContainerPanel::$compilationTime = $this->time;
-			$initialize->addBody($container->formatPhp('?;', array(
-				new Nette\DI\Statement('@Tracy\Bar::addPanel', array(new Nette\DI\Statement('Nette\Bridges\DITracy\ContainerPanel'))),
-			)));
+			$initialize->addBody($builder->formatPhp('?;', [
+				new Nette\DI\Statement('@Tracy\Bar::addPanel', [new Nette\DI\Statement(Nette\Bridges\DITracy\ContainerPanel::class)]),
+			]));
 		}
 
-		foreach (array_filter($container->findByTag('run')) as $name => $on) {
-			$initialize->addBody('$this->getService(?);', array($name));
-		}
-
-		if (!empty($this->config['accessors'])) {
-			$definitions = $container->getDefinitions();
-			ksort($definitions);
-			foreach ($definitions as $name => $def) {
-				if (Nette\PhpGenerator\Helpers::isIdentifier($name)) {
-					$type = $def->getImplement() ?: $def->getClass();
-					$class->addDocument("@property $type \$$name");
-				}
-			}
+		foreach (array_filter($builder->findByTag('run')) as $name => $on) {
+			$initialize->addBody('$this->getService(?);', [$name]);
 		}
 	}
-
 }

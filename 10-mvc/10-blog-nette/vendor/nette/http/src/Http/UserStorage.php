@@ -14,8 +14,10 @@ use Nette\Security\IIdentity;
 /**
  * Session storage for user object.
  */
-class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
+class UserStorage implements Nette\Security\IUserStorage
 {
+	use Nette\SmartObject;
+
 	/** @var string */
 	private $namespace = '';
 
@@ -35,23 +37,23 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 	/**
 	 * Sets the authenticated status of this user.
 	 * @param  bool
-	 * @return self
+	 * @return static
 	 */
 	public function setAuthenticated($state)
 	{
-		$section = $this->getSessionSection(TRUE);
+		$section = $this->getSessionSection(true);
 		$section->authenticated = (bool) $state;
 
 		// Session Fixation defence
 		$this->sessionHandler->regenerateId();
 
 		if ($state) {
-			$section->reason = NULL;
+			$section->reason = null;
 			$section->authTime = time(); // informative value
 
 		} else {
 			$section->reason = self::MANUAL;
-			$section->authTime = NULL;
+			$section->authTime = null;
 		}
 		return $this;
 	}
@@ -63,43 +65,43 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 	 */
 	public function isAuthenticated()
 	{
-		$session = $this->getSessionSection(FALSE);
+		$session = $this->getSessionSection(false);
 		return $session && $session->authenticated;
 	}
 
 
 	/**
 	 * Sets the user identity.
-	 * @return self
+	 * @return static
 	 */
-	public function setIdentity(IIdentity $identity = NULL)
+	public function setIdentity(IIdentity $identity = null)
 	{
-		$this->getSessionSection(TRUE)->identity = $identity;
+		$this->getSessionSection(true)->identity = $identity;
 		return $this;
 	}
 
 
 	/**
 	 * Returns current user identity, if any.
-	 * @return Nette\Security\IIdentity|NULL
+	 * @return Nette\Security\IIdentity|null
 	 */
 	public function getIdentity()
 	{
-		$session = $this->getSessionSection(FALSE);
-		return $session ? $session->identity : NULL;
+		$session = $this->getSessionSection(false);
+		return $session ? $session->identity : null;
 	}
 
 
 	/**
 	 * Changes namespace; allows more users to share a session.
 	 * @param  string
-	 * @return self
+	 * @return static
 	 */
 	public function setNamespace($namespace)
 	{
 		if ($this->namespace !== $namespace) {
 			$this->namespace = (string) $namespace;
-			$this->sessionSection = NULL;
+			$this->sessionSection = null;
 		}
 		return $this;
 	}
@@ -117,13 +119,13 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 
 	/**
 	 * Enables log out after inactivity.
-	 * @param  string|int|\DateTime Number of seconds or timestamp
-	 * @param  int Log out when the browser is closed | Clear the identity from persistent storage?
-	 * @return self
+	 * @param  string|int|\DateTimeInterface Number of seconds or timestamp
+	 * @param  int  flag IUserStorage::CLEAR_IDENTITY
+	 * @return static
 	 */
 	public function setExpiration($time, $flags = 0)
 	{
-		$section = $this->getSessionSection(TRUE);
+		$section = $this->getSessionSection(true);
 		if ($time) {
 			$time = Nette\Utils\DateTime::from($time)->format('U');
 			$section->expireTime = $time;
@@ -134,9 +136,6 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 		}
 
 		$section->expireIdentity = (bool) ($flags & self::CLEAR_IDENTITY);
-		$section->expireBrowser = (bool) ($flags & self::BROWSER_CLOSED);
-		$section->browserCheck = TRUE;
-		$section->setExpiration(0, 'browserCheck');
 		$section->setExpiration($time, 'foo'); // time check
 		return $this;
 	}
@@ -144,27 +143,27 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 
 	/**
 	 * Why was user logged out?
-	 * @return int|NULL
+	 * @return int|null
 	 */
 	public function getLogoutReason()
 	{
-		$session = $this->getSessionSection(FALSE);
-		return $session ? $session->reason : NULL;
+		$session = $this->getSessionSection(false);
+		return $session ? $session->reason : null;
 	}
 
 
 	/**
 	 * Returns and initializes $this->sessionSection.
-	 * @return SessionSection
+	 * @return SessionSection|null
 	 */
 	protected function getSessionSection($need)
 	{
-		if ($this->sessionSection !== NULL) {
+		if ($this->sessionSection !== null) {
 			return $this->sessionSection;
 		}
 
 		if (!$need && !$this->sessionHandler->exists()) {
-			return NULL;
+			return null;
 		}
 
 		$this->sessionSection = $section = $this->sessionHandler->getSection('Nette.Http.UserStorage/' . $this->namespace);
@@ -173,18 +172,10 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 			$section->remove();
 		}
 
-		if ($section->authenticated && $section->expireBrowser && !$section->browserCheck) { // check if browser was closed?
-			$section->reason = self::BROWSER_CLOSED;
-			$section->authenticated = FALSE;
-			if ($section->expireIdentity) {
-				unset($section->identity);
-			}
-		}
-
 		if ($section->authenticated && $section->expireDelta > 0) { // check time expiration
 			if ($section->expireTime < time()) {
 				$section->reason = self::INACTIVITY;
-				$section->authenticated = FALSE;
+				$section->authenticated = false;
 				if ($section->expireIdentity) {
 					unset($section->identity);
 				}
@@ -193,11 +184,9 @@ class UserStorage extends Nette\Object implements Nette\Security\IUserStorage
 		}
 
 		if (!$section->authenticated) {
-			unset($section->expireTime, $section->expireDelta, $section->expireIdentity,
-				$section->expireBrowser, $section->browserCheck, $section->authTime);
+			unset($section->expireTime, $section->expireDelta, $section->expireIdentity, $section->authTime);
 		}
 
 		return $this->sessionSection;
 	}
-
 }

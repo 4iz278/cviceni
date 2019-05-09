@@ -5,6 +5,8 @@
  * Copyright (c) 2008 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Latte\Runtime;
 
 use Latte;
@@ -25,6 +27,8 @@ use Latte;
  */
 class CachingIterator extends \CachingIterator implements \Countable
 {
+	use Latte\Strict;
+
 	/** @var int */
 	private $counter = 0;
 
@@ -53,10 +57,9 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Is the current element the first one?
-	 * @param  int  grid width
-	 * @return bool
+	 * @param  int  $width
 	 */
-	public function isFirst($width = NULL)
+	public function isFirst(int $width = null): bool
 	{
 		return $this->counter === 1 || ($width && $this->counter !== 0 && (($this->counter - 1) % $width) === 0);
 	}
@@ -64,10 +67,9 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Is the current element the last one?
-	 * @param  int  grid width
-	 * @return bool
+	 * @param  int  $width
 	 */
-	public function isLast($width = NULL)
+	public function isLast(int $width = null): bool
 	{
 		return !$this->hasNext() || ($width && ($this->counter % $width) === 0);
 	}
@@ -75,9 +77,8 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Is the iterator empty?
-	 * @return bool
 	 */
-	public function isEmpty()
+	public function isEmpty(): bool
 	{
 		return $this->counter === 0;
 	}
@@ -85,9 +86,8 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Is the counter odd?
-	 * @return bool
 	 */
-	public function isOdd()
+	public function isOdd(): bool
 	{
 		return $this->counter % 2 === 1;
 	}
@@ -95,9 +95,8 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Is the counter even?
-	 * @return bool
 	 */
-	public function isEven()
+	public function isEven(): bool
 	{
 		return $this->counter % 2 === 0;
 	}
@@ -105,19 +104,26 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Returns the counter.
-	 * @return int
 	 */
-	public function getCounter()
+	public function getCounter(): int
 	{
 		return $this->counter;
 	}
 
 
 	/**
-	 * Returns the count of elements.
-	 * @return int
+	 * Returns the counter as string
 	 */
-	public function count()
+	public function __toString(): string
+	{
+		return (string) $this->counter;
+	}
+
+
+	/**
+	 * Returns the count of elements.
+	 */
+	public function count(): int
 	{
 		$inner = $this->getInnerIterator();
 		if ($inner instanceof \Countable) {
@@ -131,9 +137,8 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Forwards to the next element.
-	 * @return void
 	 */
-	public function next()
+	public function next(): void
 	{
 		parent::next();
 		if (parent::valid()) {
@@ -144,9 +149,8 @@ class CachingIterator extends \CachingIterator implements \Countable
 
 	/**
 	 * Rewinds the Iterator.
-	 * @return void
 	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		parent::rewind();
 		$this->counter = parent::valid() ? 1 : 0;
@@ -173,17 +177,7 @@ class CachingIterator extends \CachingIterator implements \Countable
 	}
 
 
-	/********************* Latte\Object behaviour + property accessor ****************d*g**/
-
-
-	/**
-	 * Call to undefined method.
-	 * @throws \LogicException
-	 */
-	public function __call($name, $args)
-	{
-		throw new \LogicException(sprintf('Call to undefined method %s::%s().', get_class($this), $name));
-	}
+	/********************* property accessor ****************d*g**/
 
 
 	/**
@@ -196,37 +190,15 @@ class CachingIterator extends \CachingIterator implements \Countable
 			$ret = $this->$m();
 			return $ret;
 		}
-		throw new \LogicException(sprintf('Attempt to read undeclared property %s::$%s.', get_class($this), $name));
-	}
-
-
-	/**
-	 * Access to undeclared property.
-	 * @throws \LogicException
-	 */
-	public function __set($name, $value)
-	{
-		throw new \LogicException(sprintf('Attempt to write to undeclared property %s::$%s.', get_class($this), $name));
+		throw new \LogicException('Attempt to read undeclared property ' . get_class($this) . "::\$$name.");
 	}
 
 
 	/**
 	 * Is property defined?
-	 * @return bool
 	 */
-	public function __isset($name)
+	public function __isset($name): bool
 	{
 		return method_exists($this, 'get' . $name) || method_exists($this, 'is' . $name);
 	}
-
-
-	/**
-	 * Access to undeclared property.
-	 * @throws \LogicException
-	 */
-	public function __unset($name)
-	{
-		throw new \LogicException(sprintf('Attempt to unset undeclared property %s::$%s.', get_class($this), $name));
-	}
-
 }

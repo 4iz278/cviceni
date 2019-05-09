@@ -1,7 +1,7 @@
 {
 	"name": "latte/latte",
-	"description": "Latte: the amazing template engine for PHP",
-	"keywords": ["templating", "twig"],
+	"description": "☕ Latte: the intuitive and fast template engine for those who want the most secure PHP sites. Introduces context-sensitive escaping.",
+	"keywords": ["template", "nette", "security", "engine", "html", "twig", "context-sensitive", "escaping"],
 	"homepage": "https://latte.nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"authors": [
@@ -15,18 +15,29 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.1",
+		"php": ">=7.1",
+		"ext-json": "*",
 		"ext-tokenizer": "*"
 	},
 	"require-dev": {
-		"nette/tester": "~1.3"
+		"nette/tester": "~2.0",
+		"tracy/tracy": "^2.3"
 	},
 	"suggest": {
 		"ext-mbstring": "to use filters like lower, upper, capitalize, ...",
-		"ext-fileinfo": "to use filter |datastream"
+		"ext-fileinfo": "to use filter |datastream",
+		"nette/utils": "to use filter |webalize"
+	},
+	"conflict": {
+		"nette/application": "<2.4.1"
 	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.5-dev"
+		}
+	}
 }

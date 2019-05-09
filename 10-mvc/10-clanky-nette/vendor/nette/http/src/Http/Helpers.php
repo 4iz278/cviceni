@@ -16,10 +16,11 @@ use Nette\Utils\DateTime;
  */
 class Helpers
 {
+	use Nette\StaticClass;
 
 	/**
 	 * Returns HTTP valid date format.
-	 * @param  string|int|\DateTime
+	 * @param  string|int|\DateTimeInterface
 	 * @return string
 	 */
 	public static function formatDate($time)
@@ -41,10 +42,10 @@ class Helpers
 		$ip = implode('', array_map($tmp, unpack('N*', inet_pton($ip))));
 		$mask = implode('', array_map($tmp, unpack('N*', inet_pton($mask))));
 		$max = strlen($ip);
-		if (!$max || $max !== strlen($mask) || $size < 0 || $size > $max) {
-			return FALSE;
+		if (!$max || $max !== strlen($mask) || (int) $size < 0 || (int) $size > $max) {
+			return false;
 		}
-		return strncmp($ip, $mask, $size === '' ? $max : $size) === 0;
+		return strncmp($ip, $mask, $size === '' ? $max : (int) $size) === 0;
 	}
 
 
@@ -59,7 +60,7 @@ class Helpers
 			return;
 		}
 
-		$flatten = array();
+		$flatten = [];
 		foreach (headers_list() as $header) {
 			if (preg_match('#^Set-Cookie: .+?=#', $header, $m)) {
 				$flatten[$m[0]] = $header;
@@ -70,20 +71,4 @@ class Helpers
 			header($header, $key === 0);
 		}
 	}
-
-
-	/**
-	 * @internal
-	 */
-	public static function stripSlashes($arr, $onlyKeys = FALSE)
-	{
-		$res = array();
-		foreach ($arr as $k => $v) {
-			$res[stripslashes($k)] = is_array($v)
-				? self::stripSlashes($v, $onlyKeys)
-				: ($onlyKeys ? $v : stripslashes($v));
-		}
-		return $res;
-	}
-
 }

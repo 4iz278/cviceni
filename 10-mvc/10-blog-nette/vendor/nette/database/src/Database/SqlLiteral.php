@@ -13,8 +13,10 @@ use Nette;
 /**
  * SQL literal value.
  */
-class SqlLiteral extends Nette\Object
+class SqlLiteral
 {
+	use Nette\SmartObject;
+
 	/** @var string */
 	private $value;
 
@@ -22,7 +24,7 @@ class SqlLiteral extends Nette\Object
 	private $parameters;
 
 
-	public function __construct($value, array $parameters = array())
+	public function __construct($value, array $parameters = [])
 	{
 		$this->value = (string) $value;
 		$this->parameters = $parameters;
@@ -45,5 +47,4 @@ class SqlLiteral extends Nette\Object
 	{
 		return $this->value;
 	}
-
 }

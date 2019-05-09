@@ -22,14 +22,15 @@ class CsrfProtection extends HiddenField
 
 
 	/**
-	 * @param string
-	 * @param int
+	 * @param string|object
 	 */
-	public function __construct($message)
+	public function __construct($errorMessage)
 	{
 		parent::__construct();
-		$this->setOmitted()->addRule(self::PROTECTION, $message);
-		$this->monitor('Nette\Application\UI\Presenter');
+		$this->setOmitted()
+			->setRequired()
+			->addRule(self::PROTECTION, $errorMessage);
+		$this->monitor(Nette\Application\UI\Presenter::class);
 	}
 
 
@@ -43,7 +44,8 @@ class CsrfProtection extends HiddenField
 
 
 	/**
-	 * @return self
+	 * @return static
+	 * @internal
 	 */
 	public function setValue($value)
 	{
@@ -77,12 +79,12 @@ class CsrfProtection extends HiddenField
 	/**
 	 * @return string
 	 */
-	private function generateToken($random = NULL)
+	private function generateToken($random = null)
 	{
-		if ($random === NULL) {
+		if ($random === null) {
 			$random = Nette\Utils\Random::generate(10);
 		}
-		return $random . base64_encode(sha1($this->getToken() . $random, TRUE));
+		return $random . base64_encode(sha1($this->getToken() . $random, true));
 	}
 
 
@@ -100,9 +102,9 @@ class CsrfProtection extends HiddenField
 	 * @return bool
 	 * @internal
 	 */
-	public static function validateCsrf(CsrfProtection $control)
+	public static function validateCsrf(self $control)
 	{
-		$value = $control->getValue();
+		$value = (string) $control->getValue();
 		return $control->generateToken(substr($value, 0, 10)) === $value;
 	}
 
@@ -120,5 +122,4 @@ class CsrfProtection extends HiddenField
 		}
 		return $this->session;
 	}
-
 }

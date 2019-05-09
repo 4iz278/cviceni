@@ -1,6 +1,7 @@
 {
 	"name": "nette/http",
-	"description": "Nette HTTP Component",
+	"description": "🌐 Nette Http: abstraction for HTTP request, response and session. Provides careful data sanitization and utility for URL and cookies manipulation.",
+	"keywords": ["nette", "http", "request", "response", "session", "security", "url", "proxy", "cookies"],
 	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"authors": [
@@ -14,21 +15,28 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.1",
-		"nette/utils": "~2.2, >=2.2.2"
+		"php": ">=5.6.0",
+		"nette/utils": "^2.4 || ~3.0.0"
 	},
 	"require-dev": {
-		"nette/di": "~2.3",
-		"nette/tester": "~1.4"
+		"nette/di": "^2.4.8 || ~3.0.0",
+		"nette/tester": "^2.0",
+		"tracy/tracy": "^2.4"
 	},
 	"conflict": {
 		"nette/nette": "<2.2"
 	},
 	"suggest": {
-		"ext-fileinfo": "to detect type of uploaded files"
+		"ext-fileinfo": "to detect type of uploaded files",
+		"nette/security": "allows use Nette\\Http\\UserStorage"
 	},
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.4-dev"
+		}
+	}
 }

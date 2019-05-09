@@ -1,20 +1,27 @@
 [Latte](https://latte.nette.org): amazing template engine for PHP
-================================================================
+=================================================================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/latte/latte.svg)](https://packagist.org/packages/latte/latte)
-[![Build Status](https://travis-ci.org/nette/latte.svg?branch=v2.3)](https://travis-ci.org/nette/latte)
+[![Build Status](https://travis-ci.org/nette/latte.svg?branch=master)](https://travis-ci.org/nette/latte)
+[![Coverage Status](https://coveralls.io/repos/github/nette/latte/badge.svg?branch=master)](https://coveralls.io/github/nette/latte?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/latte/latte/v/stable)](https://github.com/nette/latte/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/latte/blob/master/license.md)
 [![Join the chat at https://gitter.im/nette/latte](https://badges.gitter.im/nette/latte.svg)](https://gitter.im/nette/latte)
 
+
+Introduction
+============
+
 Latte is a template engine for PHP which eases your work and
 ensures the output is protected against vulnerabilities, such as XSS.
 
-**Latte is fast:** it compiles templates to plain optimized PHP code.
+- **Latte is fast:** it compiles templates to plain optimized PHP code.
+- **Latte is secure:** it is the first PHP engine introducing content-aware escaping.
+- **Latte speaks your language:** it has intuitive syntax and helps you to build better websites easily.
 
-**Latte is secure:** it is the first PHP engine introducing content-aware escaping.
+Documentation can be found on the [website](https://latte.nette.org).
 
-**Latte speaks your language:** it has intuitive syntax and helps you to build better websites easily.
+If you like Latte, **[please make a donation now](https://nette.org/make-donation?to=latte)**. Thank you!
 
 
 Getting Started
@@ -52,13 +59,7 @@ As you can see there are two types of macros:
 - **macro** in braces, for example `{foreach …}`
 - **n:macro**, for example `n:if="…"`
 
-How to render template? Just install Latte (it requires PHP 5.3.1 or later) by [downloading the latest package](https://github.com/nette/latte/releases) or using Composer:
-
-```
-php composer.phar require latte/latte
-```
-
-and run this code:
+How to render template? Just install Latte (see below) and run this code:
 
 ```php
 $latte = new Latte\Engine;
@@ -68,8 +69,20 @@ $latte->render('template.latte', $parameters);
 ```
 
 
-Macros
-======
+Installation
+============
+
+The recommended way to install Latte is via Composer (alternatively you can [download package](https://github.com/nette/latte/releases)):
+
+```
+composer require latte/latte
+```
+
+Latte requires PHP version 5.4.4 and supports PHP up to 7.3. The dev-master version requires PHP 7.1.
+
+
+Usage
+=====
 
 You can find detailed description of all the default macros on the [extra page](https://doc.nette.org/en/default-macros). Furthermore, you can make your own macros.
 
@@ -192,7 +205,7 @@ Parameters are put after the filter name separated by colon or comma:
 See the summary of [standard filters](https://doc.nette.org/en/default-filters) and how to make user-defined filters.
 
 
-In templates we can use functions which change or format the data to a form we want. They are called *filters*. See the [summary of the default filters|default filters].
+In templates we can use functions which change or format the data to a form we want. They are called *filters*. See the summary of the default filters.
 
 
 Filter can be registered by any callback or lambda function:
@@ -281,6 +294,18 @@ If `$movie` variable stores `'Amarcord & 8 1/2'` string it generates the followi
 
 Thanks to Context-Aware Escaping the template is simple and your application perfectly secured against Cross Site Scripting. You can use PHP variables natively inside the JavaScript!
 
+
+JavaScript
+----------
+
+Strings in JavaScript are escaped including quotes. If you want to put variable into another string, simply concatenate them:
+
+```html
+<script>
+	alert('Hello ' + {$name} + '!');  # good
+	alert('Hello {$name} !');  # bad
+</script>
+```
 
 
 A pretty output

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Nette Framework (http://nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ * This file is part of the Nette Framework (https://nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
 namespace Nette\Bridges\SecurityTracy;
@@ -14,8 +14,10 @@ use Tracy;
 /**
  * User panel for Debugger Bar.
  */
-class UserPanel extends Nette\Object implements Tracy\IBarPanel
+class UserPanel implements Tracy\IBarPanel
 {
+	use Nette\SmartObject;
+
 	/** @var Nette\Security\User */
 	private $user;
 
@@ -36,7 +38,7 @@ class UserPanel extends Nette\Object implements Tracy\IBarPanel
 			return;
 		}
 
-		ob_start();
+		ob_start(function () {});
 		$user = $this->user;
 		require __DIR__ . '/templates/UserPanel.tab.phtml';
 		return ob_get_clean();
@@ -49,10 +51,9 @@ class UserPanel extends Nette\Object implements Tracy\IBarPanel
 	 */
 	public function getPanel()
 	{
-		ob_start();
+		ob_start(function () {});
 		$user = $this->user;
 		require __DIR__ . '/templates/UserPanel.panel.phtml';
 		return ob_get_clean();
 	}
-
 }

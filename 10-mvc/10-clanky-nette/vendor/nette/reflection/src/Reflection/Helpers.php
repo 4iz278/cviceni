@@ -7,9 +7,12 @@
 
 namespace Nette\Reflection;
 
+use Nette;
+
 
 class Helpers
 {
+	use Nette\StaticClass;
 
 	/**
 	 * Returns declaring class or trait.
@@ -18,14 +21,11 @@ class Helpers
 	 */
 	public static function getDeclaringClass(\ReflectionProperty $prop)
 	{
-		if (PHP_VERSION_ID >= 50400) {
-			foreach ($prop->getDeclaringClass()->getTraits() as $trait) {
-				if ($trait->hasProperty($prop->getName())) {
-					return self::getDeclaringClass($trait->getProperty($prop->getName()));
-				}
+		foreach ($prop->getDeclaringClass()->getTraits() as $trait) {
+			if ($trait->hasProperty($prop->getName())) {
+				return self::getDeclaringClass($trait->getProperty($prop->getName()));
 			}
 		}
 		return $prop->getDeclaringClass();
 	}
-
 }

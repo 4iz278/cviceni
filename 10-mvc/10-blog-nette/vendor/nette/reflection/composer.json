@@ -1,6 +1,7 @@
 {
 	"name": "nette/reflection",
-	"description": "Nette PHP Reflection Component",
+	"description": "Nette Reflection: docblock annotations parser and common reflection classes",
+	"keywords": ["nette", "annotation", "reflection"],
 	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"authors": [
@@ -14,14 +15,15 @@
 		}
 	],
 	"require": {
-		"php": ">=5.3.1",
+		"php": ">=5.6.0",
 		"ext-tokenizer": "*",
-		"nette/caching": "~2.2",
-		"nette/utils": "~2.2"
+		"nette/caching": "^2.2 || ^3.0",
+		"nette/utils": "^2.4 || ^3.0"
 	},
 	"require-dev": {
-		"nette/di": "~2.3",
-		"nette/tester": "~1.4"
+		"nette/di": "^2.4 || ^3.0",
+		"nette/tester": "^2.0",
+		"tracy/tracy": "^2.4"
 	},
 	"conflict": {
 		"nette/nette": "<2.2"
@@ -29,5 +31,10 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.4-dev"
+		}
+	}
 }

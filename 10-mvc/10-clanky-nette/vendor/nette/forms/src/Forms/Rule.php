@@ -13,8 +13,10 @@ use Nette;
 /**
  * Single validation rule or condition represented as value object.
  */
-class Rule extends Nette\Object
+class Rule
 {
+	use Nette\SmartObject;
+
 	/** @var IControl */
 	public $control;
 
@@ -25,12 +27,11 @@ class Rule extends Nette\Object
 	public $arg;
 
 	/** @var bool */
-	public $isNegative = FALSE;
+	public $isNegative = false;
 
 	/** @var string */
 	public $message;
 
 	/** @var Rules  for conditions */
 	public $branch;
-
 }

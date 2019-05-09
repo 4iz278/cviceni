@@ -13,8 +13,10 @@ use Nette;
 /**
  * Configurator compiling extension.
  */
-abstract class CompilerExtension extends Nette\Object
+abstract class CompilerExtension
 {
+	use Nette\SmartObject;
+
 	/** @var Compiler */
 	protected $compiler;
 
@@ -22,9 +24,12 @@ abstract class CompilerExtension extends Nette\Object
 	protected $name;
 
 	/** @var array */
-	protected $config = array();
+	protected $config = [];
 
 
+	/**
+	 * @return static
+	 */
 	public function setCompiler(Compiler $compiler, $name)
 	{
 		$this->compiler = $compiler;
@@ -33,6 +38,9 @@ abstract class CompilerExtension extends Nette\Object
 	}
 
 
+	/**
+	 * @return static
+	 */
 	public function setConfig(array $config)
 	{
 		$this->config = $config;
@@ -58,16 +66,16 @@ abstract class CompilerExtension extends Nette\Object
 	 * @return array
 	 * @throws Nette\InvalidStateException
 	 */
-	public function validateConfig(array $expected, array $config = NULL, $name = NULL)
+	public function validateConfig(array $expected, array $config = null, $name = null)
 	{
 		if (func_num_args() === 1) {
 			return $this->config = $this->validateConfig($expected, $this->config);
 		}
 		if ($extra = array_diff_key((array) $config, $expected)) {
 			$name = $name ?: $this->name;
-			$hint = Nette\Utils\ObjectMixin::getSuggestion(array_keys($expected), key($extra));
-			$extra = $hint ? key($extra) : implode(", $name.", array_keys($extra));
-			throw new Nette\InvalidStateException("Unknown configuration option $name.$extra" . ($hint ? ", did you mean $name.$hint?" : '.'));
+			$hint = Nette\Utils\ObjectHelpers::getSuggestion(array_keys($expected), key($extra));
+			$extra = $hint ? key($extra) : implode("', '{$name} › ", array_keys($extra));
+			throw new Nette\InvalidStateException("Unknown configuration option '{$name} › {$extra}'" . ($hint ? ", did you mean '{$name} › {$hint}'?" : '.'));
 		}
 		return Config\Helpers::merge($config, $expected);
 	}
@@ -132,5 +140,4 @@ abstract class CompilerExtension extends Nette\Object
 	public function afterCompile(Nette\PhpGenerator\ClassType $class)
 	{
 	}
-
 }

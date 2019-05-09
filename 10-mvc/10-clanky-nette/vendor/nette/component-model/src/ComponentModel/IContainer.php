@@ -13,35 +13,29 @@ namespace Nette\ComponentModel;
  */
 interface IContainer extends IComponent
 {
-
 	/**
-	 * Adds the specified component to the IContainer.
-	 * @param  IComponent
-	 * @param  string
-	 * @return void
+	 * Adds the component to the container.
+	 * @param  string|int|null  $name
+	 * @return static
 	 */
 	function addComponent(IComponent $component, $name);
 
 	/**
-	 * Removes a component from the IContainer.
-	 * @param  IComponent
+	 * Removes the component from the container.
 	 * @return void
 	 */
 	function removeComponent(IComponent $component);
 
 	/**
-	 * Returns single component.
-	 * @param  string
-	 * @return IComponent|NULL
+	 * Returns component specified by name or path.
+	 * @param  string|int  $name
+	 * @return IComponent|null
 	 */
 	function getComponent($name);
 
 	/**
-	 * Iterates over a components.
-	 * @param  bool    recursive?
-	 * @param  string  class types filter
+	 * Iterates over descendants components.
 	 * @return \Iterator
 	 */
-	function getComponents($deep = FALSE, $filterType = NULL);
-
+	function getComponents();
 }

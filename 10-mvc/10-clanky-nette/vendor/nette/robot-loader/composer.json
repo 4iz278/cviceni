@@ -1,26 +1,29 @@
 {
 	"name": "nette/robot-loader",
-	"description": "Nette RobotLoader: comfortable autoloading",
-	"homepage": "http://nette.org",
+	"description": "🍀 Nette RobotLoader: high performance and comfortable autoloader that will search and autoload classes within your application.",
+	"keywords": ["nette", "autoload", "class", "trait", "interface"],
+	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"authors": [
 		{
 			"name": "David Grudl",
-			"homepage": "http://davidgrudl.com"
+			"homepage": "https://davidgrudl.com"
 		},
 		{
 			"name": "Nette Community",
-			"homepage": "http://nette.org/contributors"
+			"homepage": "https://nette.org/contributors"
 		}
 	],
 	"require": {
-		"php": ">=5.3.1",
+		"php": ">=5.6.0",
+		"ext-tokenizer": "*",
 		"nette/caching": "~2.2",
 		"nette/finder": "~2.3",
-		"nette/utils": "~2.2"
+		"nette/utils": "~2.4"
 	},
 	"require-dev": {
-		"nette/tester": "~1.4"
+		"nette/tester": "~2.0",
+		"tracy/tracy": "^2.3"
 	},
 	"conflict": {
 		"nette/nette": "<2.2"
@@ -28,5 +31,10 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "dev",
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.4-dev"
+		}
+	}
 }

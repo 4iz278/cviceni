@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Nette Forms & Bootstap 2 rendering example.
+ * Nette Forms & Bootstap v2 rendering example.
  */
 
 
@@ -10,30 +10,55 @@ if (@!include __DIR__ . '/../vendor/autoload.php') {
 }
 
 use Nette\Forms\Form;
-use Nette\Forms\Controls;
 use Tracy\Debugger;
 use Tracy\Dumper;
 
 Debugger::enable();
 
 
+function makeBootstrap2(Form $form)
+{
+	$renderer = $form->getRenderer();
+	$renderer->wrappers['controls']['container'] = null;
+	$renderer->wrappers['pair']['container'] = 'div class=control-group';
+	$renderer->wrappers['pair']['.error'] = 'error';
+	$renderer->wrappers['control']['container'] = 'div class=controls';
+	$renderer->wrappers['label']['container'] = 'div class=control-label';
+	$renderer->wrappers['control']['description'] = 'span class=help-inline';
+	$renderer->wrappers['control']['errorcontainer'] = 'span class=help-inline';
+	$form->getElementPrototype()->class('form-horizontal');
+
+	foreach ($form->getControls() as $control) {
+		$type = $control->getOption('type');
+		if ($type === 'button') {
+			$control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn');
+			$usedPrimary = true;
+
+		} elseif (in_array($type, ['checkbox', 'radio'], true)) {
+			$control->getSeparatorPrototype()->setName('div')->addClass($type);
+		}
+	}
+}
+
+
 $form = new Form;
+$form->onRender[] = 'makeBootstrap2';
 
 $form->addGroup('Personal data');
 $form->addText('name', 'Your name')
 	->setRequired('Enter your name');
 
-$form->addRadioList('gender', 'Your gender', array(
+$form->addRadioList('gender', 'Your gender', [
 	'male', 'female',
-));
+]);
 
-$form->addCheckboxList('colors', 'Favorite colors:', array(
+$form->addCheckboxList('colors', 'Favorite colors', [
 	'red', 'green', 'blue',
-));
+]);
 
-$form->addSelect('country', 'Country', array(
+$form->addSelect('country', 'Country', [
 	'Buranda', 'Qumran', 'Saint Georges Island',
-));
+]);
 
 $form->addCheckbox('send', 'Ship to address');
 
@@ -54,42 +79,16 @@ if ($form->isSuccess()) {
 }
 
 
-
-// setup form rendering
-$renderer = $form->getRenderer();
-$renderer->wrappers['controls']['container'] = NULL;
-$renderer->wrappers['pair']['container'] = 'div class=control-group';
-$renderer->wrappers['pair']['.error'] = 'error';
-$renderer->wrappers['control']['container'] = 'div class=controls';
-$renderer->wrappers['label']['container'] = 'div class=control-label';
-$renderer->wrappers['control']['description'] = 'span class=help-inline';
-$renderer->wrappers['control']['errorcontainer'] = 'span class=help-inline';
-
-// make form and controls compatible with Twitter Bootstrap
-$form->getElementPrototype()->class('form-horizontal');
-
-foreach ($form->getControls() as $control) {
-	if ($control instanceof Controls\Button) {
-		$control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn');
-		$usedPrimary = TRUE;
-
-	} elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
-		$control->getLabelPrototype()->addClass($control->getControlPrototype()->type);
-		$control->getSeparatorPrototype()->setName(NULL);
-	}
-}
-
-
 ?>
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Nette Forms & Bootstrap 2 rendering example</title>
+<title>Nette Forms & Bootstrap v2 rendering example</title>
 
 <link rel="stylesheet" media="screen" href="https://netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css" />
 
 <div class="container">
 	<div class="page-header">
-		<h1>Nette Forms & Bootstrap 2 rendering example</h1>
+		<h1>Nette Forms & Bootstrap v2 rendering example</h1>
 	</div>
 
 	<?php echo $form ?>

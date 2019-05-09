@@ -14,69 +14,88 @@ use Nette\Caching\Cache;
 /**
  * SQLite storage.
  */
-class SQLiteStorage extends Nette\Object implements Nette\Caching\IStorage
+class SQLiteStorage implements Nette\Caching\IStorage, Nette\Caching\IBulkReader
 {
+	use Nette\SmartObject;
+
 	/** @var \PDO */
 	private $pdo;
 
 
-	public function __construct($path = ':memory:')
+	public function __construct($path)
 	{
-		$this->pdo = new \PDO('sqlite:' . $path, NULL, NULL, array(\PDO::ATTR_PERSISTENT => TRUE));
+		if ($path !== ':memory:' && !is_file($path)) {
+			touch($path); // ensures ordinary file permissions
+		}
+
+		$this->pdo = new \PDO('sqlite:' . $path);
 		$this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 		$this->pdo->exec('
 			PRAGMA foreign_keys = ON;
 			CREATE TABLE IF NOT EXISTS cache (
 				key BLOB NOT NULL PRIMARY KEY,
-				data BLOB NOT NULL
+				data BLOB NOT NULL,
+				expire INTEGER,
+				slide INTEGER
 			);
 			CREATE TABLE IF NOT EXISTS tags (
 				key BLOB NOT NULL REFERENCES cache ON DELETE CASCADE,
 				tag BLOB NOT NULL
 			);
+			CREATE INDEX IF NOT EXISTS cache_expire ON cache(expire);
 			CREATE INDEX IF NOT EXISTS tags_key ON tags(key);
 			CREATE INDEX IF NOT EXISTS tags_tag ON tags(tag);
+			PRAGMA synchronous = OFF;
 		');
 	}
 
 
-	/**
-	 * Read from cache.
-	 * @param  string key
-	 * @return mixed|NULL
-	 */
 	public function read($key)
 	{
-		$stmt = $this->pdo->prepare('SELECT data FROM cache WHERE key=?');
-		$stmt->execute(array($key));
-		if ($res = $stmt->fetchColumn()) {
-			return unserialize($res);
+		$stmt = $this->pdo->prepare('SELECT data, slide FROM cache WHERE key=? AND (expire IS NULL OR expire >= ?)');
+		$stmt->execute([$key, time()]);
+		if ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
+			if ($row['slide'] !== null) {
+				$this->pdo->prepare('UPDATE cache SET expire = ? + slide WHERE key=?')->execute([time(), $key]);
+			}
+			return unserialize($row['data']);
 		}
 	}
 
 
-	/**
-	 * Prevents item reading and writing. Lock is released by write() or remove().
-	 * @param  string key
-	 * @return void
-	 */
+	public function bulkRead(array $keys)
+	{
+		$stmt = $this->pdo->prepare('SELECT key, data, slide FROM cache WHERE key IN (?' . str_repeat(',?', count($keys) - 1) . ') AND (expire IS NULL OR expire >= ?)');
+		$stmt->execute(array_merge($keys, [time()]));
+		$result = [];
+		$updateSlide = [];
+		foreach ($stmt->fetchAll(\PDO::FETCH_ASSOC) as $row) {
+			if ($row['slide'] !== null) {
+				$updateSlide[] = $row['key'];
+			}
+			$result[$row['key']] = unserialize($row['data']);
+		}
+		if (!empty($updateSlide)) {
+			$stmt = $this->pdo->prepare('UPDATE cache SET expire = ? + slide WHERE key IN(?' . str_repeat(',?', count($updateSlide) - 1) . ')');
+			$stmt->execute(array_merge([time()], $updateSlide));
+		}
+		return $result;
+	}
+
+
 	public function lock($key)
 	{
 	}
 
 
-	/**
-	 * Writes item into the cache.
-	 * @param  string key
-	 * @param  mixed  data
-	 * @param  array  dependencies
-	 * @return void
-	 */
 	public function write($key, $data, array $dependencies)
 	{
+		$expire = isset($dependencies[Cache::EXPIRATION]) ? $dependencies[Cache::EXPIRATION] + time() : null;
+		$slide = isset($dependencies[Cache::SLIDING]) ? $dependencies[Cache::EXPIRATION] : null;
+
 		$this->pdo->exec('BEGIN TRANSACTION');
-		$this->pdo->prepare('REPLACE INTO cache (key, data) VALUES (?, ?)')
-			->execute(array($key, serialize($data)));
+		$this->pdo->prepare('REPLACE INTO cache (key, data, expire, slide) VALUES (?, ?, ?, ?)')
+			->execute([$key, serialize($data), $expire, $slide]);
 
 		if (!empty($dependencies[Cache::TAGS])) {
 			foreach ((array) $dependencies[Cache::TAGS] as $tag) {
@@ -90,33 +109,29 @@ class SQLiteStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Removes item from the cache.
-	 * @param  string key
-	 * @return void
-	 */
 	public function remove($key)
 	{
 		$this->pdo->prepare('DELETE FROM cache WHERE key=?')
-			->execute(array($key));
+			->execute([$key]);
 	}
 
 
-	/**
-	 * Removes items from the cache by conditions & garbage collector.
-	 * @param  array  conditions
-	 * @return void
-	 */
 	public function clean(array $conditions)
 	{
 		if (!empty($conditions[Cache::ALL])) {
 			$this->pdo->prepare('DELETE FROM cache')->execute();
 
-		} elseif (!empty($conditions[Cache::TAGS])) {
-			$tags = (array) $conditions[Cache::TAGS];
-			$this->pdo->prepare('DELETE FROM cache WHERE key IN (SELECT key FROM tags WHERE tag IN (?'
-				. str_repeat(',?', count($tags) - 1) . '))')->execute($tags);
+		} else {
+			$sql = 'DELETE FROM cache WHERE expire < ?';
+			$args = [time()];
+
+			if (!empty($conditions[Cache::TAGS])) {
+				$tags = (array) $conditions[Cache::TAGS];
+				$sql .= ' OR key IN (SELECT key FROM tags WHERE tag IN (?' . str_repeat(',?', count($tags) - 1) . '))';
+				$args = array_merge($args, $tags);
+			}
+
+			$this->pdo->prepare($sql)->execute($args);
 		}
 	}
-
 }

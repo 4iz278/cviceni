@@ -14,10 +14,13 @@ use Nette\Caching\Cache;
 /**
  * Memcached storage using memcached extension.
  */
-class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
+class NewMemcachedStorage implements Nette\Caching\IStorage, Nette\Caching\IBulkReader
 {
+	use Nette\SmartObject;
+
 	/** @internal cache structure */
-	const META_CALLBACKS = 'callbacks',
+	const
+		META_CALLBACKS = 'callbacks',
 		META_DATA = 'data',
 		META_DELTA = 'delta';
 
@@ -41,7 +44,7 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	public function __construct($host = 'localhost', $port = 11211, $prefix = '', IJournal $journal = NULL)
+	public function __construct($host = 'localhost', $port = 11211, $prefix = '', IJournal $journal = null)
 	{
 		if (!static::isAvailable()) {
 			throw new Nette\NotSupportedException("PHP extension 'memcached' is not loaded.");
@@ -58,7 +61,7 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 
 	public function addServer($host = 'localhost', $port = 11211)
 	{
-		if ($this->memcached->addServer($host, $port, 1) === FALSE) {
+		if ($this->memcached->addServer($host, $port, 1) === false) {
 			$error = error_get_last();
 			throw new Nette\InvalidStateException("Memcached::addServer(): $error[message].");
 		}
@@ -74,17 +77,12 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Read from cache.
-	 * @param  string key
-	 * @return mixed|NULL
-	 */
 	public function read($key)
 	{
 		$key = urlencode($this->prefix . $key);
 		$meta = $this->memcached->get($key);
 		if (!$meta) {
-			return NULL;
+			return null;
 		}
 
 		// meta structure:
@@ -97,7 +95,7 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 		// verify dependencies
 		if (!empty($meta[self::META_CALLBACKS]) && !Cache::checkCallbacks($meta[self::META_CALLBACKS])) {
 			$this->memcached->delete($key, 0);
-			return NULL;
+			return null;
 		}
 
 		if (!empty($meta[self::META_DELTA])) {
@@ -108,23 +106,39 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Prevents item reading and writing. Lock is released by write() or remove().
-	 * @param  string key
-	 * @return void
-	 */
+	public function bulkRead(array $keys)
+	{
+		$prefixedKeys = array_map(function ($key) {
+			return urlencode($this->prefix . $key);
+		}, $keys);
+		$keys = array_combine($prefixedKeys, $keys);
+		$metas = $this->memcached->getMulti($prefixedKeys);
+		$result = [];
+		$deleteKeys = [];
+		foreach ($metas as $prefixedKey => $meta) {
+			if (!empty($meta[self::META_CALLBACKS]) && !Cache::checkCallbacks($meta[self::META_CALLBACKS])) {
+				$deleteKeys[] = $prefixedKey;
+			} else {
+				$result[$keys[$prefixedKey]] = $meta[self::META_DATA];
+			}
+
+			if (!empty($meta[self::META_DELTA])) {
+				$this->memcached->replace($prefixedKey, $meta, $meta[self::META_DELTA] + time());
+			}
+		}
+		if (!empty($deleteKeys)) {
+			$this->memcached->deleteMulti($deleteKeys, 0);
+		}
+
+		return $result;
+	}
+
+
 	public function lock($key)
 	{
 	}
 
 
-	/**
-	 * Writes item into the cache.
-	 * @param  string key
-	 * @param  mixed  data
-	 * @param  array  dependencies
-	 * @return void
-	 */
 	public function write($key, $data, array $dp)
 	{
 		if (isset($dp[Cache::ITEMS])) {
@@ -132,9 +146,9 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 		}
 
 		$key = urlencode($this->prefix . $key);
-		$meta = array(
+		$meta = [
 			self::META_DATA => $data,
-		);
+		];
 
 		$expire = 0;
 		if (isset($dp[Cache::EXPIRATION])) {
@@ -159,22 +173,12 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Removes item from the cache.
-	 * @param  string key
-	 * @return void
-	 */
 	public function remove($key)
 	{
 		$this->memcached->delete(urlencode($this->prefix . $key), 0);
 	}
 
 
-	/**
-	 * Removes items from the cache by conditions & garbage collector.
-	 * @param  array  conditions
-	 * @return void
-	 */
 	public function clean(array $conditions)
 	{
 		if (!empty($conditions[Cache::ALL])) {
@@ -186,5 +190,4 @@ class NewMemcachedStorage extends Nette\Object implements Nette\Caching\IStorage
 			}
 		}
 	}
-
 }

@@ -13,8 +13,10 @@ use Nette;
 /**
  * Cached reflection of database structure.
  */
-class Structure extends Nette\Object implements IStructure
+class Structure implements IStructure
 {
+	use Nette\SmartObject;
+
 	/** @var Connection */
 	protected $connection;
 
@@ -25,7 +27,7 @@ class Structure extends Nette\Object implements IStructure
 	protected $structure;
 
 	/** @var bool */
-	protected $isRebuilt = FALSE;
+	protected $isRebuilt = false;
 
 
 	public function __construct(Connection $connection, Nette\Caching\IStorage $cacheStorage)
@@ -57,10 +59,39 @@ class Structure extends Nette\Object implements IStructure
 		$table = $this->resolveFQTableName($table);
 
 		if (!isset($this->structure['primary'][$table])) {
-			return NULL;
+			return null;
 		}
 
 		return $this->structure['primary'][$table];
+	}
+
+
+	public function getPrimaryAutoincrementKey($table)
+	{
+		$primaryKey = $this->getPrimaryKey($table);
+		if (!$primaryKey) {
+			return null;
+		}
+
+		// Search for autoincrement key from multi primary key
+		if (is_array($primaryKey)) {
+			$keys = array_flip($primaryKey);
+			foreach ($this->getColumns($table) as $column) {
+				if (isset($keys[$column['name']]) && $column['autoincrement']) {
+					return $column['name'];
+				}
+			}
+			return null;
+		}
+
+		// Search for autoincrement key from simple primary key
+		foreach ($this->getColumns($table) as $column) {
+			if ($column['name'] == $primaryKey) {
+				return $column['autoincrement'] ? $column['name'] : null;
+			}
+		}
+
+		return null;
 	}
 
 
@@ -70,25 +101,26 @@ class Structure extends Nette\Object implements IStructure
 		$table = $this->resolveFQTableName($table);
 
 		if (!$this->connection->getSupplementalDriver()->isSupported(ISupplementalDriver::SUPPORT_SEQUENCE)) {
-			return NULL;
+			return null;
 		}
 
-		$primary = $this->getPrimaryKey($table);
-		if (!$primary || is_array($primary)) {
-			return NULL;
+		$autoincrementPrimaryKeyName = $this->getPrimaryAutoincrementKey($table);
+		if (!$autoincrementPrimaryKeyName) {
+			return null;
 		}
 
+		// Search for sequence from simple primary key
 		foreach ($this->structure['columns'][$table] as $columnMeta) {
-			if ($columnMeta['name'] === $primary) {
-				return isset($columnMeta['vendor']['sequence']) ? $columnMeta['vendor']['sequence'] : NULL;
+			if ($columnMeta['name'] === $autoincrementPrimaryKeyName) {
+				return isset($columnMeta['vendor']['sequence']) ? $columnMeta['vendor']['sequence'] : null;
 			}
 		}
 
-		return NULL;
+		return null;
 	}
 
 
-	public function getHasManyReference($table, $targetTable = NULL)
+	public function getHasManyReference($table, $targetTable = null)
 	{
 		$this->needStructure();
 		$table = $this->resolveFQTableName($table);
@@ -101,18 +133,18 @@ class Structure extends Nette\Object implements IStructure
 				}
 			}
 
-			return NULL;
+			return null;
 
 		} else {
 			if (!isset($this->structure['hasMany'][$table])) {
-				return array();
+				return [];
 			}
 			return $this->structure['hasMany'][$table];
 		}
 	}
 
 
-	public function getBelongsToReference($table, $column = NULL)
+	public function getBelongsToReference($table, $column = null)
 	{
 		$this->needStructure();
 		$table = $this->resolveFQTableName($table);
@@ -120,13 +152,13 @@ class Structure extends Nette\Object implements IStructure
 		if ($column) {
 			$column = strtolower($column);
 			if (!isset($this->structure['belongsTo'][$table][$column])) {
-				return NULL;
+				return null;
 			}
 			return $this->structure['belongsTo'][$table][$column];
 
 		} else {
 			if (!isset($this->structure['belongsTo'][$table])) {
-				return array();
+				return [];
 			}
 			return $this->structure['belongsTo'][$table];
 		}
@@ -148,11 +180,11 @@ class Structure extends Nette\Object implements IStructure
 
 	protected function needStructure()
 	{
-		if ($this->structure !== NULL) {
+		if ($this->structure !== null) {
 			return;
 		}
 
-		$this->structure = $this->cache->load('structure', array($this, 'loadStructure'));
+		$this->structure = $this->cache->load('structure', [$this, 'loadStructure']);
 	}
 
 
@@ -163,7 +195,7 @@ class Structure extends Nette\Object implements IStructure
 	{
 		$driver = $this->connection->getSupplementalDriver();
 
-		$structure = array();
+		$structure = [];
 		$structure['tables'] = $driver->getTables();
 
 		foreach ($structure['tables'] as $tablePair) {
@@ -183,14 +215,14 @@ class Structure extends Nette\Object implements IStructure
 		}
 
 		if (isset($structure['hasMany'])) {
-			foreach ($structure['hasMany'] as & $table) {
+			foreach ($structure['hasMany'] as &$table) {
 				uksort($table, function ($a, $b) {
 					return strlen($a) - strlen($b);
 				});
 			}
 		}
 
-		$this->isRebuilt = TRUE;
+		$this->isRebuilt = true;
 
 		return $structure;
 	}
@@ -198,7 +230,7 @@ class Structure extends Nette\Object implements IStructure
 
 	protected function analyzePrimaryKey(array $columns)
 	{
-		$primary = array();
+		$primary = [];
 		foreach ($columns as $column) {
 			if ($column['primary']) {
 				$primary[] = $column['name'];
@@ -206,7 +238,7 @@ class Structure extends Nette\Object implements IStructure
 		}
 
 		if (count($primary) === 0) {
-			return NULL;
+			return null;
 		} elseif (count($primary) === 1) {
 			return reset($primary);
 		} else {
@@ -215,15 +247,16 @@ class Structure extends Nette\Object implements IStructure
 	}
 
 
-	protected function analyzeForeignKeys(& $structure, $table)
+	protected function analyzeForeignKeys(&$structure, $table)
 	{
+		$lowerTable = strtolower($table);
 		foreach ($this->connection->getSupplementalDriver()->getForeignKeys($table) as $row) {
-			$structure['belongsTo'][strtolower($table)][$row['local']] = $row['table'];
+			$structure['belongsTo'][$lowerTable][$row['local']] = $row['table'];
 			$structure['hasMany'][strtolower($row['table'])][$table][] = $row['local'];
 		}
 
-		if (isset($structure['belongsTo'][$table])) {
-			uksort($structure['belongsTo'][$table], function ($a, $b) {
+		if (isset($structure['belongsTo'][$lowerTable])) {
+			uksort($structure['belongsTo'][$lowerTable], function ($a, $b) {
 				return strlen($a) - strlen($b);
 			});
 		}
@@ -248,5 +281,4 @@ class Structure extends Nette\Object implements IStructure
 
 		throw new Nette\InvalidArgumentException("Table '$name' does not exist.");
 	}
-
 }

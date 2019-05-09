@@ -10,9 +10,9 @@ if (@!include __DIR__ . '/../vendor/autoload.php') {
 }
 
 use Nette\Forms\Form;
+use Nette\Utils\Html;
 use Tracy\Debugger;
 use Tracy\Dumper;
-use Nette\Utils\Html;
 
 Debugger::enable();
 
@@ -29,28 +29,26 @@ $form->addText('name', 'Your name:')
 $form->addText('age', 'Your age:')
 	->setRequired('Enter your age')
 	->addRule($form::INTEGER, 'Age must be numeric value')
-	->addRule($form::RANGE, 'Age must be in range from %d to %d', array(10, 100));
+	->addRule($form::RANGE, 'Age must be in range from %d to %d', [10, 100]);
 
-$form->addRadioList('gender', 'Your gender:', array(
+$form->addRadioList('gender', 'Your gender:', [
 	'm' => 'male',
 	'f' => 'female',
-));
+]);
 
-$form->addCheckboxList('colors', 'Favorite colors:', array(
+$form->addCheckboxList('colors', 'Favorite colors:', [
 	'r' => 'red',
 	'g' => 'green',
 	'b' => 'blue',
-));
+]);
 
-$form->addText('email', 'Email:')
-	->setEmptyValue('@')
-	->addCondition($form::FILLED) // conditional rule: if is email filled, ...
-		->addRule($form::EMAIL, 'Incorrect email address'); // ... then check email
+$form->addEmail('email', 'Email:')
+	->setEmptyValue('@');
 
 
 // group Shipping address
 $form->addGroup('Shipping address')
-	->setOption('embedNext', TRUE);
+	->setOption('embedNext', true);
 
 $form->addCheckbox('send', 'Ship to address')
 	->addCondition($form::FILLED) // conditional rule: if is checkbox checked...
@@ -67,14 +65,14 @@ $form->addText('city', 'City:')
 	->addConditionOn($form['send'], $form::FILLED)
 		->setRequired('Enter your shipping address');
 
-$countries = array(
-	'World' => array(
+$countries = [
+	'World' => [
 		'bu' => 'Buranda',
 		'qu' => 'Qumran',
 		'st' => 'Saint Georges Island',
-	),
+	],
 	'?' => 'other',
-);
+];
 $form->addSelect('country', 'Country:', $countries)
 	->setPrompt('Select your country')
 	->addConditionOn($form['send'], $form::FILLED)
@@ -93,8 +91,8 @@ $form->addPassword('password2', 'Reenter password:')
 	->addRule($form::EQUAL, 'Passwords do not match', $form['password']);
 
 $form->addUpload('avatar', 'Picture:')
-	->addCondition($form::FILLED)
-		->addRule($form::IMAGE, 'Uploaded file is not image');
+	->setRequired(false)
+	->addRule($form::IMAGE, 'Uploaded file is not image');
 
 $form->addHidden('userid');
 
@@ -106,15 +104,15 @@ $form->addGroup();
 $form->addSubmit('submit', 'Send');
 
 
-$form->setDefaults(array(
+$form->setDefaults([
 	'name' => 'John Doe',
 	'userid' => 231,
-));
+]);
 
 
 if ($form->isSuccess()) {
 	echo '<h2>Form was submitted and successfully validated</h2>';
-	Dumper::dump($form->getValues());
+	Dumper::dump($form->getValues(), [Dumper::COLLAPSE => false]);
 	exit;
 }
 

@@ -17,8 +17,10 @@ use Tracy\Dumper;
 /**
  * Routing debugger for Debug Bar.
  */
-class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
+class RoutingPanel implements Tracy\IBarPanel
 {
+	use Nette\SmartObject;
+
 	/** @var Nette\Application\IRouter */
 	private $router;
 
@@ -29,7 +31,7 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 	private $presenterFactory;
 
 	/** @var array */
-	private $routers = array();
+	private $routers = [];
 
 	/** @var Nette\Application\Request */
 	private $request;
@@ -41,11 +43,11 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 	public static function initializePanel(Nette\Application\Application $application)
 	{
 		Tracy\Debugger::getBlueScreen()->addPanel(function ($e) use ($application) {
-			return $e ? NULL : array(
+			return $e ? null : [
 				'tab' => 'Nette Application',
-				'panel' => '<h3>Requests</h3>' . Dumper::toHtml($application->getRequests(), array(Dumper::LIVE => TRUE))
-					. '<h3>Presenter</h3>' . Dumper::toHtml($application->getPresenter(), array(Dumper::LIVE => TRUE)),
-			);
+				'panel' => '<h3>Requests</h3>' . Dumper::toHtml($application->getRequests(), [Dumper::LIVE => true])
+					. '<h3>Presenter</h3>' . Dumper::toHtml($application->getPresenter(), [Dumper::LIVE => true]),
+			];
 		});
 	}
 
@@ -82,7 +84,7 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 		$request = $this->request;
 		$routers = $this->routers;
 		$source = $this->source;
-		$hasModule = (bool) array_filter($routers, function($rq) { return $rq['module']; });
+		$hasModule = (bool) array_filter($routers, function ($rq) { return $rq['module']; });
 		$url = $this->httpRequest->getUrl();
 		$method = $this->httpRequest->getMethod();
 		require __DIR__ . '/templates/RoutingPanel.panel.phtml';
@@ -116,14 +118,14 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 			}
 		}
 
-		$this->routers[] = array(
+		$this->routers[] = [
 			'matched' => $matched,
 			'class' => get_class($router),
-			'defaults' => $router instanceof Routers\Route || $router instanceof Routers\SimpleRouter ? $router->getDefaults() : array(),
-			'mask' => $router instanceof Routers\Route ? $router->getMask() : NULL,
+			'defaults' => $router instanceof Routers\Route || $router instanceof Routers\SimpleRouter ? $router->getDefaults() : [],
+			'mask' => $router instanceof Routers\Route ? $router->getMask() : null,
 			'request' => $request,
 			'module' => rtrim($module, ':'),
-		);
+		];
 	}
 
 
@@ -138,7 +140,7 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 		}
 		$rc = new \ReflectionClass($class);
 
-		if ($rc->isSubclassOf('Nette\Application\UI\Presenter')) {
+		if ($rc->isSubclassOf(Nette\Application\UI\Presenter::class)) {
 			if ($request->getParameter(Presenter::SIGNAL_KEY)) {
 				$method = $class::formatSignalMethod($request->getParameter(Presenter::SIGNAL_KEY));
 
@@ -153,5 +155,4 @@ class RoutingPanel extends Nette\Object implements Tracy\IBarPanel
 
 		$this->source = isset($method) && $rc->hasMethod($method) ? $rc->getMethod($method) : $rc;
 	}
-
 }

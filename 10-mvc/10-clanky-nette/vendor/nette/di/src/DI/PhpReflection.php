@@ -13,28 +13,27 @@ use Nette;
 /**
  * PHP reflection helpers.
  * @internal
+ * @deprecated
  */
 class PhpReflection
 {
-	/** @var array  for expandClassName() */
-	private static $cache;
-
+	use Nette\StaticClass;
 
 	/**
 	 * Returns an annotation value.
-	 * @return string|NULL
+	 * @return string|null
 	 */
 	public static function parseAnnotation(\Reflector $ref, $name)
 	{
 		static $ok;
 		if (!$ok) {
-			$rc = new \ReflectionMethod(__METHOD__);
-			if (!$rc->getDocComment()) {
+			if (!(new \ReflectionMethod(__METHOD__))->getDocComment()) {
 				throw new Nette\InvalidStateException('You have to enable phpDoc comments in opcode cache.');
 			}
-			$ok = TRUE;
+			$ok = true;
 		}
-		if (preg_match("#[\\s*]@$name(?:\\s++([^@]\\S*)?|$)#", trim($ref->getDocComment(), '/*'), $m)) {
+		$name = preg_quote($name, '#');
+		if ($ref->getDocComment() && preg_match("#[\\s*]@$name(?:\\s++([^@]\\S*)?|$)#", trim($ref->getDocComment(), '/*'), $m)) {
 			return isset($m[1]) ? $m[1] : '';
 		}
 	}
@@ -46,11 +45,9 @@ class PhpReflection
 	 */
 	public static function getDeclaringClass(\ReflectionProperty $prop)
 	{
-		if (PHP_VERSION_ID >= 50400) {
-			foreach ($prop->getDeclaringClass()->getTraits() as $trait) {
-				if ($trait->hasProperty($prop->getName())) {
-					return self::getDeclaringClass($trait->getProperty($prop->getName()));
-				}
+		foreach ($prop->getDeclaringClass()->getTraits() as $trait) {
+			if ($trait->hasProperty($prop->getName())) {
+				return self::getDeclaringClass($trait->getProperty($prop->getName()));
 			}
 		}
 		return $prop->getDeclaringClass();
@@ -58,19 +55,18 @@ class PhpReflection
 
 
 	/**
-	 * @return string|NULL
+	 * @return string|null
 	 */
 	public static function getParameterType(\ReflectionParameter $param)
 	{
 		if (PHP_VERSION_ID >= 70000) {
-			return $param->hasType() ? (string) $param->getType() : NULL;
-		} elseif ($param->isArray()) {
-			return 'array';
-		} elseif (PHP_VERSION_ID >= 50400 && $param->isCallable()) {
-			return 'callable';
+			$type = $param->hasType() ? (string) $param->getType() : null;
+			return strtolower($type) === 'self' ? $param->getDeclaringClass()->getName() : $type;
+		} elseif ($param->isArray() || $param->isCallable()) {
+			return $param->isArray() ? 'array' : 'callable';
 		} else {
 			try {
-				return ($ref = $param->getClass()) ? $ref->getName() : NULL;
+				return ($ref = $param->getClass()) ? $ref->getName() : null;
 			} catch (\ReflectionException $e) {
 				if (preg_match('#Class (.+) does not exist#', $e->getMessage(), $m)) {
 					return $m[1];
@@ -82,12 +78,13 @@ class PhpReflection
 
 
 	/**
-	 * @return string|NULL
+	 * @return string|null
 	 */
 	public static function getReturnType(\ReflectionFunctionAbstract $func)
 	{
 		if (PHP_VERSION_ID >= 70000 && $func->hasReturnType()) {
-			return (string) $func->getReturnType();
+			$type = (string) $func->getReturnType();
+			return strtolower($type) === 'self' ? $func->getDeclaringClass()->getName() : $type;
 		}
 		$type = preg_replace('#[|\s].*#', '', (string) self::parseAnnotation($func, 'return'));
 		if ($type) {
@@ -104,7 +101,24 @@ class PhpReflection
 	 */
 	public static function isBuiltinType($type)
 	{
-		return in_array(strtolower($type), array('string', 'int', 'float', 'bool', 'array', 'callable'), TRUE);
+		return in_array(strtolower($type), ['string', 'int', 'float', 'bool', 'array', 'callable'], true);
+	}
+
+
+	/**
+	 * Returns class and all its descendants.
+	 * @return string[]
+	 */
+	public static function getClassTree(\ReflectionClass $class)
+	{
+		$addTraits = function ($types) use (&$addTraits) {
+			if ($traits = array_merge(...array_map('class_uses', array_values($types)))) {
+				$types += $traits + $addTraits($traits);
+			}
+			return $types;
+		};
+		$class = $class->getName();
+		return array_values($addTraits([$class] + class_parents($class) + class_implements($class)));
 	}
 
 
@@ -130,11 +144,7 @@ class PhpReflection
 			return ltrim($name, '\\');
 		}
 
-		$uses = & self::$cache[$rc->getName()];
-		if ($uses === NULL) {
-			self::$cache = self::parseUseStatemenets(file_get_contents($rc->getFileName()), $rc->getName()) + self::$cache;
-			$uses = & self::$cache[$rc->getName()];
-		}
+		$uses = self::getUseStatements($rc);
 		$parts = explode('\\', $name, 2);
 		if (isset($uses[$parts[0]])) {
 			$parts[0] = $uses[$parts[0]];
@@ -150,26 +160,45 @@ class PhpReflection
 
 
 	/**
+	 * @return array of [alias => class]
+	 */
+	public static function getUseStatements(\ReflectionClass $class)
+	{
+		static $cache = [];
+		if (!isset($cache[$name = $class->getName()])) {
+			if ($class->isInternal()) {
+				$cache[$name] = [];
+			} else {
+				$code = file_get_contents($class->getFileName());
+				$cache = self::parseUseStatements($code, $name) + $cache;
+			}
+		}
+		return $cache[$name];
+	}
+
+
+	/**
 	 * Parses PHP code.
 	 * @param  string
-	 * @return array
+	 * @return array of [class => [alias => class, ...]]
 	 */
-	public static function parseUseStatemenets($code, $forClass = NULL)
+	public static function parseUseStatements($code, $forClass = null)
 	{
 		$tokens = token_get_all($code);
-		$namespace = $class = $classLevel = $level = NULL;
-		$res = $uses = array();
+		$namespace = $class = $classLevel = $level = null;
+		$res = $uses = [];
 
-		while (list(, $token) = each($tokens)) {
+		while ($token = current($tokens)) {
+			next($tokens);
 			switch (is_array($token) ? $token[0] : $token) {
 				case T_NAMESPACE:
-					$namespace = self::fetch($tokens, array(T_STRING, T_NS_SEPARATOR)) . '\\';
-					$uses = array();
+					$namespace = ltrim(self::fetch($tokens, [T_STRING, T_NS_SEPARATOR]) . '\\', '\\');
+					$uses = [];
 					break;
 
 				case T_CLASS:
 				case T_INTERFACE:
-				case PHP_VERSION_ID < 50400 ? -1 : T_TRAIT:
+				case T_TRAIT:
 					if ($name = self::fetch($tokens, T_STRING)) {
 						$class = $namespace . $name;
 						$classLevel = $level + 1;
@@ -181,10 +210,24 @@ class PhpReflection
 					break;
 
 				case T_USE:
-					while (!$class && ($name = self::fetch($tokens, array(T_STRING, T_NS_SEPARATOR)))) {
+					while (!$class && ($name = self::fetch($tokens, [T_STRING, T_NS_SEPARATOR]))) {
 						$name = ltrim($name, '\\');
-						if (self::fetch($tokens, T_AS)) {
+						if (self::fetch($tokens, '{')) {
+							while ($suffix = self::fetch($tokens, [T_STRING, T_NS_SEPARATOR])) {
+								if (self::fetch($tokens, T_AS)) {
+									$uses[self::fetch($tokens, T_STRING)] = $name . $suffix;
+								} else {
+									$tmp = explode('\\', $suffix);
+									$uses[end($tmp)] = $name . $suffix;
+								}
+								if (!self::fetch($tokens, ',')) {
+									break;
+								}
+							}
+
+						} elseif (self::fetch($tokens, T_AS)) {
 							$uses[self::fetch($tokens, T_STRING)] = $name;
+
 						} else {
 							$tmp = explode('\\', $name);
 							$uses[end($tmp)] = $name;
@@ -203,7 +246,7 @@ class PhpReflection
 
 				case '}':
 					if ($level === $classLevel) {
-						$class = $classLevel = NULL;
+						$class = $classLevel = null;
 					}
 					$level--;
 			}
@@ -213,19 +256,18 @@ class PhpReflection
 	}
 
 
-	private static function fetch(& $tokens, $take)
+	private static function fetch(&$tokens, $take)
 	{
-		$res = NULL;
+		$res = null;
 		while ($token = current($tokens)) {
-			list($token, $s) = is_array($token) ? $token : array($token, $token);
-			if (in_array($token, (array) $take, TRUE)) {
+			list($token, $s) = is_array($token) ? $token : [$token, $token];
+			if (in_array($token, (array) $take, true)) {
 				$res .= $s;
-			} elseif (!in_array($token, array(T_DOC_COMMENT, T_WHITESPACE, T_COMMENT), TRUE)) {
+			} elseif (!in_array($token, [T_DOC_COMMENT, T_WHITESPACE, T_COMMENT], true)) {
 				break;
 			}
 			next($tokens);
 		}
 		return $res;
 	}
-
 }

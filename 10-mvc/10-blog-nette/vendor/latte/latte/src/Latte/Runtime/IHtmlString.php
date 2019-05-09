@@ -5,6 +5,8 @@
  * Copyright (c) 2008 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Latte\Runtime;
 
 
@@ -14,6 +16,5 @@ interface IHtmlString
 	/**
 	 * @return string in HTML format
 	 */
-	function __toString();
-
+	function __toString(): string;
 }

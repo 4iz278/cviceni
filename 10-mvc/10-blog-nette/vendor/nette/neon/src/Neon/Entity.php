@@ -5,13 +5,15 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Neon;
 
 
 /**
  * Representation of 'foo(bar=1)' literal
  */
-class Entity extends \stdClass
+final class Entity extends \stdClass
 {
 	/** @var mixed */
 	public $value;
@@ -20,10 +22,15 @@ class Entity extends \stdClass
 	public $attributes;
 
 
-	public function __construct($value = NULL, array $attrs = NULL)
+	public function __construct($value, array $attrs = [])
 	{
 		$this->value = $value;
-		$this->attributes = (array) $attrs;
+		$this->attributes = $attrs;
 	}
 
+
+	public static function __set_state(array $properties)
+	{
+		return new self($properties['value'], $properties['attributes']);
+	}
 }

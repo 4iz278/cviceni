@@ -13,8 +13,9 @@ use Nette;
 /**
  * Basic annotation implementation.
  */
-class Annotation extends Nette\Object implements IAnnotation
+class Annotation implements IAnnotation
 {
+	use Nette\SmartObject;
 
 	public function __construct(array $values)
 	{
@@ -32,5 +33,4 @@ class Annotation extends Nette\Object implements IAnnotation
 	{
 		return $this->value;
 	}
-
 }

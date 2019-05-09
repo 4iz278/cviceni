@@ -14,8 +14,10 @@ use Nette\Caching\Cache;
 /**
  * Cache file storage.
  */
-class FileStorage extends Nette\Object implements Nette\Caching\IStorage
+class FileStorage implements Nette\Caching\IStorage
 {
+	use Nette\SmartObject;
+
 	/**
 	 * Atomic thread safe logic:
 	 *
@@ -28,8 +30,8 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 	 */
 
 	/** @internal cache file structure */
-	const META_HEADER_LEN = 28, // 22b signature + 6b meta-struct size + serialized meta-struct + data
-	// meta structure: array of
+	const
+		META_HEADER_LEN = 28, // 22b signature + 6b meta-struct size + serialized meta-struct + data
 		META_TIME = 'time', // timestamp
 		META_SERIALIZED = 'serialized', // is content serialized?
 		META_EXPIRE = 'expire', // expiration timestamp
@@ -41,12 +43,11 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 	const FILE = 'file',
 		HANDLE = 'handle';
 
-
 	/** @var float  probability that the clean() routine is started */
 	public static $gcProbability = 0.001;
 
 	/** @var bool */
-	public static $useDirectories = TRUE;
+	public static $useDirectories = true;
 
 	/** @var string */
 	private $dir;
@@ -61,7 +62,7 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 	private $locks;
 
 
-	public function __construct($dir, IJournal $journal = NULL)
+	public function __construct($dir, IJournal $journal = null)
 	{
 		if (!is_dir($dir)) {
 			throw new Nette\DirectoryNotFoundException("Directory '$dir' not found.");
@@ -72,16 +73,11 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 		$this->journal = $journal;
 
 		if (mt_rand() / mt_getrandmax() < static::$gcProbability) {
-			$this->clean(array());
+			$this->clean([]);
 		}
 	}
 
 
-	/**
-	 * Read from cache.
-	 * @param  string key
-	 * @return mixed|NULL
-	 */
 	public function read($key)
 	{
 		$meta = $this->readMetaAndLock($this->getCacheFile($key), LOCK_SH);
@@ -89,17 +85,16 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 			return $this->readData($meta); // calls fclose()
 
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 
 
 	/**
 	 * Verifies dependencies.
-	 * @param  array
 	 * @return bool
 	 */
-	private function verify($meta)
+	private function verify(array $meta)
 	{
 		do {
 			if (!empty($meta[self::META_DELTA])) {
@@ -126,19 +121,14 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 				}
 			}
 
-			return TRUE;
-		} while (FALSE);
+			return true;
+		} while (false);
 
 		$this->delete($meta[self::FILE], $meta[self::HANDLE]); // meta[handle] & meta[file] was added by readMetaAndLock()
-		return FALSE;
+		return false;
 	}
 
 
-	/**
-	 * Prevents item reading and writing. Lock is released by write() or remove().
-	 * @param  string key
-	 * @return void
-	 */
 	public function lock($key)
 	{
 		$cacheFile = $this->getCacheFile($key);
@@ -153,18 +143,11 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Writes item into the cache.
-	 * @param  string key
-	 * @param  mixed  data
-	 * @param  array  dependencies
-	 * @return void
-	 */
 	public function write($key, $data, array $dp)
 	{
-		$meta = array(
+		$meta = [
 			self::META_TIME => microtime(),
-		);
+		];
 
 		if (isset($dp[Cache::EXPIRATION])) {
 			if (empty($dp[Cache::SLIDING])) {
@@ -178,7 +161,7 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 			foreach ((array) $dp[Cache::ITEMS] as $item) {
 				$depFile = $this->getCacheFile($item);
 				$m = $this->readMetaAndLock($depFile, LOCK_SH);
-				$meta[self::META_ITEMS][$depFile] = $m[self::META_TIME]; // may be NULL
+				$meta[self::META_ITEMS][$depFile] = $m[self::META_TIME]; // may be null
 				unset($m);
 			}
 		}
@@ -209,42 +192,36 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 
 		if (!is_string($data)) {
 			$data = serialize($data);
-			$meta[self::META_SERIALIZED] = TRUE;
+			$meta[self::META_SERIALIZED] = true;
 		}
 
 		$head = serialize($meta) . '?>';
 		$head = '<?php //netteCache[01]' . str_pad((string) strlen($head), 6, '0', STR_PAD_LEFT) . $head;
 		$headLen = strlen($head);
-		$dataLen = strlen($data);
 
 		do {
-			if (fwrite($handle, str_repeat("\x00", $headLen), $headLen) !== $headLen) {
+			if (fwrite($handle, str_repeat("\x00", $headLen)) !== $headLen) {
 				break;
 			}
 
-			if (fwrite($handle, $data, $dataLen) !== $dataLen) {
+			if (fwrite($handle, $data) !== strlen($data)) {
 				break;
 			}
 
 			fseek($handle, 0);
-			if (fwrite($handle, $head, $headLen) !== $headLen) {
+			if (fwrite($handle, $head) !== $headLen) {
 				break;
 			}
 
 			flock($handle, LOCK_UN);
 			fclose($handle);
 			return;
-		} while (FALSE);
+		} while (false);
 
 		$this->delete($cacheFile, $handle);
 	}
 
 
-	/**
-	 * Removes item from the cache.
-	 * @param  string key
-	 * @return void
-	 */
 	public function remove($key)
 	{
 		unset($this->locks[$key]);
@@ -252,15 +229,11 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 	}
 
 
-	/**
-	 * Removes items from the cache by conditions & garbage collector.
-	 * @param  array  conditions
-	 * @return void
-	 */
 	public function clean(array $conditions)
 	{
 		$all = !empty($conditions[Cache::ALL]);
 		$collector = empty($conditions);
+		$namespaces = isset($conditions[Cache::NAMESPACES]) ? $conditions[Cache::NAMESPACES] : null;
 
 		// cleaning using file iterator
 		if ($all || $collector) {
@@ -296,6 +269,17 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 				$this->journal->clean($conditions);
 			}
 			return;
+
+		} elseif ($namespaces) {
+			foreach ($namespaces as $namespace) {
+				$dir = $this->dir . '/_' . urlencode($namespace);
+				if (is_dir($dir)) {
+					foreach (Nette\Utils\Finder::findFiles('_*')->in($dir) as $entry) {
+						$this->delete((string) $entry);
+					}
+					@rmdir($dir); // may already contain new files
+				}
+			}
 		}
 
 		// cleaning using journal
@@ -309,15 +293,15 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 
 	/**
 	 * Reads cache data from disk.
-	 * @param  string  file path
-	 * @param  int     lock mode
-	 * @return array|NULL
+	 * @param  string  $file
+	 * @param  int  $lock
+	 * @return array|null
 	 */
 	protected function readMetaAndLock($file, $lock)
 	{
 		$handle = @fopen($file, 'r+b'); // @ - file may not exist
 		if (!$handle) {
-			return NULL;
+			return null;
 		}
 
 		flock($handle, $lock);
@@ -326,23 +310,21 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 		if ($head && strlen($head) === self::META_HEADER_LEN) {
 			$size = (int) substr($head, -6);
 			$meta = stream_get_contents($handle, $size, self::META_HEADER_LEN);
-			$meta = @unserialize($meta); // intentionally @
-			if (is_array($meta)) {
-				$meta[self::FILE] = $file;
-				$meta[self::HANDLE] = $handle;
-				return $meta;
-			}
+			$meta = unserialize($meta);
+			$meta[self::FILE] = $file;
+			$meta[self::HANDLE] = $handle;
+			return $meta;
 		}
 
 		flock($handle, LOCK_UN);
 		fclose($handle);
-		return NULL;
+		return null;
 	}
 
 
 	/**
 	 * Reads cache data from disk and closes cache file handle.
-	 * @param  array
+	 * @param  array  $meta
 	 * @return mixed
 	 */
 	protected function readData($meta)
@@ -354,14 +336,14 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 		if (empty($meta[self::META_SERIALIZED])) {
 			return $data;
 		} else {
-			return @unserialize($data); // intentionally @
+			return unserialize($data);
 		}
 	}
 
 
 	/**
 	 * Returns file name.
-	 * @param  string
+	 * @param  string  $key
 	 * @return string
 	 */
 	protected function getCacheFile($key)
@@ -376,11 +358,11 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 
 	/**
 	 * Deletes and closes file.
-	 * @param  string
-	 * @param  resource
+	 * @param  string  $file
+	 * @param  resource  $handle
 	 * @return void
 	 */
-	private static function delete($file, $handle = NULL)
+	private static function delete($file, $handle = null)
 	{
 		if (@unlink($file)) { // @ - file may not already exist
 			if ($handle) {
@@ -401,5 +383,4 @@ class FileStorage extends Nette\Object implements Nette\Caching\IStorage
 			@unlink($file); // @ - file may not already exist
 		}
 	}
-
 }

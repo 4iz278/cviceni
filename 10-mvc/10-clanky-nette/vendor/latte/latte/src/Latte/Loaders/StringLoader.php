@@ -5,6 +5,8 @@
  * Copyright (c) 2008 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Latte\Loaders;
 
 use Latte;
@@ -13,35 +15,58 @@ use Latte;
 /**
  * Template loader.
  */
-class StringLoader extends Latte\Object implements Latte\ILoader
+class StringLoader implements Latte\ILoader
 {
+	use Latte\Strict;
+
+	/** @var array|null [name => content] */
+	private $templates;
+
+
+	public function __construct(array $templates = null)
+	{
+		$this->templates = $templates;
+	}
+
 
 	/**
 	 * Returns template source code.
-	 * @return string
 	 */
-	public function getContent($content)
+	public function getContent($name): string
 	{
-		return $content;
+		if ($this->templates === null) {
+			return $name;
+		} elseif (isset($this->templates[$name])) {
+			return $this->templates[$name];
+		} else {
+			throw new \RuntimeException("Missing template '$name'.");
+		}
+	}
+
+
+	public function isExpired($name, $time): bool
+	{
+		return false;
 	}
 
 
 	/**
-	 * @return bool
+	 * Returns referred template name.
 	 */
-	public function isExpired($content, $time)
+	public function getReferredName($name, $referringName): string
 	{
-		return FALSE;
+		if ($this->templates === null) {
+			throw new \LogicException("Missing template '$name'.");
+		}
+		return $name;
 	}
 
 
 	/**
-	 * Returns fully qualified template name.
-	 * @return string
+	 * Returns unique identifier for caching.
 	 */
-	public function getChildName($content, $parent = NULL)
+	public function getUniqueId($name): string
 	{
-		return $content;
+		return $this->getContent($name);
 	}
-
 }

@@ -14,7 +14,6 @@ namespace Nette\ComponentModel;
  */
 class RecursiveComponentIterator extends \RecursiveArrayIterator implements \Countable
 {
-
 	/**
 	 * Has the current element has children?
 	 * @return bool
@@ -43,5 +42,4 @@ class RecursiveComponentIterator extends \RecursiveArrayIterator implements \Cou
 	{
 		return iterator_count($this);
 	}
-
 }

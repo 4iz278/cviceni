@@ -5,6 +5,8 @@
  * Copyright (c) 2008 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Latte;
 
 
@@ -13,6 +15,11 @@ namespace Latte;
  */
 interface IMacro
 {
+	const
+		AUTO_EMPTY = 4,
+		AUTO_CLOSE = 64,
+		ALLOWED_IN_HEAD = 128,
+		DEFAULT_FLAGS = 0;
 
 	/**
 	 * Initializes before template parsing.
@@ -22,13 +29,13 @@ interface IMacro
 
 	/**
 	 * Finishes template parsing.
-	 * @return array(prolog, epilog)
+	 * @return array|null [prolog, epilog]
 	 */
 	function finalize();
 
 	/**
-	 * New node is found. Returns FALSE to reject.
-	 * @return bool
+	 * New node is found. Returns false to reject.
+	 * @return bool|null
 	 */
 	function nodeOpened(MacroNode $node);
 
@@ -37,5 +44,4 @@ interface IMacro
 	 * @return void
 	 */
 	function nodeClosed(MacroNode $node);
-
 }

@@ -10,9 +10,9 @@ if (@!include __DIR__ . '/../vendor/autoload.php') {
 }
 
 use Nette\Forms\Form;
+use Nette\Utils\Html;
 use Tracy\Debugger;
 use Tracy\Dumper;
-use Nette\Utils\Html;
 
 Debugger::enable();
 
@@ -21,9 +21,9 @@ $form = new Form;
 // setup custom rendering
 $renderer = $form->getRenderer();
 $renderer->wrappers['form']['container'] = Html::el('div')->id('form');
-$renderer->wrappers['group']['container'] = NULL;
+$renderer->wrappers['group']['container'] = null;
 $renderer->wrappers['group']['label'] = 'h3';
-$renderer->wrappers['pair']['container'] = NULL;
+$renderer->wrappers['pair']['container'] = null;
 $renderer->wrappers['controls']['container'] = 'dl';
 $renderer->wrappers['control']['container'] = 'dd';
 $renderer->wrappers['control']['.odd'] = 'odd';
@@ -36,14 +36,14 @@ $form->addGroup('Personal data');
 $form->addText('name', 'Your name')
 	->setRequired('Enter your name');
 
-$form->addRadioList('gender', 'Your gender', array(
-	'm' => Html::el('option', 'male')->style('color: #248bd3'),
-	'f' => Html::el('option', 'female')->style('color: #e948d4'),
-));
+$form->addRadioList('gender', 'Your gender', [
+	'm' => Html::el('span', 'male')->style('color: #248bd3'),
+	'f' => Html::el('span', 'female')->style('color: #e948d4'),
+]);
 
-$form->addSelect('country', 'Country', array(
+$form->addSelect('country', 'Country', [
 	'Buranda', 'Qumran', 'Saint Georges Island',
-));
+]);
 
 $form->addCheckbox('send', 'Ship to address');
 

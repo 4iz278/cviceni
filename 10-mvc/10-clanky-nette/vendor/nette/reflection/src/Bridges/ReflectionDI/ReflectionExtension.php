@@ -19,7 +19,7 @@ class ReflectionExtension extends Nette\DI\CompilerExtension
 	private $debugMode;
 
 
-	public function __construct($debugMode = FALSE)
+	public function __construct($debugMode = false)
 	{
 		$this->debugMode = $debugMode;
 	}
@@ -28,8 +28,7 @@ class ReflectionExtension extends Nette\DI\CompilerExtension
 	public function afterCompile(Nette\PhpGenerator\ClassType $class)
 	{
 		$class->getMethod('initialize')
-			->addBody('Nette\Reflection\AnnotationsParser::setCacheStorage($this->getByType("Nette\Caching\IStorage"));')
-			->addBody('Nette\Reflection\AnnotationsParser::$autoRefresh = ?;', array($this->debugMode));
+			->addBody('Nette\Reflection\AnnotationsParser::setCacheStorage($this->getByType(Nette\Caching\IStorage::class));')
+			->addBody('Nette\Reflection\AnnotationsParser::$autoRefresh = ?;', [$this->debugMode]);
 	}
-
 }

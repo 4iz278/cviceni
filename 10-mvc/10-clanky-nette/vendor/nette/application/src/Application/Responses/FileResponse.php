@@ -13,8 +13,13 @@ use Nette;
 /**
  * File download response.
  */
-class FileResponse extends Nette\Object implements Nette\Application\IResponse
+class FileResponse implements Nette\Application\IResponse
 {
+	use Nette\SmartObject;
+
+	/** @var bool */
+	public $resuming = true;
+
 	/** @var string */
 	private $file;
 
@@ -25,9 +30,6 @@ class FileResponse extends Nette\Object implements Nette\Application\IResponse
 	private $name;
 
 	/** @var bool */
-	public $resuming = TRUE;
-
-	/** @var bool */
 	private $forceDownload;
 
 
@@ -36,15 +38,15 @@ class FileResponse extends Nette\Object implements Nette\Application\IResponse
 	 * @param  string  imposed file name
 	 * @param  string  MIME content type
 	 */
-	public function __construct($file, $name = NULL, $contentType = NULL, $forceDownload = TRUE)
+	public function __construct($file, $name = null, $contentType = null, $forceDownload = true)
 	{
 		if (!is_file($file)) {
 			throw new Nette\Application\BadRequestException("File '$file' doesn't exist.");
 		}
 
 		$this->file = $file;
-		$this->name = $name ? $name : basename($file);
-		$this->contentType = $contentType ? $contentType : 'application/octet-stream';
+		$this->name = $name ?: basename($file);
+		$this->contentType = $contentType ?: 'application/octet-stream';
 		$this->forceDownload = $forceDownload;
 	}
 
@@ -122,10 +124,9 @@ class FileResponse extends Nette\Object implements Nette\Application\IResponse
 
 		$httpResponse->setHeader('Content-Length', $length);
 		while (!feof($handle) && $length > 0) {
-			echo $s = fread($handle, min(4e6, $length));
+			echo $s = fread($handle, min(4000000, $length));
 			$length -= strlen($s);
 		}
 		fclose($handle);
 	}
-
 }

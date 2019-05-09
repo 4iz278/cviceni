@@ -8,6 +8,7 @@
 namespace Nette\Forms\Controls;
 
 use Nette;
+use Nette\Utils\Html;
 
 
 /**
@@ -15,30 +16,32 @@ use Nette;
  */
 class Checkbox extends BaseControl
 {
-	/** @var Nette\Utils\Html  wrapper element template */
+	/** @var Html  wrapper element template */
 	private $wrapper;
 
 
 	/**
-	 * @param  string  label
+	 * @param  string|object
 	 */
-	public function __construct($label = NULL)
+	public function __construct($label = null)
 	{
 		parent::__construct($label);
 		$this->control->type = 'checkbox';
-		$this->wrapper = Nette\Utils\Html::el();
+		$this->wrapper = Html::el();
+		$this->setOption('type', 'checkbox');
 	}
 
 
 	/**
 	 * Sets control's value.
 	 * @param  bool
-	 * @return self
+	 * @return static
+	 * @internal
 	 */
 	public function setValue($value)
 	{
-		if (!is_scalar($value) && $value !== NULL) {
-			throw new Nette\InvalidArgumentException(sprintf("Value must be scalar or NULL, %s given in field '%s'.", gettype($value), $this->name));
+		if (!is_scalar($value) && $value !== null) {
+			throw new Nette\InvalidArgumentException(sprintf("Value must be scalar or null, %s given in field '%s'.", gettype($value), $this->name));
 		}
 		$this->value = (bool) $value;
 		return $this;
@@ -51,13 +54,13 @@ class Checkbox extends BaseControl
 	 */
 	public function isFilled()
 	{
-		return $this->getValue() !== FALSE; // back compatibility
+		return $this->getValue() !== false; // back compatibility
 	}
 
 
 	/**
 	 * Generates control's HTML element.
-	 * @return Nette\Utils\Html
+	 * @return Html
 	 */
 	public function getControl()
 	{
@@ -69,14 +72,13 @@ class Checkbox extends BaseControl
 	 * Bypasses label generation.
 	 * @return void
 	 */
-	public function getLabel($caption = NULL)
+	public function getLabel($caption = null)
 	{
-		return NULL;
 	}
 
 
 	/**
-	 * @return Nette\Utils\Html
+	 * @return Html
 	 */
 	public function getControlPart()
 	{
@@ -85,7 +87,7 @@ class Checkbox extends BaseControl
 
 
 	/**
-	 * @return Nette\Utils\Html
+	 * @return Html
 	 */
 	public function getLabelPart()
 	{
@@ -95,11 +97,10 @@ class Checkbox extends BaseControl
 
 	/**
 	 * Returns wrapper HTML element template.
-	 * @return Nette\Utils\Html
+	 * @return Html
 	 */
 	public function getSeparatorPrototype()
 	{
 		return $this->wrapper;
 	}
-
 }

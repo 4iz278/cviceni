@@ -1,30 +1,52 @@
-<!DOCTYPE html><link rel="stylesheet" href="assets/style.css">
-
-<h1>Tracy Exception demo</h1>
-
 <?php
+
+declare(strict_types=1);
 
 require __DIR__ . '/../src/tracy.php';
 
 use Tracy\Debugger;
 
+// For security reasons, Tracy is visible only on localhost.
+// You may force Tracy to run in development mode by passing the Debugger::DEVELOPMENT instead of Debugger::DETECT.
 Debugger::enable(Debugger::DETECT, __DIR__ . '/log');
 
+?>
+<!DOCTYPE html><link rel="stylesheet" href="assets/style.css">
 
-function first($arg1, $arg2)
+<h1>Tracy: exception demo</h1>
+
+<?php
+
+class DemoClass
 {
-	second(TRUE, FALSE);
+	public function first($arg1, $arg2)
+	{
+		$this->second(true, false);
+	}
+
+
+	public function second($arg1, $arg2)
+	{
+		self::third([1, 2, 3]);
+	}
+
+
+	public static function third($arg1)
+	{
+		throw new Exception('The my exception', 123);
+	}
 }
 
-function second($arg1, $arg2)
-{
-	third(array(1, 2, 3));
-}
 
-function third($arg1)
+function demo($a, $b)
 {
-	throw new Exception('The my exception', 123);
+	$demo = new DemoClass;
+	$demo->first($a, $b);
 }
 
 
-first(10, 'any string');
+if (Debugger::$productionMode) {
+	echo '<p><b>For security reasons, Tracy is visible only on localhost. Look into the source code to see how to enable Tracy.</b></p>';
+}
+
+demo(10, 'any string');

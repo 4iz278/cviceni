@@ -16,18 +16,14 @@ interface IJournal
 
 	/**
 	 * Writes entry information into the journal.
-	 * @param  string
-	 * @param  array
+	 * @param  string  $key
 	 * @return void
 	 */
 	function write($key, array $dependencies);
 
-
 	/**
 	 * Cleans entries from journal.
-	 * @param  array
-	 * @return array of removed items or NULL when performing a full cleanup
+	 * @return array|null of removed items or null when performing a full cleanup
 	 */
 	function clean(array $conditions);
-
 }

@@ -16,11 +16,14 @@ use Nette\Neon;
 /**
  * Reading and generating NEON files.
  */
-class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
+class NeonAdapter implements Nette\DI\Config\IAdapter
 {
+	use Nette\SmartObject;
+
 	/** @internal */
 	const INHERITING_SEPARATOR = '<', // child < parent
 		PREVENT_MERGING = '!';
+
 
 	/**
 	 * Reads configuration from NEON file.
@@ -33,19 +36,23 @@ class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
 	}
 
 
-	private function process(array $arr)
+	/**
+	 * @return array
+	 * @throws Nette\InvalidStateException
+	 */
+	public function process(array $arr)
 	{
-		$res = array();
+		$res = [];
 		foreach ($arr as $key => $val) {
-			if (substr($key, -1) === self::PREVENT_MERGING) {
-				if (!is_array($val) && $val !== NULL) {
+			if (is_string($key) && substr($key, -1) === self::PREVENT_MERGING) {
+				if (!is_array($val) && $val !== null) {
 					throw new Nette\InvalidStateException("Replacing operator is available only for arrays, item '$key' is not array.");
 				}
 				$key = substr($key, 0, -1);
 				$val[Helpers::EXTENDS_KEY] = Helpers::OVERWRITE;
 
-			} elseif (preg_match('#^(\S+)\s+' . self::INHERITING_SEPARATOR . '\s+(\S+)\z#', $key, $matches)) {
-				if (!is_array($val) && $val !== NULL) {
+			} elseif (is_string($key) && preg_match('#^(\S+)\s+' . self::INHERITING_SEPARATOR . '\s+(\S+)\z#', $key, $matches)) {
+				if (!is_array($val) && $val !== null) {
 					throw new Nette\InvalidStateException("Inheritance operator is available only for arrays, item '$key' is not array.");
 				}
 				list(, $key, $val[Helpers::EXTENDS_KEY]) = $matches;
@@ -59,16 +66,16 @@ class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
 
 			} elseif ($val instanceof Neon\Entity) {
 				if ($val->value === Neon\Neon::CHAIN) {
-					$tmp = NULL;
+					$tmp = null;
 					foreach ($this->process($val->attributes) as $st) {
 						$tmp = new Statement(
-							$tmp === NULL ? $st->getEntity() : array($tmp, ltrim($st->getEntity(), ':')),
+							$tmp === null ? $st->getEntity() : [$tmp, ltrim($st->getEntity(), ':')],
 							$st->arguments
 						);
 					}
 					$val = $tmp;
 				} else {
-					$tmp = $this->process(array($val->value));
+					$tmp = $this->process([$val->value]);
 					$val = new Statement($tmp[0], $this->process($val->attributes));
 				}
 			}
@@ -84,7 +91,7 @@ class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
 	 */
 	public function dump(array $data)
 	{
-		$tmp = array();
+		$tmp = [];
 		foreach ($data as $name => $secData) {
 			if ($parent = Helpers::takeParent($secData)) {
 				$name .= ' ' . self::INHERITING_SEPARATOR . ' ' . $parent;
@@ -93,9 +100,9 @@ class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
 		}
 		array_walk_recursive(
 			$tmp,
-			function (& $val) {
+			function (&$val) {
 				if ($val instanceof Statement) {
-					$val = NeonAdapter::statementToEntity($val);
+					$val = self::statementToEntity($val);
 				}
 			}
 		);
@@ -106,29 +113,27 @@ class NeonAdapter extends Nette\Object implements Nette\DI\Config\IAdapter
 
 	/**
 	 * @return Neon\Entity
-	 * @internal
 	 */
-	public static function statementToEntity(Statement $val)
+	private static function statementToEntity(Statement $val)
 	{
 		array_walk_recursive(
 			$val->arguments,
-			function (& $val) {
+			function (&$val) {
 				if ($val instanceof Statement) {
-					$val = NeonAdapter::statementToEntity($val);
+					$val = self::statementToEntity($val);
 				}
 			}
 		);
-		if (is_array($val->entity) && $val->entity[0] instanceof Statement) {
+		if (is_array($val->getEntity()) && $val->getEntity()[0] instanceof Statement) {
 			return new Neon\Entity(
 				Neon\Neon::CHAIN,
-				array(
-					self::statementToEntity($val->entity[0]),
-					new Neon\Entity('::' . $val->entity[1], $val->arguments)
-				)
+				[
+					self::statementToEntity($val->getEntity()[0]),
+					new Neon\Entity('::' . $val->getEntity()[1], $val->arguments),
+				]
 			);
 		} else {
-			return new Neon\Entity($val->entity, $val->arguments);
+			return new Neon\Entity($val->getEntity(), $val->arguments);
 		}
 	}
-
 }

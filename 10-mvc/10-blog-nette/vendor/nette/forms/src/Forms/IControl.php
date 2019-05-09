@@ -17,7 +17,7 @@ interface IControl
 	/**
 	 * Sets control's value.
 	 * @param  mixed
-	 * @return void
+	 * @return static
 	 */
 	function setValue($value);
 
@@ -43,13 +43,4 @@ interface IControl
 	 * @return bool
 	 */
 	function isOmitted();
-
-	/**
-	 * Returns translated string.
-	 * @param  string
-	 * @param  int      plural count
-	 * @return string
-	 */
-	function translate($s, $count = NULL);
-
 }
