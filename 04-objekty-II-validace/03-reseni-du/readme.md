@@ -1,0 +1,1 @@
+Tato složka obsahuje možné řešení úkolu z předchozího cvičení.
