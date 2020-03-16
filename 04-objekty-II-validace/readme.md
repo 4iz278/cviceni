@@ -1,5 +1,9 @@
 # 4. Objekty v PHP II., validace formulářů
 
+ :anger: **V tomto dokumentu v nejbližší době naleznete doplněné podklady ke cvičením 19. a 20.3.2020.**
+
+
+
 ## Magické metody objektů
 * **to, že v rámci daného objektu daná vlastnost (proměnná, funkce) neexistuje, ještě neznamená, že s ní nejde praxovat**
 * "magické funkce" poznáte podle toho, že začínají na *__* (dvě podtržítka)
