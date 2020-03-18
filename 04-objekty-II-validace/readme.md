@@ -5,9 +5,11 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 
 ## Opakování z minulého cvičení
 
-:point_right: V [minulém cvičení](../03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
+:point_right:
+V [minulém cvičení](../03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
 
-:point_right: Z hlediska stručného **opakování práce se soubory**: 
+:point_right:
+Z hlediska stručného **opakování práce se soubory**: 
 - při práci se soubory lze pracovat buď se souborem jako celkem (include, file_get_contents, file_put_contents, readfile),
 - nebo jde pracovat s file streamem (soubor je vlastně řetězec dat, který můžeme otevřít a následně se v něm pohybovat a měnit ho).
     - nejprve soubor otevřeme pomocí funkce fopen (a vybíráme si, zda chceme soubor číst, nebo do něj zapisovat)
@@ -16,7 +18,8 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
     - pohybovat se jde pomocí fseek, feof pak zjistí, jestli jsme na konci file streamu
     - soubor bychom neměli zapomenout zavřít pomocí fclose.
 
-:point_right: Z hlediska **opakování chyb a výjimek**:
+:point_right:
+Z hlediska **opakování chyb a výjimek**:
 - výjimky se chovají vlastně stejně, jako např. v javě
     - výjimka je instance třídy Exception, pro odchycení používáme try-catch blok
     - oproti javě nás PHP nenutí všechny výjimky odchytit na úrovni kódu, když je nezachytíme, zobrazí se uživateli
@@ -24,7 +27,8 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
     - máme různé úrovně chyb, které jsou buď odchytitelné univerzální funkcí (např. pro zápis do logu),
     - nebo chyby nejčastěji skrýváme pomocí zavináče uvedeného před názvem proměnné či před názvem funkce.
     
-:point_right: Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho byste si měli pamatovat:
+:point_right:
+Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho byste si měli pamatovat:
 - definice tříd se chovají podobně jako v javě, ale používáme některé specifické operátory:
     - :: (dvě dvojtečky) jsou odkazem na statickou proměnnou nebo na statickou metodu (např. ```MojeTrida::metoda();``` nebo ```MojeTrida::$promenna = 1;```)
     - -> (šipka) odděluje instanci od její metody či její proměnné - u té ale pak nepíšeme znak $ (např. ```$objekt->mojeMetoda();``` nebo ```$objekt->cislo = 1;```)
@@ -43,11 +47,13 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
     - pro import třídy z jiného namespace použijeme zápis ```use JmennyProstor\MojeTrida;``` (mimo definici třídy, ve třídě se *use* používá pro načtení traitu).    
     
 ---     
-:point_right: **Na tomto cvičení nás čekají 2 hlavní témata:**
+
+:point_right:
+**Na tomto cvičení nás čekají 2 hlavní témata:**
 - **[dokončení problematiky objektů](#magick%C3%A9-metody-objekt%C5%AF)**
 - **[validace formulářů](#validace-formul%C3%A1%C5%99%C5%AF)**
 
-
+---
 
 ## Magické metody objektů
 :point_right: 
