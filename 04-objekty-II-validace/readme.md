@@ -82,9 +82,9 @@ V PHP se běžně používají také **jmenné prostory**:
 V následujících odstavcích jsou uvedeny jednotlivé magické metody s příklady - zkuste si je prosím projít, případně zkusit spustit.     
 
 
+### Přístup k neexistujícím/nepřístupným proměnným
 :point_right:
 
-### Přístup k neexistujícím/nepřístupným proměnným
 - V případě, kdy se snažíme pracovat s nějakou neexistující či nepřístupnou proměnnou, PHP místo vyhození chyby nejprve zkusí zavolat funkci, která může "podstrčit" příslušný obsah.
     - Pokud umí magická metoda pracovat s proměnnou s daným jménem, tak se to pro vnější kód tváří tak, jako kdyby v daném objektu ta proměnná opravdu byla.  
     - Často jsou využívané např. pro dynamicky načítané objekty (XML struktura atp.), objektově-relační mapování atp.
@@ -106,9 +106,9 @@ V následujících odstavcích jsou uvedeny jednotlivé magické metody s přík
 * [příklad simulace properties](./04-magicke-getset.php)
 
 
+### Přístup k nedefinovaným/nepřístupným metodám
 :point_right:
 
-### Přístup k nedefinovaným/nepřístupným metodám
 - Obdobně, jako k nedefinovaným či private proměnným, můžeme přistupovat také k nedefinovaným či private metodám. Při zavolání takové metody dojde k zavolání jedné z následujících funkcí, která může vykonat požadovaný kód stejně, jako by daná metoda definována byla.   
 - **__call(jmenoMetody, argumenty)**
   * funkce volaná v případě volání neexistující metody
@@ -120,9 +120,9 @@ V následujících odstavcích jsou uvedeny jednotlivé magické metody s přík
 * [příklad neexistující metody](./04-magicke-metody.php)
 
 
+### Serializace a "uspávání" objektů
 :point_right:
 
-### Serializace a "uspávání" objektů
 - **Co to je serializace?**
     - Pokud si aspoň matně vzpomínáte na hodiny javy, tak serializace tam sloužila k možnosti přerušení činnosti objektu a jeho uložení do řetězce, který bylo možné např. přenést přes síť či uložit do souboru nebo do databáze.
     - V PHP se to chová obdobně, přičemž musíte říct, co se má vlastně serializovat (které vnitřní proměnné) a následně vznikne řetězec.  
@@ -145,9 +145,9 @@ Až se budeme bavit o formátu JSON ([10. cvičení](./10-json-xml)), vzpomeňte
 Pokud budete chtít celé objekty ukládat do databáze a nebudete je chtít rozepisovat do jednotlivých sloupců v tabulce (např. nějakou konfiguraci, kterou budete načítat vždy jako celek), doporučuji z praxe spíš serializovat daný objekt do JSONu, než pomocí PHP serializace. Už kvůli tomu, že JSON načtete i z libovolného jiného jazyka, ale PHP serializaci ne. Zároveň v JSONu nejsou kontrolovány např. délky řetězců - za což budete rádi, až budete chtít některý z nich nahradit jinou hodnotou např. při migraci na jinou doménu.
 
 
+### Další magické metody
 :point_right:
 
-### Další magické metody
 Z dalčích magických metod obvykle definujeme ```__toString()``` a případně ```__clone()```, ostatní se moc často nepoužívají.
 
 * **__clone()**
@@ -181,9 +181,9 @@ Je normální psát v PHP objektově! Narozdíl např. od javy v něm ale nejsou
 - Pro vykonání kódu potřebujeme ale všechen kód "na jednom místě" a načítání souborů pomocí *require_once* je pruda :/ (a vede k chybám v případě, že na něco zapomeneme). 
 
 
+### Class loader
 :point_right:
 
-### Class loader
 V PHP žádný automatický class loader není. Můžeme ale jednoduše definovat funkci, která se zavolá v situaci, kdy chceme pracovat s třídou, kterou jsme zatím nenačetli. A tato funkce nám načte soubor, ve kterém je definice dané třídy uložena.
 
 ```php
@@ -201,17 +201,17 @@ Autoload funkcí je možné zaregistrovat i větší množství, volají se post
 * [příklad autoload funkce pracující se jmennými prostory](./04-autoload-namespaces)
 
 
+### Načítání tříd při použítí frameworku
 :point_right:
 
-### Načítání tříd při použítí frameworku
 * v podstatě všechny PHP frameworky zahrnuje nějakou vlastní podobu autoloadu => **při použití frameworku neimplementujeme vlastní autoload**
 * často je očekáváno rozdělení souborů do pevně daných adresářů (*controllers*, *model* atp.), nebo načítání podle jmenných prostorů
 * zajímavou metodu implementuje např. Nette - naindexuje všechny třídy v zadaném adresáři (bez ohledu na jejich umístění v podadresářích)
 
 
+### Composer
 :point_right:
 
-### Composer
 * pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru
 * **composer = správce závislostí pro PHP projekty**
   * viz http://getcomposer.org
