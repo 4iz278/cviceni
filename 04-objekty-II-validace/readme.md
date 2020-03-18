@@ -1,10 +1,51 @@
 # 4. Objekty v PHP II., validace formulářů
 
- :anger: **V tomto dokumentu v nejbližší době naleznete doplněné podklady ke cvičením 19. a 20.3.2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 19. a 20.3.2020.**
+Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
+## Opakování z minulého cvičení
 
+:point_right: V [minulém cvičení](../03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
+
+Z hlediska stručného **opakování práce se soubory**: 
+- při práci se soubory lze pracovat buď se souborem jako celkem (include, file_get_contents, file_put_contents, readfile),
+- nebo jde pracovat s file streamem (soubor je vlastně řetězec dat, který můžeme otevřít a následně se v něm pohybovat a měnit ho).
+    - nejprve soubor otevřeme pomocí funkce fopen (a vybíráme si, zda chceme soubor číst, nebo do něj zapisovat)
+    - následně můžeme číst pomocí fgets nebo fread (podle toho, zda chceme číst po řádcích, nebo po bytech)
+    - pro zápis používáme fwrite nebo fputs
+    - pohybovat se jde pomocí fseek, feof pak zjistí, jestli jsme na konci file streamu
+    - soubor bychom neměli zapomenout zavřít pomocí fclose.
+
+Z hlediska **opakování chyb a výjimek**:
+- výjimky se chovají vlastně stejně, jako např. v javě
+    - výjimka je instance třídy Exception, pro odchycení používáme try-catch blok
+    - oproti javě nás PHP nenutí všechny výjimky odchytit na úrovni kódu, když je nezachytíme, zobrazí se uživateli
+- chyby jsou vyhazovány nejčastěji některými vestavěnými funkcemi (include, fopen), při přístupu k nedefinovaným proměnným atp.
+    - máme různé úrovně chyb, které jsou buď odchytitelné univerzální funkcí (např. pro zápis do logu),
+    - nebo chyby nejčastěji skrýváme pomocí zavináče uvedeného před názvem proměnné či před názvem funkce.
+    
+Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho byste si měli pamatovat:
+- definice tříd se chovají podobně jako v javě, ale používáme některé specifické operátory:
+    - :: (dvě dvojtečky) jsou odkazem na statickou proměnnou nebo na statickou metodu (např. ```MojeTrida::metoda();``` nebo ```MojeTrida::$promenna = 1;```)
+    - -> (šipka) odděluje instanci od její metody či její proměnné - u té ale pak nepíšeme znak $ (např. ```$objekt->mojeMetoda();``` nebo ```$objekt->cislo = 1;```)
+- konstruktor se jmenuje ```__construct```  
+- funguje tu normální dědičnost pomocí ```extends``` a implementace rozhraní pomocí ```implements```
+    - ve výchozím stavu třídy od ničeho nedědí, rozhodně ne od nějaké obecné třídy *Object*
+- PHP podporuje i vícenásobnou dědičnost pomocí *traitů*
+    - jde vlastně o kousek třídy, který chceme použít na víc místech
+    - definujeme ho jako třídu, ale s klíčovým slovem ```trait```, tj. například ```trait MujTrait { /*obsah traitu*/ }```
+    - tam, kde ho chceme použít, napíšeme něco jako ```class Trida1 { use MujTrait; /*tělo třídy*/ }``` - chová se to pak stejně, jako kdybychom daný kód z traitu na to místo nakopírovali.
+- v PHP se běžně používají také jmenné prostory
+    - definujeme je pomocí zápisu ```namespace JmennyProstor;```
+    - vztahují se nejen na objekty, ale také na funkce definované volně v kódu
+    - pro oddělování jmenných prostorů od používáme zpětné lomítko
+    - pro import třídy z jiného namespace použijeme zápis ```use JmennyProstor\MojeTrida;``` (mimo definici třídy, ve třídě se *use* používá pro načtení traitu).    
+    
+---     
 
 ## Magické metody objektů
+:point_right: 
+
 * **to, že v rámci daného objektu daná vlastnost (proměnná, funkce) neexistuje, ještě neznamená, že s ní nejde praxovat**
 * "magické funkce" poznáte podle toho, že začínají na *__* (dvě podtržítka)
 * některé z nich už známe - **__construct**, **__destruct**, **__toString**
