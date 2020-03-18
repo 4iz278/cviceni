@@ -40,8 +40,9 @@ Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho
     - :: (dvě dvojtečky) jsou odkazem na statickou proměnnou nebo na statickou metodu (např. ```MojeTrida::metoda();``` nebo ```MojeTrida::$promenna = 1;```)
     - -> (šipka) odděluje instanci od její metody či její proměnné - u té ale pak nepíšeme znak $ (např. ```$objekt->mojeMetoda();``` nebo ```$objekt->cislo = 1;```)
 - konstruktor se jmenuje ```__construct```  
+- nemůžeme definovat jednu metodu víckrát s různými parametry, ale můžeme mít u metody parametry volitelné
 - funguje tu normální dědičnost pomocí ```extends``` a implementace rozhraní pomocí ```implements```
-    - ve výchozím stavu třídy od ničeho nedědí, rozhodně ne od nějaké obecné třídy *Object*
+    - ve výchozím stavu třídy od ničeho nedědí, rozhodně ne od nějaké obecné třídy *Object*    
 - PHP podporuje i vícenásobnou dědičnost pomocí *traitů*
     - jde vlastně o kousek třídy, který chceme použít na víc místech
     - definujeme ho jako třídu, ale s klíčovým slovem ```trait```, tj. například ```trait MujTrait { /*obsah traitu*/ }```
@@ -69,25 +70,36 @@ V PHP se běžně používají také **jmenné prostory**
 ## Magické metody objektů
 :point_right: 
 
-* **to, že v rámci daného objektu daná vlastnost (proměnná, funkce) neexistuje, ještě neznamená, že s ní nejde praxovat**
-* "magické funkce" poznáte podle toho, že začínají na *__* (dvě podtržítka)
-* některé z nich už známe - **__construct**, **__destruct**, **__toString**
+**To, že v rámci daného objektu daná vlastnost (proměnná, funkce) neexistuje, ještě neznamená, že s ní nejde pracovat.** Magické metody nám umí např. nasimulovat proměnné načítané dynamicky z databáze atp.  
+- Všechny "magické metody" poznáte podle toho, že začínají na **__** (dvě podtržítka)
+- Mezi magické metody patří také 3, které už vlastně znáte:
+    - **__construct** - vytváří instanci objektu - používali jsme ho na minulém cvičení,
+    - **__desctruct** - pro "uklizení" po objektu (např. odpojení se od databáze atp.) při ukončení jeho existence,
+    - **__toString** - metoda automaticky volaná při přetypování objektu na string.
+    
+:point_right:
+
+V následujících odstavcích jsou uvedeny jednotlivé magické metody s příklady - zkuste si je prosím projít, případně zkusit spustit.     
 
 ### Přístup k neexistujícím/nepřístupným proměnným
-* v případě, kdy se snažíme pracovat s nějakou neexistující či nepřístupnou proměnnou, PHP místo vyhození chyby nejprve zkusí zavolat funkci, která může "podstrčit" příslušný obsah
-* často jsou využívané např. pro dynamicky načítané objekty (XML struktura atp.), objektově-relační mapování atp.
-* některé frameworky pomocí nich simulují klasické "properties" á la c# (private proměnná s get() a set())
-* **__get(jmenoPromenne)**
+:point_right:
+
+- V případě, kdy se snažíme pracovat s nějakou neexistující či nepřístupnou proměnnou, PHP místo vyhození chyby nejprve zkusí zavolat funkci, která může "podstrčit" příslušný obsah.
+    - Pokud umí magická metoda pracovat s proměnnou s daným jménem, tak se to pro vnější kód tváří tak, jako kdyby v daném objektu ta proměnná opravdu byla.  
+    - Často jsou využívané např. pro dynamicky načítané objekty (XML struktura atp.), objektově-relační mapování atp.
+    - Některé frameworky pomocí nich simulují klasické "properties" á la c# (private proměnná s get() a set())
+- **__get(jmenoPromenne)**
   * funkce zavolaná v situaci, kdy chceme načíst neexistující či nepřístupné proměnné
-* **__set(jmenoPromenne, prirazovanaHodnota)**
+- **__set(jmenoPromenne, prirazovanaHodnota)**
   * funkce zavolaná v situaci, kdy chceme přiřadit obsah do neexistující či nepřístupné proměnné
-* **__isset(jmenoPromenne)**
+- **__isset(jmenoPromenne)**
   * funkce zavolaná v situaci, kdy zavoláme *isset()* nebo *empty()* na neexistující či nepřístupné proměnné
-* **__unset(jmenoPromenne)**
+- **__unset(jmenoPromenne)**
   * funkce zavolaná v situaci, kdy zavoláme *unset()* na neexistující či nepřístupné proměnné
 
-* drobné upozornění - PHP brání rekurzivnímu zacyklení v rámci magických metod - tj. pokud v rámci __get zkusíme přistupovat k neexistující proměnné, nedojde k rekurzivnímu volání (je možné ho vynutit jen ručním zavoláním __get())
+:grey_exclamation: Drobné upozornění - PHP brání rekurzivnímu zacyklení v rámci magických metod - tj. pokud v rámci __get zkusíme přistupovat k neexistující proměnné, nedojde k rekurzivnímu volání (je možné ho vynutit jen ručním zavoláním __get())
 
+:blue_book:
 * [příklad neexistující proměnné](./04-magicke-promenne.php)
 * [příklad simulace properties](./04-magicke-getset.php)
 
