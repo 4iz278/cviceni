@@ -52,10 +52,10 @@ Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho
 :point_right:
 
 V PHP se běžně používají také **jmenné prostory**:
-    - definujeme je pomocí zápisu ```namespace JmennyProstor;```
-    - vztahují se nejen na objekty, ale také na funkce definované volně v kódu
-    - pro oddělování jmenných prostorů od používáme zpětné lomítko
-    - pro import třídy z jiného namespace použijeme zápis ```use JmennyProstor\MojeTrida;``` (mimo definici třídy, ve třídě se *use* používá pro načtení traitu).    
+- definujeme je pomocí zápisu ```namespace JmennyProstor;``` 
+- vztahují se nejen na objekty, ale také na funkce definované volně v kódu
+- pro oddělování jmenných prostorů od používáme zpětné lomítko
+- pro import třídy z jiného namespace použijeme zápis ```use JmennyProstor\MojeTrida;``` (mimo definici třídy, ve třídě se *use* používá pro načtení traitu).    
     
 ---     
 
