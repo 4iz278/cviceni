@@ -17,9 +17,9 @@
      * @return mixed
      */
     public function __get($jmenoPromenne){
-      echo 'cteni property '.$jmenoPromenne.PHP_EOL;
+      echo 'cteni property '.$jmenoPromenne.PHP_EOL;//výpisy pomocí echo jsou tu jen pro účel výuky, v reálném kódu byste samozřejmě jen vrátili danou hodnotu
 
-      if (property_exists($this,$jmenoPromenne)){
+      if (property_exists($this,$jmenoPromenne)){//metoda property_exists umí zjistit, jestli je v daném objektu definována příslušná proměnná (property)
         return $this->$jmenoPromenne;
       }elseif(isset($this->data[$jmenoPromenne])){
         return $this->data[$jmenoPromenne];

@@ -7,7 +7,7 @@
      * @param $argumenty
      */
     public function __call($name, $argumenty){
-      echo 'byla zavolána metoda '.$name.PHP_EOL;
+      echo 'byla zavolána metoda '.$name.PHP_EOL;//ladicí výpisy jsou tu uvedeny jen pro účel výuky, místo nich by tu samozřejmě byl příslušný kód k vykonání
       var_dump($argumenty);
     }
 

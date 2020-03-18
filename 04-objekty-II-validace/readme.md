@@ -81,9 +81,10 @@ V PHP se běžně používají také **jmenné prostory**
 
 V následujících odstavcích jsou uvedeny jednotlivé magické metody s příklady - zkuste si je prosím projít, případně zkusit spustit.     
 
-### Přístup k neexistujícím/nepřístupným proměnným
+
 :point_right:
 
+### Přístup k neexistujícím/nepřístupným proměnným
 - V případě, kdy se snažíme pracovat s nějakou neexistující či nepřístupnou proměnnou, PHP místo vyhození chyby nejprve zkusí zavolat funkci, která může "podstrčit" příslušný obsah.
     - Pokud umí magická metoda pracovat s proměnnou s daným jménem, tak se to pro vnější kód tváří tak, jako kdyby v daném objektu ta proměnná opravdu byla.  
     - Často jsou využívané např. pro dynamicky načítané objekty (XML struktura atp.), objektově-relační mapování atp.
@@ -99,32 +100,56 @@ V následujících odstavcích jsou uvedeny jednotlivé magické metody s přík
 
 :grey_exclamation: Drobné upozornění - PHP brání rekurzivnímu zacyklení v rámci magických metod - tj. pokud v rámci __get zkusíme přistupovat k neexistující proměnné, nedojde k rekurzivnímu volání (je možné ho vynutit jen ručním zavoláním __get())
 
+
 :blue_book:
 * [příklad neexistující proměnné](./04-magicke-promenne.php)
 * [příklad simulace properties](./04-magicke-getset.php)
 
-### Přístup k nedefinovaným/nepřístupným metodám
-* **__call(jmenoMetody, argumenty)**
-  * funkce volaná v případě volání neexistující metody
-* **__callStatic(jmenoMetody, argumenty)**
-  * funkce volaná v případě volání neexistující statické metody, podpora v PHP 5.3+
 
+:point_right:
+
+### Přístup k nedefinovaným/nepřístupným metodám
+- Obdobně, jako k nedefinovaným či private proměnným, můžeme přistupovat také k nedefinovaným či private metodám. Při zavolání takové metody dojde k zavolání jedné z následujících funkcí, která může vykonat požadovaný kód stejně, jako by daná metoda definována byla.   
+- **__call(jmenoMetody, argumenty)**
+  * funkce volaná v případě volání neexistující metody
+- **__callStatic(jmenoMetody, argumenty)**
+  * funkce volaná v případě volání neexistující statické metody
+
+
+:blue_book:
 * [příklad neexistující metody](./04-magicke-metody.php)
 
-### Serializace a "uspávání" objektů
-* **Co to je serializace?**
-* aktuálně máme v PHP na výběr 2 varianty podpory serializace v rámci definice třídy
-  * třída bude implementovat rozhsaní **Serializable** (poskytuje víc variability)
-  * implementovat magické metody **__sleep()** a **__wakeup()** (jednodušší)
-* z hlediska následného využití je to vlastně jedno :)
 
+:point_right:
+
+### Serializace a "uspávání" objektů
+- **Co to je serializace?**
+    - Pokud si aspoň matně vzpomínáte na hodiny javy, tak serializace tam sloužila k možnosti přerušení činnosti objektu a jeho uložení do řetězce, který bylo možné např. přenést přes síť či uložit do souboru nebo do databáze.
+    - V PHP se to chová obdobně, přičemž musíte říct, co se má vlastně serializovat (které vnitřní proměnné) a následně vznikne řetězec.  
+- V rámci PHP serializace jsou uchovány informace o datových typech proměnných, vnitřní struktuře atp. a např. u řetězců či polí je pro ověření zapsána do řetězce i jejich délka.    
+- Aktuálně máme v PHP na výběr 2 varianty podpory serializace v rámci definice třídy. Z hlediska následného použití je vlastně jedno, kterou z těchto variant si vyberete :)
+    1. třída bude implementovat rozhraní **Serializable** (poskytuje víc variability)
+    2. implementovat magické metody **__sleep()** a **__wakeup()** (jednodušší)
+
+
+:blue_book:
 * [příklad sleep-wake up](./04-sleep-wakeup.php)
 * [příklad Serializable - jednoduché pole](./04-serializable-v2.php)
 * [příklad Serializable - asociační pole](./04-serializable.php)
 
-* až se budeme bavit o formátu JSON ([10. cvičení](./10-json-xml)), vzpomeňte si ještě na podobné rozhraní - *JsonSerializable*
 
-### Další magické funkce
+:point_right:
+
+Až se budeme bavit o formátu JSON ([10. cvičení](./10-json-xml)), vzpomeňte si ještě na podobné rozhraní - *JsonSerializable*.
+
+Pokud budete chtít celé objekty ukládat do databáze a nebudete je chtít rozepisovat do jednotlivých sloupců v tabulce (např. nějakou konfiguraci, kterou budete načítat vždy jako celek), doporučuji z praxe spíš serializovat daný objekt do JSONu, než pomocí PHP serializace. Už kvůli tomu, že JSON načtete i z libovolného jiného jazyka, ale PHP serializaci ne. Zároveň v JSONu nejsou kontrolovány např. délky řetězců - za což budete rádi, až budete chtít některý z nich nahradit jinou hodnotou např. při migraci na jinou doménu.
+
+
+:point_right:
+
+### Další magické metody
+Z dalčích magických metod obvykle definujeme ```__toString()``` a případně ```__clone()```, ostatní se moc často nepoužívají.
+
 * **__clone()**
   * funkce volaná v případě, že chceme vytvořit klon daného objektu (samostatnou kopii)
   * běžně se při přiřazení objekty přiřazují referencí, pokud chceme samostatnou kopii, je nutné objekt naklonovat
@@ -139,6 +164,8 @@ V následujících odstavcích jsou uvedeny jednotlivé magické metody s přík
 * **__debugInfo()**
   * funkce volaná v případě využití funkce *var_dump($objekt)*, podpora v PHP 5.6+
 
+
+:blue_book:
 * [příklad clone](./04-magicke-clone.php)
 * [příklad toString](./04-magicke-toString.php)
 * [příklad invoke](./04-magicke-invoke.php)
@@ -146,26 +173,43 @@ V následujících odstavcích jsou uvedeny jednotlivé magické metody s přík
 
 
 ## Automatické načítání tříd
+:point_right:
+
+Je normální psát v PHP objektově! Narozdíl např. od javy v něm ale nejsou žádná striktní pravidla ohledně toho, jak rozmístit kód do jednotlivých souborů.
+**Obvykle uvádíme každou třídu, rozhraní či trait v samostatném souboru, přičemž je rozmisťujeme do adresářů buď podle jmenných prostorů, nebo podle jejich logické funkce.**
+- Rozčleňování kódu do většího množství souborů (obvykle v podstatě každá třída zvlášť) přispívá k jednodušší orientaci ve zdrojácích
+- Pro vykonání kódu potřebujeme ale všechen kód "na jednom místě" a načítání souborů pomocí *require_once* je pruda :/ (a vede k chybám v případě, že na něco zapomeneme). 
+
+
+:point_right:
+
 ### Class loader
-* rozčleňování kódu do většího množství souborů (obvykle v podstatě každá třída zvlášť) přispívá k jednodušší orientaci ve zdrojácích
-* pro vykonání kódu potřebujeme ale všechen kód "na jednom místě"
-* načítání souborů pomocí *require_once* je pruda :/ (a vede k chybám v případě, že na něco zapomeneme)
+V PHP žádný automatický class loader není. Můžeme ale jednoduše definovat funkci, která se zavolá v situaci, kdy chceme pracovat s třídou, kterou jsme zatím nenačetli. A tato funkce nám načte soubor, ve kterém je definice dané třídy uložena.
 
 ```php
 spl_autoload_register(function($name){
-  //vyřešení jména souboru a jeho require
+  //vyřešení jména souboru a jeho require - funkce vrací true či false podle toho, zda se jí povedlo danou třídu načíst
 });
 ```
-* autoload funkcí je možné zaregistrovat i větší množství, volají se postupně, jak byly zaregistrovány do fronty (dokud některá z nich nevrátí true)
-  * pole zaregistrovaných funkcí je možné získat pomocí *spl_autoload_functions()*, zvolenou funkci je možné odstranit pomocí *spl_autoload_unregister()*
 
+Autoload funkcí je možné zaregistrovat i větší množství, volají se postupně, jak byly zaregistrovány do fronty (dokud některá z nich nevrátí true)
+  * pole zaregistrovaných funkcí je možné získat pomocí ```spl_autoload_functions()```, zvolenou funkci je možné odstranit pomocí ```spl_autoload_unregister()```
+
+
+:blue_book:
 * [příklad autoload](./04-autoload)
 * [příklad autoload funkce pracující se jmennými prostory](./04-autoload-namespaces)
+
+
+:point_right:
 
 ### Načítání tříd při použítí frameworku
 * v podstatě všechny PHP frameworky zahrnuje nějakou vlastní podobu autoloadu => **při použití frameworku neimplementujeme vlastní autoload**
 * často je očekáváno rozdělení souborů do pevně daných adresářů (*controllers*, *model* atp.), nebo načítání podle jmenných prostorů
 * zajímavou metodu implementuje např. Nette - naindexuje všechny třídy v zadaném adresáři (bez ohledu na jejich umístění v podadresářích)
+
+
+:point_right:
 
 ### Composer
 * pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru
@@ -195,6 +239,8 @@ php composer.phar update
 ```
 
 * [příklad composer](./04-composer-example-project)
+
+---
 
 ## Validace formulářů
 * o tom, jak získat data z formulářů, jsme se už bavili - viz [2. cvičení](./02-retezce-soubory) - zatím jsme je ale moc nekontrolovali...

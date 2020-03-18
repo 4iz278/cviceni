@@ -1,4 +1,9 @@
 <?php
+  /*
+   * V tomto příkladu najdete ukázku simulace properties á la C# - ve třídě máme proměnné definované jako private a zpřístupněné pomocí magických metod.
+   * Pokud máme pro danou proměnnou definovaný getter nebo setter, tak s automaticky zavolá.
+   */
+
 
   /**
    * Trait ObjectWithProperties - ukázka implementace properties
@@ -63,7 +68,7 @@
    * @property float $b
    */
   class MojeTrida{
-    use ObjectWithProperties;
+    use ObjectWithProperties; //načíteme příslušný trait
 
     private $a;
     private $b;
@@ -71,7 +76,7 @@
     /**
      * @param float $a
      */
-    public function setA($a){
+    public function setA(float $a){
       $this->a=$a*2;
     }
   }

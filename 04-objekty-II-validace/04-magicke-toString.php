@@ -10,6 +10,10 @@
      * @return string
      */
     public function __toString(){
+      /*
+       * Metoda __toString automaticky se používá při přetypování objektu na string.
+       * Z hlediska praktického použití by měla jen vracet string, nic v ní přímo nevypisujeme! Zároveň z ní nevracejte HTML kód.
+       */
       return $this->jmeno.' '.$this->prijmeni;
     }
 

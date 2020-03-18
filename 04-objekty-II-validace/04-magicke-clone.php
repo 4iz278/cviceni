@@ -1,4 +1,9 @@
 <?php
+  
+  /*
+   * Za normálních okolností jsou při přiřazení objekty předávány jako reference (tj. obě proměnné poté odkazují na stejné místo v paměti a změny v jedné proměnné se projeví i ve druhé).
+   * Pokud chceme objekt jako celek zkopírovat, používáme k tomu přiřazení s klíčovým slovem "clone". Poté je zavolána magická metoda __clone, která může vytvořit kopie (klony) také od vnořených objektů. Proměnné s čísly a řetězci jsou naklonovány automaticky.
+   */
 
   class Trida1{
     public $id;
