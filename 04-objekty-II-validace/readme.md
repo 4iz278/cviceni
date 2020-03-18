@@ -6,9 +6,12 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 ## Opakování z minulého cvičení
 
 :point_right:
+
 V [minulém cvičení](../03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
 
+
 :point_right:
+
 Z hlediska stručného **opakování práce se soubory**: 
 - při práci se soubory lze pracovat buď se souborem jako celkem (include, file_get_contents, file_put_contents, readfile),
 - nebo jde pracovat s file streamem (soubor je vlastně řetězec dat, který můžeme otevřít a následně se v něm pohybovat a měnit ho).
@@ -18,7 +21,9 @@ Z hlediska stručného **opakování práce se soubory**:
     - pohybovat se jde pomocí fseek, feof pak zjistí, jestli jsme na konci file streamu
     - soubor bychom neměli zapomenout zavřít pomocí fclose.
 
+
 :point_right:
+
 Z hlediska **opakování chyb a výjimek**:
 - výjimky se chovají vlastně stejně, jako např. v javě
     - výjimka je instance třídy Exception, pro odchycení používáme try-catch blok
@@ -26,8 +31,10 @@ Z hlediska **opakování chyb a výjimek**:
 - chyby jsou vyhazovány nejčastěji některými vestavěnými funkcemi (include, fopen), při přístupu k nedefinovaným proměnným atp.
     - máme různé úrovně chyb, které jsou buď odchytitelné univerzální funkcí (např. pro zápis do logu),
     - nebo chyby nejčastěji skrýváme pomocí zavináče uvedeného před názvem proměnné či před názvem funkce.
-    
+
+
 :point_right:
+
 Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho byste si měli pamatovat:
 - definice tříd se chovají podobně jako v javě, ale používáme některé specifické operátory:
     - :: (dvě dvojtečky) jsou odkazem na statickou proměnnou nebo na statickou metodu (např. ```MojeTrida::metoda();``` nebo ```MojeTrida::$promenna = 1;```)
@@ -40,7 +47,10 @@ Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho
     - definujeme ho jako třídu, ale s klíčovým slovem ```trait```, tj. například ```trait MujTrait { /*obsah traitu*/ }```
     - tam, kde ho chceme použít, napíšeme něco jako ```class Trida1 { use MujTrait; /*tělo třídy*/ }``` - chová se to pak stejně, jako kdybychom daný kód z traitu na to místo nakopírovali.
 
-:point_right: V PHP se běžně používají také **jmenné prostory**
+
+:point_right:
+
+V PHP se běžně používají také **jmenné prostory**
     - definujeme je pomocí zápisu ```namespace JmennyProstor;```
     - vztahují se nejen na objekty, ale také na funkce definované volně v kódu
     - pro oddělování jmenných prostorů od používáme zpětné lomítko
@@ -49,6 +59,7 @@ Následně jsme se zabývali také **základními vlastnostmi objektů**. Z toho
 ---     
 
 :point_right:
+
 **Na tomto cvičení nás čekají 2 hlavní témata:**
 - **[dokončení problematiky objektů](#magick%C3%A9-metody-objekt%C5%AF)**
 - **[validace formulářů](#validace-formul%C3%A1%C5%99%C5%AF)**
