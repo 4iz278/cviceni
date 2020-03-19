@@ -47,9 +47,10 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 **Na tomto cvičení nás čeká:**
 - opakování základních SQL příkazů pro manipulaci s daty
 - vlastnosti MySQL a MariaDB
-- práce s nástrojem phpMyAdmin
-- připojení k databázi z PHP
-- praktická aplikace využívající databázi  
+- databáze na serveru eso.vse.cz
+- práce s nástrojem phpMyAdmin a [jiné přístupy k databázi](#jin%C3%A9-p%C5%99%C3%ADstupy-k-datab%C3%A1zi)
+- [připojení k databázi z PHP](#p%C5%99ipojen%C3%AD-k-datab%C3%A1z%C3%AD-z-php)
+- [praktická aplikace využívající databázi](#praktick%C3%A1-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi)  
 
 ---        
 
@@ -73,6 +74,12 @@ Předpokládám, že za sebou máte základní kurz věnovaný databázím, tj. 
 :point_right:
 
 TODO    
+
+### Databáze na serveru eso.vse.cz
+:point_right:
+
+TODO    
+
     
 ## phpMyAdmin
 :point_right:
@@ -80,13 +87,13 @@ TODO
 - phpMyAdmin je komplexní webový nástroj pro práci s MySQL/MariaDB, přičemž je napsaný v PHP a nalezneme ho na většině serverů
 - umožňuje nám jednoduše prohlížet a upravovat nejen data, ale i strukturu databáze     
 
-:orange_book:
-- prezentace s popisem 
-
 ### phpMyAdmin na serveru eso.vse.cz
-:point_right:
+- phpMyAdmin na serveru eso najdete na adrese **[https://eso.vse.cz/phpmysqladmin](https://eso.vse.cz/phpmysqladmin)**
 
-TODO
+:orange_book:
+- [prezentace s popisem phpMyAdminu](TODO) 
+
+
 
 ## Jiné přístupy k databázi
 :point_right:
@@ -106,7 +113,9 @@ K databázi můžete samozřejmě přistupovat nejen pomocí phpMyAdminu, ale ta
 - oficiální web nástroje: [https://www.adminer.org/cs/](https://www.adminer.org/cs/)
 - [předinstalovaný Adminer na serveru eso.vse.cz](https://eso.vse.cz/adminer/adminer.php)
 
-## Připojení k databází z PHP
+---
+
+## Připojení k databázi z PHP
 :point_right:
 
 TODO
