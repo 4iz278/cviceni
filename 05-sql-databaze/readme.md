@@ -59,6 +59,8 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 
 Předpokládám, že za sebou máte základní kurz věnovaný databázím, tj. SQL v zásadě umíte a základní vlastnosti relačních databází znáte.
 
+Budeme používat databázi MariaDB, jejíž SQL je v zásadě stejné, jako příkazy pro Oracle, se kterým už jste pracovali.
+
 **Co po vás budu chtít?**
 - příkazy pro CRUD operace, tj. ```SELECT```, ```INSERT```, ```UPDATE```, ```DELETE```
 - umět logicky navrhnout strukturu databáze (naklikat ji)
@@ -69,6 +71,30 @@ Předpokládám, že za sebou máte základní kurz věnovaný databázím, tj. 
 - vytváření a úprava tabulek, views atp.
     - protože strukturu databáze většinou definujeme jen při vývoji aplikace a máme možnost si to naklikat v phpMyAdminu
 - definice triggerů a dalších pokročilých funkcionalit (samozřejmě je můžete používat, ale jde to i bez nich)
+
+Pro jednoduché ověření - zvládli byste říct, co dělají následující příkazy?
+
+```mysql
+SELECT * FROM osoby;
+SELECT jmeno, prijmeni FROM osoby LEFT JOIN zamestnani ON osoby.id=zamestnani.osoba WHERE stav=1 ORDER BY prijmeni, jmeno LIMIT 10 OFFSET 100;
+INSERT INTO osoby(jmeno, prijmeni, stav) VALUES ('Pepa', 'Novák', 1);
+UPDATE osoby SET stav=0 WHERE prijmeni LIKE '%Nov%';
+DELETE FROM osoby WHERE stav=0;
+TRUNCATE TABLE osoby;
+```
+
+:blue_book:
+
+- [SQL turoriál na w3schools.com](https://www.w3schools.com/sql/)
+- pár komentovaných příkladů:
+    - [create table](./05-ukazky-sql/05-1-create-table.sql)
+    - [insert](./05-ukazky-sql/05-2-insert.sql)
+    - [select](./05-ukazky-sql/05-3-select.sql)
+    - [update](./05-ukazky-sql/05-4-update.sql)
+    - [transactions](./05-ukazky-sql/05-5-transactions.sql)
+    - [delete](./05-ukazky-sql/05-6-delete.sql)
+    - [cascade](./05-ukazky-sql/05-7-cascade.sql)
+
     
 ## MySQL a MariaDB
 :point_right:
@@ -133,12 +159,13 @@ Po připojení jste v normálním linuxovém terminálu (konzoli) - na serveru e
 cat ~/mysql-heslo.txt # můžete si vypsat heslo k databázi 
 ```
 
-Až budete chtít připojení ukončit, spusťtě příkaz 
+Až budete chtít připojení ukončit, spusťte příkaz 
 ```shell script
 exit
 ```
 
 **Jak používat konzolové mysql?**
+
 Připojíme se ke konzoli MySQL/MariaDB:
 ```shell script
 mysql -pHESLO xname # připojení k databázi (název databaze je stejný jako vaše xname). POZOR, mezi -p a heslem není žádná mezera! 
