@@ -76,8 +76,35 @@ TODO
     
 ## phpMyAdmin
 :point_right:
-    
+
+- phpMyAdmin je komplexní webový nástroj pro práci s MySQL/MariaDB, přičemž je napsaný v PHP a nalezneme ho na většině serverů
+- umožňuje nám jednoduše prohlížet a upravovat nejen data, ale i strukturu databáze     
+
+:orange_book:
+- prezentace s popisem 
+
+### phpMyAdmin na serveru eso.vse.cz
+:point_right:
+
 TODO
+
+## Jiné přístupy k databázi
+:point_right:
+
+K databázi můžete samozřejmě přistupovat nejen pomocí phpMyAdminu, ale také pomocí IDE, konzole a spousty dalších nástrojů. Pro praktické použití uveďme alespoň 2 konkrétní příklady:
+
+### Adminer
+:point_right:
+- Jde o jednoduché rozhraní pro náhled do dabáze, zejména v situaci, kdy ji nechceme/nemůžeme zpřístupnit pomocí komplexnějšího nástroje.
+- Obrovskou výhodou je to, že jde vlastně jen o jeden malý PHP soubor, který můžete nahrát na libovolný hosting s PHP.
+- Kromě MariaDB podporuje i celou řadu dalších databází, včetně objektových.
+- Nástroj má 2 varianty: *Adminer* a *Adminer Editor* - první z nich zpřístupňuje jen data, druhý umožňuje i naklikat strukturu databáze.  
+
+**Doporučuji vám si tento nástroj vyzkoušet a zapamatovat, protože je to nejjednodušší možný způsob, jak se dostat do databáze, i když není přístupná mimo server.**
+
+:blue_book:
+- oficiální web nástroje: [https://www.adminer.org/cs/](https://www.adminer.org/cs/)
+- [předinstalovaný Adminer na serveru eso.vse.cz](https://eso.vse.cz/adminer/adminer.php)
 
 ## Připojení k databází z PHP
 :point_right:
