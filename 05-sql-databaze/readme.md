@@ -102,14 +102,68 @@ TRUNCATE TABLE osoby;
 ## MySQL a MariaDB
 :point_right:
 
-TODO    
+- MySQL a MariaDB jsou patrně nejčastěji používanými databázemi v kombinaci s PHP. 
+- Z historického hlediska se MySQL rozšířilo z důvodu svobodné licence, jednoduchosti a rychlosti.
+    - Databáze se obvykle instalovala rovnou v kombinaci s Apachem a PHP.
+    - Původně jednoduchá tabulková databáze, která dokonce neuměla ani cizí klíče.
+- Dneska jde o plnohodnotnou a výkonnou databázi, která podporuje všechny běžné složitější konstrukty (např. triggery, relační integritu atp.) 
+- MySQL je majetkem Oracle, MariaDB je její nástupnickou open source větví. Pro malé aplikace mezi nimi však není vlastně žádný rozdíl.
 
 ### Databáze na serveru eso.vse.cz
 :point_right:
 
-TODO    
+Na serveru eso.vse.cz máte každý zřízenou osobní databázi. Heslo pro připojení k ní najdete po přihlášení na server ve svém domovském adresáři, v souboru **mysql-heslo.txt**.
+Připojte se tedy k serveru a stáhněte/zkopírujte si heslo. Následně jej použijeme jak pro přihlášení pomocí phpMyAdminu, tak také ve vlastní aplikaci. 
 
+:grey_exclamation: Jako první operaci po připojení k databázi bude potřeba změnit její výchozí kódování na **utf8**, případně **utf8_mb4**. 
+
+### Typy tabulek
+:point_right:
+
+Při vytváření tabulek je nutné si vybrat *úložiště*. Konkrétně se v praxi používají 2:
+- InnoDB = úložiště s podporou cizích klíčů, doporučuji jej používat jako základní
+- MyISAM = úložiště, které podporuje fulltextové indexy, ale nepodporuje cizí klíče; historicky bylo rychlejší, než InnoDB, dnes už je to srovnatelné  
+
+### Datové typy, kódování, klíče
+:point_right:
+
+Při vytváření sloupců v tabulkách máme na výběr několik **základních datových typů**. Když vytváříte tabulku v phpMyAdminu (viz dále), tak vám zobrazí nápovědu, k čemu se který datový typ hodí.
+- INT = základní typ pro celá čísla
+- FLOAT, DOUBLE = desetinná čísla s plovoucí desetinnou částkou
+- DECIMAL = číslo s pevným počtem desetinných míst -> vhodné pro částky
+- VARCHAR = textový řetězec o maximálně zadané délce; pokud je řetězec kratší, zabere v paměti jen tolik místa, kolik nutně potřebuje
+- TEXT = datový typ pro velká textová data 
+- DATE = datum ve tvaru yyyy-mm-dd
+- TIMESTAMP = klasický timestamp, jeho specialitou je to, že se jeden sloupec s tímto typem umí automaticky aktualizovat při každé změně v daném řádku (tj. hodí se to pro automatické sledovní poslední změny záznamu) 
+- ENUM, SET = datové typy s konkrétním výčtem hodnot -> vhodné např. pro pohlaví, stavy objednávky atp. Rozhodně je vhodnější používat ENUM nebo SET, než např. stavy objevnávky mít označené číslem. 
     
+Specifika datových typů:
+- MariaDB nezná datový typ BOOLEAN. Místo něj používá *INT(1)*, do kterého pak ukládáte 1 nebo 0.
+- Pokud budete chtít v některém sloupci NULL hodnoty, musíte je extra povolit.
+
+
+:point_right:
+
+**Pozor na kódování!**
+- Specifikem MariaDB je to, že každá tabulka i každý její sloupec může používat jiné kódování. V praxi to ale neděláme, pokud to není vyloženě nutné, protože pak musíme všechny dotazy i jejich odpovědi překódovávat!
+- Doporučuji používat MariaDB normálně s kódováním utf8, způsob řazení si pak můžete vybrat z dané nabídky. Např. *utf8mb4_czech_ci*.        
+
+
+:point_right:
+
+**Typy indexů/klíčů**
+- PRIMARY = primární klíč tabulky
+- UNIQUE = vyžadování unikátních hodnot, ale nejde o primární klíč
+- INDEX = běžné indexování hodnot
+- FULLTEXT = klíč s fulltextovým indexem
+
+Klíče můžete definovat nad jedním či nad více sloupci, stejně jako v Oracle.
+
+:grey_exclamation: Jedna praktická rada: Ačkoliv jste se v databázích učili, že když je to možné, máte používat složené klíče, ve webových aplikacích občas "zbytečně" zavádíme umělé primární klíče s autoincrementem. Důvody jsou poměrně jednoduché:
+- v odkazech atp. vypadá mnohem lépe a srozumitelněji jedno číslo, než několik různých hodnot
+- neměli bychom uživatelům ukazovat hodnoty, které nepotřebují vidět (např. osobní údaje osob atp.) 
+
+
 ## phpMyAdmin
 :point_right:
 
