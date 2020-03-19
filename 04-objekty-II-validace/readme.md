@@ -385,7 +385,8 @@ if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 Kromě již kompletních příkladů se pojďme společně podívat na **postup tvorby jednoduchého formuláře s kontrolami**.
 
 V následujícím příkladu budeme chtít od uživatele chtít získat jméno a příjmení, e-mail a telefon, na kterém je možné jej kontaktovat. Výsledek poté zapíšeme do CSV souboru.
-*   
+* [prezentace s komentovaným postupem řešení](./04-priklad-validace/04-prezentace-priklad-form.pptx)
+* [vytvořený soubor](./04-priklad-validace/formular.php)  
 
 ---
 
