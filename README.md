@@ -6,32 +6,32 @@ Web předmětu: **http://4iz278.github.io**
 
 ## Plán cvičení
 
-1. [HTML, základy PHP syntaxe](./01-html-zaklady-php/)
+1. [HTML, základy PHP syntaxe](./01-html-zaklady-php/) *(20. a 21.2.2020)*
   * HTML - stručné opakování
   * základy syntaxe
   * nahrání stránek na výukový server
-2. [Řetězce, soubory](./02-retezce-soubory)
+2. [Řetězce, soubory](./02-retezce-soubory) *(27. a 28.2.2020)*
   * řetězcové funkce
   * include, require
   * GET, POST
   * čtení a zápis souborů
-3. [Objekty v PHP](./03-objekty)
+3. [Objekty v PHP](./03-objekty) *(5. a 6.3.2020)*
   * práce s file systémem
   * definice tříd, rozhraní atd.
   * namespaces
   * výjimky
-4. [Objekty v PHP II., validace formulářů](./04-objekty-II-validace)
+4. [Objekty v PHP II., validace formulářů](./04-objekty-II-validace) *(19. a 20.3.2020)*
   * class loader
   * magické metody objektů
   * validace formulářů
   * composer
   * praktická aplikace
-<!--5. [SQL](./05-sql)
+5. [SQL a dabáze](./05-sql-databaze) *(26. a 27.3.2020)*
   * Opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
-6. [Práce s databází](./06-databaze)
-  * práce s databází z PHP
+  * práce s databází z PHP  
+<!--
 7. [Session, cookies](./07-session-cookies)
   * session
   * cookies
