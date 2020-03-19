@@ -271,6 +271,7 @@ Opakování jednoduchého formuláře:
 ```
 ### Proč data kontrolovat?
 :point_right:
+
 Pokud máme např. ve formuláři pole pro dnešní datum, korektními údaji by mohly být např.:
 ```
 20. 3. 2020
