@@ -52,3 +52,44 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 - praktická aplikace využívající databázi  
 
 ---        
+
+## Základní SQL příkazy pro manipulaci
+:point_right:
+
+Předpokládám, že za sebou máte základní kurz věnovaný databázím, tj. SQL v zásadě umíte a základní vlastnosti relačních databází znáte.
+
+**Co po vás budeme chtít?**
+- příkazy pro CRUD operace, tj. ```SELECT```, ```INSERT```, ```UPDATE```, ```DELETE```
+- umět logicky navrhnout strukturu databáze (naklikat ji)
+- vědět, jak se chovají cizí klíče
+- vědět, co jsou to transakce
+
+**Co po vás naopak chcít nebudeme?**
+- vytváření a úprava tabulek, views atp.
+    - protože strukturu databáze většinou definujeme jen při vývoji aplikace a máme možnost si to naklikat v phpMyAdminu
+- definice triggerů a dalších pokročilých funkcionalit (samozřejmě je můžete používat, ale jde to i bez nich)
+    
+## MySQL a MariaDB
+:point_right:
+
+TODO    
+    
+## phpMyAdmin
+:point_right:
+    
+TODO
+
+## Připojení k databází z PHP
+:point_right:
+
+TODO
+
+## Praktická aplikace využívající databázi
+:orange_book:
+
+TODO
+
+## Domácí úkol
+:house:
+
+> TODO
