@@ -302,14 +302,9 @@ Pokud chcete od uživatele údaj, který je běžně možné zadat ve větším 
 - u datumu můžeme z českého formátu udělat mezinárodní atd. 
 
 
-* **pokud odesíláme formulář pomocí POSTu, je nutné po jeho úspěšném zpracování provést redirect!**
-  * i v případě, kdy přesměrováváme na ten samý skript
-
-```php
-header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné přesměrování
-```
-
 ### Postup implementace validace
+:point_right:
+
 1. kontrola v rámci HTML/HTML 5 formuláře
    * nedá se na ni sice úplně spolehnout, ale je to nejrychlejší varianta, jak "omezit" kreativitu uživatele
    * např. vhodná formulářá pole (datum, čas), omezení délky atd.
@@ -318,14 +313,38 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
    * může být výrazně interaktivnější, než kontrola na serveru (např. se uživatel dozví o chybě hned při zadání chybné hodnoty)
 3. kontrola dat na serveru
    * ať už byla data získána z GETu, nebo POSTu
-4. zobrazení formuláře k opravě
+4. pokud byla v datech chyba, zobrazíme formuláře k opravě
    * musí v něm být ty hodnoty, které nám uživatel poslal! (aspoň ty, které byly správně)
+5. pokud byla data v pořádku, provedeme požadovanou akci
+   * pokud byla data poslána metodou POST, tak provedeme přesměrování!    
+
+### Přesměrování po zpracování formuláře 
+:point_right:
+
+**Pokud odesíláme formulář pomocí POSTu, je nutné po jeho úspěšném zpracování provést redirect!**
+Pokud bychom to neudělali, tak prohlížeč při obnově dané stránky vyzve uživatele k opětovnému odeslání dat (zeptá se jich, zda chtějí odeslat data a provést nákup či něco podobného znovu).
+
+Přesměrování je nutné vyřešit na úrovni protokolu HTTP (nestačí přesměrování javascriptem atp.). 
+Před odesláním libovolných dat (tj. ještě před doctypem) zavoláme v PHP funkci:
+
+```php
+header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné přesměrování
+```
+
+:point_right:
+- Přesměrování provádíme jen v situaci, že formulář neobsahoval chyby.
+- Z hlediska struktury skriptu je normální nejdřív zkontrolovat a zpracovat data z formuláře a teprve poté začít vypisovat HTML.  
+
 
 ### Užitečné validační funkce
-* **preg_match($pattern, $text)**
-  * funkce pro kontrolu, zda zadaný text odpovídá požadovanému regulárnímu výrazu
-* **filter_var($text, $filtr)**
-  * funkce pro validaci a případné "pročištění" vstupu (např. e-mailu)
+:point_right:
+
+- **preg_match($pattern, $text)**
+    - funkce pro kontrolu, zda zadaný text odpovídá požadovanému regulárnímu výrazu
+    - regulární výrazy pro tuto funkci jsou bohatší, než klasické regexy - ale pokud umíte reget např. z 4iz210, tak před a za daný výraz zkuste jen přidat lomítko
+  
+- **filter_var($text, $filtr)**
+    - funkce pro validaci a případné "pročištění" vstupu (např. e-mailu)
 
 
 * [příklad validace - HTML 5](./04-validace-html5.php)
