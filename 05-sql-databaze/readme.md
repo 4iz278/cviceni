@@ -45,11 +45,11 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- opakování základních SQL příkazů pro manipulaci s daty
-- vlastnosti MySQL a MariaDB
-- databáze na serveru eso.vse.cz
-- práce s nástrojem phpMyAdmin a [jiné přístupy k databázi](#jin%C3%A9-p%C5%99%C3%ADstupy-k-datab%C3%A1zi)
-- [připojení k databázi z PHP](#p%C5%99ipojen%C3%AD-k-datab%C3%A1z%C3%AD-z-php)
+- [opakování základních SQL příkazů pro manipulaci s daty](#z%C3%A1kladn%C3%AD-sql-p%C5%99%C3%ADkazy-pro-manipulaci)
+- [vlastnosti MySQL a MariaDB](#mysql-a-mariadb)
+- [databáze na serveru eso.vse.cz](#datab%C3%A1ze-na-serveru-esovsecz)
+- [práce s nástrojem phpMyAdmin](#phpmyadmin) a [jiné přístupy k databázi](#jin%C3%A9-p%C5%99%C3%ADstupy-k-datab%C3%A1zi)
+- [připojení k databázi z PHP](#p%C5%99ipojen%C3%AD-k-datab%C3%A1zi-z-php)
 - [praktická aplikace využívající databázi](#praktick%C3%A1-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi)  
 
 ---        
@@ -59,13 +59,13 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 
 Předpokládám, že za sebou máte základní kurz věnovaný databázím, tj. SQL v zásadě umíte a základní vlastnosti relačních databází znáte.
 
-**Co po vás budeme chtít?**
+**Co po vás budu chtít?**
 - příkazy pro CRUD operace, tj. ```SELECT```, ```INSERT```, ```UPDATE```, ```DELETE```
 - umět logicky navrhnout strukturu databáze (naklikat ji)
 - vědět, jak se chovají cizí klíče
 - vědět, co jsou to transakce
 
-**Co po vás naopak chcít nebudeme?**
+**Co po vás naopak chtít nebudu?**
 - vytváření a úprava tabulek, views atp.
     - protože strukturu databáze většinou definujeme jen při vývoji aplikace a máme možnost si to naklikat v phpMyAdminu
 - definice triggerů a dalších pokročilých funkcionalit (samozřejmě je můžete používat, ale jde to i bez nich)
@@ -98,7 +98,7 @@ TODO
 ## Jiné přístupy k databázi
 :point_right:
 
-K databázi můžete samozřejmě přistupovat nejen pomocí phpMyAdminu, ale také pomocí IDE, konzole a spousty dalších nástrojů. Pro praktické použití uveďme alespoň 2 konkrétní příklady:
+K databázi můžete samozřejmě přistupovat nejen pomocí phpMyAdminu, ale také pomocí IDE, konzole a spousty dalších nástrojů. Pro praktické použití uveďme alespoň 2 konkrétní příklady - [Adminer](#adminer) a [připojení z konzole].
 
 ### Adminer
 :point_right:
@@ -112,6 +112,48 @@ K databázi můžete samozřejmě přistupovat nejen pomocí phpMyAdminu, ale ta
 :blue_book:
 - oficiální web nástroje: [https://www.adminer.org/cs/](https://www.adminer.org/cs/)
 - [předinstalovaný Adminer na serveru eso.vse.cz](https://eso.vse.cz/adminer/adminer.php)
+
+### Připojení z konzole
+:point_right:
+
+Pokud máte k serveru přístup pomocí ssh, můžete využít také jednoduché připojení pomocí konzole mysql. Tato možnost je k dispozici i na serveru eso.vse.cz, jen pro připojení musíte být na [VPN](https://vpn.vse.cz).
+
+Pokud konzolové nástroje nemáte rádi, určitě vás nenutím, abyste následující postup zkoušeli.
+
+**Jak se připojit k serveru?**
+K připojení k serveru buď můžete na použít **ssh** (na novějších verzích win 10 a všech unixových systémech), nebo na windows také nástroj [Putty](https://www.putty.org). 
+
+Připojení k serveru:
+```shell script
+ssh xname@eso.vse.cz # připojit se na server eso s uživatelským jménem xname (následně se zobrazí výzva pro heslo)
+```
+
+Po připojení jste v normálním linuxovém terminálu (konzoli) - na serveru eso.vse.cz jde o bash. Fungují tu tedy všechny běžné příkazy, např ```ls``` pro výpis adresáře, ```cd``` pro jeho změnu atd.
+```shell script
+cat ~/mysql-heslo.txt # můžete si vypsat heslo k databázi 
+```
+
+Až budete chtít připojení ukončit, spusťtě příkaz 
+```shell script
+exit
+```
+
+**Jak používat konzolové mysql?**
+Připojíme se ke konzoli MySQL/MariaDB:
+```shell script
+mysql -pHESLO xname # připojení k databázi (název databaze je stejný jako vaše xname). POZOR, mezi -p a heslem není žádná mezera! 
+```
+
+Při zadání správného jména a hesla jste přihlášeni do databáze a můžete přímo zadávat SQL příkazy. Například:
+```mysql
+SHOW TABLES;
+SELECT * FORM table;
+``` 
+
+Nakonec se nezapomeňte odhlásit pomocí:
+```mysql
+exit;
+``` 
 
 ---
 
