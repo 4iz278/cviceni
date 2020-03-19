@@ -369,6 +369,7 @@ if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 }
 ```    
 
+### Příklady k validaci formulářů
 :blue_book:
 * [příklad validace - HTML 5](./04-validace-html5.php)
 * [příklad validace - souhrnné hlášení chyb](./04-validace-souhrnna.php)
@@ -379,7 +380,7 @@ if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 
  
  :orange_book:
-Kromě již kompletních příkladů se pojďme společně podívat na postup tvorby jednoduchého formuláře s kontrolami.
+Kromě již kompletních příkladů se pojďme společně podívat na **postup tvorby jednoduchého formuláře s kontrolami**.
 
 V následujícím příkladu budeme chtít od uživatele chtít získat jméno a příjmení, e-mail a telefon, na kterém je možné jej kontaktovat. Výsledek poté zapíšeme do CSV souboru.
 *   
