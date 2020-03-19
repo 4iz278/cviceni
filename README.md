@@ -1,6 +1,6 @@
 # 4iz268 - cvičení
 
-Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze
+Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze **platné v letním semestru 2019/2020**.
 
 Web předmětu: **http://4iz278.github.io**
 
@@ -26,7 +26,7 @@ Web předmětu: **http://4iz278.github.io**
   * validace formulářů
   * composer
   * praktická aplikace
-5. [SQL](./05-sql)
+<!--5. [SQL](./05-sql)
   * Opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
@@ -53,7 +53,7 @@ Web předmětu: **http://4iz278.github.io**
   * AJAX
   * mPDF
 12. [CRUD aplikace](./12-crud)
-  * aplikace s REST API
+  * aplikace s REST API-->
 
 ## Co naleznete v tomto úložišti?
 
