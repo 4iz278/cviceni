@@ -378,8 +378,10 @@ if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 * [w3schools - Filter functions](http://www.w3schools.com/php/php_ref_filter.asp)
 * [PHP manuál - preg_match](http://php.net/manual/en/function.preg-match.php)
 
+
  
  :orange_book:
+
 Kromě již kompletních příkladů se pojďme společně podívat na **postup tvorby jednoduchého formuláře s kontrolami**.
 
 V následujícím příkladu budeme chtít od uživatele chtít získat jméno a příjmení, e-mail a telefon, na kterém je možné jej kontaktovat. Výsledek poté zapíšeme do CSV souboru.
