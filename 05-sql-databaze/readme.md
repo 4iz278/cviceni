@@ -22,7 +22,7 @@ Z hlediska **práce s objekty** byste si měli pamatovat:
     - běžně nenačítáme soubory s definicí tříd ručně pomocí require/include, ale definujeme funkci, která je načte při jejich prvním použití;
         - buď ruční definice pomocí ```spl_autoload_register```,
         - nebo načítání v rámci nějakého frameworku.
-    - závislosit načítáme nástrojem *composer*
+    - závislosti načítáme nástrojem *composer*
         - definice pomocí jednoduchého JSON souboru, ve kterém uvedeme, jaké komponenty chceme;
         - composer načítá komponenty buď z https://packagist.org, nebo z GITu;
         - pro načtení všech příslušných tříd stačí načíst vygenerovaný autoload.php.
@@ -72,6 +72,9 @@ Budeme používat databázi MariaDB, jejíž SQL je v zásadě stejné, jako př
     - protože strukturu databáze většinou definujeme jen při vývoji aplikace a máme možnost si to naklikat v phpMyAdminu
 - definice triggerů a dalších pokročilých funkcionalit (samozřejmě je můžete používat, ale jde to i bez nich)
 
+
+:point_right:
+
 Pro jednoduché ověření - zvládli byste říct, co dělají následující příkazy?
 
 ```mysql
@@ -118,7 +121,6 @@ TODO
 
 :orange_book:
 - [prezentace s popisem phpMyAdminu](TODO) 
-
 
 
 ## Jiné přístupy k databázi
