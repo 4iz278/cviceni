@@ -319,6 +319,17 @@ Pokud chcete od uživatele údaj, který je běžně možné zadat ve větším 
 5. pokud byla data v pořádku, provedeme požadovanou akci
    * pokud byla data poslána metodou POST, tak provedeme přesměrování!    
 
+### Jak informovat uživatele o chybách
+:point_right:
+
+- Všechny chyby bychom měli srozumitelně popsat, aby uživatel rovnou věděl, co po něm chceme.
+- O všech chybách informujeme uživatele najednou - je to příjemnější, než když nám aplikace formulář 5x vrátí vždy s jinou chybou.
+- Chyby zobrazujeme rovnou na stránce s formulářem, ne na samostatné stránce!
+- Minimálně to, co bylo správně, musí zůstat ve formuláři vyplněno! 
+- Chyby můžeme zobrazit 2 způsoby:
+    1. na začátku formuláře či každé jeho sekce zobrazíme výpis chyb (např. jako odrážky) - což je pro nás jako programátory jednodušší, ale uživatelsky je to méně přívětivé
+    2. chyby zobrazujeme u jednotlivých polí formuláře    
+
 ### Přesměrování po zpracování formuláře 
 :point_right:
 
@@ -342,12 +353,19 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
 
 - **preg_match($pattern, $text)**
     - funkce pro kontrolu, zda zadaný text odpovídá požadovanému regulárnímu výrazu
-    - regulární výrazy pro tuto funkci jsou bohatší, než klasické regexy - ale pokud umíte reget např. z 4iz210, tak před a za daný výraz zkuste jen přidat lomítko
+    - regulární výrazy pro tuto funkci jsou bohatší, než klasické regexy - ale pokud umíte základní regulární výrazy např. z 4iz210, tak před a za daný výraz zkuste jen přidat lomítko
   
 - **filter_var($text, $filtr)**
     - funkce pro validaci a případné "pročištění" vstupu (např. e-mailu)
+    - např. pro validaci e-mailu je vhodnější použít 
+    
+```php
+if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
+  echo 'Musíte zadat platný e-mail.';
+}
+```    
 
-
+:blue_book:
 * [příklad validace - HTML 5](./04-validace-html5.php)
 * [příklad validace - souhrnné hlášení chyb](./04-validace-souhrnna.php)
 * [příklad validace - hlášení chyb u jednotlivých inputů](./04-validace-inputy.php)
@@ -356,14 +374,24 @@ header('Location: skript.php'); //ukázka odeslání hlavičky pro dočasné př
 * [PHP manuál - preg_match](http://php.net/manual/en/function.preg-match.php)
 
 
-## Praktická aplikace
-> Vaším úkolem je vytvořit aplikaci pro správu seznamu zaměstnanců, který je uložen v CSV souboru.
-> * využijte přiložený soubor [adresar.csv](./04-ukol/adresar.csv)
->   * soubor je v kódování utf-8
-> * požadovaná funkcionalita aplikace
->   * načtení položek se záznamy o zaměstnancích s možností jejich seřazení podle jména, bydliště, nadřízeného atp.
->   * zobrazení zaměstnanců formou tabulky
->   * formulář pro úpravu existujícího zaměstnance a přidání zaměstnance nového
->     * povinnými údaji jsou u každého zaměstnance jméno, příjmení, obec, psc
->     * zaměstanec, který je dělníkem, musí mít zadaného nadřízeného (vybraného se selectu, ne zapsaného ručně!)
-> * pokud možno napište aplikaci za využití objektů (tj. záznam každého zaměstnance bude instancí objektu)
+---
+
+## Domácí úkol
+:house:
+
+> Vaším úkolem je **vytvořit aplikaci pro správu seznamu zaměstnanců**, který je uložen v CSV souboru.
+> - využijte přiložený soubor [adresar.csv](./04-ukol/adresar.csv)
+>   - soubor je v kódování utf-8
+> - požadovaná funkcionalita aplikace
+>   - načtení položek se záznamy o zaměstnancích a jejich obrazení formou tabulky 
+>       - *zkuste si vzpomenout na funkci fgetcsv()*
+>   - možnost seřazení zaměstnanců podle jména, bydliště, nadřízeného atp.
+>       - *doporučuji načíst zaměstnance do pole a poté je seřadit např. pomocí uasort()*
+>   - formulář pro přidání nového zaměstnance
+>       - povinnými údaji jsou u každého zaměstnance jméno, příjmení, obec, psc
+>       - zaměstanec, který je dělníkem, musí mít zadaného nadřízeného (vybraného se selectu, ne zapsaného ručně!)
+> - pokud možno napište aplikaci za využití objektů (tj. záznam každého zaměstnance bude instancí objektu)
+>
+> **Způsob a termín odevzdání:**
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 27.3.2020 23:59.
+> - Připomínám, že kladně hodnocen bude každý pokus o aplikaci (i pokud se Vám některý z požadavků nepovede splnit). 
