@@ -5,10 +5,8 @@ Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze
 Web předmětu: **http://4iz278.github.io**
 
 
-:exclamation: 
-S ohledem na aktuální průběh letního semestru 2019/2020 a preventivní opatření kvůli coronaviru probíhá výuka distanční formou.
-
-[Aktuální podklady naleznete zde](https://github.com/4iz278/cviceni/tree/domaci-vyuka-LS-2020)
+:exclamation: S ohledem na aktuální průběh letního semestru 2019/2020 a preventivní opatření kvůli coronaviru probíhá výuka distanční formou.
+**[Aktuální podklady naleznete zde](https://github.com/4iz278/cviceni/tree/domaci-vyuka-LS-2020)**
 
 
 ## Plán cvičení
