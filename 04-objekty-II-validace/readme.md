@@ -293,6 +293,10 @@ March 03, 2020
     - Data nám mohl poslat také nějaký skript, robot atp. A nebo prostě uživatel vypnul javascript nebo použil starý prohlížeč.
 - Chyby musíme uživateli zobrazovat v přehledné a hlavně srozumitelné podobě - žádné hlášky ve stylu "Ve formuláři je chyba." nebo "Vyplňte povinná pole."
 - U důležitějších formulářů je vhodné aplikovat CSRF ochranu (Cross-Site Request Forgery) - ale to až budeme umět používat *session*...
+- To, co nemusí uživatel zadávat ručně, mu umožníme nějak vybrat:
+    - např. výběrem ze selectu,
+    - výběrem z kalendáře atp.,
+    - kliknutím na odkaz.
 
 ### Můžeme uživateli nějak usnadnit zadávání dat?
 :point_right:
@@ -373,6 +377,12 @@ if (!filter_var($_REQUEST['email'], FILTER_VALIDATE_EMAIL)) {
 * [w3schools - Filter functions](http://www.w3schools.com/php/php_ref_filter.asp)
 * [PHP manuál - preg_match](http://php.net/manual/en/function.preg-match.php)
 
+ 
+ :orange_book:
+Kromě již kompletních příkladů se pojďme společně podívat na postup tvorby jednoduchého formuláře s kontrolami.
+
+V následujícím příkladu budeme chtít od uživatele chtít získat jméno a příjmení, e-mail a telefon, na kterém je možné jej kontaktovat. Výsledek poté zapíšeme do CSV souboru.
+*   
 
 ---
 
