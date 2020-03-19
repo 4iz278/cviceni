@@ -212,45 +212,94 @@ Autoload funkcí je možné zaregistrovat i větší množství, volají se post
 ### Composer
 :point_right:
 
-* pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru
-* **composer = správce závislostí pro PHP projekty**
-  * viz http://getcomposer.org
-  * distribuován v podobě PHAR archívu (= ZIP archív s instrukcemi pro spuštění zahrnutých PHP skriptů)
-* jako správce balíčků se používá [Packagist](https://packagist.org/), nebo GITové úložiště (nejčastěji GitHub)
-* postup použití:
+- Pokud chceme pracovat s externími "knihovnami" (balíčky tříd), je v PHP obvyklé neskládat dané kódy ručně, ale spracovat závislosti projektu pomocí composeru.
+- **Composer = správce závislostí pro PHP projekty**
+    - viz http://getcomposer.org
+    - distribuován v podobě PHAR archívu (= ZIP archív s instrukcemi pro spuštění zahrnutých PHP skriptů), ale např. na windows si ho můžete nainstalovat také pomocí běžného instalátoru.
+- Jako správce balíčků se používá [Packagist](https://packagist.org/), nebo GITové úložiště (nejčastěji GitHub)
+    - Můžete si definovat vlastní znovupoužitelné komponenty, které jednoduše začleníte do většího množství projektů.
+    - Pokud je použitá komponenta závislá na dalších komponentách, composer automaticky vyřeší a stáhne i všechny její závislosti.
+
+     
+:point_right:
+
+**Postup použití composeru:**
   1. stáhneme/nainstalujeme composer
   2. definujeme soubor **composer.json**
     * v rámci tohoto souboru jsou definovány všechny závislosti
-    * alternativně se dá composer kompletně ovládat konzolovými příkazy
-  3. necháme composer stáhnout veškeré potřebné balíčky
+    * alternativně se dá composer kompletně ovládat konzolovými příkazy (i tak si ale vytvoří composer.json pro zápis konfigurace)
+  3. necháme composer stáhnout veškeré potřebné balíčky (obykle jsou umístěny do složky *vendor*)
   4. v rámci aplikace načítáme jen jeden soubor (*autoload.php*), v rámci kterého jsou vygenerovány instrukce pro načítání všech zahrnutých tříd
 
+Následující kód je velmi jednoduchou ukázkou projektu se závislostí definovanou pro composer. Konkrétně stahujeme knihovnu mpdf, která se používá pro jednoduché vytváření PDF souborů.
 ```json
 {
   "name": "4iz278/03-composer-example-project",
   "description": "Ukázkový project",
   "require": {
-    "mpdf/mpdf": "v6.0.0"
+    "mpdf/mpdf": "^v8.0"
   }
 }
 ```
+
+Následující příkaz spuštěný v příkazovém řádků/konzoli nám stáhne všechny závislosti, či balíčky v rámci možností zaktualizuje na novější verze.
 ```
 php composer.phar update
 ```
 
+**Jak to pak použít ve vlastní aplikaci**
+Pokud máte v projektu závislosti vyřešené composerem, tak pro načítání souborů naincludujete jím vytvořený autoload.php a pokud nepoužíváte žádný framework, tak si definujete autoload funkci pro vlastní třídy.
+
+
+:blue_book:
 * [příklad composer](./04-composer-example-project)
 
 ---
 
 ## Validace formulářů
-* o tom, jak získat data z formulářů, jsme se už bavili - viz [2. cvičení](./02-retezce-soubory) - zatím jsme je ale moc nekontrolovali...
+:point_right:
 
-### Základní zásady
-* **Všechny vstupy od uživatele je nutné kontrolovat** - ať už byly odeslány formulářem, nebo v URL uvedené v rámci odkazu!
-* kontrolovat data můžeme také např. v HTML5 či JavaScriptu, ale přesto je znovu musíme kontrolovat i na serveru!
-* chyby musíme uživateli zobrazovat v přehledné a hlavně srozumitelné podobě
-  * žádné hlášky ve stylu "Ve formuláři je chyba."
-* u důležitějších formulářů je vhodné aplikovat CSRF ochranu (Cross-Site Request Forgery) - ale to až budeme umět používat *session*...
+O tom, jak získat data z formulářů či pomocí URL jsme se už bavili - viz [2. cvičení](./02-retezce-soubory). Zatím jsme je ale moc nekontrolovali.
+ Připomínám, že jsme vytvářeli například jednoduchou kalkulačku s parametry předávanými pomocí parametrů v URL a bavili jsme se o tom, že data najdeme v polích  ```$_GET```,  ```$_POST``` a  ```$_REQUEST```. 
+
+Opakování jednoduchého formuláře:
+```html
+<form method="post"><!--U formuláře můžeme definovat metodu get nebo post. Pokud by skript neměl data posílat sám sobě, ale někam jinam, uvedeme ještě parametr action.-->
+  <label for="cislo">Zadejte číslo:</label><!--label je popiskem pole, které má id stejné, jako je tady hodnota atributu for-->
+  <input type="number" name="cislo" id="cislo" value="<?php echo htmlspecialchars(@$_POST['cislo']);?>"><!--pole s vypsanou dříve odeslanou hodnotou; zkuste si vzpomenout, proč je tam @ a funkce htmlspecialchars-->
+</form>
+```
+### Proč data kontrolovat?
+:point_right:
+Pokud máme např. ve formuláři pole pro dnešní datum, korektními údaji by mohly být např.:
+```
+20. 3. 2020
+20.3.2020
+20.03.2020
+20.3.20
+20.03.20
+20. března 2020
+2020-03-20
+March 03, 2020
+20. 3.
+```
+
+### Základní zásady kontroly dat
+:point_right:
+
+- **Všechny vstupy od uživatele je nutné kontrolovat** - ať už byly odeslány formulářem, nebo v URL uvedené v rámci odkazu!
+- Kontrolovat data můžeme také např. v HTML5 či JavaScriptu, ale přesto je znovu musíme kontrolovat i na serveru!
+    - Data nám mohl poslat také nějaký skript, robot atp. A nebo prostě uživatel vypnul javascript nebo použil starý prohlížeč.
+- Chyby musíme uživateli zobrazovat v přehledné a hlavně srozumitelné podobě - žádné hlášky ve stylu "Ve formuláři je chyba." nebo "Vyplňte povinná pole."
+- U důležitějších formulářů je vhodné aplikovat CSRF ochranu (Cross-Site Request Forgery) - ale to až budeme umět používat *session*...
+
+### Můžeme uživateli nějak usnadnit zadávání dat?
+:point_right:
+
+Pokud chcete od uživatele údaj, který je běžně možné zadat ve větším množství formátů, zkuste se zamyslet nad tím, zda data není vhodné ještě před kontrolou upravit.
+- Například z telefonního čísla můžeme vyházet mezery, lomítka a pomlčky;
+- u čísla můžeme v českém prostředí automaticky převést desetinnou čárku na tečku;
+- u datumu můžeme z českého formátu udělat mezinárodní atd. 
 
 
 * **pokud odesíláme formulář pomocí POSTu, je nutné po jeho úspěšném zpracování provést redirect!**
