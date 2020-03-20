@@ -115,7 +115,7 @@ TRUNCATE TABLE osoby;
 Na serveru eso.vse.cz máte každý zřízenou osobní databázi. Heslo pro připojení k ní najdete po přihlášení na server ve svém domovském adresáři, v souboru **mysql-heslo.txt**.
 Připojte se tedy k serveru a stáhněte/zkopírujte si heslo. Následně jej použijeme jak pro přihlášení pomocí phpMyAdminu, tak také ve vlastní aplikaci. 
 
-:grey_exclamation: Jako první operaci po připojení k databázi bude potřeba změnit její výchozí kódování na **utf8**, případně **utf8_mb4**. 
+:grey_exclamation: Jako první operaci po připojení k databázi bude potřeba změnit její výchozí kódování na **utf8**, případně **utf8mb4**. 
 
 ### Typy tabulek
 :point_right:
