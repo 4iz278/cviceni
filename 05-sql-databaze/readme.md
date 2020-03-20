@@ -50,7 +50,7 @@ Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-valid
 - [databáze na serveru eso.vse.cz](#datab%C3%A1ze-na-serveru-esovsecz)
 - [práce s nástrojem phpMyAdmin](#phpmyadmin) a [jiné přístupy k databázi](#jin%C3%A9-p%C5%99%C3%ADstupy-k-datab%C3%A1zi)
 - [připojení k databázi z PHP](#p%C5%99ipojen%C3%AD-k-datab%C3%A1zi-z-php)
-- [praktická aplikace využívající databázi](#praktick%C3%A1-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi)  
+- [tvorba aplikace využívající databázi](#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi)  
 
 ---        
 
@@ -245,7 +245,33 @@ exit;
 
 TODO
 
-## Praktická aplikace využívající databázi
+### Připojení k dabázi
+:point_right:
+
+TODO
+
+### Spouštění SQL příkazů
+:point_right:
+
+TODO
+
+### Ukázková aplikace
+:blue_book:
+- postup zprovoznění ukázkové aplikace:
+    1. stáhněte si celou složku aplikace ([05-app-clients](./05-app-clients)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./05-app-clients/05-schema.sql)
+    3. nahrajte do MariaDB [ukázková data](./05-app-clients/05-data.sql)
+    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./05-app-clients/db.php)
+- ukázkové skripty v aplikaci:
+    - [jednoduchý výpis klientů](./05-app-clients/index.php)
+    - [výpis klientů se stránkováním](./05-app-clients/index_with_pagination.php)
+    - [vytvoření nového klienta](./05-app-clients/new_prepare.php)
+    - [vytvoření nového klienta - bez ošetření SQL injection](./05-app-clients/new_open.php)
+    - [úprava klienta](./05-app-clients/update.php)
+    - [smazání klienta](./05-app-clients/delete.php)
+
+
+## Tvorba aplikace využívající databázi
 :orange_book:
 
 TODO
