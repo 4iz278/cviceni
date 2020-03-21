@@ -346,7 +346,7 @@ Kromě předání pole parametrů při spuštění dotazu bychom alternativně  
 
 :point_right:
 
-Druhou variantou je **dotat s nepojmenovanými parametry**:
+Druhou variantou je **dotaz s nepojmenovanými parametry**:
 
 ```php
 $query = $db->prepare('SELECT * FROM osoby WHERE jmeno=? AND prijmeni=?;');//nejprve si připravíme dotaz s parametry
@@ -371,21 +371,6 @@ Další zdroje informací:
 - [Transakce - PHP manuál k PDO](https://www.php.net/manual/en/pdo.transactions.php)
 - [PDOStatement - PHP manul k PDO](https://www.php.net/manual/en/class.pdostatement.php)
 
-### Ukázková aplikace
-:blue_book:
-- postup zprovoznění ukázkové aplikace:
-    1. stáhněte si celou složku aplikace ([05-app-clients](./05-app-clients)) a nahrajte ji na server
-    2. nahrajte do MariaDB [strukturu databáze](./05-app-clients/05-schema.sql)
-    3. nahrajte do MariaDB [ukázková data](./05-app-clients/05-data.sql)
-    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./05-app-clients/db.php)
-- ukázkové skripty v aplikaci:
-    - [jednoduchý výpis klientů](./05-app-clients/index.php)
-    - [výpis klientů se stránkováním](./05-app-clients/index_with_pagination.php)
-    - [vytvoření nového klienta](./05-app-clients/new_prepare.php)
-    - [vytvoření nového klienta - bez ošetření SQL injection](./05-app-clients/new_open.php)
-    - [úprava klienta](./05-app-clients/update.php)
-    - [smazání klienta](./05-app-clients/delete.php)
-
 
 ## Tvorba aplikace využívající databázi
 :orange_book:
@@ -400,7 +385,7 @@ Na nástěnce bude možné mít umístěné příspěvky přiřazené do kategor
 :house:
 
 > Domácí úkol vychází z aplikace jednoduché webové nástěnky, jejíž tvorba byla [ukázána v předchozím příkladu](#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
-> Za domácí úkol máte možnost získat 2 body, každý za jeden z následujících úkolů. Zatím nijak nerozlišujeme uživatelská práva, tj. ta do aplikace určitě doplňovat nemusíte.
+> Za domácí úkol máte možnost získat 3 body. Zatím nijak nerozlišujeme uživatelská práva, tj. ta do aplikace určitě doplňovat nemusíte.
 > - doplňte do aplikace možnost úpravy příspěvku
 > - doplňte do aplikace možnost zobrazit si příspěvky jen ze zvolené kategorie
 >
