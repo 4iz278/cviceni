@@ -49,9 +49,7 @@ S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě
     - [vytvoření nového klienta](./06-db-app-clients/new_prepare.php)
     - [vytvoření nového klienta - bez ošetření SQL injection](./06-db-app-clients/new_open.php)
     - [úprava klienta](./06-db-app-clients/update.php)
-    - [smazání klienta](./06-db-app-clients/delete.php)
-    
----
+    - [smazání klienta](./06-db-app-clients/delete.php)    
 
 # Cookies
 
