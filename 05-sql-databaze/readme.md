@@ -243,10 +243,34 @@ exit;
 ## Připojení k databázi z PHP
 :point_right:
 
+- Připojení k MySQL/MariaDB je z PHP možné hned několika metodami. Mezi běžné způsoby lze zařadit:
+    - připojení pomocí PDO
+        - tento způsobu doporučuji, jde o standardní variantu
+        - s touto možností budeme řešit příklady na cvičeních
+    - připojení pomocí mysqli funkcí
+        - pozor, je opravdu nutné používat funkce začínající na mysqli (ne na mysql)
+        - musíte ručně escapovat speciální znaky v dotazech
+- Kromě přímého připojení můžete využít také nějakou abstraktní vrstvu - ať již pro jednodušší tvorbu dotazů, nebo pro objektově relační mapování.
+    - Řada PHP frameworků či CMS v sobě obsahuje i databázovou vrstvu:
+        - v Zendu, Nette atp. můžete buď používat připojení pomocí tříd frameworku, nebo použít libovolný jiný způsob připojení (např. s ORM);
+        - vlastní připojení najdete také v nejrozšířenějších CMS - např. ve wordpressu.
+    - Pro zjednodušení tvorby dotazů mohu doporučit např. **[dibi](https://dibiphp.com/)**.
+    - Pro objektově-relační mapování lze používat např. [Doctrine](https://www.doctrine-project.org/), nebo jednodušší [Leanmapper](https://leanmapper.com/).    
+
+### Co je to PDO?
 TODO
 
 ### Připojení k dabázi
 :point_right:
+
+
+
+//pripojeni do db na serveru eso.vse.cz
+$db = new PDO('mysql:host=127.0.0.1;dbname=VASXNAME;charset=utf8', 'VASXNAME', 'VASE HESLO DO MYSQL');
+
+//vyhazuje vyjimky v pripade neplatneho SQL vyrazu
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 
 TODO
 
