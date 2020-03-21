@@ -274,9 +274,19 @@ TODO
 ## Tvorba aplikace využívající databázi
 :orange_book:
 
-TODO
+V rámci praktické ukázky si projdeme tvorbu aplikace, která bude sloužit jako **jednoduchá webová nástěnka s daty uloženými v databázi**. 
+Na nástěnce bude možné mít umístěné příspěvky přiřazené do kategorií, každý příspěvek bude mít svého autora. 
+
+* [prezentace s komentovaným postupem řešení](./05-aplikace-nastenka/prezentace-postup-vyvoje-nastenka.pptx)
+* [vytvořený zdrojový kód včetně exportu databáze](./05-aplikace-nastenka/)
 
 ## Domácí úkol
 :house:
 
-> TODO
+> Domácí úkol vychází z aplikace jednoduché webové nástěnky, jejíž tvorba byla [ukázána v předchozím příkladu](#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
+> Za domácí úkol máte možnost získat 2 body, každý za jeden z následujících úkolů. Zatím nijak nerozlišujeme uživatelská práva, tj. ta do aplikace určitě doplňovat nemusíte.
+> - doplňte do aplikace možnost úpravy příspěvku
+> - doplňte do aplikace možnost zobrazit si příspěvky jen ze zvolené kategorie
+>
+> **Způsob a termín odevzdání:**
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 3.4.2020 23:59.
