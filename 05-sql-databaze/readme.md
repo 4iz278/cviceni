@@ -1,6 +1,6 @@
 # 5. SQL a databáze
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 26. a 20.3.2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 26. a 27.3.2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
@@ -262,7 +262,18 @@ Kromě přímého připojení můžete využít také nějakou abstraktní vrstv
 - Pro objektově-relační mapování lze používat např. [Doctrine](https://www.doctrine-project.org/), nebo jednodušší [Leanmapper](https://leanmapper.com/).    
 
 ### Co je to PDO?
-TODO
+:point_right:
+
+**PDO**, nebo také "PHP Data Objects", je univerzální rozhraní pro práci s databázemi z jazyka PHP. Ačkoliv jde o rozšíření, je dnes v podstatě na všech serverech (ostatně jako třeba JSON, XML atp.), protože nám výrazně usnadňuje vývoj.
+
+V zásadě jde o základní abstrakční vrstvu, díky které nemusíme řešit, jaké konkrétní funkce pracují s daným typem databáze. Po instalaci příslušných ovladačů se můžeme dotazovat pořád stejně pomocí PDO. Je nutné ale mít na paměti, že:
+- PDO nijak nemění SQL dotazy, které chceme spustit - tj. pokud chceme aplikaci převést např. z MariaDB do MS-SQL, budeme muset dotazy upravit (protože se dané varianty SQL neshodují);
+- ovladače pro MariaDB/MySQL najdeme většinou rovnou nainstalované, ale např. pro Oracle obvykle ne. PDO se ale umí připojit k databázi i pomocí ODBC.
+- Nad PDO je postaveno také velké množství vyšších abstraktních vrstev a knihoven, např. pro ORM.
+
+
+:blue_book:
+- [PDO v PHP manuálu](https://www.php.net/manual/en/book.pdo.php)
 
 ### Připojení k dabázi
 :point_right:
