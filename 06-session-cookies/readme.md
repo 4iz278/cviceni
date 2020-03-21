@@ -13,19 +13,27 @@ V rámci [minulého cvičení](../05-sql-databaze) jsme se zabývali vlastnostmi
 - a [ukázali tvorbu databázové aplikace v rámci komentované prezentace].
 
 Místo podrobného opakování se rovnou vrhneme na obsah dnešního cvičení, protože se na práci s databází podíváme ještě v dalším komentovaném ukázkovém příkladu. 
+
+    
+:house:
+
+Ještě připomínám, že součástí byl také [domácí úkol](../05-sql-databaze#dom%C3%A1c%C3%AD-%C3%BAkol). Pokud jej máte (byť i jen z části) hotový, nezapomeňte na jeho odevzdání.
     
 ---
 
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- další ukázková aplikace pracující s databází  
-
----     
-
-:point_right: 
+- [opakování práce s databází](#opakov%C3%A1n%C3%AD-pr%C3%A1ce-s-datab%C3%A1z%C3%AD) prostřednictvím další ukázkové aplikace  
+- [cookies](#cookies)
+- [session](#session)
+- [vyzkoušení si práce se session] <!--TODO--> 
+- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace)
+---      
 
 # Opakování práce s databází
+:point_right:
+
 S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě bychom si měli práci s ní procvičit.
 **Projděte si prosím následující okomentované zdrojové kódy.**
 
@@ -49,9 +57,11 @@ S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě
 
 TODO
 
-# Sessions
+# Session
 
 TODO
+
+TODO vyzkoušení si práce se session
 
 # Ukázková aplikace 
 
