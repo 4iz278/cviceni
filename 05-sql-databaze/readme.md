@@ -299,7 +299,66 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ### Spouštění SQL příkazů
 :point_right:
 
-TODO
+**Jednoduché spuštění SQL dotazu bez požadavku na odpověď**
+
+Pokud chceme spustit SQL dotaz, u kterého neočekáváme žádné konkrétní výsledky, je nejjednodušší spustit jen pomocí metody ```exec()```.
+ 
+```php
+$db->exec('TRUNCATE TABLE tabulka;');
+```
+
+
+**Spuštění SQL dotazu bez uživatelských vstupů**
+
+Pro získání dat pomocí SQL můžeme použít metodu ```query()```. Jejím výsledkem bude **PDOStatement**, pomocí kterého se dostaneme k výsledkům.
+ 
+```php
+$result = $db->query('SELECT * FROM tabulka;');
+$data = $result->fetchAll();
+```
+
+
+**SQL dotaz s parametry**
+
+Pokud chceme spustit SQL dotaz, ve kterém mají být zahrnuta nějaká data získaná od uživatele či z jiného potenciálně nebezpečného zdroje, tak z důvodu ochrany přes SQL injection použijeme **prepared statement**.
+
+První variantou je **dotaz s pojmenovanými parametry**:
+ 
+```php
+$query = $db->prepare('SELECT * FROM osoby WHERE jmeno=:jmeno AND prijmeni=:prijmeni;');//nejprve si připravíme dotaz s parametry
+$query->execute([//následně naplníme parametry dotazu konkrétními hodnotami a spustíme
+  ':jmeno' => $jmeno,
+  ':prijmeni' => $prijmeni
+]);
+```  
+
+Jméno každého z parametrů musí začínat dvojtečkou.  
+
+Kromě předání pole parametrů při spuštění dotazu bychom alternativně  mohli připojit parametry také postupně, pomocí metod ```$query->bindParam()``` a ```$query->bindValue()```.
+
+
+Druhou variantou je **dotat s nepojmenovanými parametry**:
+
+```php
+$query = $db->prepare('SELECT * FROM osoby WHERE jmeno=? AND prijmeni=?;');//nejprve si připravíme dotaz s parametry
+$query->execute([
+  $jmeno,
+  $prijmeni
+]);
+``` 
+V tomto případě je každý z parametrů označen otazníkem. Při jejich naplnění musíme dodržovat pořadí parametrů v poli podle toho, jak byly uvedeny v SQL.
+
+
+**PDOStatement**
+TODO 
+
+:blue_book:
+
+Další zdroje informací:
+
+- [Prepared statement - PHP manuál k PDO](https://www.php.net/manual/en/pdo.prepared-statements.php)
+- [Transakce - PHP manuál k PDO](https://www.php.net/manual/en/pdo.transactions.php)
+- [PDOStatement - PHP manul k PDO](https://www.php.net/manual/en/class.pdostatement.php)
 
 ### Ukázková aplikace
 :blue_book:
