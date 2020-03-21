@@ -174,7 +174,7 @@ Klíče můžete definovat nad jedním či nad více sloupci, stejně jako v Ora
 - phpMyAdmin na serveru eso najdete na adrese **[https://eso.vse.cz/phpmysqladmin](https://eso.vse.cz/phpmysqladmin)**
 
 :orange_book:
-- [prezentace s popisem phpMyAdminu](TODO) 
+- [prezentace s popisem phpMyAdminu](./05-prezentace-phpmyadmin.pptx) 
 
 
 ## Jiné přístupy k databázi

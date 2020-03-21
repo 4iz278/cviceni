@@ -26,11 +26,12 @@ Web předmětu: **http://4iz278.github.io**
   * validace formulářů
   * composer
   * praktická aplikace
-5. [SQL a dabáze](./05-sql-databaze) *(26. a 27.3.2020)*
+5. [SQL a databáze](./05-sql-databaze) *(26. a 27.3.2020)*
   * Opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
-  * práce s databází z PHP  
+  * práce s databází z PHP
+  * tvorba jednoduché databázové aplikace
 <!--
 7. [Session, cookies](./07-session-cookies)
   * session
