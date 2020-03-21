@@ -243,19 +243,23 @@ exit;
 ## Připojení k databázi z PHP
 :point_right:
 
-- Připojení k MySQL/MariaDB je z PHP možné hned několika metodami. Mezi běžné způsoby lze zařadit:
-    - připojení pomocí PDO
-        - tento způsobu doporučuji, jde o standardní variantu
-        - s touto možností budeme řešit příklady na cvičeních
-    - připojení pomocí mysqli funkcí
-        - pozor, je opravdu nutné používat funkce začínající na mysqli (ne na mysql)
-        - musíte ručně escapovat speciální znaky v dotazech
-- Kromě přímého připojení můžete využít také nějakou abstraktní vrstvu - ať již pro jednodušší tvorbu dotazů, nebo pro objektově relační mapování.
-    - Řada PHP frameworků či CMS v sobě obsahuje i databázovou vrstvu:
-        - v Zendu, Nette atp. můžete buď používat připojení pomocí tříd frameworku, nebo použít libovolný jiný způsob připojení (např. s ORM);
-        - vlastní připojení najdete také v nejrozšířenějších CMS - např. ve wordpressu.
-    - Pro zjednodušení tvorby dotazů mohu doporučit např. **[dibi](https://dibiphp.com/)**.
-    - Pro objektově-relační mapování lze používat např. [Doctrine](https://www.doctrine-project.org/), nebo jednodušší [Leanmapper](https://leanmapper.com/).    
+Připojení k MySQL/MariaDB je z PHP možné hned několika metodami. Mezi běžné způsoby lze zařadit:
+- připojení pomocí PDO
+    - tento způsobu doporučuji, jde o standardní variantu
+    - s touto možností budeme řešit příklady na cvičeních
+- připojení pomocí mysqli funkcí
+    - pozor, je opravdu nutné používat funkce začínající na mysqli (ne na mysql)
+    - musíte ručně escapovat speciální znaky v dotazech
+
+        
+:point_right:
+        
+Kromě přímého připojení můžete využít také nějakou abstraktní vrstvu - ať již pro jednodušší tvorbu dotazů, nebo pro objektově relační mapování.
+- Řada PHP frameworků či CMS v sobě obsahuje i databázovou vrstvu:
+    - v Zendu, Nette atp. můžete buď používat připojení pomocí tříd frameworku, nebo použít libovolný jiný způsob připojení (např. s ORM);
+    - vlastní připojení najdete také v nejrozšířenějších CMS - např. ve wordpressu.
+- Pro zjednodušení tvorby dotazů mohu doporučit např. **[dibi](https://dibiphp.com/)**.
+- Pro objektově-relační mapování lze používat např. [Doctrine](https://www.doctrine-project.org/), nebo jednodušší [Leanmapper](https://leanmapper.com/).    
 
 ### Co je to PDO?
 TODO
@@ -263,16 +267,23 @@ TODO
 ### Připojení k dabázi
 :point_right:
 
+Pro připojení k databázi stačí vytvořit instanci třídy PDO s příslušnými parametry.
+- Z praxe doporučuji si danou proměnnou pojmenovat tak, aby bylo na první pohled zřejmé, o co jde. Např. ```$db``` nebo ```$pdo```.
+- **K jedné databázi se připojujeme vždy jen jednou!** 
+    - V opačném případě bychom zbytečně zabíraly sockety pro možná připojení a zároveň výrazně zpomalovali skript.
+    - Pokud je na databázi postavená celá aplikace, 
+- Odpojení od databáze nijak řešit nemusíte, dojde k němu při zrušení databázového objektu. Tj. automaticky při konci aplikace.
 
+:grey_exclamation: Doporučuji mít připojení k databázi definované v celé aplikaci jen v jednom souboru - buď rovnou vytvoření instance PDO, nebo nějaké konstanty s přístupy. Z bezpečnostních důvodů určitě časem dojde ke změně přístupů a rozhodně není rozumné hledat a měnit např. heslo k DB ve spoustě různých souborů.  
 
-//pripojeni do db na serveru eso.vse.cz
-$db = new PDO('mysql:host=127.0.0.1;dbname=VASXNAME;charset=utf8', 'VASXNAME', 'VASE HESLO DO MYSQL');
+```php
+//připojení do DB na serveru eso.vse.cz - XNAME a HESLO samozřejmě zaktualizujte dle svých vlastních údajů
+//doporučuji do connection stringu rovnou dopsat také údaje o kódování, ve kterém chceme s databází komunikovat
+$db = new PDO('mysql:host=127.0.0.1;dbname=XNAME;charset=utf8', 'XNAME', 'VASE HESLO DO MYSQL');
 
-//vyhazuje vyjimky v pripade neplatneho SQL vyrazu
+//následující nastavení zařídí, abychom byla při chybě v SQL vyhozena standardní výjimka (exception)
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-
-TODO
+```
 
 ### Spouštění SQL příkazů
 :point_right:
