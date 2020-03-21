@@ -308,6 +308,8 @@ $db->exec('TRUNCATE TABLE tabulka;');
 ```
 
 
+:point_right:
+
 **Spuštění SQL dotazu bez uživatelských vstupů**
 
 Pro získání dat pomocí SQL můžeme použít metodu ```query()```. Jejím výsledkem bude **PDOStatement**, pomocí kterého se dostaneme k výsledkům.
@@ -318,9 +320,14 @@ $data = $result->fetchAll();
 ```
 
 
+:point_right:
+
 **SQL dotaz s parametry**
 
 Pokud chceme spustit SQL dotaz, ve kterém mají být zahrnuta nějaká data získaná od uživatele či z jiného potenciálně nebezpečného zdroje, tak z důvodu ochrany přes SQL injection použijeme **prepared statement**.
+
+
+:point_right:
 
 První variantou je **dotaz s pojmenovanými parametry**:
  
@@ -337,6 +344,8 @@ Jméno každého z parametrů musí začínat dvojtečkou.
 Kromě předání pole parametrů při spuštění dotazu bychom alternativně  mohli připojit parametry také postupně, pomocí metod ```$query->bindParam()``` a ```$query->bindValue()```.
 
 
+:point_right:
+
 Druhou variantou je **dotat s nepojmenovanými parametry**:
 
 ```php
@@ -348,6 +357,8 @@ $query->execute([
 ``` 
 V tomto případě je každý z parametrů označen otazníkem. Při jejich naplnění musíme dodržovat pořadí parametrů v poli podle toho, jak byly uvedeny v SQL.
 
+
+:point_right:
 
 **PDOStatement**
 TODO 
