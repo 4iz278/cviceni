@@ -361,7 +361,57 @@ V tomto případě je každý z parametrů označen otazníkem. Při jejich napl
 :point_right:
 
 **PDOStatement**
-TODO 
+Po spuštění jednoduchého dotazu pomocí metody ```query()``` nebo na základě *spuštění prepared statementu* máme k dispozici instanci třídy PDOStatement, která nám následně umožní vyzvednout výsledky dotazu z databáze.
+
+První variantou, která se hodí zejména v případě zpracování menšího množství dat, je **jednorázové získání pole se všemi výsledky**:  
+
+```php
+$query = $db->query('SELECT * FROM osoby;');
+$osoby = $query->fetchAll(PDO::FETCH_ASSOC);//každý z řádků DB tabulky získáme v podobě asociačního pole; alternativně bychom mohli získat pole s číselnými indexy, nebo objekty
+
+if (!empty($osoby)){
+  foreach ($osoby as $osoba){
+    echo $osoba['jmeno'];  
+  }
+}
+```
+
+:point_right:
+
+Druhou variantou je **postupné načítání jednotlivých řádků**:
+
+```php
+$query = $db->query('SELECT * FROM osoby;');
+while ($osoba = $query->fetch(PDO::FETCH_ASSOC)){ //načteme jeden řádek z výsledků SQL dotazu v podobě asociačního pole
+  echo $osoba['jmeno'];
+}
+```
+
+```php
+$query = $db->query('SELECT * FROM osoby;');
+while ($osoba = $query->fetchObject()){ //načteme jeden řádek z výsledků SQL dotazu v podobě objektu (jako parametr funkce fetchObject() je možné zadat i název třídy, jejíž instanci chceme)
+  echo $osoba->jmeno;
+}
+```
+
+:point_right:
+
+V některých případech chceme **hodnoty jen jednoho sloupce**. Například když chceme jen získat IDčka povolených uživatelů:
+
+```php
+$query = $db->query('SELECT id FROM osoby;');
+$osobyIdArr = $query->fetchColumn(0); //pokud by sloupců ve výsledcích bylo víc, tak jen číselným parametrem určíme, který sloupec chceme 
+```
+
+:point_right:
+
+Poslední základní variantou je to, že nás zajímá jen **počet řádků** výsledku. Například když chceme postupně načítat seznam osob, ale nejdřív chceme vypsat jejich celkový počet.
+
+```php
+$query = $db->query('SELECT * FROM osoby;');
+echo $query->rowCount();
+```
+
 
 :blue_book:
 
