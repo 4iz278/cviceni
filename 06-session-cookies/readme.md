@@ -1,4 +1,4 @@
-# 5. SQL a databáze
+# 6. SQL a databáze
 
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 2. a 3.4.2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
