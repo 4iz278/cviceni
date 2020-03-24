@@ -140,9 +140,9 @@ Nejpve si vytvoříme jednoduché počítadlo přístupů. Při každém načten
 
 :orange_book:
 
-Druhým jednoduchým příkladem je uložení informace z formuláře.
-- [prezentace s postupem řešení] TODO
-- [zdrojový kód] TODO
+Druhým jednoduchým příkladem je uložení informace z formuláře. Konkrétně půjde o jednoduchý přihlašovací formulář, zatím ale bez ověření uživatele vůči dabázi (o tom až [příště](../07-uzivatele)).
+- [prezentace s postupem řešení](./06-priklad-prihlaseni/prezentace-priklad-prihlaseni.pptx)
+- [zdrojový kód](./06-priklad-prihlaseni)
 
 ## Další informace k session
 :point_right:
