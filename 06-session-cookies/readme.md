@@ -134,14 +134,14 @@ Abychom si SESSION nepopisovali jen teoreticky, podívejte se na následující 
 :orange_book:
 
 Nejpve si vytvoříme jednoduché počítadlo přístupů. Při každém načtení stránky se zvětší hodnota uložená v session.
-- [prezentace s popisem řešení] TODO
-- [zdrojový kód] TODO
+- [prezentace s postupem řešení](./06-pocitadlo-pristupu/prezentace-pocitadlo.pptx)
+- [zdrojový kód](./06-pocitadlo-pristupu/pocitadlo.php)
 
 
 :orange_book:
 
 Druhým jednoduchým příkladem je uložení informace z formuláře.
-- [prezentace s popisem řešení] TODO
+- [prezentace s postupem řešení] TODO
 - [zdrojový kód] TODO
 
 ## Další informace k session
