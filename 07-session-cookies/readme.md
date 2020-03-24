@@ -66,31 +66,13 @@ Případy užití:
   * Jaké jsou výhody/nevýhody používání cookies obecně? Co je/není vhodné do sessions ukládat?
   * Je třeba mít aplikaci přizpůsobenou pro vypnuté cookies? Proč ano/ne?
 
-
-## 6. Cookies
-
-* Cookies = sušenky = klíč a hodnota, které se ukládají v browseru.
-* Server do browseru pošle cookie. Každý další request z browseru na server tuto cookie vrací v HTTP hlavičce (cookie je součást HTTP hlavičky requestu).
-* Cookie je malá databáze na straně serveru.
-* Cookie je z bezpečnostních důvodů navázána k URL serveru, který cookie poslal.
-* V PHP jsou cookies dostupné v globálním (přístupném odkudkoli) asociativním poli **$_COOKIE** a posílají se (ukládají do browseru) funkcí **setcookie()**.
-* Protože je cookie součást HTTP hlavičky, je třeba ji poslat (uložit) ještě před generování jakéhokoli výstupu, podobně jako u HTTP redirectu (hlavička Location).
-* **Otázka: Co by se stalo, kdyby neexistovala kontrola na propojení cookie a serveru, který ji poslal a každý server by mohl číst každou cookie?**
-* **Otázka: Může uživatel přečíst/přepsat hodnoty v cookies?**
-* Podívejte se na cookies uložené v browseru (Firefox - Firebug, Chrome - Developer Tools).
-* **Práce s cookies** - viz [me](./07-app/me.php).
-
 ## 7. Sessions
 
-* HTTP protokol je stateless (nepamatuje si stav requestu=požadavku konkrétního uživatele, který prochází aplikaci), tzn. že každý HTTP request je považován za nový, unikátní, bez návaznosti na requesty předchozí.
-* Sessions přidávají zdání "stateful", aplikace si pak může "pamatovat" uživatele, který ji prochází.
-* Session si ze představit jako unikátní ID, ke kterému jsou na serveru uložena nějaká data (v paměti, na disku, záleží na implementaci či nastavení jazyka).
-* Sessions se ukládají do cookie nebo se posílají jako parametr v URL.
 * V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string, viz příklad [serialize](./07-app/serialize.php).
 * Pokud nastartujeme session, uloží se do cookie browseru session id, které se v PHP jmenuje **PHPSESSID** s náhodně generovaným řetězcem, který je těžké odhadnout. Zkontrolujte v browseru (Firefox - Firebug, Chrome - Developer Tools).
 * Session nastartujeme (do cookie uložíme/přečteme **PHPSESSID** a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
 * Session data zrušíme pomocí funkce **session_destroy()**. Cookie zůstane, ale nemá už přiřazena data na serveru.
-* To, že si aplikace bude "pamatovat" uživatele je plně na vývojáři aplikace. PHP pouze uloží/přečte **PHPSESSID** a zpřístupní session data patřící k této náhodné hodnotě.
+
 * **Otázka: Co by se stalo, pokud by hodnota PHPSESSID šla jednoduše odhadnout?**
 * **Otázka: Jaká jsou obecná kriteria pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
 * **Otázka: Co se stane, pokud ručně přepíšeme/smažeme v cookie hodnotu PHPSESSID? Přidejte zboží do košíku a smažte cookie PHPSESSID.**

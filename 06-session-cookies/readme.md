@@ -64,7 +64,7 @@ Nejjednodušší variantou, jak si předávat data mezi skripty, je jejich posí
 **Cookies nejsou jen "sušenky", ale také jednoduchý způsob uložení informací v prohlížeči ve tvaru klíč = hodnota.**
 - Server (PHP) odešle požadavek na uložení cookie. Prohlížeč si tyto informace zapamatuje a posílá danou cookie na server při každém dalším požadavku na danou doménu.
     - Když si uložíme cookie požadavkem ze souboru index.php, tak se pošle na server při všech požadavcích na další skripty, obrázky atp. (tj. přenáší se opravdu v každém požadavku). **Do cookies ukládáme jen opravdu malé objemy informací.**
-- Cookies mohou být dostupné jak z javascriptu, tak také ze serveru. 
+- Cookies mohou být dostupné jak z javascriptu, tak také ze serveru. Zrovna tak je ale uživatel může v prohlížeči kompletně zakázat.
 - Cookies mohou mít omezenou platnost (po jejím vypršení je prohlížeč smaže).
 - Pozor: Uživatel si může cookies v prohlížeči nejen zobrazit, ale také je přepsat!
 - Pokud používáme cookies pro trasování uživatele (sledování jeho chování na webu), měli bychom mít jeho souhlas.    
@@ -88,6 +88,42 @@ echo $_COOKIE['cookie1']; //výpis cookie
 - [Funkce setcookie() na w3schools.com](https://www.w3schools.com/php/func_network_setcookie.asp)
 
 # Session
+
+:point_right:
+
+Jak už bylo zmíněno, při činnosti aplikace velmi často potřebujeme vědět, jaké požadavky odeslal uživatel před tím současným (například zda se přihlásil, co přidal do košíku atp.). Tyto informace potřebujeme na straně serveru a také potřebujeme, aby je uživatel nemohl jednoduše podvrhnout (například nám tvrdit, že je přihlášený, ačkoliv není). 
+A právě k tomu se velmi hodí SESSION - což je vlastně datové pole, které si můžeme uchovávat na serveru a je dostupné všem následně volaným PHP skriptům.
+
+- V reálu jde o místo (na disku, v paměti atp.), které je označeno unikátním ID uživatele a do kterého můžeme si do něj ukládat informace, které chceme mít dostupné i na další stránce.
+- Samotné ID pro identifikaci session se ukládá do cookie, nebo se případně přidává jako parametr do URL.
+- To, že si aplikace pamatuje například přihlášeného uživatele, je věcí vývojáře. Server jen zpřístupní pole s daty podle ID, které obdržel v rámci požadavku uživatele.
+
+:point_right:
+
+Kdykoliv chceme v PHP session použít, musíme ji nejprve nastartovat pomocí funkce ```session_start()```, kterou zavoláme před začátkem odesílání obsahu. 
+- Pokud pro daného uživatele ještě session nemáme, odešle se do prohlížeče požadavek na uložení cookie *PHPSESSID* s náhodně generovaným řetězcem, který je těžké odhadnout. Zároveň se nám zpřístupní globální pole ```$_SESSION``` pro ukládání informací na serveru.
+- Pokud uživatel již ve svém požadavku odeslat na server *PHPSESSID*, načtou se do pole ```$_SESSION``` hodnoty, které v něm byl při předchozím požadavku.       
+
+:point_right:
+
+Data v session máme v PHP přístupné v globálním poli ```$_SESSION```.
+- Jde o normální asociační pole, do kterého můžeme informace ukládat kdekoliv v rámci skriptu.
+- Pokud do session chceme ukládat objekty, musí být serializovatelné (viz [4. cvičení](../04-objekty-II-validace#serializace-a-usp%C3%A1v%C3%A1n%C3%AD-objekt%C5%AF)) 
+
+```php
+session_start(); //nastartování session
+
+$_SESSION['uzivatel']='jmeno'; // zápis hodnoty do session
+echo $_SESSION['pocet_pristupu'];// načtení hodnoty ze session
+unset($_SESSION['x']); //smazání hodnoty ze session
+```
+
+:point_right:
+
+Pokud budeme chtít session ukončit, zavoláme funkci ```session_destroy()```.
+- Dojde ke smazání dat o session na straně serveru (cookie v prohlížeči zůstane, ale k danému *PHPSESSID* již nejsou přiřazena žádná data).
+
+Pokud jen budeme chtít změnit hodnotu *PHPSESSID*, zavoláme funkci ```session_regenerate_id()```.
 
 TODO
 
