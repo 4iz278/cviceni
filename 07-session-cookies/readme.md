@@ -66,18 +66,6 @@ Případy užití:
   * Jaké jsou výhody/nevýhody používání cookies obecně? Co je/není vhodné do sessions ukládat?
   * Je třeba mít aplikaci přizpůsobenou pro vypnuté cookies? Proč ano/ne?
 
-## 7. Sessions
-
-* V PHP existuje globální (přístupné odkudkoli) asociativní pole **$_SESSION**, do kterého lze ukládat všechny datové typy z PHP (jsou serializovány = převedeny na string, viz příklad [serialize](./07-app/serialize.php).
-* Pokud nastartujeme session, uloží se do cookie browseru session id, které se v PHP jmenuje **PHPSESSID** s náhodně generovaným řetězcem, který je těžké odhadnout. Zkontrolujte v browseru (Firefox - Firebug, Chrome - Developer Tools).
-* Session nastartujeme (do cookie uložíme/přečteme **PHPSESSID** a zpřístupníme tak data v poli **$\_SESSION**) pomocí funkce **session_start()**.
-* Session data zrušíme pomocí funkce **session_destroy()**. Cookie zůstane, ale nemá už přiřazena data na serveru.
-
-* **Otázka: Co by se stalo, pokud by hodnota PHPSESSID šla jednoduše odhadnout?**
-* **Otázka: Jaká jsou obecná kriteria pro rozhodování, kdy použít sessions a kdy cookies? Může uživatel přečíst hodnoty v sessions? Může přečíst hodnoty v cookies?**
-* **Otázka: Co se stane, pokud ručně přepíšeme/smažeme v cookie hodnotu PHPSESSID? Přidejte zboží do košíku a smažte cookie PHPSESSID.**
-* **Práce se sessions** - viz [buy](./07-app/buy.php), [cart](./07-app/cart.php) a [remove](./07-app/remove.php).
-
 ## 8. Domácí úkol
 
 Rozšiřte aplikaci - vytvořte tabulku uživatelů a přidejte jednoduchou autentizaci (login/heslo - zatím jen plain text) a autorizaci (jen admin může přidat/upravit/smazat zboží). Košík ukládejte do DB.

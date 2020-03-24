@@ -100,13 +100,13 @@ A právě k tomu se velmi hodí SESSION - což je vlastně datové pole, které 
 
 :point_right:
 
-Kdykoliv chceme v PHP session použít, musíme ji nejprve nastartovat pomocí funkce ```session_start()```, kterou zavoláme před začátkem odesílání obsahu. 
+Kdykoliv chceme v PHP session použít, musíme ji nejprve **nastartovat pomocí funkce** ```session_start()```, kterou zavoláme před začátkem odesílání obsahu. 
 - Pokud pro daného uživatele ještě session nemáme, odešle se do prohlížeče požadavek na uložení cookie *PHPSESSID* s náhodně generovaným řetězcem, který je těžké odhadnout. Zároveň se nám zpřístupní globální pole ```$_SESSION``` pro ukládání informací na serveru.
 - Pokud uživatel již ve svém požadavku odeslat na server *PHPSESSID*, načtou se do pole ```$_SESSION``` hodnoty, které v něm byl při předchozím požadavku.       
 
 :point_right:
 
-Data v session máme v PHP přístupné v globálním poli ```$_SESSION```.
+**Data v session** máme v PHP přístupná v globálním poli ```$_SESSION```.
 - Jde o normální asociační pole, do kterého můžeme informace ukládat kdekoliv v rámci skriptu.
 - Pokud do session chceme ukládat objekty, musí být serializovatelné (viz [4. cvičení](../04-objekty-II-validace#serializace-a-usp%C3%A1v%C3%A1n%C3%AD-objekt%C5%AF)) 
 
@@ -125,9 +125,25 @@ Pokud budeme chtít session ukončit, zavoláme funkci ```session_destroy()```.
 
 Pokud jen budeme chtít změnit hodnotu *PHPSESSID*, zavoláme funkci ```session_regenerate_id()```.
 
+## Jednoduché vyzkoušení práce se SESSION
+
 TODO
 
 TODO vyzkoušení si práce se session
+
+:point_right:
+
+Pár otázek k zamyšlení:
+- *Co by se stalo, pokud by hodnota PHPSESSID šla jednoduše odhadnout?*
+- *Co se stane, pokud ručně přepíšeme/smažeme v cookie hodnotu PHPSESSID?*
+- *Jsou nějaká data, která je vhodnější uložit do COOKIE, než do SESSION?*
+
+
+:blue_book:
+
+Pokud byste hledali další informace, koukněte na:
+- [Sessions na webu w3schools.com](https://www.w3schools.com/php/php_sessions.asp)
+- [Sessions v PHP manuálu](https://www.php.net/manual/en/book.session.php)
 
 # Ukázková aplikace 
 
