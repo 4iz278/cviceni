@@ -59,15 +59,18 @@ Ačkoliv jsme dosud pracovali s PHP zcela bezstavově, při reálném nasazení 
 
 Nejjednodušší variantou, jak si předávat data mezi skripty, je jejich posílání - buď si je vždy necháme poslat (např. v parametrech URL adresy), nebo si je uložíme v prohlížeči v podobě **cookies**.
 
-Cookies nejsou jen "sušenky", ale také jednoduchý způsob uložení informací v prohlížeči ve tvaru *klíč = hodnota*.
+:point_right:
+
+**Cookies nejsou jen "sušenky", ale také jednoduchý způsob uložení informací v prohlížeči ve tvaru klíč = hodnota.**
+- Server (PHP) odešle požadavek na uložení cookie. Prohlížeč si tyto informace zapamatuje a posílá danou cookie na server při každém dalším požadavku na danou doménu.
+    - Když si uložíme cookie požadavkem ze souboru index.php, tak se pošle na server při všech požadavcích na další skripty, obrázky atp. (tj. přenáší se opravdu v každém požadavku). **Do cookies ukládáme jen opravdu malé objemy informací.**
 - Cookies mohou být dostupné jak z javascriptu, tak také ze serveru. 
 - Cookies mohou mít omezenou platnost (po jejím vypršení je prohlížeč smaže).
-- Server (PHP) odešle požadavek na uložení cookie. Prohlížeč si tyto informace zapamatuje a posílá danou cookie na server při každém dalším požadavku na danou doménu.
-    - Když si uložíme cookie požadavkem ze souboru index.php, tak se pošle na server při všech požadavcích na další skripty, obrázky atp. (tj. přenáší se opravdu v každém požadavku).
-    - --> do cookies ukládáme jen opravdu malé objemy informací
 - Pozor: Uživatel si může cookies v prohlížeči nejen zobrazit, ale také je přepsat!
 - Pokud používáme cookies pro trasování uživatele (sledování jeho chování na webu), měli bychom mít jeho souhlas.    
     
+:point_right:
+
 Pro nastavení cookies používáme funkci ```setcookie()```, která nám sestaví a odešle příslušnou HTTP hlavičku s nastavením. Stejně jako např. funkci ```header()``` musíme i nastavení cookies volat před začátkem odesílání HTML obsahu (jako třeba u přesměrování po odeslání formuláře).
     
 ```php
