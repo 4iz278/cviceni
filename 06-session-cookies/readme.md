@@ -27,7 +27,7 @@ Ještě připomínám, že součástí byl také [domácí úkol](../05-sql-data
 - [opakování práce s databází](#opakov%C3%A1n%C3%AD-pr%C3%A1ce-s-datab%C3%A1z%C3%AD) prostřednictvím další ukázkové aplikace  
 - [cookies](#cookies)
 - [session](#session)
-- [vyzkoušení si práce se session] <!--TODO--> 
+- [vyzkoušení si práce se session](#jednoduch%C3%A9-vyzkou%C5%A1en%C3%AD-pr%C3%A1ce-se-session) 
 - [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace)
 ---      
 
@@ -125,18 +125,31 @@ Pokud budeme chtít session ukončit, zavoláme funkci ```session_destroy()```.
 
 Pokud jen budeme chtít změnit hodnotu *PHPSESSID*, zavoláme funkci ```session_regenerate_id()```.
 
-## Jednoduché vyzkoušení práce se SESSION
-
-TODO
-
-TODO vyzkoušení si práce se session
+## Jednoduché vyzkoušení práce se session
 
 :point_right:
 
-Pár otázek k zamyšlení:
+Abychom si SESSION nepopisovali jen teoreticky, podívejte se na následující 2 praktické příklady s okomentovaným postupem tvorby.
+
+:red_book:
+
+Nejpve si vytvoříme jednoduché počítadlo přístupů. Při každém načtení stránky se zvětší hodnota uložená v session.
+- []
+
+
+:red_book:
+
+Druhým jednoduchým příkladem je uložení informace z formuláře.
+-  
+
+## Další informace k session
+:point_right:
+
+Pár otázek k zamyšlení (a případně vyzkoušení v praxi):
 - *Co by se stalo, pokud by hodnota PHPSESSID šla jednoduše odhadnout?*
 - *Co se stane, pokud ručně přepíšeme/smažeme v cookie hodnotu PHPSESSID?*
 - *Jsou nějaká data, která je vhodnější uložit do COOKIE, než do SESSION?*
+- *Co se stane, když si na jednom počítači otevřu stejnou stránku ve dvou různých prohlížečích? Bude session sdílená?*
 
 
 :blue_book:
