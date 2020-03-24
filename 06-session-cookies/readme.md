@@ -131,16 +131,18 @@ Pokud jen budeme chtít změnit hodnotu *PHPSESSID*, zavoláme funkci ```session
 
 Abychom si SESSION nepopisovali jen teoreticky, podívejte se na následující 2 praktické příklady s okomentovaným postupem tvorby.
 
-:red_book:
+:orange_book:
 
 Nejpve si vytvoříme jednoduché počítadlo přístupů. Při každém načtení stránky se zvětší hodnota uložená v session.
-- []
+- [prezentace s popisem řešení] TODO
+- [zdrojový kód] TODO
 
 
-:red_book:
+:orange_book:
 
 Druhým jednoduchým příkladem je uložení informace z formuláře.
--  
+- [prezentace s popisem řešení] TODO
+- [zdrojový kód] TODO
 
 ## Další informace k session
 :point_right:
