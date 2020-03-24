@@ -53,7 +53,36 @@ S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě
 
 # Cookies
 
-TODO
+:point_right:
+
+Ačkoliv jsme dosud pracovali s PHP zcela bezstavově, při reálném nasazení velmi často narážíme na potřebu ukládání informací o tom, co dělal uživatel v předchozích požadavcích. Například u e-shopu považujeme za normální, že postupně vybíráme zboží, přidáváme ho do košíku a teprve poté odešleme objednávku. A rozhodně to nezvládneme na jedné jediné stránce.
+
+Nejjednodušší variantou, jak si předávat data mezi skripty, je jejich posílání - buď si je vždy necháme poslat (např. v parametrech URL adresy), nebo si je uložíme v prohlížeči v podobě **cookies**.
+
+Cookies nejsou jen "sušenky", ale také jednoduchý způsob uložení informací v prohlížeči ve tvaru *klíč = hodnota*.
+- Cookies mohou být dostupné jak z javascriptu, tak také ze serveru. 
+- Cookies mohou mít omezenou platnost (po jejím vypršení je prohlížeč smaže).
+- Server (PHP) odešle požadavek na uložení cookie. Prohlížeč si tyto informace zapamatuje a posílá danou cookie na server při každém dalším požadavku na danou doménu.
+    - Když si uložíme cookie požadavkem ze souboru index.php, tak se pošle na server při všech požadavcích na další skripty, obrázky atp. (tj. přenáší se opravdu v každém požadavku).
+    - --> do cookies ukládáme jen opravdu malé objemy informací
+- Pozor: Uživatel si může cookies v prohlížeči nejen zobrazit, ale také je přepsat!
+- Pokud používáme cookies pro trasování uživatele (sledování jeho chování na webu), měli bychom mít jeho souhlas.    
+    
+Pro nastavení cookies používáme funkci ```setcookie()```, která nám sestaví a odešle příslušnou HTTP hlavičku s nastavením. Stejně jako např. funkci ```header()``` musíme i nastavení cookies volat před začátkem odesílání HTML obsahu (jako třeba u přesměrování po odeslání formuláře).
+    
+```php
+setcookie('cookie1', 'hodnota', time() + 3600); //ukládáme cookie s platností 1 hodinu
+setcookie('cookie2', 'hodnota', time() + 3600*24, "/xname/"); //ukládáme cookie s platností 1 den, která bude dostupná jen pro adresář /xname/
+```
+
+Pro čtení máme cookies dostupné kdekoliv ve skriptu v globální proměnné ```$_COOKIE```. Pozor, přepsáním hodnoty v tomto poli se žádná cookie neuloží!
+
+```php
+echo $_COOKIE['cookie1']; //výpis cookie
+```
+
+:blue_book:
+- [Funkce setcookie() na w3schools.com](https://www.w3schools.com/php/func_network_setcookie.asp)
 
 # Session
 
