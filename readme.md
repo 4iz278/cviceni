@@ -6,37 +6,43 @@ Web předmětu: **http://4iz278.github.io**
 
 ## Plán cvičení
 
-1. [HTML, základy PHP syntaxe](./01-html-zaklady-php/) *(20. a 21.2.2020)*
+1. **[HTML, základy PHP syntaxe](./01-html-zaklady-php/)** *(20. a 21. 2. 2020 - ve škole)*
   * HTML - stručné opakování
   * základy syntaxe
   * nahrání stránek na výukový server
-2. [Řetězce, soubory](./02-retezce-soubory) *(27. a 28.2.2020)*
+2. **[Řetězce, soubory](./02-retezce-soubory)** *(27. a 28. 2. 2020 - ve škole)*
   * řetězcové funkce
   * include, require
   * GET, POST
   * čtení a zápis souborů
-3. [Objekty v PHP](./03-objekty) *(5. a 6.3.2020)*
+3. **[Objekty v PHP](./03-objekty)** *(5. a 6. 3. 2020) - ve škole*
   * práce s file systémem
   * definice tříd, rozhraní atd.
   * namespaces
   * výjimky
-4. [Objekty v PHP II., validace formulářů](./04-objekty-II-validace) *(19. a 20.3.2020)*
+4. **[Objekty v PHP II., validace formulářů](./04-objekty-II-validace)** *(19. a 20. 3. 2020)*
   * class loader
   * magické metody objektů
   * validace formulářů
   * composer
   * praktická aplikace
-5. [SQL a databáze](./05-sql-databaze) *(26. a 27.3.2020)*
-  * Opakování základů SQL
+5. **[SQL a databáze](./05-sql-databaze)** *(26. a 27. 3. 2020)*
+  * opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
   * práce s databází z PHP
   * tvorba jednoduché databázové aplikace
-<!--
-7. [Session, cookies](./07-session-cookies)
-  * session
+6. **[Opakování práce s databází, session, cookies](./06-session-cookies)** *(2. a 3. 4. 2020)*
+  * ukázková aplikace na práci s databází
   * cookies
-  * práce s DB
+  * session  
+  * ukázková aplikace na práci se session a cookies
+<!--
+
+Uživatelé (16. a 17. 4. 2020)
+JSON, XML, generování PDF, maily (23. a 24. 4. 2020)
+MVC nebo opakování(14. a 15. 5. 2020)
+
 8. [Uživatelé](./08-uzivatele)
   * autorizace, autentizace
   * lokální přihlašování
