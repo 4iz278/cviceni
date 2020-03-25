@@ -59,11 +59,11 @@
         foreach ($goods as $good){
           echo '  <tr>
                     <td class="center">
-						          <a href="remove.php?id='.$good['id'].'">Remove</a>
-					          </td>
-					          <td>'.htmlspecialchars($good['name']).'</td>
-					          <td class="right">'.$good['price'].'</td>
-					          <td>'.htmlspecialchars($good['description']).'</td>
+                      <a href="remove.php?id='.$good['id'].'">Remove</a>
+                    </td>
+                    <td>'.htmlspecialchars($good['name']).'</td>
+                    <td class="right">'.$good['price'].'</td>
+                    <td>'.htmlspecialchars($good['description']).'</td>
                   </tr>';
           $sum+=$good['price'];
         }
