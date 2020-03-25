@@ -28,7 +28,7 @@ Ještě připomínám, že součástí byl také [domácí úkol](../05-sql-data
 - [cookies](#cookies)
 - [session](#session)
 - [vyzkoušení si práce se session](#jednoduch%C3%A9-vyzkou%C5%A1en%C3%AD-pr%C3%A1ce-se-session) 
-- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace) a na ní navazující [domácí úkol]
+- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace) a na ní navazující [domácí úkol](#dom%C3%A1c%C3%AD-%C3%BAkol)
 ---      
 
 ## Opakování práce s databází
@@ -184,3 +184,12 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     
 ### Domácí úkol
 :house:    
+
+> Domácí úkol vychází z ukázkové aplikace [jednoduchého e-shopu](./06-app-eshop).
+> Vaším úkolem je:
+> - spustit aplikaci na serveru eso.vse.cz *(0,5 bodu)*
+>   - pokud jste to stihli již v rámci učení se místo cvičení, tím lépe :) 
+> - upravit aplikaci tak, aby bylo možné do košíku přidat více kusů od každého druhu zboží *(1,5 bodu)*
+>
+> **Způsob a termín odevzdání:**
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 10.4.2020 23:59.
