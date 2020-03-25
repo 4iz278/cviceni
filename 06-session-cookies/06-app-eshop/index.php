@@ -56,16 +56,16 @@
           <!--region výpis jednoho řádku se zbožím-->
           <tr>
             <td class="center">
-              <a href='buy.php?id=<?= $row['id'] ?>'>Buy</a>
+              <a href='buy.php?id=<?php echo $row['id']; ?>'>Buy</a>
             </td>
 
-            <td><?= $row['name'] ?></td>
-            <td class="right"><?= $row['price'] ?></td>
-            <td><?= $row['description'] ?></td>
+            <td><?php echo htmlspecialchars($row['name']); ?></td>
+            <td class="right"><?php echo $row['price']; ?></td>
+            <td><?php echo htmlspecialchars($row['description']); ?></td>
 
             <td class="center">
-              <a href='update.php?id=<?= $row['id'] ?>'>Edit</a> |
-              <a href='delete.php?id=<?= $row['id'] ?>'>Delete</a>
+              <a href='update.php?id=<?php echo $row['id']; ?>'>Edit</a> |
+              <a href='delete.php?id=<?php echo $row['id']; ?>'>Delete</a>
             </td>
           </tr>
           <!--endregion výpis jednoho řádku se zbožím-->

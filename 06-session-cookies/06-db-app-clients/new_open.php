@@ -21,7 +21,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>PHP Clients App</title>
+    <title>New client - PHP Clients App</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
@@ -35,7 +35,7 @@
       <input type="text" name="last_name" id="last_name" value=""><br/><br/>
 
       <label for="salary">Salary</label><br/>
-      <input type="text" name="salary" id="salary" value=""><br/><br/>
+      <input type="number" name="salary" id="salary" value=""><br/><br/>
 
       <label for="note">Note</label><br/>
       <textarea name="note" id="note"></textarea><br/><br/>
