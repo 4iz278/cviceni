@@ -1,6 +1,6 @@
 # 4. Objekty v PHP II., validace formulářů
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 19. a 20.3.2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 19. a 20. 3. 2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení

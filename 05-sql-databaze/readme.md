@@ -1,6 +1,6 @@
 # 5. SQL a databáze
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 26. a 27.3.2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 26. a 27. 3. 2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
