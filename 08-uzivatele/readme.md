@@ -1,5 +1,7 @@
 # 8. Uživatelé, autentizace, autorizace
 
+:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry: 
+
 Do našeho e-shopu přidáme autentizaci (KDO je uživatel) a autorizaci (CO může uživatel dělat). Aplikaci může používat pouze přihlášený uživatel. Katalog může spravovat pouze administrátor.
 
 ## 1. Zdroje pro cvičení:

@@ -1,5 +1,7 @@
 # 11. JSON, XML
 
+:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
+
 * **K čemu jsou dobré strukturované formáty?**
 * Jak je použít v aplikaci?
 

@@ -1,5 +1,7 @@
 # 9. Uživatelé a DB, víceuživatelský přístup, práce s datem/časem, OAuth
 
+:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
+
 Do našeho e-shopu přidáme zamykání záznamů pro případ, kdyby jeden záznam potřebovalo upravovat více uživatelů najednou.
 Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme se přihlásit se do aplikace pomocí Facebooku (OAuth protokol).
 

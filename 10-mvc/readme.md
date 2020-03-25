@@ -1,5 +1,7 @@
 # 10. MVC, SEO URL, poslání e-mailu
 
+:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
+
 * Zbývá nám do konce pár semestru pár cvičení, tak je vhodné shrnout, jak na tom jsme...
     * umíme všechny potřebné jazykové konstrukce v PHP
     * umíme napsat jednoduchou aplikaci
