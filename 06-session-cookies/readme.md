@@ -1,6 +1,6 @@
-# 6. SQL a databáze
+# 6. Opakování práce s databází, session, cookies
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 2. a 3.4.2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 2. a 3. 4. 2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
@@ -10,7 +10,7 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 V rámci [minulého cvičení](../05-sql-databaze) jsme se zabývali vlastnostmi databáze MariaDB. Následně jsme si:
 - [ukázali práci s nástrojem phpMyAdmin](../05-sql-databaze/05-prezentace-phpmyadmin.pptx),
 - probrali používání databáze pomocí PDO  
-- a [ukázali tvorbu databázové aplikace v rámci komentované prezentace].
+- a [ukázali tvorbu databázové aplikace v rámci komentované prezentace](../05-sql-databaze#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
 
 Místo podrobného opakování se rovnou vrhneme na obsah dnešního cvičení, protože se na práci s databází podíváme ještě v dalším komentovaném ukázkovém příkladu. 
 
@@ -164,7 +164,9 @@ Pokud byste hledali další informace, koukněte na:
 :point_right:
 
 Pro lepší představu o práci se session a cookies tu máme připravenou již hotovou aplikaci, představující jednoduchý e-shop.
-Aplikace využívá session pro nákupní košík a cookies pro uložení jména uživatele. 
+- Aplikace využívá session pro nákupní košík a cookies pro uložení jména uživatele.
+- Přihlášení v horní části lišty není skutečné přihlášení, jen ukazuje práci s cookies (jméno uživatele ukládá do cookie v browseru).
+- Aplikace zatím nijak neřeší oprávnění uživatelů (všichni mohou vše).  
 
 Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 
@@ -175,12 +177,21 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     3. nahrajte do MariaDB [ukázková data](./06-app-eshop/06-data.sql)
     4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./06-app-eshop/db.php)
 - část aplikace pro uživatele:
-    - [buy](./06-app-eshop/buy.php) - přidání zboží do košíku dle ID
-    - [remove](./06-app-eshop/remove.php) - smazání zboží z košíku
+    - [index.php](./07-app/index.php) - výpis zboží v e-shopu.
+    - [buy.php](./06-app-eshop/buy.php) - přidání zboží do košíku dle ID
+    - [remove.php](./06-app-eshop/remove.php) - smazání zboží z košíku
+    - [cart.php](./07-app/cart.php) - výpis zboží přidaného do košíku
+    - [logout.php](./07-app/logout.php) - simulace odhlášení, zruší session
+    - [me.php](./07-app/me.php) - údaje o uživateli (demonstrace práce s cookies)
 - část aplikace pro její správce:
-    - [new](./06-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
-    - [delete](./06-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
-    - [update](./06-app-eshop/update.php) - úprava zboží v e-shopu
+    - [new.php](./06-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
+    - [delete.php](./06-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
+    - [update.php](./06-app-eshop/update.php) - úprava zboží v e-shopu
+
+:point_right:
+
+Výzva k zamyšlení:
+- *Zvládli byste předělat přihlašování tak, aby se data o uživateli ukládala do session?*
     
 ### Domácí úkol
 :house:    
@@ -192,4 +203,4 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 > - upravit aplikaci tak, aby bylo možné do košíku přidat více kusů od každého druhu zboží *(1,5 bodu)*
 >
 > **Způsob a termín odevzdání:**
-> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 10.4.2020 23:59.
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 10. 4. 2020 23:59.
