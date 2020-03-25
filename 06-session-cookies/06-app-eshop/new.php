@@ -20,7 +20,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-	
+  
     <?php include 'navbar.php' ?>
 
     <h1>New goods</h1>

@@ -27,9 +27,9 @@
   </head>
   <body>
 
-	  <?php include 'navbar.php' ?>
-	
-	  <h1>Update goods</h1>
+    <?php include 'navbar.php' ?>
+  
+    <h1>Update goods</h1>
 
     <form  method="post"><!--formulář pro zadání zboží do e-shopu - pro zjednodušení bez formátovacích značek-->
       <label for="name">Name</label><br/>

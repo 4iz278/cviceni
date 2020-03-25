@@ -29,19 +29,19 @@
   </head>
   <body>
 
-	  <?php include 'navbar.php' ?>
-	
-	  <h1>Goods index</h1>
-	
+    <?php include 'navbar.php' ?>
+  
+    <h1>Goods index</h1>
+  
     Total goods: <strong><?php echo $count;/*v proměnné $count máme číslo, nemusíme tedy ošetřovat speciální znaky*/ ?></strong>
-	
-	  <br/><br/>
-	
-	  <a href="new.php">New Good</a><!--odkaz pro přidání nového zboží-->
-	
-	  <br/><br/>
-	
-	  <?php if ($count>0){ ?>
+  
+    <br/><br/>
+  
+    <a href="new.php">New Good</a><!--odkaz pro přidání nového zboží-->
+  
+    <br/><br/>
+  
+    <?php if ($count>0){ ?>
       <!--region tabulka s výpisem produktů-->
       <table>
         <tr>
@@ -51,8 +51,8 @@
           <th>Description</th>
           <th></th>
         </tr>
-	
-			  <?php foreach($goods as $row){ ?>
+  
+        <?php foreach($goods as $row){ ?>
           <!--region výpis jednoho řádku se zbožím-->
           <tr>
             <td class="center">
@@ -69,22 +69,22 @@
             </td>
           </tr>
           <!--endregion výpis jednoho řádku se zbožím-->
-				<?php } ?>
-		  </table>
+        <?php } ?>
+      </table>
       <!--endregion tabulka s výpisem produktů-->
-		
-		  <br/>
+    
+      <br/>
 
       <!--region výpis stránkování-->
-		  <div class="pagination">
-		    <?php
+      <div class="pagination">
+        <?php
           for($i=1; $i<=ceil($count/10); $i++){
             echo '<a class="'.($offset/10+1==$i?'active':'').'" href="index.php?offset='.(($i-1)*10).'">'.$i.'</a>';
           }
         ?>
-		  </div>
+      </div>
       <!--endregion výpis stránkování-->
-		<?php } ?>
+    <?php } ?>
 
   </body>
 </html>
