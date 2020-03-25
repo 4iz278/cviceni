@@ -177,12 +177,12 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     3. nahrajte do MariaDB [ukázková data](./06-app-eshop/06-data.sql)
     4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./06-app-eshop/db.php)
 - část aplikace pro uživatele:
-    - [index.php](./07-app/index.php) - výpis zboží v e-shopu.
+    - [index.php](./06-app-eshop/index.php) - výpis zboží v e-shopu.
     - [buy.php](./06-app-eshop/buy.php) - přidání zboží do košíku dle ID
     - [remove.php](./06-app-eshop/remove.php) - smazání zboží z košíku
-    - [cart.php](./07-app/cart.php) - výpis zboží přidaného do košíku
-    - [logout.php](./07-app/logout.php) - simulace odhlášení, zruší session
-    - [me.php](./07-app/me.php) - údaje o uživateli (demonstrace práce s cookies)
+    - [cart.php](./06-app-eshop/cart.php) - výpis zboží přidaného do košíku
+    - [logout.php](./06-app-eshop/logout.php) - simulace odhlášení, zruší session
+    - [me.php](./06-app-eshop/me.php) - údaje o uživateli (demonstrace práce s cookies)
 - část aplikace pro její správce:
     - [new.php](./06-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
     - [delete.php](./06-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
