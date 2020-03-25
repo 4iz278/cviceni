@@ -5,5 +5,5 @@
 		<a href="cart.php">My shopping cart</a>
 		
 	</div>
-	<div style="float: right"><a href="me.php">Signed in as <?= isset($_COOKIE['name']) ? $_COOKIE['name'] : "Guest" ?> </a></div>
+	<div style="float: right"><a href="me.php">Signed in as <?php echo (isset($_COOKIE['name'])?htmlspecialchars($_COOKIE['name']):"Guest"); ?> </a></div>
 </div>

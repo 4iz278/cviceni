@@ -28,10 +28,10 @@ Ještě připomínám, že součástí byl také [domácí úkol](../05-sql-data
 - [cookies](#cookies)
 - [session](#session)
 - [vyzkoušení si práce se session](#jednoduch%C3%A9-vyzkou%C5%A1en%C3%AD-pr%C3%A1ce-se-session) 
-- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace)
+- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace) a na ní navazující [domácí úkol]
 ---      
 
-# Opakování práce s databází
+## Opakování práce s databází
 :point_right:
 
 S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě bychom si měli práci s ní procvičit.
@@ -51,7 +51,7 @@ S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě
     - [úprava klienta](./06-db-app-clients/update.php)
     - [smazání klienta](./06-db-app-clients/delete.php)    
 
-# Cookies
+## Cookies
 
 :point_right:
 
@@ -87,7 +87,7 @@ echo $_COOKIE['cookie1']; //výpis cookie
 :blue_book:
 - [Funkce setcookie() na w3schools.com](https://www.w3schools.com/php/func_network_setcookie.asp)
 
-# Session
+## Session
 
 :point_right:
 
@@ -125,7 +125,7 @@ Pokud budeme chtít session ukončit, zavoláme funkci ```session_destroy()```.
 
 Pokud jen budeme chtít změnit hodnotu *PHPSESSID*, zavoláme funkci ```session_regenerate_id()```.
 
-## Jednoduché vyzkoušení práce se session
+### Jednoduché vyzkoušení práce se session
 
 :point_right:
 
@@ -144,7 +144,7 @@ Druhým jednoduchým příkladem je uložení informace z formuláře. Konkrétn
 - [prezentace s postupem řešení](./06-priklad-prihlaseni/prezentace-priklad-prihlaseni.pptx)
 - [zdrojový kód](./06-priklad-prihlaseni)
 
-## Další informace k session
+### Další informace k session
 :point_right:
 
 Pár otázek k zamyšlení (a případně vyzkoušení v praxi):
@@ -160,6 +160,27 @@ Pokud byste hledali další informace, koukněte na:
 - [Sessions na webu w3schools.com](https://www.w3schools.com/php/php_sessions.asp)
 - [Sessions v PHP manuálu](https://www.php.net/manual/en/book.session.php)
 
-# Ukázková aplikace 
+## Ukázková aplikace 
+:point_right:
 
-TODO    
+Pro lepší představu o práci se session a cookies tu máme připravenou již hotovou aplikaci, představující jednoduchý e-shop.
+Aplikace využívá session pro nákupní košík a cookies pro uložení jména uživatele. 
+
+Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
+
+:blue_book:
+- postup zprovoznění ukázkové aplikace:
+    1. stáhněte si celou složku aplikace ([06-app-eshop](./06-app-eshop)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./06-app-eshop/06-schema.sql)
+    3. nahrajte do MariaDB [ukázková data](./06-app-eshop/06-data.sql)
+    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./06-app-eshop/db.php)
+- část aplikace pro uživatele:
+    - [buy](./06-app-eshop/buy.php) - přidání zboží do košíku dle ID
+    - [remove](./06-app-eshop/remove.php) - smazání zboží z košíku
+- část aplikace pro její správce:
+    - [new](./06-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
+    - [delete](./06-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
+    - [update](./06-app-eshop/update.php) - úprava zboží v e-shopu
+    
+### Domácí úkol
+:house:    
