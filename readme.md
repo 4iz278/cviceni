@@ -37,30 +37,28 @@ Web předmětu: **http://4iz278.github.io**
   * cookies
   * session  
   * ukázková aplikace na práci se session a cookies
-<!--
-
-Uživatelé (16. a 17. 4. 2020)
-JSON, XML, generování PDF, maily (23. a 24. 4. 2020)
-MVC nebo opakování(14. a 15. 5. 2020)
-
-8. [Uživatelé](./08-uzivatele)
+7. **[Ukázkové aplikace](./07-ukazkove-aplikace)** *(9. 4. 2020)*  
+  * ukázka vyřešení domácího úkolu z CSV
+  * ukázka rozšíření aplikace nástěnky o uživatelské účty
+8. **Uživatelé, maily** *(16. a 17. 4. 2020)*
   * autorizace, autentizace
-  * lokální přihlašování
-9. [Uživatelé a DB](./09-uzivatele-db)
-  * víceuživatelský přístup k DB
-  * OAuth
+  * lokální přihlašování uživatelů
+  * posílání e-mailů
+9. **Uživatelé a DB, JSON, XML** *(23. a 24. 4. 2020)* 
   * datum a čas
-10. [MVC, SEO URL, poslání e-mailu](./10-mvc)
+  * víceuživatelský přístup k DB
+  * strukturované datové formáty
+10. **REST API, PDF** *(30. 4. 2020)*
+  * tvorba API
+  * AJAX
+  * mPDF 
+11. **Přihlašování přes OAuth, CURL** *(7. 5. 2020)*
+  * OAuth
+  * CURL
+12. **MVC, SEO URL** *(14. a 15. 5. 2020)*   
   * návrhový vzor MVC
   * objektová tvorba aplikací
   * .htaccess
-  * posílání e-mailů
-11. [JSON, XML](./11-json-xml)
-  * strukturované datové formáty
-  * AJAX
-  * mPDF
-12. [CRUD aplikace](./12-crud)
-  * aplikace s REST API-->
 
 ## Co naleznete v tomto úložišti?
 
