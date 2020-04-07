@@ -48,7 +48,7 @@ V rámci domácího úkolu bylo požadováno doplnění možnosti editace přís
 - [prezentace s komentovaným postupem řešení](TODO)
 - [vytvořený zdrojový kód včetně exportu databáze](TODO)
 
-### Uživatelské účty
+## Uživatelské účty
 :point_right:
 
 Uživatelskými účty se podrobněji budeme zabývat až na dalším cvičení. V tomto cvičení jen uveďme pár základních pravidel:
