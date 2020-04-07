@@ -15,13 +15,15 @@ Ohledně **session** byste si měli pamatovat:
 - do session jde uložit libovolná serializovatelná data (řetězce, čísla, pole, serializovatelné objekty)
 - pro identifikaci konkrétního uživatele se používá kód, který je u uživatel uložen v cookie
 
-## Obsah dnešního cvičení
+---
 
 :point_right:
 
-Dnešní cvičení máme tak trochu navíc, neboť byl zrušen původně plánovaný děkanský den. Nemáme tedy ve čtvrtek volno, ale měli bychom se věnovat studiu. 
+**Dnešní cvičení** máme tak trochu navíc, neboť byl zrušen původně plánovaný děkanský den. Nemáme tedy ve čtvrtek volno, ale měli bychom se věnovat studiu. 
 
 Ačkoliv by řada z vás raději již slavila Velikonoce, využijme tohoto času ke společnému programování. Nejprve si [vyřešíme domácí úkol](#%C5%99e%C5%A1en%C3%AD-dom%C3%A1c%C3%ADho-%C3%BAkolu) a následně se začneme zabývat [uživatelskými účty](#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty) a doplníme je do aplikace nástěnky.
+
+---
 
 ## Aplikace Nástěnka
 :point_right:
