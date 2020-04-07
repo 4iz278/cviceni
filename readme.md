@@ -37,9 +37,9 @@ Web předmětu: **http://4iz278.github.io**
   * cookies
   * session  
   * ukázková aplikace na práci se session a cookies
-7. **[Ukázkové aplikace](./07-ukazkove-aplikace)** *(9. 4. 2020)*  
-  * ukázka vyřešení domácího úkolu z CSV
-  * ukázka rozšíření aplikace nástěnky o uživatelské účty
+7. **[Ukázková aplikace](./07-ukazkova-aplikace)** *(9. 4. 2020)*  
+  * ukázka vyřešení domácího úkolu s nástěnkou
+  * ukázka rozšíření nástěnky o uživatelské účty
 8. **Uživatelé, maily** *(16. a 17. 4. 2020)*
   * autorizace, autentizace
   * lokální přihlašování uživatelů
