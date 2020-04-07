@@ -24,7 +24,7 @@ Dnešní cvičení máme tak trochu navíc, neboť byl zrušen původně plánov
 Ačkoliv by řada z vás raději již slavila Velikonoce, využijme tohoto času ke společnému programování. Nejprve si [vyřešíme domácí úkol](#%C5%99e%C5%A1en%C3%AD-dom%C3%A1c%C3%ADho-%C3%BAkolu) a následně se začneme zabývat [uživatelskými účty](#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty) a doplníme je do aplikace nástěnky.
 
 ## Aplikace Nástěnka
-:point_right
+:point_right:
 
 Na cvičení [5. SQL a databáze](../05-sql-databaze) byl zadán domácí úkol, v rámci kterého jste měli rozšířit funkcionalitu nástěnky vytvářené na daném cvičení. Zadání tohoto domácího úkolu naleznete [zde](../05-sql-databaze#dom%C3%A1c%C3%AD-%C3%BAkol).
 
@@ -70,7 +70,7 @@ TODO
 ## Domácí úkol
 :house:
 
-V tomto týdnu nemáme klasický domácí úkol, ale je na čase, abyste začali přemýšlet nad zadáním své PHP aplikace, kterou budete odevzdávat ve zkouškovém období.
+V tomto týdnu nemáme klasický domácí úkol, ale je na čase, abyste **začali přemýšlet nad zadáním své PHP aplikace**, kterou budete odevzdávat ve zkouškovém období.
 Aplikace by měla být postavena nad databází a využívat alespoň 3 tabulky ve vazbách 1:N či M:N. Zároveň je nutné, aby aplikace byla použitelná a smysluplná.
 
-Zadání stačí v podobě pár vět, ve kterých popíšete, co má aplikace umět. Zadání je potřeba odevzdat do odevzdávárny v InSISu nejpozději do **8. 5. 2020**.         
+Zadání stačí v podobě pár vět, ve kterých popíšete, co má aplikace umět. Zadání je potřeba **odevzdat do odevzdávárny v InSISu nejpozději do 8. 5. 2020**.         
