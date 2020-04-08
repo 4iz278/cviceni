@@ -34,13 +34,16 @@
   }
 
   //vložíme do stránek patičku
+  $pageTitle='Přihlášení uživatele';
   include 'inc/header.php';
 ?>
+
+  <h2>Přihlášení uživatele</h2>
 
   <form method="post">
     <div class="form-group">
       <label for="email">E-mail:</label>
-      <input type="email" name="email" id="email" required class="form-control <?php echo ($errors?'is-invalid':''); ?>" />
+      <input type="email" name="email" id="email" required class="form-control <?php echo ($errors?'is-invalid':''); ?>" value="<?php echo htmlspecialchars(@$_POST['email'])?>"/>
       <?php
         echo (!empty($errors['name'])?'<div class="invalid-feedback">Neplatná kombinace přihlašovacího e-mailu a hesla.</div>':'');
       ?>

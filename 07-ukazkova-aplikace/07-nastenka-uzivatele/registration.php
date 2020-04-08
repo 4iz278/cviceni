@@ -68,20 +68,25 @@
 
 
   //vložíme do stránek patičku
+  $pageTitle='Registrace nového uživatele';
   include 'inc/header.php';
 ?>
+
+  <h2>Registrace nového uživatele</h2>
 
   <form method="post">
     <div class="form-group">
       <label for="name">Jméno či přezdívka:</label>
-      <input type="text" name="name" id="name" required class="form-control <?php echo (!empty($errors['name'])?'is-invalid':''); ?>" />
+      <input type="text" name="name" id="name" required class="form-control <?php echo (!empty($errors['name'])?'is-invalid':''); ?>"
+             value="<?php echo htmlspecialchars(@$name);?>" />
       <?php
         echo (!empty($errors['name'])?'<div class="invalid-feedback">'.$errors['name'].'</div>':'');
       ?>
     </div>
     <div class="form-group">
       <label for="email">E-mail:</label>
-      <input type="email" name="email" id="email" required class="form-control <?php echo (!empty($errors['email'])?'is-invalid':''); ?>" />
+      <input type="email" name="email" id="email" required class="form-control <?php echo (!empty($errors['email'])?'is-invalid':''); ?>"
+             value="<?php echo htmlspecialchars(@$email);?>" />
       <?php
         echo (!empty($errors['email'])?'<div class="invalid-feedback">'.$errors['name'].'</div>':'');
       ?>

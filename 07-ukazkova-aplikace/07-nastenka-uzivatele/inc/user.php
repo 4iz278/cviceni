@@ -12,7 +12,9 @@
     ]);
     if ($userQuery->rowCount()!=1){
       //uživatel už není v DB, nebo není aktivní => musíme ho odhlásit
-      header('Location: logout.php');
+      unset($_SESSION['user_id']);
+      unset($_SESSION['user_name']);
+      header('Location: index.php');
       exit();
     }
   }
