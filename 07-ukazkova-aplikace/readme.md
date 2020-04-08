@@ -45,8 +45,8 @@ V rámci domácího úkolu bylo požadováno doplnění možnosti editace přís
 :orange_book:
 
 **Řešení:**
-- [prezentace s komentovaným postupem řešení](TODO)
-- [vytvořený zdrojový kód včetně exportu databáze](TODO)
+- [prezentace s komentovaným postupem řešení](./07-nastenka-reseni-du/prezentace-nastenka-reseni-du.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./07-nastenka-reseni-du)
 
 ## Uživatelské účty
 :point_right:
@@ -64,9 +64,22 @@ Pro zahashování (zašifrování) hesla budeme používat funkci ```password_ha
 Pro registraci i přihlášení uživatele použijeme normální formulář v aplikaci. Přihlášení uživatele si pamatujeme pomocí **session**. 
    
 ### Uživatelské účty v aplikaci Nástěnka
-TODO
+:point_right:
 
+Jako další část dnešního cvičení si do aplikace Nástěnka doplníme možnost jednoduché registrace a přihlášení uživatelů.
 
+Nebudeme řešit oprávnění uživatelů, každý z přihlášených uživatelů bude moct přidávat příspěvky a také všechny příspěvky upravovat.  
+
+**Řešení přímo navazuje na předchozí příklad** vyřešení zadání domácího úkolu. Pokud jste jej z nějakého důvodu neabsolvovali, je potřeba:
+1. stáhněte si [zdrojový kód](./07-nastenka-reseni-du)
+2. nahrajte zdrojový kód aplikace na server eso.vse.cz
+3. naimportujte SQL export do databáze
+ 
+:orange_book:
+
+**Řešení:**
+- [prezentace s komentovaným postupem řešení](./07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./07-nastenka-uzivatele)
 
 
 ## Domácí úkol
