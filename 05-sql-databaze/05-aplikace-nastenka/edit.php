@@ -77,7 +77,7 @@
 
     <div class="form-group">
       <label for="text">Text příspěvku:</label>
-      <textarea name="text" id="text" required class="form-control <?php echo (!empty($errors['category'])?'is-invalid':''); ?>"><?php echo htmlspecialchars(@$_POST['text'])?></textarea>
+      <textarea name="text" id="text" required class="form-control <?php echo (!empty($errors['text'])?'is-invalid':''); ?>"><?php echo htmlspecialchars(@$_POST['text'])?></textarea>
       <?php
         if (!empty($errors['text'])){
           echo '<div class="invalid-feedback">'.$errors['text'].'</div>';
