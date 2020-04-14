@@ -102,7 +102,7 @@ Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položká
 
 **Na tomto cvičení nás čeká:**
 - práce s uživatelskými účty
-- autorizace uživatelů
+- oprávnění uživatelů
 - posílání e-mailů
 
 ---
@@ -112,3 +112,11 @@ Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položká
 
 Příklad s uživatelskými účty jsme trochu nakousli už u [aplikace Nástěnka](../07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty), ale je nutné, abychom to probrali podrobněji.
 
+TODO
+
+
+## Oprávnění uživatelů
+
+TODO
+
+## Posílání e-mailů
