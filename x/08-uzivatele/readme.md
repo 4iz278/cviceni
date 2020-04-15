@@ -99,8 +99,6 @@ Případy užití:
 
 ## 7. Autentizace
 
-* **Autentizace (z angličtiny)= autentifikace (asi z francouzštiny :) = authentization = kdo jsem = zjištění totožnosti uživatele.**
-* Analogie s řidičským průkazem - kdo je řidič? Jméno, příjmení, fotka. Pokud nás zastaví, zda jsme to my.
 * Různé formy - záleží na tom, kde jsou umístěna data o uživatelích:
   * databázová - ověření vůči datům v databázi - viz [signin](./08-app/signup.php) a [user required](./08-app/user_required.php).
   * HTTP autentizace - podpora přímo v protokolu HTTP pomocí HTTP hlaviček, viz [admin required](./08-app/admin_required.php).
@@ -110,11 +108,6 @@ Případy užití:
     * k dispozici celá řada generátorů - viz např. [.htaccess Tools](http://www.htaccesstools.com/htpasswd-generator/)
     * lze využít např. pro jednoduché znepřístupnění aplikace při vývoji na serveru dostupném přes internet
 
-## 8. Autorizace
-
-* **Autorizace = co můžu dělat, jaká mám oprávnění, kam mám přístup.**
-* Analogie s řidičským průkazem - když nás zastaví na Harley, máme na řidičáku skupinu A?
-* Typicky mapováno na role a use-cases (případy užití) v aplikaci - v našem obchodu jen admin může měnit katalog zboží, ostatní uživatelé mohou používat aplikaci. Nepřihlášený uživatel nemůže aplikaci vůbec používat.
 
 ## 9. Domácí úkol
 

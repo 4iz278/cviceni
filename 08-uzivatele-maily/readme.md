@@ -116,20 +116,36 @@ Nejprve si projdeme trochu nezbytné teorie a poté se podíváme na praktický 
 
 ### Autentizace vs. autorizace
 :point_right:
+
 V souvislosti s uživatelskými účty a oprávněními uživatelů se velmi často setkáváme s termíny *autentizace* a *autorizace*. Oba se vztahují k tomu, jestli může daný uživatel s naší aplikací provádět nějaké operace, ale každý znamená trošku něco jiného.
 
 :point_right:
+
 **Autentizace**
 - jde o identifikaci uživatele (např. jeho přihlášení)
 - *autentizace* (z angličtiny) = *autentifikace* (asi z francouzštiny :) = *authentization* = kdo jsem = zjištění totožnosti uživatele
 - analogie s řidičským průkazem: Kdo je řidič? Jméno, příjmení, fotka. Pokud nás zastaví, zda jsme to my.
-- uživatele můžeme identifikovat řadou různých způsobů - viz dále
+- uživatele můžeme identifikovat řadou různých způsobů - viz [dále](#metody-autentizace-u%C5%BEivatel%C5%AF)
+
+:point_right:
+
+**Autorizace**
+- jde o ověření, zda může uživatel provést v naší aplikaci nějakou operaci (např. upravit danou stránku)
+- analogie s řidičským průkazem: Když nás zastaví na Harley, máme na řidičáku skupinu A?
+- nejčastěji řešíme oprávnění formou uživatelských rolí (jednou či několika pro každého uživatele)
+    - např. administrátor může v e-shopu upravovat zboží, přihlášený uživatel si ho může koupit, nepřihlášený jen prohlížet
+- oprávnění uživatelů by měla vyplývat z analýzy případů použití (use-case model)
+- [podrobněji k autorizaci](#opr%C3%A1vn%C4%9Bn%C3%AD-u%C5%BEivatel%C5%AF)     
 
 ### Metody autentizace uživatelů
 :point_right:
 
+
+TODO
+
 ### Hashování hesel
 :point_right:
+
 TODO
 
 
@@ -140,4 +156,6 @@ TODO
 
 ## Posílání e-mailů
 :point_right:
+
+TODO
 
