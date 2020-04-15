@@ -101,9 +101,9 @@ Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položká
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- práce s uživatelskými účty
-- oprávnění uživatelů
-- posílání e-mailů
+- [práce s uživatelskými účty](#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty)
+- [oprávnění uživatelů](#opr%C3%A1vn%C4%9Bn%C3%AD-u%C5%BEivatel%C5%AF)
+- [posílání e-mailů](#pos%C3%ADl%C3%A1n%C3%AD-e-mail%C5%AF)
 
 ---
 
@@ -112,11 +112,32 @@ Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položká
 
 Příklad s uživatelskými účty jsme trochu nakousli už u [aplikace Nástěnka](../07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty), ale je nutné, abychom to probrali podrobněji.
 
+Nejprve si projdeme trochu nezbytné teorie a poté se podíváme na praktický příklad.
+
+### Autentizace vs. autorizace
+:point_right:
+V souvislosti s uživatelskými účty a oprávněními uživatelů se velmi často setkáváme s termíny *autentizace* a *autorizace*. Oba se vztahují k tomu, jestli může daný uživatel s naší aplikací provádět nějaké operace, ale každý znamená trošku něco jiného.
+
+:point_right:
+**Autentizace**
+- jde o identifikaci uživatele (např. jeho přihlášení)
+- *autentizace* (z angličtiny) = *autentifikace* (asi z francouzštiny :) = *authentization* = kdo jsem = zjištění totožnosti uživatele
+- analogie s řidičským průkazem: Kdo je řidič? Jméno, příjmení, fotka. Pokud nás zastaví, zda jsme to my.
+- uživatele můžeme identifikovat řadou různých způsobů - viz dále
+
+### Metody autentizace uživatelů
+:point_right:
+
+### Hashování hesel
+:point_right:
 TODO
 
 
 ## Oprávnění uživatelů
+:point_right:
 
 TODO
 
 ## Posílání e-mailů
+:point_right:
+
