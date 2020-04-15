@@ -157,5 +157,64 @@ TODO
 ## Posílání e-mailů
 :point_right:
 
-TODO
+**K čemu je dobré posílání mailů z PHP?**
+S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklady můžeme jmenovat:
+- v návaznosti na uživatelské účty např. pro poslání odkazu pro potvrzení platnosti e-mailové adresy či pro změnu hesla,
+- potvrzení objednávky z e-shopu,
+- zasílání novinek na webu pro odběratele,
+- upozornění administrátora na chybu v aplikaci.
 
+:point_right:
+
+**Co bychom naopak rozhodně dělat neměli?**
+- Neměli bychom posílat spam - tj. např. reklamy a novinky uživatelům, kteří si je výslovně nevyžádali.
+- Rozhodně bychom neměli posílat maily, ve kterých se vydáváme za někoho jiného!
+
+
+### Jak e-mail odeslat?
+:point_right:
+
+- Přímo v PHP najdeme funkci ```mail()```, která umí e-mail odeslat prostřednictvím unixového nástroje sendmail. Tj. na většině serverů s ní můžeme maily ručně poslat.
+- Funkce ```mail()``` je ale poměrně hloupá - respektive řeší jen odeslání, ale ne sestavení e-mailu.
+    - Hodí se ale např. pro jednoduché posílání notifikací administrátorům.
+    - Upozornění: Na serveru eso.vse.cz funguje posílání e-mailů jen na školní adresy. 
+- Pro složitější e-maily a posílání mailů např. přes jiný SMTP server obvykle použíme odpovídající knihovny.
+    - jako univerzální knihovnu doporučuji **PHPMailer**
+        - jednoduchá, srozumitelná knihovna umožňující poslat např. HTML mail s přílohami nejen sendmailem, ale i přes SMTP server
+        - je použita také v dalších řešeních, např. ve WordPressu
+    - ve většině PHP frameworků jejich vlastní řešení pro posílání e-mailů, přičemž v některých případech jej můžeme použít i mimo framework 
+
+Poslání mailu funkcí mail:
+```php
+mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutné do nich zadat např. info o odesílateli...
+```
+
+:blue_book:
+Příklad a podklady:
+- [Příklad mail()](TODO)
+- [Příklad PHPMailer](TODO)
+- [Funkce mail() na w3schools.com](https://www.w3schools.com/php/func_mail_mail.asp)
+- [Informace ke knihovně PHPMailer](https://github.com/PHPMailer/PHPMailer)
+
+:blue_book:
+Řešení pro posílání mailů ve frameworcích:
+- [Nette\Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
+- [Symfony\Mailer](https://symfony.com/doc/current/mailer.html)
+- [Zend\Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
+
+### Posílání velkého množtví e-mailů
+:point_right:
+
+Pokud budete chtít z webu např. rozesílat newsletter či jinou formu reklam většímu množství uživatelů, či jen máte na serveru velký provoz např. v e-shopu, je vhodnější místo výchozího SMTP serveru použít nějaké řešení v podobě SaaS.
+- na managed hostingu vám pak nevypnou základní posílání mailů
+- nebudete muset tak moc řešit, zda nejste na spamovém blacklistu, škálování, balancování apt.
+- Pozor, většina normálních e-mailových schránek (např. gmail) má limit na počet odeslaných zpráv - tj. nemůžete je používat pro rozesílání velkého množství mailů, i když se k nim zvládnete přihlásit přes SMTP.
+
+Příklady SMTP serverů jako SaaS:
+- [Amazon SES](https://aws.amazon.com/ses/) - SMTP jako SaaS, pod Amazon Web Services (levný, spolehlivý)
+- [Sendgrid](https://sendgrid.com/) - další SMTP server jako SaaS, velké objemy (i miliony mailů měsíčně; drahý, ale spolehlivý)
+- [MailChimp](http://mailchimp.com/) - kompletní odesílání mailů jako SaaS (tvorba šablon, WYSIWYG editor, plánovač odesílání, tracking doručení i přečtení mailu příjemcem, garantuje doručení, velmi drahý)
+
+:point_right:
+
+Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, nebo si ho dokonce přečetl?*

@@ -60,31 +60,6 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
 
 ---
 
-## Posílání e-mailů z PHP
-* **K čemu je dobré posílat e-maily z PHP?** (A co bychom naopak dělat neměli?)
-* pro opravdu jednoduché poslání e-mailu je k dispozici funkce *mail()*
-    ```php
-      mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutné do nich zadat např. info o odesílateli...
-    ```
-    * posílá maily pomocí sendmailu
-    * pokud se s posláním e-mailu nechce moc "babrat", tak se hodí jen pro jednoduché textové upozornění...
-
-* pro pokročilejší maily s přílohami atp. je k dispozici řada knihoven, pomocí kterých si e-mail postupně seskládáte
-    * [PHPMailer](https://github.com/PHPMailer/PHPMailer)
-        * jednoduchá, srozumitelná knihovna umožňující poslat např. HTML mail s přílohami nejen sendmailem, ale i přes SMTP server
-        * pro základní použití stačí jen jeden soubor, pro komplexní instalaci využijte *composer* (o tom jsme se bavili na [4. cvičení](../04-objekty-II-validace#composer))
-    * [Nette\Mail](https://doc.nette.org/cs/2.3/mailing)
-    * [Zend_Mail](http://framework.zend.com/manual/1.12/en/zend.mail.html)
-    * [PEAR::Mail](http://pear.php.net/package/Mail)
- 
-### SMTP servery jako SaaS
-* [Amazon SES](https://aws.amazon.com/ses/) - SMTP jako SaaS, pod Amazon Web Services, **doporučuji, levný, spolehlivý**
-* [Sendgrid](https://sendgrid.com/) - další SMTP server jako SaaS, velké objemy (i miliony mailů měsíčně), **drahý, ale spolehlivý**
-* [MailChimp](http://mailchimp.com/) - kompletní odesílání mailů jako SaaS, **tvorba šablon, WYSIWYG editor, plánovač odesílání, tracking doručení i přečtení mailu příjemcem, garantuje doručení, velmi drahý**
-* **obecné doporučení: neprovozujte vlastní SMTP server, musí se záplatovat, škálovat, balancovat, a pravděpodobně skončíte na blacklistu**
-
-**Otázka:** Jak lze poznat, že uživatel dostal do schránky mail, nebo si ho dokonce přečetl?
-
 ### Příklady
 * [příklad mail()](./10-maily/example1.php)
 * [příklad PHPMailer](./10-maily/example2.php)
