@@ -1,4 +1,4 @@
-# 7. Ukázkové aplikace
+# 8. Uživatelé, maily
 
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 16. a  17. 4. 2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.

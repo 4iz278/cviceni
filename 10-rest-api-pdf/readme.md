@@ -1,0 +1,3 @@
+# 10. REST API, PDF
+
+:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry: 

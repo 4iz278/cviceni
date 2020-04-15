@@ -40,22 +40,22 @@ Web předmětu: **http://4iz278.github.io**
 7. **[Ukázková aplikace](./07-ukazkova-aplikace)** *(9. 4. 2020)*  
   * ukázka vyřešení domácího úkolu s nástěnkou
   * ukázka rozšíření nástěnky o uživatelské účty
-8. **Uživatelé, maily** *(16. a 17. 4. 2020)*
+8. **[Uživatelé, maily](./08-uzivatele-maily)** *(16. a 17. 4. 2020)*
   * autorizace, autentizace
   * lokální přihlašování uživatelů
   * posílání e-mailů
-9. **Uživatelé a DB, JSON, XML** *(23. a 24. 4. 2020)* 
+9. **[Uživatelé a DB, JSON, XML](./09-uzivatele-db-json-xml)** *(23. a 24. 4. 2020)* 
   * datum a čas
   * víceuživatelský přístup k DB
   * strukturované datové formáty
-10. **REST API, PDF** *(30. 4. 2020)*
+10. **[REST API, PDF](./10-mvc/10-db.sql)** *(30. 4. 2020)*
   * tvorba API
   * AJAX
   * mPDF 
-11. **Přihlašování přes OAuth, CURL** *(7. 5. 2020)*
+11. **[Přihlašování přes OAuth, CURL](./11-oauth-curl)** *(7. 5. 2020)*
   * OAuth
   * CURL
-12. **MVC, SEO URL** *(14. a 15. 5. 2020)*   
+12. **[MVC, SEO URL](./12-mvc-seo-url)** *(14. a 15. 5. 2020)*   
   * návrhový vzor MVC
   * objektová tvorba aplikací
   * .htaccess
