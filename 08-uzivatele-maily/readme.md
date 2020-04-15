@@ -228,9 +228,9 @@ Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, 
 ## Domácí úkol
 :house:
 > Domácí úkol vychází z ukázkové aplikace **Nástěnka s uživatelskými účty**, kterou jsme vytvářeli na Velikonočním cvičení.
+>
 > **Nezbytná příprava:**
-> :orange_book:
-> 1. pokud jste ji zatím neviděli, prohlédněte si [prezentaci s postupem implementace přihlašování uživatelů](../07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx)
+> 1. pokud jste ji zatím neviděli, prohlédněte si :orange_book: [prezentaci s postupem implementace přihlašování uživatelů](../07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx)
 > 2. stáhněte si [zdrojové kódy](../07-ukazkova-aplikace/07-nastenka-uzivatele)
 > 3. nahrajte zdrojový kód aplikace na server eso.vse.cz
 > 4. naimportujte SQL export do databáze 
