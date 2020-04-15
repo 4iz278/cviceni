@@ -224,3 +224,23 @@ Příklady SMTP serverů jako SaaS:
 :point_right:
 
 Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, nebo si ho dokonce přečetl?*
+
+## Domácí úkol
+:house:
+> Domácí úkol vychází z ukázkové aplikace **Nástěnka s uživatelskými účty**, kterou jsme vytvářeli na Velikonočním cvičení.
+> **Nezbytná příprava:**
+> 1. pokud jste ji zatím neviděli, prohlédněte si [prezentaci s postupem implementace přihlašování uživatelů](../07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx)
+> 2. stáhněte si [zdrojové kódy](../07-ukazkova-aplikace/07-nastenka-uzivatele)
+> 3. nahrajte zdrojový kód aplikace na server eso.vse.cz
+> 4. naimportujte SQL export do databáze 
+>
+> **Vaším úkolem je:**
+> - doplnit do aplikace rozlišení rolí uživatelů - budeme rozlišovat běžné uživatele a administrátory *(0,5 bodu)*
+>   - stačí jeden vhodný sloupec v DB, při registraci je uživatel automaticky v roli běžného uživatele
+>   - žádnou stránku pro administraci uživatelů dělat nemusíte 
+> - administrátoři mohou upravovat a mazat všechny příspěvky, běžní uživatelé jen příspěvky vlastní *(1 bod)*
+> - pro administrátory doplňte možnost přidávat, upravovat a odebírat kategorie, ve kterých jsou příspěvky zařazeny *(1,5 bodu)*
+>   - při smazání kategorie můžete smazat všechny do ní zařazené příspěvky, neřešte jejich převod do jiné kategorie
+>
+> **Způsob a termín odevzdání:**
+> Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 24. 4. 2020 23:59. 
