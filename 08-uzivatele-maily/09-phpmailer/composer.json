@@ -1,0 +1,15 @@
+{
+	"name": "vojir/example-phpmailer",
+	"description": "Ukázka použití knihovny PHPMailer",
+	"type": "project",
+	"require": {
+		"php": ">= 7.2",
+		"phpmailer/phpmailer": "^6.1"
+	},
+	"minimum-stability": "stable",
+	"config": {
+		"platform": {
+			"php": "7.2"
+		}
+	}
+}

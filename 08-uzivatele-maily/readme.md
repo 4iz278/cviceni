@@ -158,6 +158,7 @@ TODO
 :point_right:
 
 **K čemu je dobré posílání mailů z PHP?**
+
 S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklady můžeme jmenovat:
 - v návaznosti na uživatelské účty např. pro poslání odkazu pro potvrzení platnosti e-mailové adresy či pro změnu hesla,
 - potvrzení objednávky z e-shopu,
@@ -195,8 +196,8 @@ mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutn
 Příklad a podklady:
 - [Příklad mail()](./09-funkce-mail/mail-plaintext.php)
 - [Příklad mail() - HTML verze](./09-funkce-mail/mail-html.php)
-- [Příklad PHPMailer](TODO)
-- [Příklad PHPMailer s přílohou](TODO)
+- [Příklad PHPMailer](./09-phpmailer/example.php)
+- [Příklad PHPMailer s přílohou](./09-phpmailer/example-with-attachment.php)
 - [Funkce mail() na w3schools.com](https://www.w3schools.com/php/func_mail_mail.asp)
 - [Informace ke knihovně PHPMailer](https://github.com/PHPMailer/PHPMailer)
 

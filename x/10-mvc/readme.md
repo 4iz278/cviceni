@@ -60,13 +60,6 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
 
 ---
 
-### Příklady
-* [příklad mail()](./10-maily/example1.php)
-* [příklad PHPMailer](./10-maily/example2.php)
-* příklad praktického poslání mailu najdete i v následujících ukázkách aplikací (u registrace uživatele...)
-
----
-
 ## Model-View-Controller, respektive Model-View-Presenter
 * ale **MVC už známe z Javy**, ne?
 * jde o 2 podobné návrhové vzory, které se liší druhem vazeb mezi jednotlivými složkami aplikace
