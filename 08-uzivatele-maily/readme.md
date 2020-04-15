@@ -182,6 +182,7 @@ S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklad
     - jako univerzální knihovnu doporučuji **PHPMailer**
         - jednoduchá, srozumitelná knihovna umožňující poslat např. HTML mail s přílohami nejen sendmailem, ale i přes SMTP server
         - je použita také v dalších řešeních, např. ve WordPressu
+        - instalace nejjednodušeji pomocí composeru
     - ve většině PHP frameworků jejich vlastní řešení pro posílání e-mailů, přičemž v některých případech jej můžeme použít i mimo framework 
 
 Poslání mailu funkcí mail:
@@ -192,8 +193,10 @@ mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutn
 :blue_book:
 
 Příklad a podklady:
-- [Příklad mail()](TODO)
+- [Příklad mail()](./09-funkce-mail/mail-plaintext.php)
+- [Příklad mail() - HTML verze](./09-funkce-mail/mail-html.php)
 - [Příklad PHPMailer](TODO)
+- [Příklad PHPMailer s přílohou](TODO)
 - [Funkce mail() na w3schools.com](https://www.w3schools.com/php/func_mail_mail.asp)
 - [Informace ke knihovně PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
