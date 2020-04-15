@@ -174,7 +174,7 @@ S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklad
 ### Jak e-mail odeslat?
 :point_right:
 
-- Přímo v PHP najdeme funkci ```mail()```, která umí e-mail odeslat prostřednictvím unixového nástroje sendmail. Tj. na většině serverů s ní můžeme maily ručně poslat.
+- Přímo v PHP najdeme funkci ```mail()```, která umí e-mail odeslat prostřednictvím unixového nástroje sendmail - tj. funguje na většině serverů.
 - Funkce ```mail()``` je ale poměrně hloupá - respektive řeší jen odeslání, ale ne sestavení e-mailu.
     - Hodí se ale např. pro jednoduché posílání notifikací administrátorům.
     - Upozornění: Na serveru eso.vse.cz funguje posílání e-mailů jen na školní adresy. 
@@ -190,6 +190,7 @@ mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutn
 ```
 
 :blue_book:
+
 Příklad a podklady:
 - [Příklad mail()](TODO)
 - [Příklad PHPMailer](TODO)
@@ -197,6 +198,7 @@ Příklad a podklady:
 - [Informace ke knihovně PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
 :blue_book:
+
 Řešení pro posílání mailů ve frameworcích:
 - [Nette\Mail](https://framework.zend.com/manual/2.1/en/modules/zend.mail.introduction.html)
 - [Symfony\Mailer](https://symfony.com/doc/current/mailer.html)
