@@ -154,6 +154,20 @@ TODO
 
 TODO
 
+## Ukázková aplikace s uživatelskými účty
+:point_right:
+
+TODO
+
+Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
+
+:blue_book:
+- postup zprovoznění ukázkové aplikace:
+    1. stáhněte si celou složku aplikace ([06-app-eshop](./06-app-eshop)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./06-app-eshop/06-schema.sql)
+    3. nahrajte do MariaDB [ukázková data](./06-app-eshop/06-data.sql)
+
+
 ## Posílání e-mailů
 :point_right:
 
@@ -194,10 +208,10 @@ mail($to, $subject, $message, $headers);//hlavičky jsou volitelné, ale je nutn
 :blue_book:
 
 Příklad a podklady:
-- [Příklad mail()](./09-funkce-mail/mail-plaintext.php)
-- [Příklad mail() - HTML verze](./09-funkce-mail/mail-html.php)
-- [Příklad PHPMailer](./09-phpmailer/example.php)
-- [Příklad PHPMailer s přílohou](./09-phpmailer/example-with-attachment.php)
+- [Příklad mail()](./08-funkce-mail/mail-plaintext.php)
+- [Příklad mail() - HTML verze](./08-funkce-mail/mail-html.php)
+- [Příklad PHPMailer](./08-phpmailer/example.php)
+- [Příklad PHPMailer s přílohou](./08-phpmailer/example-with-attachment.php)
 - [Funkce mail() na w3schools.com](https://www.w3schools.com/php/func_mail_mail.asp)
 - [Informace ke knihovně PHPMailer](https://github.com/PHPMailer/PHPMailer)
 
