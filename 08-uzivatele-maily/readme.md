@@ -237,11 +237,11 @@ Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, 
 >
 > **Vaším úkolem je:**
 >
-> - doplnit do aplikace rozlišení rolí uživatelů - budeme rozlišovat běžné uživatele a administrátory *(0,5 bodu)*
+> - **doplnit do aplikace rozlišení rolí uživatelů - budeme rozlišovat běžné uživatele a administrátory** *(0,5 bodu)*
 >   - stačí jeden vhodný sloupec v DB, při registraci je uživatel automaticky v roli běžného uživatele
 >   - žádnou stránku pro administraci uživatelů dělat nemusíte 
-> - administrátoři mohou upravovat a mazat všechny příspěvky, běžní uživatelé jen příspěvky vlastní *(1 bod)*
-> - pro administrátory doplňte možnost přidávat, upravovat a odebírat kategorie, ve kterých jsou příspěvky zařazeny *(1,5 bodu)*
+> - **administrátoři mohou upravovat a mazat všechny příspěvky, běžní uživatelé jen příspěvky vlastní** *(1 bod)*
+> - **pro administrátory doplňte možnost přidávat, upravovat a odebírat kategorie, ve kterých jsou příspěvky zařazeny** *(1,5 bodu)*
 >   - při smazání kategorie můžete smazat všechny do ní zařazené příspěvky, neřešte jejich převod do jiné kategorie
 >   - ideálně to bude nějaká samostatná stránka, na kterou budou mít přístup jen administrátoři (a také na ni jen oni uvidí odkaz z hlavní stránky aplikace)
 >
