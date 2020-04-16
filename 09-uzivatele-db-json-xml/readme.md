@@ -51,8 +51,9 @@ TODO
 }
 ```
 
-#### Práce s JSONem z PHP
 :point_right:
+
+#### Práce s JSONem z PHP
 - **json_encode($data, $options)**
     - funkce pro zakódování pole, objektu atd.
     - pomocí ```$options``` jdou ovlivnit vlastnosti konverze - viz [json_encode v PHP manuálu](http://php.net/manual/en/function.json-encode.php)
