@@ -199,7 +199,23 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 ### HTTP autentizace
 :point_right:
 
-TODO
+- = metoda autentizace, která je definována přímo v protokolu HTTP
+- **Jak to funguje?**
+    1. aplikace pošle http hlavičky vyžadující autentizaci
+    2. prohlížeč zobrazí uživateli univerzální okno pro zadání uživatelského jména a hesla
+    3. jméno a heslo zadané uživatelem pak prohlížeč zasílá v každém následujícím požadavku na server (tj. nejen požadavky na PHP skript, ale také na všechny obrázky atp.)
+- heslo se na server posílá nešifrované => pro bezpečné použití **musíme být na https!**
+- z pohledu uživatele má tato autentizace jednu podstatnou nevýhodu - nedá se z ní jednoduše odhlásit (to lze jen zavřením prohlížeče)
+- HTTP autentizace má více forem (Basic, Digest) - obvykle používáme *Basic*
+    
+:point_right:
+- Tato metoda funguje dokonce i mimo vlastní aplikaci (ověření nám pak zajistí např. Apache) => s výhodou lze tuto metodu použít k dočasnému zabezpečení vyvíjené aplikace před tím, než ji budeme chtít spustit veřejně :)
+    - pro využití mimo aplikaci stačí v dané složce umístit soubory **.htaccess** a **.htpasswd**   
+    
+:blue_book:    
+- [příklad HTTP Basic autentifikace v e-shopu](./08-app-eshop/admin_required.php)
+- [příklad zabezpečení složky pomocí .htaccess a .htpasswd](./08-htpasswd/)
+- [.htpasswd generator](https://www.web2generators.com/apache-tools/htpasswd-generator)
 
 ### Lokální přihlašování uživatelů
 :point_right:

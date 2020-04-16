@@ -22,15 +22,6 @@
 * Nebo jednoduše použijeme [funkci password_hash](http://php.net/manual/en/function.password-hash.php), která sama generuje bezpečnou sůl a používá aktuálně bezpečnou hashovací funkci. Vygenerovaný hash v sobě dále obsahuje použitou hashovací funkci a sůl. **Tohle je preferovaný způsob hashování hesla v PHP**.
 * Pro ověření hesla použijeme funkci [funkci password_verify](http://php.net/manual/en/function.password-verify.php).
 * Viz [ukázka použití funkce password_verify](./password_verify.php).
-* **Otázky:**
-  * Které hashovací funkce nemáme používat? Proč?
-  * Co se stane, když útočník bude znát hash hesla? Jde z něj vypočítat či určit původní heslo? Jak?
-  * Co je duhová tabulka (rainbow table)?
-  * Musíme solit?
-  * Co se stane, pokud útočník bude znát jen sůl?
-  * Je možné mít sůl pokaždé stejnou? Nebo pokaždé jinou? Jaké jsou výhody/nevýhody?
-  * Proč se salt (sůl) jmenuje právě sůl? V čem je analogie?
-
 
 ## 7. Autentizace
 
