@@ -64,8 +64,9 @@ Pokud bychom šli v uživatelské přívětivosti o něco dále:
     - šlo to realizovat nejen klasickým formulářem, ale také např. pomocí odkazů **+** a **-**
 - při koupi zboží je hezké mít možnost vložit do košíku např. 10 kusů zboží X a nemuset je klikat jednotlivě.
 
-#### Jak to realizovat v rámci session?
 :point_right:
+
+#### Jak to realizovat v rámci session?
 
 - v SESSION bude zboží uložené jen v 1 poli (např. v ```$_SESSION['cart']```)
 - nejjednodušší variantou je to, abychom dané pole indexovali pomocí IDček zboží a jako hodnoty tam měli počet kusů.    
@@ -88,8 +89,9 @@ if (isset($_SESSION['cart'][$idZbozi])){
 }
 ```
 
-#### Na co nezapomenout?
 :point_right:
+
+#### Na co nezapomenout?
 
 Pokud máme v aplikaci formulářové pole či odkazy na přidávání/odebírání kusů zboží, nesmíme zapomenout na kontroly. Aplikace by neměla připustit, abychom do košíku dostali záporný počet kusů.
 
