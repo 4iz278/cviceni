@@ -36,9 +36,7 @@ TODO
     - existuje [json schema](http://json-schema.org), ale není moc podporované a využívané
     - nepodporuje jmenné prostory a vícenásobné definice prvků se stejným jménem
 
-:point_right:
-   
-Příklad JSONu:    
+**Příklad JSONu:**    
 ```json
 {
     "10":{
@@ -53,9 +51,8 @@ Příklad JSONu:
 }
 ```
 
-:point_right:
-
 #### Práce s JSONem z PHP
+:point_right:
 - **json_encode($data, $options)**
     - funkce pro zakódování pole, objektu atd.
     - pomocí ```$options``` jdou ovlivnit vlastnosti konverze - viz [json_encode v PHP manuálu](http://php.net/manual/en/function.json-encode.php)
