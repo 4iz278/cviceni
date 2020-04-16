@@ -41,7 +41,7 @@
 * Různé formy - záleží na tom, kde jsou umístěna data o uživatelích:
   * databázová - ověření vůči datům v databázi - viz [signin](./08-app/signup.php) a [user required](./08-app/user_required.php).
   * HTTP autentizace - podpora přímo v protokolu HTTP pomocí HTTP hlaviček, viz [admin required](./08-app/admin_required.php).
-  * další, např. LDAP, NDS v Novell Intranetware, Active Directory od Microsoftu...
+  
 
 * zabezpečení pomocí HTTP autentizaci lze realizovat i mimo kód aplikace - pomocí souborů **.htaccess** a **.htpasswd**
     * k dispozici celá řada generátorů - viz např. [.htaccess Tools](http://www.htaccesstools.com/htpasswd-generator/)
