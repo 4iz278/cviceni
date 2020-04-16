@@ -92,6 +92,7 @@ if (isset($_SESSION['cart'][$idZbozi])){
 :point_right:
 
 **Na co nezapomenout?**
+
 Pokud máme v aplikaci formulářové pole či odkazy na přidávání/odebírání kusů zboží, nesmíme zapomenout na kontroly. Aplikace by neměla připustit, abychom do košíku dostali záporný počet kusů.
 
 Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položkách daný odkaz nezobrazíme, ještě neznamená, že nám uživatel na server daný požadavek nepošle!
@@ -161,7 +162,47 @@ TODO
 ## Oprávnění uživatelů
 :point_right:
 
-TODO
+Z hlediska oprávnění uživatelů (tj. jejich autorizace) **potřebujeme vždy ověřit, jestli uživatel může provést danou operaci**.
+- Uživateli zobrazujeme v aplikaci jen odkazy a formuláře, které má právo použít (tj. např. v e-shopu běžný uživatel nevidí odkaz na úpravu ceny zboží :)).
+- Ověřování provádíme ve všech skriptech, které mají být daným způsobem omezeny.
+    - nemusí jít nutně o pokus o hack naší aplikace, ale uživatel se mohl např. odhlásit, ale na další záložce v prohlížeči mu zůstala zobrazená administrace naší aplikace
+
+:point_right:
+
+**Možnosti ověření oprávnění uživatelů:**
+- Nejjednodušší variantou je ověření, zda uživatel je či není přihlášen.
+- U nepatrně složitějších aplikací obvykle máme odlišeny administrátory a běžné uživatele - stačí na to 1 boolean hodnota uložená u daného uživatele v DB.    
+- Ve složitějších aplikacích obvykle používáme **uživatelské role**.
+
+:point_right:
+
+**Jak pracovat s uživatelskými rolemi?**    
+- jednodušší variantou mít v aplikaci jednu sadu vzájemně se rozšiřujících rolí
+    - např. v CMS máme role *guest -> autor -> editor -> admin*
+    - uživatel pak má obvykle jen 1 roli, kterou u něj máme uloženou v DB ve sloupci v tabulce s uživateli
+- složitější variantou je možnost mít více rolí pro každého uživatele
+    - uživatel by měl mít práva za všechny příslušné role najednou - nenuťte ho role přepínat!
+
+:point_right:
+
+**Oprávnění k jednotlivým zdrojům**      
+Pokud máme rozsáhlejší či objektově psanou aplikaci a nechceme všude vypisovat role, které mají oprávnění provádět danou operaci, je vhodnější mít v aplikaci uložený seznam oprávnění, které se vztahují k jednotlivým rolím.
+
+V praxi to může vypadat tak, že evidujeme identifikátor zdroje a jednotlivé operace. Například:
+- v aplikaci máme zdroj **good**
+- pro daný zdroj definujeme, jaké operace může provádět která role:
+    - admin může provést všechny operace
+    - seller má oprávnění k akcím *show*, *create* a *update*
+    - guest má oprávnění pouze pro akci *show*
+- ověření role pak vypadá tak, že ověříme, jestli aktuální uživatel má např. oprávnění *good-delete* (což dle uvedeného výčtu mohou jen uživatelé s rolí *admin*
+
+POZOR: Pokud si píšete ověřování oprávnění sami, doporučuji mít oprávnění definovaná jen kladně (tj. výčet všech operací, které může uživatel provést).
+- pokud má uživatel více rolí, tak nám stačí, že oprávnění pro danou operaci má libovolná z jeho rolí. 
+
+:point_right:
+
+- příklad na ověřování oprávnění uživatelů pomocí zdrojů a rolí si [ukážeme za týden](../09-uzivatele-db-json-xml)
+ 
 
 ## Ukázková aplikace s uživatelskými účty
 :point_right:
