@@ -222,6 +222,22 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 
 TODO
 
+:blue_book:
+- [jednoduchý příklad použití funkcí password_hash() a password_verify()](./password_verify.php)
+- [funkce password_hash() v PHP manuálu](https://www.php.net/manual/en/function.password-hash.php)
+- [funkce password_verify() v PHP manuálu](https://www.php.net/manual/en/function.password-verify.php)
+- [funkce hash() v PHP manuálu](http://php.net/manual/en/function.hash.php)
+
+:blue_book:
+
+Příklady přihlašování v ukázkových aplikacích:
+- příklad lokálního přihlášení v Nástěnce (podrobněji bylo popsáno [tady](../07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty-v-aplikaci-n%C3%A1st%C4%9Bnka))
+    - [přihlášení](../07-ukazkova-aplikace/07-nastenka-uzivatele/login.php)
+    - [ověření platnosti přihlášení uživatele](../07-ukazkova-aplikace/07-nastenka-uzivatele/inc/user.php)
+- příklad lokálního přihlášení v e-shopu (podrobněji [popsáno dále](#uk%C3%A1zkov%C3%A1-aplikace-s-u%C5%BEivatelsk%C3%BDmi-%C3%BA%C4%8Dty)):
+    - [přihlášení](./08-app-eshop/signin.php)
+    - [vynucení přihlášeného uživatele](./08-app-eshop/user_required.php)
+
 ## Oprávnění uživatelů
 :point_right:
 
