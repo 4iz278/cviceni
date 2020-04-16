@@ -104,7 +104,9 @@ Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položká
 **Na tomto cvičení nás čeká:**
 - [práce s uživatelskými účty](#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty)
 - [oprávnění uživatelů](#opr%C3%A1vn%C4%9Bn%C3%AD-u%C5%BEivatel%C5%AF)
+- [ukázkový e-shop s přihlašováním uživatelů](#uk%C3%A1zkov%C3%A1-aplikace-s-u%C5%BEivatelsk%C3%BDmi-%C3%BA%C4%8Dty)
 - [posílání e-mailů](#pos%C3%ADl%C3%A1n%C3%AD-e-mail%C5%AF)
+- [zadání domácího úkolu](#dom%C3%A1c%C3%AD-%C3%BAkol) (za maximálně 3 body)
 
 ---
 
@@ -201,9 +203,9 @@ V praxi to může vypadat tak, že evidujeme identifikátor zdroje a jednotlivé
 **POZOR:** Pokud si píšete ověřování oprávnění sami, doporučuji mít oprávnění definovaná jen kladně (tj. výčet všech operací, které může uživatel provést).
 - pokud má uživatel více rolí, tak nám stačí, že oprávnění pro danou operaci má libovolná z jeho rolí. 
 
-:point_right:
+:blue_book:
 
-- příklad na ověřování oprávnění uživatelů pomocí zdrojů a rolí si [ukážeme za týden](../09-uzivatele-db-json-xml)
+Příklad na ověřování oprávnění uživatelů pomocí zdrojů a rolí si [ukážeme za týden](../09-uzivatele-db-json-xml).
  
 
 ## Ukázková aplikace s uživatelskými účty
