@@ -64,9 +64,9 @@ Pokud bychom šli v uživatelské přívětivosti o něco dále:
     - šlo to realizovat nejen klasickým formulářem, ale také např. pomocí odkazů **+** a **-**
 - při koupi zboží je hezké mít možnost vložit do košíku např. 10 kusů zboží X a nemuset je klikat jednotlivě.
 
+#### Jak to realizovat v rámci session?
 :point_right:
 
-**Jak to realizovat v rámci session?**
 - v SESSION bude zboží uložené jen v 1 poli (např. v ```$_SESSION['cart']```)
 - nejjednodušší variantou je to, abychom dané pole indexovali pomocí IDček zboží a jako hodnoty tam měli počet kusů.    
 
@@ -88,10 +88,8 @@ if (isset($_SESSION['cart'][$idZbozi])){
 }
 ```
 
-
+#### Na co nezapomenout?
 :point_right:
-
-**Na co nezapomenout?**
 
 Pokud máme v aplikaci formulářové pole či odkazy na přidávání/odebírání kusů zboží, nesmíme zapomenout na kontroly. Aplikace by neměla připustit, abychom do košíku dostali záporný počet kusů.
 
@@ -169,25 +167,25 @@ Z hlediska oprávnění uživatelů (tj. jejich autorizace) **potřebujeme vždy
 - Ověřování provádíme ve všech skriptech, které mají být daným způsobem omezeny.
     - nemusí jít nutně o pokus o hack naší aplikace, ale uživatel se mohl např. odhlásit, ale na další záložce v prohlížeči mu zůstala zobrazená administrace naší aplikace
 
+### Možnosti ověření oprávnění uživatelů
 :point_right:
 
-**Možnosti ověření oprávnění uživatelů:**
 - Nejjednodušší variantou je ověření, zda uživatel je či není přihlášen.
 - U nepatrně složitějších aplikací obvykle máme odlišeny administrátory a běžné uživatele - stačí na to 1 boolean hodnota uložená u daného uživatele v DB.    
 - Ve složitějších aplikacích obvykle používáme **uživatelské role**.
 
+### Jak pracovat s uživatelskými rolemi?
 :point_right:
-
-**Jak pracovat s uživatelskými rolemi?**    
+    
 - jednodušší variantou mít v aplikaci jednu sadu vzájemně se rozšiřujících rolí
     - např. v CMS máme role *guest -> autor -> editor -> admin*
     - uživatel pak má obvykle jen 1 roli, kterou u něj máme uloženou v DB ve sloupci v tabulce s uživateli
 - složitější variantou je možnost mít více rolí pro každého uživatele
     - uživatel by měl mít práva za všechny příslušné role najednou - nenuťte ho role přepínat!
 
+### Oprávnění k jednotlivým zdrojům
 :point_right:
-
-**Oprávnění k jednotlivým zdrojům**      
+      
 Pokud máme rozsáhlejší či objektově psanou aplikaci a nechceme všude vypisovat role, které mají oprávnění provádět danou operaci, je vhodnější mít v aplikaci uložený seznam oprávnění, které se vztahují k jednotlivým rolím.
 
 V praxi to může vypadat tak, že evidujeme identifikátor zdroje a jednotlivé operace. Například:
