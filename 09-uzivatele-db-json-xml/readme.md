@@ -12,12 +12,12 @@ TODO
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- příklad na obnovu zapomenutého hesla
 - práce s datem a časem
 - víceuživatelský přístup k databázi
 - strukturované datové formáty
     - [JSON](#json)
     - [XML](#xml)
+
 ---
 
 
