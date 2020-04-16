@@ -148,6 +148,15 @@ TODO
 
 TODO
 
+### HTTP autentizace
+:point_right:
+
+TODO
+
+### Lokální přihlašování uživatelů
+:point_right:
+
+TODO
 
 ## Oprávnění uživatelů
 :point_right:
@@ -157,16 +166,44 @@ TODO
 ## Ukázková aplikace s uživatelskými účty
 :point_right:
 
-TODO
+Pro ukázku použití uživatelských účtů a možnosti rozlišení uživatelských rolí se podívejme na další verzi aplikace jednoduchého e-shopu, která v tomto případě disponuje možnostmi autentizace a autorizace uživatelů.
+- aplikaci může používat jen přihlášený uživatel
+    - nepřihlášený uživatel je automaticky přesměrován na přihlašovací stránku [signin.php](./08-app-eshop/signin.php)
+    - ověření je v souboru [user_required.php](./08-app-eshop/user_required.php)
+    - údaje o přihlášeném uživateli uchováváme v session
+- jen admin může měnit nabídku zboží
+    - pro přihlašování administrátorů je využívána HTTP autentifikace
+- pplikace nemá ošetřené vstupy (prázdné heslo atp), pouze zamezuje SQL inject útoku - DIY :)   
 
 Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 
 :blue_book:
 - postup zprovoznění ukázkové aplikace:
-    1. stáhněte si celou složku aplikace ([06-app-eshop](./06-app-eshop)) a nahrajte ji na server
-    2. nahrajte do MariaDB [strukturu databáze](./06-app-eshop/06-schema.sql)
-    3. nahrajte do MariaDB [ukázková data](./06-app-eshop/06-data.sql)
+    1. stáhněte si celou složku aplikace ([08-app-eshop](./08-app-eshop)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./08-app-eshop/08-schema.sql) (pozor, schéma není stejné jako u předchozí verze e-shopu)
+    3. nahrajte do MariaDB [ukázková data](./08-app-eshop/08-data.sql)
+    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./08-app-eshop/db.php)
+- část pro nepřihlášeného uživatele/databázová autentizace:
+    - [signup.php](./08-app-eshop/signup.php) - registrace nového uživatele, ukázka práce s funkcí password_hash
+    - [signin.php](./08-app-eshop/signin.php) - přihlášení existujícího uživatele, ukázka práce s funkcí password_verify
+- část pro autorizaci a autentizaci:
+    - [user required.php](./08-app-eshop/user_required.php) - soubor pro require, vynucení přihlášení uživatele, autentizace uložená v SESSION
+    - [admin required.php](./08-app-eshop/admin_required.php) - soubor pro require, vynucení přihlášení administrátora, ukázka HTTP autentizace
+- část pro přihlášeného uživatele:
+    - [index.php](./08-app-eshop/index.php) - výpis zboží v e-shopu.
+    - [buy.php](./08-app-eshop/buy.php) - přidání zboží do košíku podle jeho ID
+    - [cart.php](./08-app-eshop/cart.php) - výpis zboží přidaného do košíku
+    - [remove.php](./08-app-eshop/remove.php) - smazání zboží z košíku
+    - [signout.php](./08-app-eshop/signout.php) - odhlášení, zruší session
+- část pro administátora:
+    - [new.php](./08-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi.
+    - [delete.php](./08-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi.
+    - [update.php](./08-app-eshop/update.php) - úprava zboží v e-shopu. 
 
+:point_right:
+
+Výzva k zamyšlení:
+- *Zvládli byste předělat aplikaci tak, aby se i administrátoři přihlašovali normálně a ne pomocí HTTP autentifikace?*
 
 ## Posílání e-mailů
 :point_right:

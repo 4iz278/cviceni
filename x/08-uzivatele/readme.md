@@ -2,8 +2,6 @@
 
 :no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry: 
 
-Do našeho e-shopu přidáme autentizaci (KDO je uživatel) a autorizaci (CO může uživatel dělat). Aplikaci může používat pouze přihlášený uživatel. Katalog může spravovat pouze administrátor.
-
 ## 1. Zdroje pro cvičení:
 
 * http://php.net/manual/en/function.hash.php - generace hashe ze vstupních dat
@@ -11,66 +9,7 @@ Do našeho e-shopu přidáme autentizaci (KDO je uživatel) a autorizaci (CO mů
 * http://php.net/manual/en/function.password-verify.php - kontrola hesla
 * http://php.net/manual/en/features.http-auth.php - HTTP autentizace 
 
-## 2. Vytvoření db schématu
-
-Vytvořte na serveru eso.vse.cz ve vaší MySQL databázi tabulku goods (zboží) a users (uživatelé).
-
-[create table goods and users](./08-schema.sql)
-
-## 3. Naplnění testovacími daty
-
-Naplňte vytvořenou tabulku testovacími daty. Testovací data lze vygenerovat např. aplikací http://www.generatedata.com/
-
-[insert test data](./08-data.sql)
-
-## 4. Připojení k databázi
-
-Pro práci s DB budeme opět používat třídu [PDO](http://php.net/manual/en/class.pdo.php), která je abstraktním objektem nad jakoukoli databází:
-
-[db.php](./08-app/db.php)
-
-**Nezapomeňte v souboru nastavit váš xname a heslo pro připojení do db!**
-
-## 5. Práce s aplikací
-
-Zkopírujte scripty z adresáře 08-data do vašeho adresáře na serveru eso.vse.cz.
-
-Funkční aplikaci pak najdete na adrese:
-
-https://eso.vse.cz/~xhraj18/ (použijte váš vlastní xname :)
-
-Případy užití:
-
-Část pro nepřihlášeného uživatele/databázová autentizace:
-
-* [signup](./08-app/signup.php) - registrace nového uživatele, ukázka práce s funkcí [password_hash](http://php.net/manual/en/function.password-hash.php).
-* [signin](./08-app/signin.php) - přihlášení existujícího uživatele, ukázka práce s funkcí   [password_verify](http://php.net/manual/en/function.password-verify.php).
-
-Část pro přihlášeného uživatele:
-
-* [index](./08-app/index.php) - výpis zboží v e-shopu.
-* [buy](./08-app/buy.php) - přidání zboží do košíku dle ID (ukázka práce se sessions).
-* [cart](./08-app/cart.php) - výpis zboží přidaného do košíku (ukázka práce se sessions).
-* [remove](./08-app/remove.php) - smazání zboží z košíku (ukázka práce se sessions).
-* [signout](./08-app/signout.php) - odhlášení, zruší session (ukázka práce se sessions).
-
-Část pro administátora (správce):
-
-* [new](./08-app/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi.
-* [delete](./08-app/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi.
-* [update](./08-app/update.php) - úprava zboží v e-shopu.
-
-Část pro autorizaci a HTTP autentizaci:
-
-* [user required](./08-app/user_required.php) - soubor pro require, vynucení přihlášení uživatele.
-* [admin required](./08-app/admin_required.php) - soubor pro require, vynucení přihlášení administrátora, ukázka HTTP autentizace.
-
-
 ### Poznámky a otázky k aplikaci
-
-* Aplikaci může používat jen přihlášený uživatel - pokud není přihlášen, aplikace provede HTTP redirect na [signin](./08-app/signin.php) stránku. Viz [user required](./08-app/user_required.php).
-* Jen admin může měnit katalog zboží. Viz [admin required](./08-app/admin_required.php). Tato část používá HTTP autentizaci.
-* Aplikace nemá ošetřené vstupy (prázdné heslo), pouze zamezuje SQL inject útoku. Do it yourself - udělejte si sami doma :)
 * **Otázky:**
   * Je HTTP autentizace bezpečná? Pod jakým protokolem musí aplikace běžet, aby HTTP hlavičky nešlo odposlouchávat?
   * Jaké jsou výhody/nevýhody používání HTTP autentizace?
@@ -112,8 +51,6 @@ Případy užití:
 ## 9. Domácí úkol
 
 1. Nastudujte HTTP Digest autentizaci. Viz [http auth](http://php.net/manual/en/features.http-auth.php).
-2. Upravte aplikaci tak, aby byl i administrátor ověřován pomocí databáze
-3. Zrušte HTTP autentizaci.
 
 
 

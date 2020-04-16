@@ -6,7 +6,7 @@
 		
 	</div>
 	<div style="float: right">
-		Signed in as <?= $current_user['email'] ?> | 
+		Signed in as <?php echo htmlspecialchars($currentUser['email']); ?> |
 		<a href="signout.php">Sign out</a>
 	</div>
 </div>
