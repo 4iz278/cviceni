@@ -233,6 +233,8 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 ### Jak lokální přihlášení realizovat?
 V databázi máme tabulku s uživateli, ve které máme kromě loginu či e-mailu také sloupec pro hash hesla (doporučeně varchar o délce max. 255 znaků)
 
+:point_right:
+
 **Registrace uživatele:**
 - na zadání hesla se zeptáme 2x (abychom odchytili případné překlepy)
 - heslo zahashujeme funkcí ```password_hash``` a uložíme do databáze
@@ -248,6 +250,8 @@ $query->execute([
   ':password'=>$passwordHash
 ]);
 ``` 
+
+:point_right:
 
 **Přihlášení uživatele:**
 - podle zadaného přihlašovacího jména či e-mailu vybereme uživatele z databáze
