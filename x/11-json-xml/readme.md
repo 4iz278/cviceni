@@ -46,59 +46,6 @@ Eva;Adamová;;
 </osoby>
 ```
 
-### JSON
-* jednoduchý formát odvozený od zápisu objektů v jazyce JavaScript (*JavaScript Object Notation*)
-* výhody
-    * podpora ve velkém množství jazyků
-    * datově úsporný
-    * jednoduchý i při ručním vytváření
-* nevýhody:
-    * není standartní mechanismus kontroly dat - je nutné kontrolovat v rámci zpracovávající aplikace
-    * existuje [json schema](http://json-schema.org), ale není moc podporované a využívané
-    * nepodporuje jmenné prostory
-
-```json
-{
-    "10":{
-        "jmeno":"Josef",
-        "prijmeni":"Novák",
-        "email":["josef.novak@nekde.cz","josef.novak@nikde.com"]
-    },
-    "12":{
-        "jmeno":"Eva",
-        "prijmeni":"Adamová"
-    }
-}
-```
-
-### Neon
-* v rámci aplikací se setkáváme i s jinými strukturovanými formáty, zejména v oblasti konfigurace
-* příkladem je jazyk **Neon**
-    * viz [https://ne-on.org/](https://ne-on.org/)
-    * používá ho např. framework *Nette*
-
-## Práce se strukturovanými formáty v rámci PHP
-### JSON
-* **json_encode($data, $options)**
-    * funkce pro zakódování pole, objektu atd.
-    * pomocí $options jdou ovlivnist vlastnosti konverze - viz [json_encode v PHP manuálu](http://php.net/manual/en/function.json-encode.php)
-* **json_decode($json, $assoc=false)**
-    * funkce pro dekódování JSONu
-    * vrací asociační pole nebo objekt (dle nastavení 2. parametru)
-* Interface **JsonSerializable**
-    * pro převod objektů do JSONu jsou ve výchozím stavu serializovány všechny properties
-    * serializaci je možné ovlivnit implementováním rozhraní JsonSerializable (funkce **jsonSerialize()**)
-
-```php
-$data = ['jmeno'=>'Josef','prijmeni'=>'Novák'];
-$json = json_encode($data); //funcke pro vytvoření JSONu z pole
-
-$data2=json_decode($json, true); //funkce pro dekódování JSONu
-```
-
-* [příklad json_encode,json_decode](./11-json/encode_decode.php)
-* [příklad JsonSerializable](./11-json/jsonserializable.php)
-
 ### XML
 * v PHP máme k dispozici několik parserů, které umí pracovat s XML dokumenty
     * DOM přístup (procházení dle uzlů stromu)
@@ -144,23 +91,6 @@ $.getJSON('URL', function(data){
 
 * [příklad AJAX - jednoduchý](./11-ajax-simple)
 * [příklad AJAX - složitější](./11-ajax-complex)
-
-## Generování PDF
-* **K čemu by mohl být vhodný výstup v PDF?**
-* PHP neumí přímo generovat PDF výstup, ale existuje celá řada knihoven - např.
-    * [TCPDF](http://www.tcpdf.org/)
-        * asi nejkomplexnější knihovna pro generování PDF výstupu
-        * zvládá i dokumenty podepsané certifikátem atd.
-        * lze generovat části popsané pomocí HTML (ale s minimální podporou stylů) a části popsané pomocí speciálních konstrukcí
-        * [ukázkové příklady na webu TCPDF](http://www.tcpdf.org/examples.php)
-    * [mPDF](http://mpdf.github.io/)
-        * knihovna pro jednoduché generování PDF výstupu z HTML
-        * [ukázkové příklady na GitHubu](https://github.com/mpdf/mpdf/tree/development/examples)
-    * [FPDF](http://www.fpdf.org/)
-
-* [příklady mPDF](./11-mpdf)
-    * pozor, ze složky mPDF byla kvůli velikosti odstraněna nevyužívaná písma, barevné profily a zdroje pro QR kódy
-* [příklady TCPDF](./11-tcpdf)
 
 ## Domácí úkol
 > **Připravte aplikaci umožňující nechat si zasílat novinky na e-mail.**

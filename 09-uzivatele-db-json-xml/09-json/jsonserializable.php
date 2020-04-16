@@ -14,7 +14,7 @@ class Osoba implements JsonSerializable{
     private $komentare;
 
     /**
-     * Funkce pro serializaci do JSONu
+     * Funkce pro serializaci do JSONu - bude automaticky zavolaná při kódování instance této třídy pomocí json_encode
      * @return array
      */
     public function jsonSerialize(){
@@ -33,7 +33,7 @@ class Osoba implements JsonSerializable{
      * @param $jmeno
      * @param $prijmeni
      */
-    public function __construct($id=null,$jmeno,$prijmeni){
+    public function __construct($id,$jmeno,$prijmeni){
         $this->id=$id;
         $this->jmeno=$jmeno;
         $this->prijmeni=$prijmeni;

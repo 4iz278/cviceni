@@ -60,7 +60,7 @@ if ($polozkyElement->length==1){//zjistíme počet elementů v seznamu
 
     $upraveneXML=$xml->saveXML();//uložení výsledku do proměnné
 
-    if (is_writable(__DIR__.'/objednavka-upravena.xml')){//TODO co dělá tahle funkce?
+    if (is_writable(__DIR__.'/objednavka-upravena.xml')){//TODO vzpomněli byste si, co dělá tahle funkce?
         $xml->save(__DIR__.'/objednavka-upravena.xml');    //uložení výstupu do souboru
     }
 }
