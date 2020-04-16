@@ -22,7 +22,13 @@ TODO
 
 
 ## JSON a XML
-TODO
+:point_right:
+
+- Většina byť jen trochu složitějších aplikací potřebuje pro svoji funkčnost komunikovat s dalšími aplikacemi, či například podporovat export dat.
+    - chceme exportovat seznam objednávek, stáhnout fakturu, naimportovat kontakty, stáhnout data z cizí aplikace atp.
+- Pro komunikaci se obvykle používají strukturované formáty.
+    - nejčastěji tím myslíme [XML](#xml) a [JSON](#json) 
+    - kromě toho ale existují i další formáty - např. CSV, které známe již ze [2. cvičení](../02-retezce-soubory)
 
 ### JSON
 :point_right:
@@ -72,16 +78,80 @@ $data2=json_decode($json, true); //funkce pro dekódování JSONu (vrací asocia
 ```
 
 :blue_book:
-- [příklad použití json_encode(), json_decode()](./09-json/json_encode_decode.php)
-- [příklad použití JsonSerializable](./09-json/jsonserializable.php)
+- [příklad json_encode(), json_decode()](./09-json/json_encode_decode.php)
+- [příklad JsonSerializable](./09-json/jsonserializable.php)
 
 ### XML
 :point_right:
 
-TODO
+- značkovací jazyk využívaný pro záznam dokumentů o volitelné struktuře
+- jde o obecný jazyk, z něhož jsou odvozeny konkrétní formáty používané pro konkrétní účely
+    - dnes se s ním setkáme téměř všude
+    - xHTML, docx, xlsx, isdoc, rss...
+- každé XML by mělo být vytvářeno dle konkrétního schématu
+    - schéma = popis, jaké značky mohou být v dokumentu použity a jaké jsou jejich hodnoty
+- výhody:
+    - jasně definovaná struktura, snadno kontrolovatelná standartními mechanismy (dle schématu)
+    - podpora ve všech rozumných programovacích jazycích (ale ne vždy je to zcela jednoduché)
+    - možnost XSL transformací
+    - možnost kombinovat větší množství jmenných prostorů
+- nevýhody:
+    - pro jednoduchou výměnu dat je XML zbytečně "ukecané" - i v následujícím příkladu značky zabírají větší množství znaků, než samotný obsah
+    - v případě velkých dokumentů náročné na paměť (při zpracování DOM parserem - tj. procházení v podobě stromu)
+
+**Příklad XML:** 
+```xml
+<?xml version='1.0' encoding='UTF-8'?>
+<osoby>
+    <osoba id="10">
+        <jmeno>Josef</jmeno>
+        <prijmeni>Novák</prijmeni>
+        <email>josef.novak@nekde.cz</email>
+        <email>josef.novak@nikde.com</email>
+    </osoba>
+    <osoba id="12">
+        <jmeno>Eva</jmeno>
+        <prijmeni>Adamová</prijmeni>
+    </osoba>
+</osoby>
+```
 
 :point_right:
 
 #### Práce s XML z PHP
+- v PHP máme k dispozici několik parserů, které umí pracovat s XML dokumenty
+    - DOM přístup (procházení dle uzlů stromu)
+        - [SimpleXML](http://php.net/manual/en/book.simplexml.php) (SimpleXMLElement)
+        - [DOM Parser](http://php.net/manual/en/class.domdocument.php) (DOMDocument)
+    - SAX přístup ("proudové" zpracování - vhodné pro hodně velké dokumenty)
+        - [XMLReader](http://php.net/manual/en/xmlreader.open.php)
+        - [Expat parser](http://www.w3schools.com/php/php_xml_parser_expat.asp)
+- **pro většinu případů doporučuji použít SimpleXML**
+    - jednoduchý objektový přístup ke XML dokumentu
+        - co vnořená značka, to vnořený objekt
+        - k atributům přistupujeme jako k prvkům pole
+    - lze jej využít pro čtení i zápis XML dokumentu
+    - objekty jsou vzájemně převoditelné s DOM Parserem
+        - toto využijeme pro složitější manipulace např. s pořadím elementů, které SimpleXML neumí
+    - pozor, SimpleXML tak trochu ignoruje jmenné prostory (což nám pro většinu běžné práce nevadí, ale existují i dokumenty, ve kterých jsou elementy z více jmenných prostorů)
 
-TODO
+```php
+$xml = simplexml_load_string($data);
+if (!empty($xml->osoba)){
+  foreach($xml->osoba as $osoba){
+    echo (string)$osoba['id'];
+    echo ': ';
+    echo (string)$osoba->jmeno;
+    echo ' ';
+    echo (string)$osoba->prijmeni;    
+  }
+}
+```
+
+
+:blue_book:
+- [příklad SimpleXML](./09-xml/simplexml.php)
+- [příklad DOMDocument](./09-xml/domdocument.php)
+- [příklad validace](./09-xml/validace.php)
+- [příklad XSL transformace](./09-xml/transformace.php)
+- [příklad RSS čtečka](./09-xml/rss-reader.php)

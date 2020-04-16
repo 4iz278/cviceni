@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
     <head>
         <title>Jednoduchá RSS čtečka</title>
         <meta charset="utf-8"/>
@@ -7,7 +7,7 @@
     <body>
         <h1>Jednoduchá RSS čtečka</h1>
         <?php
-            $file = 'http://akce.vse.cz/rss/zabava/';
+            $file = 'https://www.vse.cz/feed/';
 
             //následující kód je ukázkou jednoduchého zpracování RSS zdroje - pozor, RSS zdroje mohou být ve větším množství formátů, které se liší svojí strukturou!
 
@@ -33,13 +33,12 @@
                                 echo '</a>';
                             }
                             echo '</li>';
-                            //TODO : upravte výpis tak, aby obsahoval také popisky jednotlivých položek...
+                            //TODO Zvládli byste upravit výpis tak, aby obsahoval také úryvky článků?
                         }
                         echo '</ul>';
                     }
                 }
             }
-
 
         ?>
     </body>

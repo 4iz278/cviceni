@@ -1,6 +1,6 @@
 <?php
 
-echo '<!DOCTYPE html><html><head><title>DOMDocument</title><meta charset="UTF-8"/></head><body>';
+echo '<!DOCTYPE html><html lang="cs"><head><title>DOMDocument</title><meta charset="UTF-8"/></head><body>';
 
 /** @var SimpleXMLElement $xml */
 $xml=simplexml_load_file('objednavka.xml');
