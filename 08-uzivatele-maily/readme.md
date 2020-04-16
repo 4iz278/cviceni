@@ -148,6 +148,7 @@ Existuje celá řada variant, jak ověřit, jestli je daný uživatel tím, za k
 Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data naše aplikace obsahuje. Jde o jakýsi kompromis mezi bezpečností a tím, jak moc chceme uživatele prudit.)
 
 :point_right:
+
 **Běžné jednoduché autentizace:**
 - [HTTP autentizace](#http-autentizace)
 - [lokální přihlašování ověřené podle údajů v databázi](#lok%C3%A1ln%C3%AD-p%C5%99ihla%C5%A1ov%C3%A1n%C3%AD-u%C5%BEivatel%C5%AF)
@@ -160,6 +161,7 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 - ideální stav je takový, kdy si uživatel může vybrat mezi lokálním přihlášením a přihlášením pomocí externí služby
 
 :point_right:
+
 **Vícefaktorová autentizace:**
 - jde o ověření nejen znalosti hesla, ale obvykle také toho, zda uživatel vlastní nějaké zařízení
 - patří sem např. přihlašování pomocí certifikátů, zasílání SMS atp.
