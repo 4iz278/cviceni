@@ -196,7 +196,9 @@ V praxi to může vypadat tak, že evidujeme identifikátor zdroje a jednotlivé
     - guest má oprávnění pouze pro akci *show*
 - ověření role pak vypadá tak, že ověříme, jestli aktuální uživatel má např. oprávnění *good-delete* (což dle uvedeného výčtu mohou jen uživatelé s rolí *admin*
 
-POZOR: Pokud si píšete ověřování oprávnění sami, doporučuji mít oprávnění definovaná jen kladně (tj. výčet všech operací, které může uživatel provést).
+:point_right:
+
+**POZOR:** Pokud si píšete ověřování oprávnění sami, doporučuji mít oprávnění definovaná jen kladně (tj. výčet všech operací, které může uživatel provést).
 - pokud má uživatel více rolí, tak nám stačí, že oprávnění pro danou operaci má libovolná z jeho rolí. 
 
 :point_right:
