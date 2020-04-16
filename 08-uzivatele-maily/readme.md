@@ -249,9 +249,9 @@ Výzva k zamyšlení:
 - *Zvládli byste předělat aplikaci tak, aby se i administrátoři přihlašovali normálně a ne pomocí HTTP autentifikace?*
 
 ## Posílání e-mailů
-:point_right:
 
-**K čemu je dobré posílání mailů z PHP?**
+### K čemu je dobré posílání mailů z PHP?
+:point_right:
 
 S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklady můžeme jmenovat:
 - v návaznosti na uživatelské účty např. pro poslání odkazu pro potvrzení platnosti e-mailové adresy či pro změnu hesla,
@@ -259,9 +259,9 @@ S posíláním mailů z PHP se setkáme v celé řadě aplikací. Jako příklad
 - zasílání novinek na webu pro odběratele,
 - upozornění administrátora na chybu v aplikaci.
 
+### Co bychom naopak rozhodně dělat neměli?
 :point_right:
 
-**Co bychom naopak rozhodně dělat neměli?**
 - Neměli bychom posílat spam - tj. např. reklamy a novinky uživatelům, kteří si je výslovně nevyžádali.
 - Rozhodně bychom neměli posílat maily, ve kterých se vydáváme za někoho jiného!
 
