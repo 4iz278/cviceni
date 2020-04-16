@@ -173,8 +173,29 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 ### Hashování hesel
 :point_right:
 
-TODO
+- Heslo nikdy neuchováváme v databázi ani v kódu aplikace v čitelné podobě!
+    - Je zde vždy riziko, že se nám např. k datům v databázi někdo dostane - a v případě nešifrovaných hesel by je pak útočník jednoduše získal.
+    - Většina uživatelů nemá pro každou aplikaci (službu) unikátní heslo, ale má jich jen několik, která střídají (v řadě případů dokonce mají např. jen 1 heslo pro banku a jedno jiné pro všechny ostatní služby) => když by útočník zjistil dané heslo z naší aplikace, může ho rozhodně zkusit použít i pro další služby.
+- **Místo čitelného hesla ukládáme jeho hash**
+    - = jednosměrný otisk dat získaný pomocí známé matematické funkce
+    - z hashe nejde přímo zjistit původní heslo, ale dá se zjistit jiný řetězec, který má stejný hash
+    - jelikož nejde z hashe nejde získat původní heslo, nemůže nám ho aplikace při obnově zapomenutého hesla poslat -> může nám nabídnout jen možnost jeho změny 
+- Příklady hashovacích funkcí - MD5, SHA1, SHA256, komplet seznam viz [funkce hash](http://php.net/manual/en/function.hash.php).    
+      - pokud chcete bezpečnou funkci, použijte SHA256 nebo SHA512, případně BCRYPT
+      - i starší funkce se ale dají použít, pokud v aplikaci hesla vylepšujeme za pomocí "soli" (*salt*)
+      
+:point_right:
 
+**Solení hesel**
+- jde o způsob, jak i z jednoduchého hesla udělat složitější
+- **salt (sůl)** = náhodná data, která jsou přimíchána do výsledného hashe (nebo uložena bokem) z původních dat
+- smyslem je zamezit útokům pomocí tzv. **rainbow table (duhová tabulka)** - tzv. reverzní hashing = předvypočtené seznamy výsledků hashovacích funkcí, ze kterých lze odvodit původní vstupní data = ideální pro zjištění hesla, pokud se útočník nějak dostane k hashům
+- Co si pod tím představit v praxi?
+    - Uživatel nám zadal heslo "heslo" -> přidáme do něj nějaký další (ideálně náhodný) řetězec, tzv. sůl - výsledkem může být např. "he78D/4slo" -> tento řetězec zahashujeme a výsledek uložíme, včetně přimíchaného řetězec "78D/4" (ten můžeme např. připojit k hashi)
+    - Při přihlášení uživatele provedeme stejnou operaci s jediným rozdílem - sůl negenerujeme náhodně, ale získáme ji z místa, kam jsme si ji uložili. A výsledky následně porovnáme.
+- nemusíme to dělat ručně, výchozí funkce pro práci s hesly to celé umí udělat i automaticky
+- pokud hesla solíme, můžeme použít i jinak ne zrovna bezpečnou hashovací funkci (např. wordpress také používá funkci md5 s přimícháním soli)     
+ 
 ### HTTP autentizace
 :point_right:
 
