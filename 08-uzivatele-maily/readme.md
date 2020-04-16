@@ -213,8 +213,8 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
     - pro využití mimo aplikaci stačí v dané složce umístit soubory **.htaccess** a **.htpasswd**   
     
 :blue_book:    
-- [příklad HTTP Basic autentifikace v e-shopu](./08-app-eshop/admin_required.php)
 - [příklad zabezpečení složky pomocí .htaccess a .htpasswd](./08-htpasswd/)
+- [příklad HTTP Basic autentifikace v e-shopu](./08-app-eshop/admin_required.php)
 - [.htpasswd generator](https://www.web2generators.com/apache-tools/htpasswd-generator)
 
 ### Lokální přihlašování uživatelů
@@ -279,7 +279,7 @@ Pro ukázku použití uživatelských účtů a možnosti rozlišení uživatels
     - údaje o přihlášeném uživateli uchováváme v session
 - jen admin může měnit nabídku zboží
     - pro přihlašování administrátorů je využívána HTTP autentifikace
-- pplikace nemá ošetřené vstupy (prázdné heslo atp), pouze zamezuje SQL inject útoku - DIY :)   
+- aplikace nemá ošetřené vstupy (prázdné heslo atp), pouze zamezuje SQL inject útoku - DIY :)   
 
 Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 
