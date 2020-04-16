@@ -11,7 +11,7 @@ TODO opakování
 **Na tomto cvičení nás čeká:**
 - ukázka tvorby API
 - použití PHP kódu pomocí AJAXu
-- generování PDF
+- [generování PDF](#generov%C3%A1n%C3%AD-pdf)
 
 ---
 
@@ -23,7 +23,8 @@ TODO AJAX
 :point_right:
 
 **K čemu by mohlo být dobré generovat PDF z PHP?**
-    - 
+    - generování faktur, dodávkových listů, objednávek atp.
+    - exporty dat pro archivaci (u PDF máte uživatel jistotu, že bude všude vypadat stejně)
     
 :point_right:
 

@@ -1,0 +1,15 @@
+{
+	"name": "vojir/example-mpdf",
+	"description": "Ukázka použití knihovny mPDF",
+	"type": "project",
+	"require": {
+		"php": ">= 7.2",
+		"mpdf/mpdf": "^8.0"
+	},
+	"minimum-stability": "stable",
+	"config": {
+		"platform": {
+			"php": "7.2"
+		}
+	}
+}
