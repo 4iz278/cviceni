@@ -220,7 +220,60 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 ### Lokální přihlašování uživatelů
 :point_right:
 
-TODO
+- obvykle využíváme kombinaci uživatelského jména či e-mailu a hesla
+    - kombinace jména a hesla je o trošku bezpečnější (jde o další údaj, který musí uživatel znát), ale e-mail je z pohledu uživatele pohodlnější 
+    - při přihlašování pomocí mailu je uživatelsky přívětivější ignorovat velikost písmen
+- u hesla je vhodné vyžadovat alespoň jeho minimální délku, ale neměli bychom to s požadavky přehánět
+    - popravdě řečeno např. požadavky na velké a malé písmeno, speciální znak, číslo a alespoň 10 znaků vedou jen k tomu, že si uživatel heslo někam uloží či napíše - rozhodně si ho nebude chtít pamatovat
+    - požadavky by měly být přiměřené důležitosti naší aplikace a citlivosti v ní uložených dat
+- pokud nenutíme uživatele ověřit při registraci svůj e-mail, tak jej rovnou přihlásíme
+    - aby nemusel zbytečně znovu zadávat své přihlašovací údaje, které zadal chvíli před tím při registraci     
+
+:point_right:
+### Jak lokální přihlášení realizovat?
+V databázi máme tabulku s uživateli, ve které máme kromě loginu či e-mailu také sloupec pro hash hesla (doporučeně varchar o délce max. 255 znaků)
+
+**Registrace uživatele:**
+- na zadání hesla se zeptáme 2x (abychom odchytili případné překlepy)
+- heslo zahashujeme funkcí ```password_hash``` a uložíme do databáze
+
+```php
+$login = $_POST['login'];
+$passwordHash = password_hash($_POST['password'],PASSWORD_DEFAULT);
+
+//uložení uživatele do DB
+$query = $db->prepare('INSERT INTO users (login, password) VALUES (:login, :password)');
+$query->execute([
+  ':login'=>$login,
+  ':password'=>$passwordHash
+]);
+``` 
+
+**Přihlášení uživatele:**
+- podle zadaného přihlašovacího jména či e-mailu vybereme uživatele z databáze
+- ověříme platnost zadaného hesla pomocí ```password_verify```
+- pokud nám ověření jména či hesla selže, zobrazíme uživateli jen obecnou hlášku o chybě (je to mezi formuláři jediná výjimka, kdy nechceme zobrazovat konkrétní chybu)  
+
+```php
+$login = $_POST['login'];
+$password = $_POST['password'];
+
+//načteme uživatele z DB
+$query = $db->prepare('SELECT * FROM users WHERE login=:login LIMIT 1;');
+$query->execute([
+  ':login'=>$login,
+]);             
+
+if ($user=$query->fetch(PDO::FETCH_ASSOC)){
+  if (password_verify($password, $user['password'])){
+    //uložíme údaje uživatele do session
+    $_SESSION['id']=$user['id'];
+    $_SESSION['login']=$user['login'];
+    //úspěšně přihlášeného uživatele přesměrujeme na cílovou stránku
+    header('index.php');
+  }
+}
+```
 
 :blue_book:
 - [jednoduchý příklad použití funkcí password_hash() a password_verify()](./password_verify.php)
