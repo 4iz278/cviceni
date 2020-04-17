@@ -1,4 +1,4 @@
-# 10. MVC, SEO URL, poslání e-mailu
+# 10. MVC, SEO URL
 
 :no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
 
@@ -15,12 +15,7 @@
 
 ## Obsah dnešního cvičení
 * naučíme se používat .htaccess (budeme dělat hezké SEO adresy)
-* naučíme se posílat maily (není to nic těžkého...)
 * budeme se věnovat návrhovým vzorům pro tvorbu objektových aplikací
-
-### Příprava
-* nahrajte na server eso.vse.cz podklady k dnešnímu cvičení
-* importujte do databáze obsah souboru [10-db.sql](10-db.sql)
 
 ---
 
@@ -141,24 +136,3 @@ RewriteRule pozadovanaUrl vracenySkript [modifikátory]
     * v rámci ukázkových aplikací *záměrně využíváme pro práci s databází jen PDO*
         * už ho známe a umíme s ním pracovat
         * pokud byste chtěli něco s většími možnostmi, tak v Nette je vlastní databázová vrstva, případně se dá používat nějaká vrstva pro objektově-relační mapování (asi nejznámnější je *Doctrine*, či lze využít např. jednoduchý *LeanMapper*)
-
-* **příklad Zobrazení článků**
-    * aplikace načítající články z databáze a zobrazující je na webu
-    * základní implementace využívající přímo data získaná z DB (bez tříd pro jednotlivé entity)
-    * pozor: *pro spuštění Nette aplikace je potřeba načíst její podadresář www* (tj. například http://eso.vse.cz/~xname/10-blog-nette/www)
-    * [jednoduché MVC](./10-clanky-mvc)
-    * [implementace v Nette](./10-clanky-nette)
-
-* **příklad Blog**
-    * příklad jednoduchého blogu zobrazujícího články dle kategorií
-    * obsahuje autentizaci a autorizaci uživatelů
-    * využívá definované třídy pro články, kategorie, uživatele atd.
-    * pro vyzkoušení jsou k dispozici uživatelské účty:
-        * e-mail "xadmin@vse.cz", heslo "xadmin"
-        * e-mail "xname@vse.cz", heslo "xname"
-    * [jednoduché MVC](./10-blog-mvc)
-    * [implementace v Nette](./10-blog-nette)
-
-
-## Domácí úkol
-> Vyberte si jednu z variant aplikace "blog" a doplňte do ní možnost přidávání komentářů pro registrované uživatele.
