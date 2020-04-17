@@ -32,7 +32,6 @@ TODO
 
 TODO
 
-:point_right:
 
 ### MVC aplikace implementované bez frameworku
 :point_right:
@@ -46,15 +45,13 @@ TODO
 TODO
 
 
-:point_right:
-
 ### Příprava ke spuštění ukázkových aplikací:
+:point_right:
 1. naimportujte [SQL export](./12-db.sql) do databáze 
 2. nahrajte na server eso.vse.cz podklady k dnešnímu cvičení
 
-:point_right:
-
 ### Aplikace Články
+:point_right:
 - jde o jednoduchou objektovou aplikaci, která načítá články z databáze a zobrazuje je na webu
 - data jsou v modelu načítána bez vytváření konkrétních entit (instancí konkrétních entitních tříd)
 - pozor: *pro spuštění Nette aplikace je potřeba načíst její podadresář www* (tj. například http://eso.vse.cz/~xname/10-blog-nette/www)
@@ -63,9 +60,9 @@ TODO
 - [aplikace Články implementovaná v MVC bez použití frameworku](./12-clanky-mvc)
 - [aplikace Články implementovaná v Nette](./12-clanky-nette)
 
-:point_right:
 
 ### Aplikace Blog
+:point_right:
 - jde o příklad jednoduchého blogu zobrazujícího články dle kategorií
 - aplikace obsahuje autentizaci a autorizaci uživatelů
 - jsou využívány definované entitní třídy pro články, kategorie, uživatele atd.
