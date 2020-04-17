@@ -11,9 +11,9 @@ TODO opakování
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- .htaccess (a hezké SEO adresy)
-- objektový přístup k vývoji aplikací, MVC
-- ukázkové objektové aplikace
+- [.htaccess (a hezké SEO adresy)](#htaccess)
+- [objektový přístup k vývoji aplikací, MVC](#objektov%C3%BD-p%C5%99%C3%ADstup-k-v%C3%BDvoji-mvc)
+- [ukázkové objektové aplikace](#uk%C3%A1zkov%C3%A9-objektov%C3%A9-aplikace)
 
 --- 
 
