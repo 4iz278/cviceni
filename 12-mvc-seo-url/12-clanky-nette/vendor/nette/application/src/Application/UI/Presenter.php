@@ -1,0 +1,1431 @@
+<?php
+
+/**
+ * This file is part of the Nette Framework (https://nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
+ */
+
+namespace Nette\Application\UI;
+
+use Nette;
+use Nette\Application;
+use Nette\Application\Helpers;
+use Nette\Application\Responses;
+use Nette\Http;
+
+
+/**
+ * Presenter component represents a webpage instance. It converts Request to IResponse.
+ *
+ * @property-read Nette\Application\Request $request
+ * @property-read string $action
+ * @property      string $view
+ * @property      string|bool $layout
+ * @property-read \stdClass $payload
+ * @property-read Nette\DI\Container $context
+ * @property-read Nette\Http\Session $session
+ * @property-read Nette\Security\User $user
+ */
+abstract class Presenter extends Control implements Application\IPresenter
+{
+	/** bad link handling {@link Presenter::$invalidLinkMode} */
+	const INVALID_LINK_SILENT = 0b0000,
+		INVALID_LINK_WARNING = 0b0001,
+		INVALID_LINK_EXCEPTION = 0b0010,
+		INVALID_LINK_TEXTUAL = 0b0100;
+
+	/** @internal special parameter key */
+	const SIGNAL_KEY = 'do',
+		ACTION_KEY = 'action',
+		FLASH_KEY = '_fid',
+		DEFAULT_ACTION = 'default';
+
+	/** @var int */
+	public $invalidLinkMode;
+
+	/** @var callable[]  function (Presenter $sender); Occurs when the presenter is starting */
+	public $onStartup;
+
+	/** @var callable[]  function (Presenter $sender, IResponse $response = null); Occurs when the presenter is shutting down */
+	public $onShutdown;
+
+	/** @var bool  automatically call canonicalize() */
+	public $autoCanonicalize = true;
+
+	/** @var bool  use absolute Urls or paths? */
+	public $absoluteUrls = false;
+
+	/** @var Nette\Application\Request|null */
+	private $request;
+
+	/** @var Nette\Application\IResponse */
+	private $response;
+
+	/** @var array */
+	private $globalParams;
+
+	/** @var array */
+	private $globalState;
+
+	/** @var array|null */
+	private $globalStateSinces;
+
+	/** @var string */
+	private $action;
+
+	/** @var string */
+	private $view;
+
+	/** @var string|bool */
+	private $layout;
+
+	/** @var \stdClass */
+	private $payload;
+
+	/** @var string */
+	private $signalReceiver;
+
+	/** @var string|null */
+	private $signal;
+
+	/** @var bool */
+	private $ajaxMode;
+
+	/** @var bool */
+	private $startupCheck;
+
+	/** @var Nette\Application\Request|null */
+	private $lastCreatedRequest;
+
+	/** @var array|null */
+	private $lastCreatedRequestFlag;
+
+	/** @var Nette\DI\Container */
+	private $context;
+
+	/** @var Nette\Http\IRequest */
+	private $httpRequest;
+
+	/** @var Nette\Http\IResponse */
+	private $httpResponse;
+
+	/** @var Nette\Http\Session */
+	private $session;
+
+	/** @var Nette\Application\IPresenterFactory */
+	private $presenterFactory;
+
+	/** @var Nette\Application\IRouter */
+	private $router;
+
+	/** @var Nette\Security\User */
+	private $user;
+
+	/** @var ITemplateFactory */
+	private $templateFactory;
+
+	/** @var Nette\Http\Url */
+	private $refUrlCache;
+
+
+	public function __construct()
+	{
+		$this->payload = new \stdClass;
+	}
+
+
+	/**
+	 * @return Nette\Application\Request|null
+	 */
+	public function getRequest()
+	{
+		return $this->request;
+	}
+
+
+	/**
+	 * Returns self.
+	 * @return Presenter
+	 */
+	public function getPresenter($throw = true)
+	{
+		return $this;
+	}
+
+
+	/**
+	 * Returns a name that uniquely identifies component.
+	 * @return string
+	 */
+	public function getUniqueId()
+	{
+		return '';
+	}
+
+
+	/********************* interface IPresenter ****************d*g**/
+
+
+	/**
+	 * @return Nette\Application\IResponse
+	 */
+	public function run(Application\Request $request)
+	{
+		try {
+			// STARTUP
+			$this->request = $request;
+			$this->payload = $this->payload ?: new \stdClass;
+			$this->setParent($this->getParent(), $request->getPresenterName());
+
+			if (!$this->httpResponse->isSent()) {
+				$this->httpResponse->addHeader('Vary', 'X-Requested-With');
+			}
+
+			$this->initGlobalParameters();
+			$this->checkRequirements($this->getReflection());
+			$this->onStartup($this);
+			$this->startup();
+			if (!$this->startupCheck) {
+				$class = $this->getReflection()->getMethod('startup')->getDeclaringClass()->getName();
+				throw new Nette\InvalidStateException("Method $class::startup() or its descendant doesn't call parent::startup().");
+			}
+			// calls $this->action<Action>()
+			$this->tryCall($this->formatActionMethod($this->action), $this->params);
+
+			// autoload components
+			foreach ($this->globalParams as $id => $foo) {
+				$this->getComponent($id, false);
+			}
+
+			if ($this->autoCanonicalize) {
+				$this->canonicalize();
+			}
+			if ($this->httpRequest->isMethod('head')) {
+				$this->terminate();
+			}
+
+			// SIGNAL HANDLING
+			// calls $this->handle<Signal>()
+			$this->processSignal();
+
+			// RENDERING VIEW
+			$this->beforeRender();
+			// calls $this->render<View>()
+			$this->tryCall($this->formatRenderMethod($this->view), $this->params);
+			$this->afterRender();
+
+			// save component tree persistent state
+			$this->saveGlobalState();
+			if ($this->isAjax()) {
+				$this->payload->state = $this->getGlobalState();
+			}
+
+			// finish template rendering
+			if ($this->getTemplate()) {
+				$this->sendTemplate();
+			}
+
+		} catch (Application\AbortException $e) {
+			// continue with shutting down
+			if ($this->isAjax()) {
+				try {
+					$hasPayload = (array) $this->payload;
+					unset($hasPayload['state']);
+					if ($this->response instanceof Responses\TextResponse && $this->isControlInvalid()) {
+						$this->snippetMode = true;
+						$this->response->send($this->httpRequest, $this->httpResponse);
+						$this->sendPayload();
+					} elseif (!$this->response && $hasPayload) { // back compatibility for use terminate() instead of sendPayload()
+						trigger_error('Use $presenter->sendPayload() instead of terminate() to send payload.');
+						$this->sendPayload();
+					}
+				} catch (Application\AbortException $e) {
+				}
+			}
+
+			if ($this->hasFlashSession()) {
+				$this->getFlashSession()->setExpiration($this->response instanceof Responses\RedirectResponse ? '+ 30 seconds' : '+ 3 seconds');
+			}
+
+			// SHUTDOWN
+			$this->onShutdown($this, $this->response);
+			$this->shutdown($this->response);
+
+			return $this->response;
+		}
+	}
+
+
+	/**
+	 * @return void
+	 */
+	protected function startup()
+	{
+		$this->startupCheck = true;
+	}
+
+
+	/**
+	 * Common render method.
+	 * @return void
+	 */
+	protected function beforeRender()
+	{
+	}
+
+
+	/**
+	 * Common render method.
+	 * @return void
+	 */
+	protected function afterRender()
+	{
+	}
+
+
+	/**
+	 * @param  Nette\Application\IResponse
+	 * @return void
+	 */
+	protected function shutdown($response)
+	{
+	}
+
+
+	/**
+	 * Checks authorization.
+	 * @return void
+	 */
+	public function checkRequirements($element)
+	{
+		$user = (array) ComponentReflection::parseAnnotation($element, 'User');
+		if (in_array('loggedIn', $user, true) && !$this->getUser()->isLoggedIn()) {
+			throw new Application\ForbiddenRequestException;
+		}
+	}
+
+
+	/********************* signal handling ****************d*g**/
+
+
+	/**
+	 * @return void
+	 * @throws BadSignalException
+	 */
+	public function processSignal()
+	{
+		if ($this->signal === null) {
+			return;
+		}
+
+		$component = $this->signalReceiver === '' ? $this : $this->getComponent($this->signalReceiver, false);
+		if ($component === null) {
+			throw new BadSignalException("The signal receiver component '$this->signalReceiver' is not found.");
+
+		} elseif (!$component instanceof ISignalReceiver) {
+			throw new BadSignalException("The signal receiver component '$this->signalReceiver' is not ISignalReceiver implementor.");
+		}
+
+		$component->signalReceived($this->signal);
+		$this->signal = null;
+	}
+
+
+	/**
+	 * Returns pair signal receiver and name.
+	 * @return array|null
+	 */
+	public function getSignal()
+	{
+		return $this->signal === null ? null : [$this->signalReceiver, $this->signal];
+	}
+
+
+	/**
+	 * Checks if the signal receiver is the given one.
+	 * @param  mixed  component or its id
+	 * @param  string signal name (optional)
+	 * @return bool
+	 */
+	public function isSignalReceiver($component, $signal = null)
+	{
+		if ($component instanceof Nette\ComponentModel\Component) {
+			$component = $component === $this ? '' : $component->lookupPath(__CLASS__, true);
+		}
+
+		if ($this->signal === null) {
+			return false;
+
+		} elseif ($signal === true) {
+			return $component === ''
+				|| strncmp($this->signalReceiver . '-', $component . '-', strlen($component) + 1) === 0;
+
+		} elseif ($signal === null) {
+			return $this->signalReceiver === $component;
+
+		} else {
+			return $this->signalReceiver === $component && strcasecmp($signal, $this->signal) === 0;
+		}
+	}
+
+
+	/********************* rendering ****************d*g**/
+
+
+	/**
+	 * Returns current action name.
+	 * @return string
+	 */
+	public function getAction($fullyQualified = false)
+	{
+		return $fullyQualified ? ':' . $this->getName() . ':' . $this->action : $this->action;
+	}
+
+
+	/**
+	 * Changes current action. Only alphanumeric characters are allowed.
+	 * @param  string
+	 * @return void
+	 */
+	public function changeAction($action)
+	{
+		if (is_string($action) && Nette\Utils\Strings::match($action, '#^[a-zA-Z0-9][a-zA-Z0-9_\x7f-\xff]*\z#')) {
+			$this->action = $action;
+			$this->view = $action;
+
+		} else {
+			$this->error('Action name is not alphanumeric string.');
+		}
+	}
+
+
+	/**
+	 * Returns current view.
+	 * @return string
+	 */
+	public function getView()
+	{
+		return $this->view;
+	}
+
+
+	/**
+	 * Changes current view. Any name is allowed.
+	 * @param  string
+	 * @return static
+	 */
+	public function setView($view)
+	{
+		$this->view = (string) $view;
+		return $this;
+	}
+
+
+	/**
+	 * Returns current layout name.
+	 * @return string|bool
+	 */
+	public function getLayout()
+	{
+		return $this->layout;
+	}
+
+
+	/**
+	 * Changes or disables layout.
+	 * @param  string|bool
+	 * @return static
+	 */
+	public function setLayout($layout)
+	{
+		$this->layout = $layout === false ? false : (string) $layout;
+		return $this;
+	}
+
+
+	/**
+	 * @return void
+	 * @throws Nette\Application\BadRequestException if no template found
+	 * @throws Nette\Application\AbortException
+	 */
+	public function sendTemplate()
+	{
+		$template = $this->getTemplate();
+		if (!$template->getFile()) {
+			$files = $this->formatTemplateFiles();
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					$template->setFile($file);
+					break;
+				}
+			}
+
+			if (!$template->getFile()) {
+				$file = strtr(reset($files), '/', DIRECTORY_SEPARATOR);
+				$this->error("Page not found. Missing template '$file'.");
+			}
+		}
+
+		$this->sendResponse(new Responses\TextResponse($template));
+	}
+
+
+	/**
+	 * Finds layout template file name.
+	 * @return string|null
+	 * @internal
+	 */
+	public function findLayoutTemplateFile()
+	{
+		if ($this->layout === false) {
+			return;
+		}
+		$files = $this->formatLayoutTemplateFiles();
+		foreach ($files as $file) {
+			if (is_file($file)) {
+				return $file;
+			}
+		}
+
+		if ($this->layout) {
+			$file = strtr(reset($files), '/', DIRECTORY_SEPARATOR);
+			throw new Nette\FileNotFoundException("Layout not found. Missing template '$file'.");
+		}
+	}
+
+
+	/**
+	 * Formats layout template file names.
+	 * @return array
+	 */
+	public function formatLayoutTemplateFiles()
+	{
+		if (preg_match('#/|\\\\#', $this->layout)) {
+			return [$this->layout];
+		}
+		list($module, $presenter) = Helpers::splitName($this->getName());
+		$layout = $this->layout ?: 'layout';
+		$dir = dirname($this->getReflection()->getFileName());
+		$dir = is_dir("$dir/templates") ? $dir : dirname($dir);
+		$list = [
+			"$dir/templates/$presenter/@$layout.latte",
+			"$dir/templates/$presenter.@$layout.latte",
+		];
+		do {
+			$list[] = "$dir/templates/@$layout.latte";
+			$dir = dirname($dir);
+		} while ($dir && $module && (list($module) = Helpers::splitName($module)));
+		return $list;
+	}
+
+
+	/**
+	 * Formats view template file names.
+	 * @return array
+	 */
+	public function formatTemplateFiles()
+	{
+		list(, $presenter) = Helpers::splitName($this->getName());
+		$dir = dirname($this->getReflection()->getFileName());
+		$dir = is_dir("$dir/templates") ? $dir : dirname($dir);
+		return [
+			"$dir/templates/$presenter/$this->view.latte",
+			"$dir/templates/$presenter.$this->view.latte",
+		];
+	}
+
+
+	/**
+	 * Formats action method name.
+	 * @param  string
+	 * @return string
+	 */
+	public static function formatActionMethod($action)
+	{
+		return 'action' . $action;
+	}
+
+
+	/**
+	 * Formats render view method name.
+	 * @param  string
+	 * @return string
+	 */
+	public static function formatRenderMethod($view)
+	{
+		return 'render' . $view;
+	}
+
+
+	/**
+	 * @return ITemplate
+	 */
+	protected function createTemplate()
+	{
+		return $this->getTemplateFactory()->createTemplate($this);
+	}
+
+
+	/********************* partial AJAX rendering ****************d*g**/
+
+
+	/**
+	 * @return \stdClass
+	 */
+	public function getPayload()
+	{
+		return $this->payload;
+	}
+
+
+	/**
+	 * Is AJAX request?
+	 * @return bool
+	 */
+	public function isAjax()
+	{
+		if ($this->ajaxMode === null) {
+			$this->ajaxMode = $this->httpRequest->isAjax();
+		}
+		return $this->ajaxMode;
+	}
+
+
+	/**
+	 * Sends AJAX payload to the output.
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function sendPayload()
+	{
+		$this->sendResponse(new Responses\JsonResponse($this->payload));
+	}
+
+
+	/**
+	 * Sends JSON data to the output.
+	 * @param  mixed
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function sendJson($data)
+	{
+		$this->sendResponse(new Responses\JsonResponse($data));
+	}
+
+
+	/********************* navigation & flow ****************d*g**/
+
+
+	/**
+	 * Sends response and terminates presenter.
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function sendResponse(Application\IResponse $response)
+	{
+		$this->response = $response;
+		$this->terminate();
+	}
+
+
+	/**
+	 * Correctly terminates presenter.
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function terminate()
+	{
+		throw new Application\AbortException;
+	}
+
+
+	/**
+	 * Forward to another presenter or action.
+	 * @param  string|Nette\Application\Request
+	 * @param  array|mixed
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function forward($destination, $args = [])
+	{
+		if ($destination instanceof Application\Request) {
+			$this->sendResponse(new Responses\ForwardResponse($destination));
+		}
+
+		$args = func_num_args() < 3 && is_array($args) ? $args : array_slice(func_get_args(), 1);
+		$this->createRequest($this, $destination, $args, 'forward');
+		$this->sendResponse(new Responses\ForwardResponse($this->lastCreatedRequest));
+	}
+
+
+	/**
+	 * Redirect to another URL and ends presenter execution.
+	 * @param  string
+	 * @param  int HTTP error code
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function redirectUrl($url, $httpCode = null)
+	{
+		if ($this->isAjax()) {
+			$this->payload->redirect = (string) $url;
+			$this->sendPayload();
+
+		} elseif (!$httpCode) {
+			$httpCode = $this->httpRequest->isMethod('post')
+				? Http\IResponse::S303_POST_GET
+				: Http\IResponse::S302_FOUND;
+		}
+		$this->sendResponse(new Responses\RedirectResponse($url, $httpCode));
+	}
+
+
+	/**
+	 * Link to myself.
+	 * @return string
+	 * @deprecated
+	 */
+	public function backlink()
+	{
+		trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
+		return $this->getAction(true);
+	}
+
+
+	/**
+	 * Returns the last created Request.
+	 * @return Nette\Application\Request|null
+	 * @internal
+	 */
+	public function getLastCreatedRequest()
+	{
+		return $this->lastCreatedRequest;
+	}
+
+
+	/**
+	 * Returns the last created Request flag.
+	 * @param  string
+	 * @return bool
+	 * @internal
+	 */
+	public function getLastCreatedRequestFlag($flag)
+	{
+		return !empty($this->lastCreatedRequestFlag[$flag]);
+	}
+
+
+	/**
+	 * Conditional redirect to canonicalized URI.
+	 * @param  string
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function canonicalize($destination = null, array $args = [])
+	{
+		$request = $this->request;
+		if (!$this->isAjax() && ($request->isMethod('get') || $request->isMethod('head'))) {
+			try {
+				$url = $this->createRequest(
+					$this,
+					$destination ?: $this->action,
+					$args + $this->getGlobalState() + $request->getParameters(),
+					'redirectX'
+				);
+			} catch (InvalidLinkException $e) {
+			}
+			if (isset($url) && !$this->httpRequest->getUrl()->isEqual($url)) {
+				$code = $request->hasFlag($request::VARYING) ? Http\IResponse::S302_FOUND : Http\IResponse::S301_MOVED_PERMANENTLY;
+				$this->sendResponse(new Responses\RedirectResponse($url, $code));
+			}
+		}
+	}
+
+
+	/**
+	 * Attempts to cache the sent entity by its last modification date.
+	 * @param  string|int|\DateTimeInterface  last modified time
+	 * @param  string strong entity tag validator
+	 * @param  mixed  optional expiration time
+	 * @return void
+	 * @throws Nette\Application\AbortException
+	 */
+	public function lastModified($lastModified, $etag = null, $expire = null)
+	{
+		if ($expire !== null) {
+			$this->httpResponse->setExpiration($expire);
+		}
+		$helper = new Http\Context($this->httpRequest, $this->httpResponse);
+		if (!$helper->isModified($lastModified, $etag)) {
+			$this->terminate();
+		}
+	}
+
+
+	/**
+	 * Request/URL factory.
+	 * @param  Component  base
+	 * @param  string   destination in format "[//] [[[module:]presenter:]action | signal! | this] [#fragment]"
+	 * @param  array    array of arguments
+	 * @param  string   forward|redirect|link
+	 * @return string|null   URL
+	 * @throws InvalidLinkException
+	 * @internal
+	 */
+	protected function createRequest($component, $destination, array $args, $mode)
+	{
+		// note: createRequest supposes that saveState(), run() & tryCall() behaviour is final
+
+		$this->lastCreatedRequest = $this->lastCreatedRequestFlag = null;
+
+		// PARSE DESTINATION
+		// 1) fragment
+		$a = strpos($destination, '#');
+		if ($a === false) {
+			$fragment = '';
+		} else {
+			$fragment = substr($destination, $a);
+			$destination = substr($destination, 0, $a);
+		}
+
+		// 2) ?query syntax
+		$a = strpos($destination, '?');
+		if ($a !== false) {
+			parse_str(substr($destination, $a + 1), $args);
+			$destination = substr($destination, 0, $a);
+		}
+
+		// 3) URL scheme
+		$a = strpos($destination, '//');
+		if ($a === false) {
+			$scheme = false;
+		} else {
+			$scheme = substr($destination, 0, $a);
+			$destination = substr($destination, $a + 2);
+		}
+
+		// 4) signal or empty
+		if (!$component instanceof self || substr($destination, -1) === '!') {
+			list($cname, $signal) = Helpers::splitName(rtrim($destination, '!'));
+			if ($cname !== '') {
+				$component = $component->getComponent(strtr($cname, ':', '-'));
+			}
+			if ($signal === '') {
+				throw new InvalidLinkException('Signal must be non-empty string.');
+			}
+			$destination = 'this';
+		}
+
+		if ($destination == null) {  // intentionally ==
+			throw new InvalidLinkException('Destination must be non-empty string.');
+		}
+
+		// 5) presenter: action
+		$current = false;
+		list($presenter, $action) = Helpers::splitName($destination);
+		if ($presenter === '') {
+			$action = $destination === 'this' ? $this->action : $action;
+			$presenter = $this->getName();
+			$presenterClass = get_class($this);
+
+		} else {
+			if ($presenter[0] === ':') { // absolute
+				$presenter = substr($presenter, 1);
+				if (!$presenter) {
+					throw new InvalidLinkException("Missing presenter name in '$destination'.");
+				}
+			} else { // relative
+				list($module, , $sep) = Helpers::splitName($this->getName());
+				$presenter = $module . $sep . $presenter;
+			}
+			if (!$this->presenterFactory) {
+				throw new Nette\InvalidStateException('Unable to create link to other presenter, service PresenterFactory has not been set.');
+			}
+			try {
+				$presenterClass = $this->presenterFactory->getPresenterClass($presenter);
+			} catch (Application\InvalidPresenterException $e) {
+				throw new InvalidLinkException($e->getMessage(), 0, $e);
+			}
+		}
+
+		// PROCESS SIGNAL ARGUMENTS
+		if (isset($signal)) { // $component must be IStatePersistent
+			$reflection = new ComponentReflection(get_class($component));
+			if ($signal === 'this') { // means "no signal"
+				$signal = '';
+				if (array_key_exists(0, $args)) {
+					throw new InvalidLinkException("Unable to pass parameters to 'this!' signal.");
+				}
+
+			} elseif (strpos($signal, self::NAME_SEPARATOR) === false) {
+				// counterpart of signalReceived() & tryCall()
+				$method = $component->formatSignalMethod($signal);
+				if (!$reflection->hasCallableMethod($method)) {
+					throw new InvalidLinkException("Unknown signal '$signal', missing handler {$reflection->getName()}::$method()");
+				}
+				// convert indexed parameters to named
+				self::argsToParams(get_class($component), $method, $args, [], $missing);
+			}
+
+			// counterpart of IStatePersistent
+			if ($args && array_intersect_key($args, $reflection->getPersistentParams())) {
+				$component->saveState($args);
+			}
+
+			if ($args && $component !== $this) {
+				$prefix = $component->getUniqueId() . self::NAME_SEPARATOR;
+				foreach ($args as $key => $val) {
+					unset($args[$key]);
+					$args[$prefix . $key] = $val;
+				}
+			}
+		}
+
+		// PROCESS ARGUMENTS
+		if (is_subclass_of($presenterClass, __CLASS__)) {
+			if ($action === '') {
+				$action = self::DEFAULT_ACTION;
+			}
+
+			$current = ($action === '*' || strcasecmp($action, $this->action) === 0) && $presenterClass === get_class($this);
+
+			$reflection = new ComponentReflection($presenterClass);
+
+			// counterpart of run() & tryCall()
+			$method = $presenterClass::formatActionMethod($action);
+			if (!$reflection->hasCallableMethod($method)) {
+				$method = $presenterClass::formatRenderMethod($action);
+				if (!$reflection->hasCallableMethod($method)) {
+					$method = null;
+				}
+			}
+
+			// convert indexed parameters to named
+			if ($method === null) {
+				if (array_key_exists(0, $args)) {
+					throw new InvalidLinkException("Unable to pass parameters to action '$presenter:$action', missing corresponding method.");
+				}
+			} else {
+				self::argsToParams($presenterClass, $method, $args, $destination === 'this' ? $this->params : [], $missing);
+			}
+
+			// counterpart of IStatePersistent
+			if ($args && array_intersect_key($args, $reflection->getPersistentParams())) {
+				$this->saveState($args, $reflection);
+			}
+
+			if ($mode === 'redirect') {
+				$this->saveGlobalState();
+			}
+
+			$globalState = $this->getGlobalState($destination === 'this' ? null : $presenterClass);
+			if ($current && $args) {
+				$tmp = $globalState + $this->params;
+				foreach ($args as $key => $val) {
+					if (http_build_query([$val]) !== (isset($tmp[$key]) ? http_build_query([$tmp[$key]]) : '')) {
+						$current = false;
+						break;
+					}
+				}
+			}
+			$args += $globalState;
+		}
+
+		if ($mode !== 'test' && !empty($missing)) {
+			foreach ($missing as $rp) {
+				if (!array_key_exists($rp->getName(), $args)) {
+					throw new InvalidLinkException("Missing parameter \${$rp->getName()} required by {$rp->getDeclaringClass()->getName()}::{$rp->getDeclaringFunction()->getName()}()");
+				}
+			}
+		}
+
+		// ADD ACTION & SIGNAL & FLASH
+		if ($action) {
+			$args[self::ACTION_KEY] = $action;
+		}
+		if (!empty($signal)) {
+			$args[self::SIGNAL_KEY] = $component->getParameterId($signal);
+			$current = $current && $args[self::SIGNAL_KEY] === $this->getParameter(self::SIGNAL_KEY);
+		}
+		if (($mode === 'redirect' || $mode === 'forward') && $this->hasFlashSession()) {
+			$args[self::FLASH_KEY] = $this->getFlashKey();
+		}
+
+		$this->lastCreatedRequest = new Application\Request($presenter, Application\Request::FORWARD, $args);
+		$this->lastCreatedRequestFlag = ['current' => $current];
+
+		return $mode === 'forward' || $mode === 'test'
+			? null
+			: $this->requestToUrl($this->lastCreatedRequest, $mode === 'link' && $scheme === false && !$this->absoluteUrls) . $fragment;
+	}
+
+
+	/**
+	 * Converts Request to URL.
+	 * @return string
+	 * @internal
+	 */
+	protected function requestToUrl(Application\Request $request, $relative = null)
+	{
+		if ($this->refUrlCache === null) {
+			$this->refUrlCache = new Http\Url($this->httpRequest->getUrl());
+			$this->refUrlCache->setPath($this->httpRequest->getUrl()->getScriptPath());
+		}
+		if (!$this->router) {
+			throw new Nette\InvalidStateException('Unable to generate URL, service Router has not been set.');
+		}
+
+		$url = $this->router->constructUrl($request, $this->refUrlCache);
+		if ($url === null) {
+			$params = $request->getParameters();
+			unset($params[self::ACTION_KEY]);
+			$params = urldecode(http_build_query($params, '', ', '));
+			throw new InvalidLinkException("No route for {$request->getPresenterName()}:{$request->getParameter('action')}($params)");
+		}
+
+		if ($relative === null ? !$this->absoluteUrls : $relative) {
+			$hostUrl = $this->refUrlCache->getHostUrl() . '/';
+			if (strncmp($url, $hostUrl, strlen($hostUrl)) === 0) {
+				$url = substr($url, strlen($hostUrl) - 1);
+			}
+		}
+
+		return $url;
+	}
+
+
+	/**
+	 * Converts list of arguments to named parameters.
+	 * @param  string  class name
+	 * @param  string  method name
+	 * @param  array   arguments
+	 * @param  array   supplemental arguments
+	 * @param  ReflectionParameter[]  missing arguments
+	 * @return void
+	 * @throws InvalidLinkException
+	 * @internal
+	 */
+	public static function argsToParams($class, $method, &$args, $supplemental = [], &$missing = [])
+	{
+		$i = 0;
+		$rm = new \ReflectionMethod($class, $method);
+		foreach ($rm->getParameters() as $param) {
+			list($type, $isClass) = ComponentReflection::getParameterType($param);
+			$name = $param->getName();
+
+			if (array_key_exists($i, $args)) {
+				$args[$name] = $args[$i];
+				unset($args[$i]);
+				$i++;
+
+			} elseif (array_key_exists($name, $args)) {
+				// continue with process
+
+			} elseif (array_key_exists($name, $supplemental)) {
+				$args[$name] = $supplemental[$name];
+			}
+
+			if (!isset($args[$name])) {
+				if (!$param->isDefaultValueAvailable() && !$param->allowsNull() && $type !== 'NULL' && $type !== 'array' && $type !== 'iterable') {
+					$missing[] = $param;
+					unset($args[$name]);
+				}
+				continue;
+			}
+
+			if (!ComponentReflection::convertType($args[$name], $type, $isClass)) {
+				throw new InvalidLinkException(sprintf(
+					'Argument $%s passed to %s() must be %s, %s given.',
+					$name,
+					$rm->getDeclaringClass()->getName() . '::' . $rm->getName(),
+					$type === 'NULL' ? 'scalar' : $type,
+					is_object($args[$name]) ? get_class($args[$name]) : gettype($args[$name])
+				));
+			}
+
+			$def = $param->isDefaultValueAvailable() ? $param->getDefaultValue() : null;
+			if ($args[$name] === $def || ($def === null && $args[$name] === '')) {
+				$args[$name] = null; // value transmit is unnecessary
+			}
+		}
+
+		if (array_key_exists($i, $args)) {
+			throw new InvalidLinkException("Passed more parameters than method $class::{$rm->getName()}() expects.");
+		}
+	}
+
+
+	/**
+	 * Invalid link handler. Descendant can override this method to change default behaviour.
+	 * @return string
+	 * @throws InvalidLinkException
+	 */
+	protected function handleInvalidLink(InvalidLinkException $e)
+	{
+		if ($this->invalidLinkMode & self::INVALID_LINK_EXCEPTION) {
+			throw $e;
+		} elseif ($this->invalidLinkMode & self::INVALID_LINK_WARNING) {
+			trigger_error('Invalid link: ' . $e->getMessage(), E_USER_WARNING);
+		}
+		return $this->invalidLinkMode & self::INVALID_LINK_TEXTUAL
+			? '#error: ' . $e->getMessage()
+			: '#';
+	}
+
+
+	/********************* request serialization ****************d*g**/
+
+
+	/**
+	 * Stores current request to session.
+	 * @param  mixed  optional expiration time
+	 * @return string key
+	 */
+	public function storeRequest($expiration = '+ 10 minutes')
+	{
+		$session = $this->getSession('Nette.Application/requests');
+		do {
+			$key = Nette\Utils\Random::generate(5);
+		} while (isset($session[$key]));
+
+		$session[$key] = [$this->user ? $this->user->getId() : null, $this->request];
+		$session->setExpiration($expiration, $key);
+		return $key;
+	}
+
+
+	/**
+	 * Restores request from session.
+	 * @param  string key
+	 * @return void
+	 */
+	public function restoreRequest($key)
+	{
+		$session = $this->getSession('Nette.Application/requests');
+		if (!isset($session[$key]) || ($session[$key][0] !== null && $session[$key][0] !== $this->getUser()->getId())) {
+			return;
+		}
+		$request = clone $session[$key][1];
+		unset($session[$key]);
+		$request->setFlag(Application\Request::RESTORED, true);
+		$params = $request->getParameters();
+		$params[self::FLASH_KEY] = $this->getFlashKey();
+		$request->setParameters($params);
+		$this->sendResponse(new Responses\ForwardResponse($request));
+	}
+
+
+	/********************* interface IStatePersistent ****************d*g**/
+
+
+	/**
+	 * Returns array of persistent components.
+	 * This default implementation detects components by class-level annotation @persistent(cmp1, cmp2).
+	 * @return array
+	 */
+	public static function getPersistentComponents()
+	{
+		return (array) ComponentReflection::parseAnnotation(new \ReflectionClass(get_called_class()), 'persistent');
+	}
+
+
+	/**
+	 * Saves state information for all subcomponents to $this->globalState.
+	 * @return array
+	 */
+	protected function getGlobalState($forClass = null)
+	{
+		$sinces = &$this->globalStateSinces;
+
+		if ($this->globalState === null) {
+			$state = [];
+			foreach ($this->globalParams as $id => $params) {
+				$prefix = $id . self::NAME_SEPARATOR;
+				foreach ($params as $key => $val) {
+					$state[$prefix . $key] = $val;
+				}
+			}
+			$this->saveState($state, $forClass ? new ComponentReflection($forClass) : null);
+
+			if ($sinces === null) {
+				$sinces = [];
+				foreach ($this->getReflection()->getPersistentParams() as $name => $meta) {
+					$sinces[$name] = $meta['since'];
+				}
+			}
+
+			$components = $this->getReflection()->getPersistentComponents();
+			$iterator = $this->getComponents(true);
+
+			foreach ($iterator as $name => $component) {
+				if ($iterator->getDepth() === 0) {
+					// counts with Nette\Application\RecursiveIteratorIterator::SELF_FIRST
+					$since = isset($components[$name]['since']) ? $components[$name]['since'] : false; // false = nonpersistent
+				}
+				if (!$component instanceof IStatePersistent) {
+					continue;
+				}
+				$prefix = $component->getUniqueId() . self::NAME_SEPARATOR;
+				$params = [];
+				$component->saveState($params);
+				foreach ($params as $key => $val) {
+					$state[$prefix . $key] = $val;
+					$sinces[$prefix . $key] = $since;
+				}
+			}
+
+		} else {
+			$state = $this->globalState;
+		}
+
+		if ($forClass !== null) {
+			$since = null;
+			foreach ($state as $key => $foo) {
+				if (!isset($sinces[$key])) {
+					$x = strpos($key, self::NAME_SEPARATOR);
+					$x = $x === false ? $key : substr($key, 0, $x);
+					$sinces[$key] = isset($sinces[$x]) ? $sinces[$x] : false;
+				}
+				if ($since !== $sinces[$key]) {
+					$since = $sinces[$key];
+					$ok = $since && is_a($forClass, $since, true);
+				}
+				if (!$ok) {
+					unset($state[$key]);
+				}
+			}
+		}
+
+		return $state;
+	}
+
+
+	/**
+	 * Saves state informations for next request.
+	 */
+	public function saveState(array &$params, ComponentReflection $reflection = null)
+	{
+		$reflection = $reflection ?: $this->getReflection();
+		$reflection->saveState($this, $params);
+	}
+
+
+	/**
+	 * Permanently saves state information for all subcomponents to $this->globalState.
+	 * @return void
+	 */
+	protected function saveGlobalState()
+	{
+		$this->globalParams = [];
+		$this->globalState = $this->getGlobalState();
+	}
+
+
+	/**
+	 * Initializes $this->globalParams, $this->signal & $this->signalReceiver, $this->action, $this->view. Called by run().
+	 * @return void
+	 * @throws Nette\Application\BadRequestException if action name is not valid
+	 */
+	private function initGlobalParameters()
+	{
+		// init $this->globalParams
+		$this->globalParams = [];
+		$selfParams = [];
+
+		$params = $this->request->getParameters();
+		if (($tmp = $this->request->getPost('_' . self::SIGNAL_KEY)) !== null) {
+			$params[self::SIGNAL_KEY] = $tmp;
+		} elseif ($this->isAjax()) {
+			$params += $this->request->getPost();
+			if (($tmp = $this->request->getPost(self::SIGNAL_KEY)) !== null) {
+				$params[self::SIGNAL_KEY] = $tmp;
+			}
+		}
+
+		foreach ($params as $key => $value) {
+			if (!preg_match('#^((?:[a-z0-9_]+-)*)((?!\d+\z)[a-z0-9_]+)\z#i', $key, $matches)) {
+				continue;
+			} elseif (!$matches[1]) {
+				$selfParams[$key] = $value;
+			} else {
+				$this->globalParams[substr($matches[1], 0, -1)][$matches[2]] = $value;
+			}
+		}
+
+		// init & validate $this->action & $this->view
+		$this->changeAction(isset($selfParams[self::ACTION_KEY]) ? $selfParams[self::ACTION_KEY] : self::DEFAULT_ACTION);
+
+		// init $this->signalReceiver and key 'signal' in appropriate params array
+		$this->signalReceiver = $this->getUniqueId();
+		if (isset($selfParams[self::SIGNAL_KEY])) {
+			$param = $selfParams[self::SIGNAL_KEY];
+			if (!is_string($param)) {
+				$this->error('Signal name is not string.');
+			}
+			$pos = strrpos($param, '-');
+			if ($pos) {
+				$this->signalReceiver = substr($param, 0, $pos);
+				$this->signal = substr($param, $pos + 1);
+			} else {
+				$this->signalReceiver = $this->getUniqueId();
+				$this->signal = $param;
+			}
+			if ($this->signal == null) { // intentionally ==
+				$this->signal = null;
+			}
+		}
+
+		$this->loadState($selfParams);
+	}
+
+
+	/**
+	 * Pops parameters for specified component.
+	 * @param  string  component id
+	 * @return array
+	 * @internal
+	 */
+	public function popGlobalParameters($id)
+	{
+		if (isset($this->globalParams[$id])) {
+			$res = $this->globalParams[$id];
+			unset($this->globalParams[$id]);
+			return $res;
+
+		} else {
+			return [];
+		}
+	}
+
+
+	/********************* flash session ****************d*g**/
+
+
+	/**
+	 * @return string|null
+	 */
+	private function getFlashKey()
+	{
+		$flashKey = $this->getParameter(self::FLASH_KEY);
+		return is_string($flashKey) && $flashKey !== ''
+			? $flashKey
+			: null;
+	}
+
+
+	/**
+	 * Checks if a flash session namespace exists.
+	 * @return bool
+	 */
+	public function hasFlashSession()
+	{
+		$flashKey = $this->getFlashKey();
+		return $flashKey !== null
+			&& $this->getSession()->hasSection('Nette.Application.Flash/' . $flashKey);
+	}
+
+
+	/**
+	 * Returns session namespace provided to pass temporary data between redirects.
+	 * @return Nette\Http\SessionSection
+	 */
+	public function getFlashSession()
+	{
+		$flashKey = $this->getFlashKey();
+		if ($flashKey === null) {
+			$this->params[self::FLASH_KEY] = $flashKey = Nette\Utils\Random::generate(4);
+		}
+		return $this->getSession('Nette.Application.Flash/' . $flashKey);
+	}
+
+
+	/********************* services ****************d*g**/
+
+
+	public function injectPrimary(Nette\DI\Container $context = null, Application\IPresenterFactory $presenterFactory = null, Application\IRouter $router = null,
+		Http\IRequest $httpRequest, Http\IResponse $httpResponse, Http\Session $session = null, Nette\Security\User $user = null, ITemplateFactory $templateFactory = null)
+	{
+		if ($this->presenterFactory !== null) {
+			throw new Nette\InvalidStateException('Method ' . __METHOD__ . ' is intended for initialization and should not be called more than once.');
+		}
+
+		$this->context = $context;
+		$this->presenterFactory = $presenterFactory;
+		$this->router = $router;
+		$this->httpRequest = $httpRequest;
+		$this->httpResponse = $httpResponse;
+		$this->session = $session;
+		$this->user = $user;
+		$this->templateFactory = $templateFactory;
+	}
+
+
+	/**
+	 * Gets the context.
+	 * @return Nette\DI\Container
+	 * @deprecated
+	 */
+	public function getContext()
+	{
+		if (!$this->context) {
+			throw new Nette\InvalidStateException('Context has not been set.');
+		}
+		return $this->context;
+	}
+
+
+	/**
+	 * @return Nette\Http\IRequest
+	 */
+	public function getHttpRequest()
+	{
+		return $this->httpRequest;
+	}
+
+
+	/**
+	 * @return Nette\Http\IResponse
+	 */
+	public function getHttpResponse()
+	{
+		return $this->httpResponse;
+	}
+
+
+	/**
+	 * @param  string
+	 * @return Nette\Http\Session|Nette\Http\SessionSection
+	 */
+	public function getSession($namespace = null)
+	{
+		if (!$this->session) {
+			throw new Nette\InvalidStateException('Service Session has not been set.');
+		}
+		return $namespace === null ? $this->session : $this->session->getSection($namespace);
+	}
+
+
+	/**
+	 * @return Nette\Security\User
+	 */
+	public function getUser()
+	{
+		if (!$this->user) {
+			throw new Nette\InvalidStateException('Service User has not been set.');
+		}
+		return $this->user;
+	}
+
+
+	/**
+	 * @return ITemplateFactory
+	 */
+	public function getTemplateFactory()
+	{
+		if (!$this->templateFactory) {
+			throw new Nette\InvalidStateException('Service TemplateFactory has not been set.');
+		}
+		return $this->templateFactory;
+	}
+}

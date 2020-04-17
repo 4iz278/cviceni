@@ -1,0 +1,38 @@
+{
+	"name": "nette/safe-stream",
+	"description": "Nette SafeStream: atomic and safe manipulation with files via native PHP functions.",
+	"keywords": ["nette", "atomic", "safe", "filesystem"],
+	"homepage": "https://nette.org",
+	"license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
+	"authors": [
+		{
+			"name": "David Grudl",
+			"homepage": "https://davidgrudl.com"
+		},
+		{
+			"name": "Nette Community",
+			"homepage": "https://nette.org/contributors"
+		}
+	],
+	"require": {
+		"php": ">=7.1"
+	},
+	"require-dev": {
+		"nette/tester": "^2.0",
+		"tracy/tracy": "^2.3",
+		"phpstan/phpstan": "^0.12"
+	},
+	"autoload": {
+		"files": ["src/loader.php"]
+	},
+	"minimum-stability": "dev",
+	"scripts": {
+		"phpstan": "phpstan analyse --level 5 src",
+		"tester": "tester tests -s"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "2.4-dev"
+		}
+	}
+}

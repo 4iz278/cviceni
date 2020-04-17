@@ -1,0 +1,52 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+  
+    <title>{ifset title}{include title|striptags} | {/ifset}Ukázkový jednoduchý blog</title>
+  
+    <link rel="stylesheet" href="{$basePath}/css/main.css">
+    <link rel="stylesheet" href="{$basePath}/css/nette.css">
+    <meta name="viewport" content="width=device-width">
+    {block head}{/block}
+  </head>
+  <body>
+  	<header>
+      <h1><a href="{link Homepage:}">Jednoduchý blog</a></h1>
+      <div id="currentUser">
+        {if $user->isLoggedIn()}
+          Přihlášený uživatel: <strong>{$user->identity->name}</strong> ({$user->identity->email})
+          <a href="{link User:logout}">Odhlásit se...</a>
+        {else}
+          <a href="{link User:login}">Přihlásit se...</a>
+        {/if}
+      </div>
+    </header>
+    {if !empty($categories)}
+      <nav>
+        <ul>
+          {foreach $categories as $categoryItem}
+            <li><a href="{link Article:list category=>$categoryItem->id}" {if (!empty($category) && $categoryItem->id==$category->id)}class="active"{/if}>{$categoryItem->name}</a></li>
+          {/foreach}
+        </ul>
+      </nav>
+    {/if}
+    <section id="main">
+      <div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+  
+      {include content}
+  
+    </section>
+  
+    {block scripts}
+      <script type="text/javascript" src="{$basePath}/js/jquery-3.5.0.min.js"></script>
+      <script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
+      <script type="text/javascript" src='{$basePath}/js/tinymce/tinymce.min.js'></script>
+      <script type="text/javascript" src="{$basePath}/js/tinymce/jquery.tinymce.min.js"></script>
+    {/block}
+  </body>
+</html>

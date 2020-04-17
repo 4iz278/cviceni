@@ -7,15 +7,6 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 
 ## 1. Zdroje pro cvičení:
 
-* https://docs.jboss.org/jbossas/docs/Server_Configuration_Guide/4/html/TransactionJTA_Overview-Pessimistic_and_optimistic_locking.html - optimistické vs pesimistické zamykání (optimistic vs pessimistic lock)
-* http://www.iso.org/iso/home/standards/iso8601.htm  - ISO 8601 - Date and time format
-* https://www.ietf.org/rfc/rfc0822.txt - RFC 822 - STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES
-* https://www.ietf.org/rfc/rfc850.txt - RFC 850 - Standard for Interchange of USENET Messages (obsolete)
-* https://www.ietf.org/rfc/rfc1036.txt - RFC 1036 - Standard for Interchange of USENET Messages
-* https://www.ietf.org/rfc/rfc1123.txt - RFC 1123 - Requirements for Internet Hosts -- Application and Support
-* https://www.ietf.org/rfc/rfc2822.txt - RFC 2822 -  Internet Message Format
-* https://www.ietf.org/rfc/rfc3339.txt - RFC 3339 -  Date and Time on the Internet: Timestamps
-* http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html - výchozí inicializace datového typu timestamp v MySQL.
 * http://php.net/manual/en/intro.datetime.php - úvod do práce s datem/časem v PHP.
 * http://php.net/manual/en/function.date.php - funkce date.
 * http://php.net/manual/en/function.date-default-timezone-set.php - nastavení default časové zóny

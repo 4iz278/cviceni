@@ -1,0 +1,24 @@
+{**
+ * @param string   $basePath web base path
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE html>
+<html lang="cs">
+	<head>
+		<meta charset="utf-8">
+		<title>{ifset title}{include title|striptags} | {/ifset}Ukázková aplikace</title>
+		<link rel="stylesheet" href="{$basePath}/css/style.css">
+		<meta name="viewport" content="width=device-width">
+		{block head}{/block}
+	</head>
+	<body>
+
+		<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
+
+		{include content}
+
+		{block scripts}
+  		<script src="{$basePath}/js/netteForms.min.js"></script>
+		{/block}
+	</body>
+</html>
