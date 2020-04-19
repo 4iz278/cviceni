@@ -1,7 +1,5 @@
 # 12. MVC, SEO URL
 
-:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
-
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 14. a  15. 5. 2020.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
