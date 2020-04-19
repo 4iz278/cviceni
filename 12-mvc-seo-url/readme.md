@@ -98,20 +98,35 @@ TODO
 ## Ukázkové objektové aplikace
 :point_right:
 
-TODO
-
+Pro možnost porovnání vývoje s frameworkem a bez něj najdete v podkladech ke dnešnímu cvičení aplikace Články a Blog, které jsou implementované ve dvou variantách - jednak ve vlastní objektové implementaci za využití návrhového vzoru MVC a poté za využití frameworku Nette, který využívá návrhový vzor MVP.
+Kód obou implementací je záměrně napsán tak, aby s vzájemně co nejvíce odpovídal.
 
 ### MVC aplikace implementované bez frameworku
 :point_right:
-
-TODO
-
+- jednoduchá ukázka ruční implementace MVC
+- pro získání instancí tříd modelu je využit návrhový vzor **singleton** (který už také znáte z Javy...)
+    - lepší alternativou by byla implementace *automatického injection* přístupu (tj. automatického načítání potřebných závislostí pro třídy, což moc nejde bez konstrukcí, které jsou pro tento kurz zbytečně složité)
+    - rovnocennou alternativou je implementace návrhového vzoru *registry*
+        - jedna třída slouží ke shromažďování již vytvořených instancí (např. v asociačním poli), které je možné získat dle jejich názvu/typu
 
 ### Aplikace implementované v Nette
 :point_right:
-
-TODO
-
+- Co je to *Nette*?
+    - = český PHP framework, populární nejen v Čechách, ale v souvislosti s českými autory má velmi dobrou komunitní podporu
+    - více info na webu [https://nette.org/cs/](https://nette.org/cs/)
+    - má některé zajímavé funkce, které zjednodušují vývoj aplikace - např.:
+        - vůbec nemusíte řešit, jaké budou adresy v aplikaci
+            - odkazujete se vždycky na konkrétní presenter a jeho akci, parametry předáváte jako pole
+            - URL se z toho seskládají pomocí *routeru* (třída definující překlad adres)
+        - jednoduchá možnost následného zAJAXovatění aplikace
+        - není závislý na jedné konkrétní databázové vrstvě
+        - má Tracy - nástroj pro opravdu přehledné vysvětlování chyb
+        - všechny šablony se píší v *latte* (šablonovací systém podobný např. *smarty*), který za vás zajistí bezpečnost znaků na výstupu
+        - pokud využijete trait Nette\SmartObject, je podporováno využívání properties á la c#
+        - nezáleží na přesném umístění tříd v souborech, autoload najde všechny třídy, které umístíte do adresáře s aplikací
+- v rámci ukázkových aplikací *záměrně využíváme pro práci s databází jen PDO*
+    - už ho známe a umíme s ním pracovat
+    - pokud byste chtěli něco s většími možnostmi, tak v Nette je vlastní databázová vrstva, případně se dá používat nějaká vrstva pro objektově-relační mapování (asi nejznámnější je [Doctrine](https://www.doctrine-project.org/), či lze využít např. jednoduchý [LeanMapper](https://leanmapper.com/)
 
 ### Příprava ke spuštění ukázkových aplikací:
 :point_right:
