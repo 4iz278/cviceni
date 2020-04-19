@@ -13,6 +13,7 @@ Ohledně lokálního přihlašování je vhodné si připomenout, že:
 - informace o přihlášením uživateli si ukládáme do session.
 
 :point_right:
+
 Následně navážeme na [předchozí cvičení](../10-rest-api-pdf), na kterém jsme se zabývali tvorbou API. O tom bychom si měli pamatovat, že:
 - pro REST API využíváme HTTP metody GET, POST, UPDATE a DELETE,
 - pro komunikaci většinou používáme [JSON](../09-uzivatele-db-json-xml#json) nebo [XML](../09-uzivatele-db-json-xml#xml).
@@ -22,9 +23,9 @@ Následně navážeme na [předchozí cvičení](../10-rest-api-pdf), na kterém
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- ukázka obnovy zapomenutého hesla
-- přihlašování pomocí protokolu Oauth
-- volání vzdáleného API
+- [ukázka obnovy zapomenutého hesla](#obnova-zapomenut%C3%A9ho-hesla)
+- [přihlašování pomocí protokolu Oauth](#p%C5%99ihla%C5%A1ov%C3%A1n%C3%AD-pomoc%C3%AD-protokolu-oauth)
+- [volání vzdáleného API](#vol%C3%A1n%C3%AD-vzd%C3%A1len%C3%A9ho-api)
 
 ---
 
