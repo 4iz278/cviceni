@@ -10,7 +10,7 @@ TODO opakování
 
 **Na tomto cvičení nás čeká:**
 - ukázka tvorby API
-- [AJAXová aplikace v PHP]()
+- [AJAXová aplikace v PHP](#ajaxov%C3%A1-aplikace-v-php)
 - [generování PDF](#generov%C3%A1n%C3%AD-pdf)
 
 ---
@@ -35,7 +35,7 @@ TODO AJAX
 
 **Z pohledu PHP části implementace** jde vlastně o volání API (o jehož tvorbě jsme se bavili před chvílí), nebo má PHP skript vracet kousek HTML (ne celou stránku, ale např. jen obsah jednoho odstavce).  
 
-### Ukázka za využití jQuery
+### AJAX za využití jQuery
 :point_right:
 
 Jednou z nejjednodušších variant, jak využívat AJAX na straně prohlížeče, je javascriptová knihovna jQuery. Tu využijeme také v pár následujících ilustračních příkladech.  
@@ -49,6 +49,7 @@ $.getJSON('http://eso.vse.cz/....', function(data){//načtení dat AJAXem s pře
 ```
 
 :blue_book:
+
 Pokud nemáte zkušenosti s javascriptem, mrkněte se na tyto podklady:
 - [podklady k práci s jQuery (z kurzu 4iz268)](https://github.com/4iz268/cviceni/tree/master/09-dom-jquery)
 - [podklady k AJAXu (z kurzu 4iz268)](https://github.com/4iz268/cviceni/tree/master/11-ajax)
