@@ -2,9 +2,25 @@
 
 :no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
 
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 14. a  15. 5. 2020.**
+Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
+
+## Stručná rekapitulace
 :point_right:
 
-TODO opakování
+Úspěšně jsme se dopracovali až na konec semestru a umíme toho už docela dost. Namátkou bychom kromě úplných základů PHP bychom mohli připomenout:
+- zpracování formulářů včetně kontrol a ošetření vstupů,
+- definici tříd a jejich použití v aplikaci,
+- práci se soubory i s databází,
+- či například implementaci uživatelských účtů.
+
+Jenže to nestačí, abychom mohli říct, že umíme psát aplikace v PHP
+
+:point_right:
+
+**Většina nových aplikací v PHP se dnes píše objektově a používá hezké URL.** 
+- vlastně všechny byť jen trochu složitější aplikace
+- i v případě neobjektových aplikací je kladen důraz na oddělení business logiky aplikace od prezentační vrstvy (např. za využití šablonovacího systému)
 
 ---
 
@@ -84,7 +100,6 @@ TODO
 
 TODO
 
-:point_right:
 
 ### MVC aplikace implementované bez frameworku
 :point_right:

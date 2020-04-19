@@ -1,20 +1,5 @@
 # 10. MVC, SEO URL
 
-:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
-
-* Zbývá nám do konce pár semestru pár cvičení, tak je vhodné shrnout, jak na tom jsme...
-    * umíme všechny potřebné jazykové konstrukce v PHP
-    * umíme napsat jednoduchou aplikaci
-    * umíme pracovat se soubory a s databází
-
-  jenže to nestačí, abychom mohli říct, že umíme psát aplikace v PHP
-
-* **většina nových aplikací v PHP se dnes píše objektově**
-    * vlastně všechny, které mají nějakou větší funkcionalitu, než načtení záznamů z DB a jejich zobrazení (co má nějakou administraci atp.)
-    * i v případě neobjektových aplikací je kladen důraz na oddělení business logiky aplikace od prezentační vrstvy (např. za využití šablonovacího systému)
-
----
-
 ## Model-View-Controller, respektive Model-View-Presenter
 * ale **MVC už známe z Javy**, ne?
 * jde o 2 podobné návrhové vzory, které se liší druhem vazeb mezi jednotlivými složkami aplikace
