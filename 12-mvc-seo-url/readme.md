@@ -140,3 +140,23 @@ TODO
 :blue_book:
 - [aplikace Blog implementovaná v MVC bez použití frameworku](./12-blog-mvc)
 - [aplikace Blog implementovaná v Nette](./12-blog-nette) 
+
+---
+
+## Zakončení předmětu
+:point_right:
+
+Jelikož máme poslední cvičení, je vhodné si připomenout, co vše musíte splnit pro úspěšné zakončení tohoto předmětu:
+- absolvovat test (z témat probíraných na přednáškách)
+- napsat a následně obhájit databázovou aplikaci v PHP
+
+Obecné požadavky jsou uvedeny [na webu předmětu](https://4iz278.github.io/zakonceni/). 
+
+### Obhajoby PHP aplikací v letním semestru 2019/2020
+:key: 
+
+**Obhajoby budou probíhat přes MS Teams za následujících podmínek:**
+- k obhajobě je nutné se přihlásit prostřednictvím systém InSIS
+- vaše PHP aplikace musí být dostupná přes internet
+- na začátku obhajoby bude nutné se připojit přes webkameru a pomocí ukázání školní karty či OP prokázat svoji totožnost
+- následně bude potřeba nasdílet vlastní obrazovku s promítnutím aplikace a zdrojového kódu 
