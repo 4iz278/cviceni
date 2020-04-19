@@ -24,7 +24,9 @@ TODO opakování
 - ovlivňuje nastavení serveru pro daný adresář a jeho podadresáře
 - v případě spuštění PHP jako modulu v Apache lze v rámci něj měnit i nastavení PHP
 - zatím jsme tento soubor použili pro jednoduchou HTTP autentifikaci - [viz cvičení 08](../08-uzivatele-maily/08-htpasswd)
-- POZOR: možnosti, které jsou 
+- POZOR: Možnosti, které jsou v .htaccessu dostupné, se liší podle konfigurace serveru.
+    - Pokud je v něm uvedena direktiva, kterou není možné na daném serveru použít, místo daného webu se nám zobrazí buď chyba v konfiguraci serveru, nebo vůbec nic. Pak je variantou postupně povolovat jednotlivé direktivy až k té, která není funkční.
+    - Pokud nemůžeme direktivu měnit, nemůžeme ji v .htaccessu uvést ani v případě, že bychom ji chtěli změnit na hodnotu, kterou už má.  
 
 ### Mod Rewrite
 :point_right:
