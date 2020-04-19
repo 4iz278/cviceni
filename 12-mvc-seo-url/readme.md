@@ -11,16 +11,65 @@ TODO opakování
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- .htaccess (a hezké SEO adresy)
-- objektový přístup k vývoji aplikací, MVC
-- ukázkové objektové aplikace
+- [.htaccess](#htaccess)
+- [objektový přístup k vývoji aplikací, MVC](#objektov%C3%BD-p%C5%99%C3%ADstup-k-v%C3%BDvoji-mvc)
+- [ukázkové objektové aplikace](#mvc-aplikace-implementovan%C3%A9-bez-frameworku)
 
 --- 
 
 ## .htaccess
 :point_right:
 
-TODO
+- jde o konfigurační soubor pro úpravu nastavení serveru Apache (na kterém je PHP ve většině případů provozováno)
+- ovlivňuje nastavení serveru pro daný adresář a jeho podadresáře
+- v případě spuštění PHP jako modulu v Apache lze v rámci něj měnit i nastavení PHP
+- zatím jsme tento soubor použili pro jednoduchou HTTP autentifikaci - [viz cvičení 08](../08-uzivatele-maily/08-htpasswd)
+
+### Mod Rewrite
+:point_right:
+
+Pomocí tohoto módu můžeme serveru zařídit, aby server poslal jako odpověď jiný soubor, než jaký byl uveden v HTTP požadavku.
+- výsledkem vyhodnocení může být buď **přesměrování** (např. z adresy bez *www* na verzi s ní),
+- nebo tzv. **podstrkávání** - tj. varianta, pomocí které se dělají hezké adresy (např. adresa */produkty/produktA* vede ve skutečnosti na PHP skript, který daný produkt načte z databáze a zobrazí jej) 
+
+:point_right:
+
+#### Základní zápis mod rewrite v .htaccessu
+```apache
+RewriteEngine on
+RewriteBase /10-htaccess
+
+RewriteCond selektorPodminky podminka
+RewriteRule pozadovanaUrl vracenySkript [modifikátory]
+```
+
+- část ```RewriteCond``` slouží pro složitější podmínky, např. použitý protokol serveru atp.
+- základní přesměrovávací pravidla se zapisují jen pomocí ```RewriteRule```, v hranatých závorkách se za pravidlem uvádějí tzv. modifikátory
+    - při větším množství se modifikátory oddělují čárkou
+    - doporučené modifikátory
+        - **R** - přesměrování (bez jeho uvedení jde o "podstrkávání" - uživatel se nedozví, že server vrací něco jiného, než je požadováno)
+        - **R=301** - redirect permanent
+        - **QSA** - k výsledné URL bude připojena původní část za otazníkem
+        - **L** - poslední přesměrování v seznamu
+        - **F** - zakázání získání souboru
+
+:blue_book:
+- [příklad .htaccess - SEO URL](./12-htaccess/seo-url)
+- [další příklady rewritu v .htaccessu](./12-htaccess/rewrite/.htaccess)
+- [zabezpečení pomocí rewritu v .htaccessu](./12-htaccess/rewrite-security/.htaccess)
+
+### Další nastavení v .htaccessu
+:point_right:
+
+Kromě hezkých adres se .htaccess používá také k definici HTTP hlaviček, úpravě nastavení PHP, nastavení chybových dokumentů atp. V následujícím seznamu najdete pár příkladů.
+
+:blue_book:
+- [příklad přidání hlaviček do výstupu](./12-htaccess/headers/.htaccess)
+- [příklad konfigurace PHP](./12-htaccess/php/.htaccess)
+- [příklad zapnutí gzip komprese](./12-htaccess/komprese/.htaccess)
+- [příklad zakázání přístupu](./12-htaccess/allow-deny/.htaccess)
+- [příklad chybové dokumenty](./12-htaccess/error-document/.htaccess)
+
 
 ## Objektový přístup k vývoji, MVC
 :point_right:
