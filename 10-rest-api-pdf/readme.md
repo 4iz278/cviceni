@@ -2,14 +2,43 @@
 
 :no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
 
-TODO opakování
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičení 1. 5. 2020, doporučuji ji však ke studiu také studentům z pátečních cvičení.**
+
+## Opakování z předchozího cvičení
+:point_right:
+
+Na minulém cvičení jsme se zabývali víceuživatelským přístupem k aplikaci a také strukturovanými datovými formáty. Co bychom si o tom určitě měli pamatovat?
+
+:point_right:
+
+**Ohledně víceuživatelského přístupu k aplikaci:**
+- u aplikací bychom měli počítat s tím, že je bude využívat více uživatelů v ten samý čas a poku si mohou data přepisovat, měli bychom tento stav ošetřit
+- pokud očekáváme, že si uživatelé budou data spíše prohlížeč, ale málokdy je upravovat, je vhodné použít **optimistické zamykání**
+- pokud očekáváme, že většina uživatelů, kteří si zobrazí daný datový záznam k úpravě, jej nakonec také změní, je vhodné využít **pesimistické zamykání**
+- je vhodné počítat také se situací, kdy uživatel úpravu korektně neukončí (např. prostě jen zavře prohlížeč) - zámek by měl tedy po určité době vypršet    
+
+:point_right:
+
+**Ohledně strukturovaných datových formátů** jsme se bavili o XML a JSONu.
+- **XML**
+    - datový formát, který se podobá HTML
+    - je využíván pro ukládání a výměnu dat (a je z něj odvozena celá řada specifických formátů) 
+    - je možné definovat vlastní elementy a jejich atributy
+    - pro ruční zpracování je z PHP výhodné používat ```SimpleXML```
+    - velmi snadno můžeme používat validaci podle XML schématu, transformaci pomocí XSLT atp.
+- **JSON**
+    - jednoduchý datový formát odvozený od objektové notace v javascriptu
+    - oproti XML má tento formát méně možností, ale je výrazně méně "ukecaný"
+    - z PHP používáme funkce ```json_encode()``` a ```json_decode()```, u objektů můžeme využít rozhraní ```JsonSerializable``` 
+
+Na používání formátů JSON a XML navážeme právě na tomto cvičení, kdy je využijeme pro tvorbu API.
 
 ---
 
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- tvorba REST API
+- [tvorba REST API](#tvorba-rest-api)
 - [AJAXová aplikace v PHP](#ajaxov%C3%A1-aplikace-v-php)
 - [generování PDF](#generov%C3%A1n%C3%AD-pdf)
 
