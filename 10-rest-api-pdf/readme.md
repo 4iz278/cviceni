@@ -9,15 +9,16 @@ TODO opakování
 :point_right:
 
 **Na tomto cvičení nás čeká:**
-- ukázka tvorby API
+- tvorba REST API
 - [AJAXová aplikace v PHP](#ajaxov%C3%A1-aplikace-v-php)
 - [generování PDF](#generov%C3%A1n%C3%AD-pdf)
 
 ---
 
-TODO tvorba API
+## Tvorba REST API
+:point_right:
 
-TODO AJAX
+TODO
 
 
 ## AJAXová aplikace v PHP
@@ -90,6 +91,7 @@ Běžněji se ale využívají metody, jak generovat PDF přímo prostřednictv�
 Všechny uvedené knihovny jdou jednoduše instalovat pomocí composeru, nebo jdou do jednodušších aplikací také přímo stáhnout a načíst ručně.
 
 :blue_book:
-- TODO
+- [příklad mPDF - jednoduchý](./10-mpdf/basic-example.php)
+- [příklad mPDF - vzorová faktura](./10-mpdf/example-invoice)
 - [web mPDF](http://mpdf.github.io/)
 - [web TCPDF](http://www.tcpdf.org/) 
