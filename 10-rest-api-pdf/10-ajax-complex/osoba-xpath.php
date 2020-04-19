@@ -26,7 +26,7 @@ if (count($vysledek)==1){
     }
     echo json_encode($result);
 }else{
-    //nebyla nalezena daná osoba
+    //nebyla nalezena daná osoba - vrátíme odpovídající HTTP chybu
     header("HTTP/1.0 404 Not Found");
     exit();
 }

@@ -9,7 +9,7 @@ if (empty($_GET['id'])){
 
 
 if (!empty($xml->osoba)){
-    foreach ($xml->osoba as $osoba){//projdeme jednotlivé osoby (viz struktura daného souboru)
+    foreach ($xml->osoba as $osoba){//projdeme jednotlivé osoby (viz struktura daného souboru) - hledáme osobu se zadaným ID
 
         if ((string)$osoba['id']==$_GET['id']){
             //našli jsme příslušný obsah
@@ -32,7 +32,7 @@ if (!empty($xml->osoba)){
 if (!empty($result)){
     echo json_encode($result);
 }else{
-    //nebyla nalezena daná osoba
+    //nebyla nalezena daná osoba - vrátíme odpovídající HTTP chybu
     header("HTTP/1.0 404 Not Found");
     exit();
 }
