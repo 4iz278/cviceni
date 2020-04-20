@@ -47,8 +47,18 @@ Na používání formátů JSON a XML navážeme právě na tomto cvičení, kdy
 ## Tvorba REST API
 :point_right:
 
-TODO
+### Ukázka implementace jednoduchého REST API
+:point_right:
 
+V rámci ukázkového příkladu si vytvoříme velmi jednoduchý adresář, který bude dostupný prostřednictvím RESTful API, které bude data poskytovat i přijímat ve formátu JSON.
+- o osobách budeme ukládat vždy jen jejich jméno, e-mail a telefon; data jsou ukládána do 1 tabulky v databázi
+- v aplikaci jsou ukázány všechny základní HTTP metody (tj. GET, POST, PUT i DELETE)
+
+:orange_book:
+- [prezentace s komentovaným postupem řešení](./10-api-persons/prezentace-postup-vyvoje-rest-api.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./10-api-persons)
+
+*K zamyšlení: Zvládli byste do příkladu s API doplnit ověření uživatele pomocí API klíče?* 
 
 ## AJAXová aplikace v PHP
 :point_right:
