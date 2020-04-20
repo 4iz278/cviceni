@@ -190,8 +190,7 @@
         ':id'=>$existingPerson['person_id']
       ]);
 
-      //odeslání údajů o vytvořené osobě
-      $id=$db->lastInsertId();
+      //odeslání údajů o uložené osobě
       $personQuery=$db->prepare('SELECT * FROM persons WHERE person_id=:id LIMIT 1;');
       $personQuery->execute([':id'=>$existingPerson['person_id']]);
 
