@@ -225,4 +225,6 @@ Obecné požadavky jsou uvedeny [na webu předmětu](https://4iz278.github.io/za
 - k obhajobě je nutné se přihlásit prostřednictvím systém InSIS
 - vaše PHP aplikace musí být dostupná přes internet
 - na začátku obhajoby bude nutné se připojit přes webkameru a pomocí ukázání školní karty či OP prokázat svoji totožnost
-- následně bude potřeba nasdílet vlastní obrazovku s promítnutím aplikace a zdrojového kódu 
+- následně bude potřeba nasdílet vlastní obrazovku s promítnutím aplikace a zdrojového kódu
+    - počítejte s tím, že bude nutné v aplikaci během obhajoby provést nějakou menší úpravu - tj. je nutné nasdílení z počítače či notebooku, ne telefonu (abyste mohli kód přímo upravovat)
+- stále je platná možnost případného dodělání či opravy aplikace, ale již k 1. pokusu musí být aplikace pokud možno hotová (tj. ne prázdná stránka s nadpisem) 
