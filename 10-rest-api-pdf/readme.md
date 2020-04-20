@@ -111,8 +111,8 @@ Pokud nemáte zkušenosti s javascriptem, mrkněte se na tyto podklady:
 :point_right:
 
 **K čemu by mohlo být dobré generovat PDF z PHP?**
-    - generování faktur, dodávkových listů, objednávek atp.
-    - exporty dat pro archivaci (u PDF máte uživatel jistotu, že bude všude vypadat stejně)
+- generování faktur, dodávkových listů, objednávek atp.
+- exporty dat pro archivaci (u PDF máte uživatel jistotu, že bude všude vypadat stejně)
     
 :point_right:
 
