@@ -1,7 +1,5 @@
 # 10. REST API, PDF
 
-:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
-
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičení 1. 5. 2020, doporučuji ji však ke studiu také studentům z pátečních cvičení.**
 
 ## Opakování z předchozího cvičení
@@ -54,16 +52,25 @@ Pokud jde o poskytnutí dat naší aplikace aplikacím externím, je obvyklé im
 ### Možné formy API
 :point_right:
 
-TODO
+API je možné realizovat v poměrně rozličné škále variant. Z často používaných lze jmenovat:
+- **REST API** - o tom se budeme bavit na dnešním cvičení 
+- **Web Services (SOAP)**
+    - vzdálené volání funkcí přes web, velmi jednoduše použitelné např. z .NETu
+    - dokumentace dostupných metod i předávaných objektů pomocí WSDL, možnosti autentizace, šifrování atp.
+- **XML-RPC**
+    - jedna ze starších forem API, ve které jsou volány vzdálené funkce (procedury) např. přes HTTP protokol - čímž se vlastně podobá REST API, ale nepracuje se zdroji, ale s funkcemi
+- **GraphQL**
+    - moderní API, umožňující definovat v rámci požadavků také požadovanou strukturu a rozsah dat získaných v odpovědi
+    - často se používá např. ve spojení s Reactem
 
 ### REST API
 :point_right:
-- REST je vlastně architektonickým zdrojem pro tvorbu klient-server aplikací, který velmi často používáme pro tvorbu API
+- **REST je vlastně architektonickým vzorem pro tvorbu klient-server aplikací**, který velmi často používáme pro tvorbu API
     - stranou "server" je vždy ten, kdo poskytuje data (tj. pokud tvoříme vlastní API, bude to naše aplikace; pokud ale používáme cizí API, je naše aplikace v roli klienta)
 - REST API je bezstavové (tj. není závislé na předchozích požadavcích) 
 - obvykle jej používáme prostřednictvím protokolu HTTP
 - REST API není závislé na žádném konkrétním programovacím jazyce (tj. můžeme jej využívat z PHP, Javy, Pythonu, JavaScriptu, C#, ...)
-- API musí být dokumentované!
+- **API musí být dokumentované!**
     - existuje celá řada nástrojů, doporučit mohu např. [Swagger](https://swagger.io/), pro který lze najít i nástroje pro zápis dokumentace API přímo do dokumentačních komentářů v PHP
 
 :point_right:
