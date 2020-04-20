@@ -3,8 +3,7 @@
   $url = 'https://eso.vse.cz/~xname/10-rest-api/person'; //TODO aktualizujte URL k API vytvořenému na minulém cvičení
 
   $personData=json_encode([
-    'name' => 'Eva',
-    'surname' => 'Adamová',
+    'name' => 'Eva Adamová',
     'email' => 'eva.adamova@domena.tld'
   ]);
 
