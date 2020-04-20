@@ -3,7 +3,7 @@
   require_once 'inc/user.php';
 
   if (!empty($_SESSION['user_id'])){
-    //uživatel už je přihlášený, nemá smysl, aby se registroval
+    //uživatel už je přihlášený, nemá smysl, aby se přihlašoval znovu
     header('Location: index.php');
     exit();
   }
