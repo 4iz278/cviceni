@@ -38,6 +38,7 @@ Velké množství aplikací dnes na internetu obvykle nefunguje jako zcela samos
 - kontrola stavu vzdáleného systému,...
 
 :point_right:
+
 Existuje celá řada standardů, na kterých může být API postaveno. Nejčastěji používáme v zásadě 3 (respektive 4) z nich - REST API (či vzdálené volání požadavků přes HTTP), SOAP a QraphQL.
 
 Na tomto cvičení si ukážeme využívání externího REST API, které je velmi populární jak pro svoji jednoduchost, tak také pro snadnost použití nejen z PHP, ale také např. z JavaScriptu.
@@ -56,9 +57,11 @@ Pro vyzkoušení volání můžete využít [API z minulého cvičení](../10-re
 - [příklad využití REST API pomocí file_get_contents()](./11-php-client-file_get_contents.php)  
 
 :point_right:
-**K zamyšlení: Zvládli byste vytvořit PHP skript s formulářem pro přidání nové osoby do adresáře, který využíváme přes API?**
+
+*K zamyšlení: Zvládli byste vytvořit PHP skript s formulářem pro přidání nové osoby do adresáře, který využíváme přes API?*
   
 :blue_book:
+
 Další zdroje:
 - [Web services (SOAP) v PHP manuálu](https://www.php.net/manual/en/book.soap.php)
 - [GraphQL pro PHP](https://graphql.org/code/#php) (ale existuje i celá řada dalších knihoven)
