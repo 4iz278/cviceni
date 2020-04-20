@@ -88,21 +88,21 @@
       <input type="email" name="email" id="email" required class="form-control <?php echo (!empty($errors['email'])?'is-invalid':''); ?>"
              value="<?php echo htmlspecialchars(@$email);?>" />
       <?php
-        echo (!empty($errors['email'])?'<div class="invalid-feedback">'.$errors['name'].'</div>':'');
+        echo (!empty($errors['email'])?'<div class="invalid-feedback">'.$errors['email'].'</div>':'');
       ?>
     </div>
     <div class="form-group">
       <label for="password">Heslo:</label>
       <input type="password" name="password" id="password" required class="form-control <?php echo (!empty($errors['password'])?'is-invalid':''); ?>" />
       <?php
-        echo (!empty($errors['password'])?'<div class="invalid-feedback">'.$errors['name'].'</div>':'');
+        echo (!empty($errors['password'])?'<div class="invalid-feedback">'.$errors['password'].'</div>':'');
       ?>
     </div>
     <div class="form-group">
       <label for="password2">Potvrzení hesla:</label>
       <input type="password" name="password2" id="password2" required class="form-control <?php echo (!empty($errors['password2'])?'is-invalid':''); ?>" />
       <?php
-        echo (!empty($errors['password2'])?'<div class="invalid-feedback">'.$errors['name'].'</div>':'');
+        echo (!empty($errors['password2'])?'<div class="invalid-feedback">'.$errors['password2'].'</div>':'');
       ?>
     </div>
     <button type="submit" class="btn btn-primary">registrovat se</button>
