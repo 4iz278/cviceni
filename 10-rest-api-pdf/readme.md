@@ -47,8 +47,67 @@ Na používání formátů JSON a XML navážeme právě na tomto cvičení, kdy
 ## Tvorba REST API
 :point_right:
 
+V řadě případů narážíme na požadavky, aby naše webová aplikace negenerovala výstup přímo v podobě HTML stránky, ale aby bylo možné s ní komunikovat také z jiných aplikací. Ať již jde o opravdu externí aplikace, nebo jen o zpřístupnění dat pro AJAXové požadavky z prohlížeče.
+
+Pokud jde o poskytnutí dat naší aplikace aplikacím externím, je obvyklé implementovat dokumentované **API**.
+
+### Možné formy API
+:point_right:
+
 TODO
 
+### REST API
+:point_right:
+- REST je vlastně architektonickým zdrojem pro tvorbu klient-server aplikací, který velmi často používáme pro tvorbu API
+    - stranou "server" je vždy ten, kdo poskytuje data (tj. pokud tvoříme vlastní API, bude to naše aplikace; pokud ale používáme cizí API, je naše aplikace v roli klienta)
+- REST API je bezstavové (tj. není závislé na předchozích požadavcích) 
+- obvykle jej používáme prostřednictvím protokolu HTTP
+- REST API není závislé na žádném konkrétním programovacím jazyce (tj. můžeme jej využívat z PHP, Javy, Pythonu, JavaScriptu, C#, ...)
+- API musí být dokumentované!
+    - existuje celá řada nástrojů, doporučit mohu např. [Swagger](https://swagger.io/), pro který lze najít i nástroje pro zápis dokumentace API přímo do dokumentačních komentářů v PHP
+
+:point_right:
+
+**Základní myšlenkou REST API je zpřístupnění dat v podobě zdrojů.**
+- s každým zdrojem můžeme provádět základní operace pro čtení, zápis, aktualizaci a mazání
+- tomu obvykle odpovídá také struktura používaných URL adres (např. ```/api/item/1``` pro zdroj *item* s ID *1*)  
+
+:point_right:
+
+Pro rozlišení typu požadované operace využíváme různé typy HTTP metod:
+- **GET** = požadavek pro načtení konkrétního záznamu či seznamu záznamů
+- **POST** = požadavek na vytvoření a uložení nového záznamu
+- **PUT** = požadavek na úpravu již existujícího záznamu
+- **DELETE** = požadavek na smazání konkrétního záznamu  
+
+:blue_book:
+
+Další zdroje informací:
+- [REST API na zdrojak.cz](https://www.zdrojak.cz/clanky/rest-architektura-pro-webove-api/)
+- [REST API Tutorial](https://restfulapi.net/)
+
+:point_right:
+
+#### Datové formáty pro komunikaci
+
+- pro komunikaci jsou data nejčastěji zasílána ve formátech JSON či XML
+    - a to jak z hlediska odesílání dat ze serveru, tak také pro obdržení vstupů (tj. data posílaná na server nejsou obvykle kódována jako formuláře z prohlížeče)
+- chytřejší REST API umí komunikovat i ve větším množství formátů, přičemž vhodný formát se vybere podle HTTP hlavičky ```Accept```
+- při zasílání odpovědi je nezbytné odeslat ze serveru odpovídající HTTP hlavičku:
+    ```php
+    header("Content-Type: application/json;charset=utf-8"); //budeme odesílat data jako JSON; obdobně by vypadala hlavička pro XML  
+    ```      
+
+:point_right:
+
+#### Autentifikace uživatele API
+
+- **REST API je bezstavové**
+    - nemůžeme tedy používat běžné přihlášení uživatele s tím, že si informaci o přihlášení uložíme do session
+- pro identifikaci uživatelů se nejčastěji používají API klíče (dle dokumentace daného API)
+    - klíč předáváme na server obvykle v proměnné předané metodou GET (např. ```apiKey=xxx```),
+    - nebo jej předáváme v HTTP hlavičce (např. hlavičky ```X-API-Key```, nebo ```Authorization```. 
+- alternativně můžeme využívat také např. HTTP autentifikaci
 
 ### Ukázka implementace jednoduchého REST API
 :point_right:
