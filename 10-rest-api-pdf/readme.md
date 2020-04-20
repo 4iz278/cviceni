@@ -47,6 +47,9 @@ Na používání formátů JSON a XML navážeme právě na tomto cvičení, kdy
 ## Tvorba REST API
 :point_right:
 
+TODO
+
+
 ### Ukázka implementace jednoduchého REST API
 :point_right:
 
@@ -55,8 +58,10 @@ V rámci ukázkového příkladu si vytvoříme velmi jednoduchý adresář, kte
 - v aplikaci jsou ukázány všechny základní HTTP metody (tj. GET, POST, PUT i DELETE)
 
 :orange_book:
-- [prezentace s komentovaným postupem řešení](./10-api-persons/prezentace-postup-vyvoje-rest-api.pptx)
+- [prezentace s komentovaným postupem tvorby API](./10-api-persons/prezentace-postup-vyvoje-rest-api.pptx)
 - [vytvořený zdrojový kód včetně exportu databáze](./10-api-persons)
+
+:point_right:
 
 *K zamyšlení: Zvládli byste do příkladu s API doplnit ověření uživatele pomocí API klíče?* 
 
