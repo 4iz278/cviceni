@@ -229,4 +229,4 @@ Obecné požadavky jsou uvedeny [na webu předmětu](https://4iz278.github.io/za
     - počítejte s tím, že bude nutné v aplikaci během obhajoby provést nějakou menší úpravu - tj. je nutné nasdílení z počítače či notebooku, ne telefonu (abyste mohli kód přímo upravovat)
 - stále je platná možnost případného dodělání či opravy aplikace v rámci opakované obhajoby, ale již k 1. pokusu musí být aplikace pokud možno hotová (tj. ne prázdná stránka s nadpisem)
 - připomínám, že je doporučeno verzovat aplikaci během vývoje systémem GIT
-    - není to povinné, ale pokud budete mít aplikaci v nějakém repozitáři na internetu (např. GitHub, Bitbucket, GitLab...) a bude zřejmé, jak jste na aplikaci postupně pracovali, máte možnost získat k obhajobě 3 bonusové body  
+    - není to povinné, ale pokud budete mít aplikaci v nějakém repozitáři na internetu (např. GitHub, Bitbucket, GitLab... - nemusí jít o veřejný repozitář) a bude zřejmé, jak jste na aplikaci postupně pracovali, máte možnost získat k obhajobě 3 bonusové body  
