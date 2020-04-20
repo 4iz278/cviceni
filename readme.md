@@ -52,13 +52,14 @@ Web předmětu: **http://4iz278.github.io**
   * tvorba API
   * AJAX
   * mPDF 
-11. **[Přihlašování přes OAuth, CURL](./11-oauth-curl)** *(7. 5. 2020)*
+11. **[Přihlašování přes OAuth, CURL](./11-oauth-curl)** *(7. 5. 2020)*  
+  * CURL  
+  * zapomenuté heslo
   * OAuth
-  * CURL
 12. **[MVC, SEO URL](./12-mvc-seo-url)** *(14. a 15. 5. 2020)*   
-  * návrhový vzor MVC
-  * objektová tvorba aplikací
   * .htaccess
+  * návrhový vzor MVC
+  * objektová tvorba aplikací  
 
 ## Co naleznete v tomto úložišti?
 
