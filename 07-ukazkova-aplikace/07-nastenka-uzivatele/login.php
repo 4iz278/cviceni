@@ -45,7 +45,7 @@
       <label for="email">E-mail:</label>
       <input type="email" name="email" id="email" required class="form-control <?php echo ($errors?'is-invalid':''); ?>" value="<?php echo htmlspecialchars(@$_POST['email'])?>"/>
       <?php
-        echo (!empty($errors['name'])?'<div class="invalid-feedback">Neplatná kombinace přihlašovacího e-mailu a hesla.</div>':'');
+        echo ($errors?'<div class="invalid-feedback">Neplatná kombinace přihlašovacího e-mailu a hesla.</div>':'');
       ?>
     </div>
     <div class="form-group">
