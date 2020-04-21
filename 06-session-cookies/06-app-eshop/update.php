@@ -11,7 +11,7 @@
 
   if ($_SERVER["REQUEST_METHOD"]=="POST") {//kontrolujeme, jestli byl požadavek poslán metodou POST
 
-    //TODO tadz by asi měly být nějaké kontroly ;)
+    //TODO tady by asi měly být nějaké kontroly ;)
 
     $stmt = $db->prepare("UPDATE goods SET name=?, description=?, price=? WHERE id=? LIMIT 1;");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
     $stmt->execute(array($_POST['name'], $_POST['description'], (float)$_POST['price'], $_POST['id']));//naplnění předchozího statementu daty
