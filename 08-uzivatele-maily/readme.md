@@ -369,15 +369,15 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     - [user required.php](./08-app-eshop/user_required.php) - soubor pro require, vynucení přihlášení uživatele, autentizace uložená v SESSION
     - [admin required.php](./08-app-eshop/admin_required.php) - soubor pro require, vynucení přihlášení administrátora, ukázka HTTP autentizace
 - část pro přihlášeného uživatele:
-    - [index.php](./08-app-eshop/index.php) - výpis zboží v e-shopu.
+    - [index.php](./08-app-eshop/index.php) - výpis zboží v e-shopu
     - [buy.php](./08-app-eshop/buy.php) - přidání zboží do košíku podle jeho ID
     - [cart.php](./08-app-eshop/cart.php) - výpis zboží přidaného do košíku
     - [remove.php](./08-app-eshop/remove.php) - smazání zboží z košíku
     - [signout.php](./08-app-eshop/signout.php) - odhlášení, zruší session
 - část pro administátora:
-    - [new.php](./08-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi.
-    - [delete.php](./08-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi.
-    - [update.php](./08-app-eshop/update.php) - úprava zboží v e-shopu. 
+    - [new.php](./08-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
+    - [delete.php](./08-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
+    - [update.php](./08-app-eshop/update.php) - úprava zboží v e-shopu 
 
 :point_right:
 
