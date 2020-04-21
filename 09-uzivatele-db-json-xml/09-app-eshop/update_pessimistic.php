@@ -7,7 +7,7 @@
 
   #region načtení zboží k aktualizaci a výpočet zámku pro pessimistic lock
   //výpočet zámku: ve výsledku máme sloupec edit_expired s boolean hodnotou danou ověřením, jestli již zámek vypršel (tj. jestli je starší než 5 minut)
-  $stmt = $db->prepare('SELECT goods.*, users.email, now() > last_edit_starts_at + INTERVAL 5 MINUTE AS edit_expired FROM goods LEFT JOIN users ON users.id=goods.last_edit_starts_by_id WHERE id=:id');
+  $stmt = $db->prepare('SELECT goods.*, users.email, now() > last_edit_starts_at + INTERVAL 5 MINUTE AS edit_expired FROM goods LEFT JOIN users ON users.id=goods.last_edit_starts_by_user WHERE id=:id');
   $stmt->execute([':id'=>@$_REQUEST['id']]);
   $goods = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -33,8 +33,8 @@
    */
 
   if (
-    !empty($goods["last_edit_starts_by_id"]) && 								//toto zboží je právě upravováno
-    $goods["last_edit_starts_by_id"] != $currentUser['id'] && 	//úpravu provádí jiný než aktuálně přihlášený uživatel
+    !empty($goods["last_edit_starts_by_user"]) && 								//toto zboží je právě upravováno
+    $goods["last_edit_starts_by_user"] != $currentUser['id'] && 	//úpravu provádí jiný než aktuálně přihlášený uživatel
     !$goods['edit_expired'] 																	  //zámek ještě nevypršel
   ){
     //zobrazíme uživateli informaci o tom, kdo zboží aktuálně upravuje
@@ -42,7 +42,7 @@
   }
 
   //pokud není dané zboží zamčené k úpravě, nebo zámek vypršel, nastavíme zámek nový
-  $stmt = $db->prepare("UPDATE goods SET last_edit_starts_at=NOW(), last_edit_starts_by_id=:user WHERE id=:id");
+  $stmt = $db->prepare("UPDATE goods SET last_edit_starts_at=NOW(), last_edit_starts_by_user=:user WHERE id=:id");
   $stmt->execute([':user'=> $currentUser["id"], ':id'=> $_GET['id']]);
   #endregion vyřešení pesimistického zámku pro úpravu
 
@@ -58,7 +58,7 @@
     if (empty($formErrors)){
       #region uložení zboží do DB
 	    //při uložení zboží kromě změněných dat také vynulujeme zámky nastavené pro editaci (aby mohl zboží případně editovat další uživatel)
-      $stmt = $db->prepare('UPDATE goods SET name=:name, description=:description, price=:price, last_edit_starts_by_id=NULL, last_edit_starts_at=NULL WHERE id=:id LIMIT 1;');
+      $stmt = $db->prepare('UPDATE goods SET name=:name, description=:description, price=:price, last_edit_starts_by_user=NULL, last_edit_starts_at=NULL WHERE id=:id LIMIT 1;');
       $stmt->execute([
         ':name'=> $name,
         ':description'=> $description,

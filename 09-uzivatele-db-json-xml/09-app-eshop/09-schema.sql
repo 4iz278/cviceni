@@ -1,34 +1,82 @@
-CREATE TABLE users
-(
-	id SERIAL PRIMARY KEY,
-	email VARCHAR(255) NOT NULL,
-	password VARCHAR(255) NOT NULL
-)
-CHARACTER SET utf8
-;
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
 
-CREATE UNIQUE INDEX in_users_email ON users(email);
+--
+-- Databáze: `xname`
+--
 
+-- --------------------------------------------------------
 
---mysql auto update timestamp: http://dev.mysql.com/doc/refman/5.5/en/timestamp-initialization.html
---pokud je v tabulce pole timestamp, automaticky se aktualizuje na aktualni cast, pokud se zmeni jakakoli jina hodnota v radku
---default hodnota je "on update CURRENT_TIMESTAMP"
+--
+-- Struktura tabulky `goods`
+--
 
+CREATE TABLE `goods` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `last_updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `last_edit_starts_at` timestamp NULL DEFAULT NULL,
+  `last_edit_starts_by_user` int(10) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE goods
-(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(255),
-	description TEXT,
-	price NUMERIC(10,2) NOT NULL DEFAULT 0,
-	
-	last_updated_at TIMESTAMP,
-	
-	last_edit_starts_at TIMESTAMP,
-	last_edit_starts_by_id BIGINT(20) UNSIGNED,
-	
-	FOREIGN KEY (last_edit_starts_by_id) REFERENCES users(id)
-	
-)
-CHARACTER SET utf8
-;
+-- --------------------------------------------------------
+
+--
+-- Struktura tabulky `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` set('user','admin') NOT NULL DEFAULT 'admin'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Klíče pro exportované tabulky
+--
+
+--
+-- Klíče pro tabulku `goods`
+--
+ALTER TABLE `goods`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `last_edit_starts_by_user` (`last_edit_starts_by_user`);
+
+--
+-- Klíče pro tabulku `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT pro tabulky
+--
+
+--
+-- AUTO_INCREMENT pro tabulku `goods`
+--
+ALTER TABLE `goods`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pro tabulku `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Omezení pro exportované tabulky
+--
+
+--
+-- Omezení pro tabulku `goods`
+--
+ALTER TABLE `goods`
+  ADD CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`last_edit_starts_by_user`) REFERENCES `users` (`id`) ON UPDATE CASCADE;
+COMMIT;
