@@ -39,11 +39,11 @@
         ':id'=> $goods['id']
       ]);
       #endregion uložení zboží do DB
-    }
 
-    //přesměrování na homepage
-    header('Location: index.php');
-    exit();
+      //přesměrování na homepage
+      header('Location: index.php');
+      exit();
+    }
   }
 ?><!DOCTYPE html>
 <html lang="en">
