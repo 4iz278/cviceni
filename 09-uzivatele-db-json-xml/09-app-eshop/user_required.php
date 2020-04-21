@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * Soubor pro ověření přihlášení normálních uživatel vůči DB (info o přihlášení ukládáme v $_SESSION)
+	 * Soubor pro ověření přihlášení uživatele vůči DB (info o přihlášení ukládáme v $_SESSION)
 	 */
 
 	session_start();
