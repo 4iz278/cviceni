@@ -77,7 +77,7 @@ TODO
 V rámci ukázkového příkladu si vytvoříme základ aplikace s lokální autentizací uživatelů - tj. s údaji uloženými v databázi a přihlášením uživatele pomocí SESSION.
 
 Aplikace bude obsahovat:
-- formuláře přo přihlášení existujícího uživatele a registraci uživatele nového
+- formuláře pro přihlášení existujícího uživatele a registraci uživatele nového
 - možnost odhlášení a zobrazení informace o tom, zda je uživatel přihlášen
 - možnost poslání požadavku na změnu hesla, zaslání příslušného odkazu e-mailem a možnost změnit zapomenuté heslo na nové
 
