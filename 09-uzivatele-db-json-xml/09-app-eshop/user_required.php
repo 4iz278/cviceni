@@ -13,7 +13,7 @@
 
 	//v session je user id uživatele, tak ho zkusíme načíst z DB
 	$stmt = $db->prepare("SELECT * FROM users WHERE id = ? LIMIT 1"); //limit 1 jen výkonnostní optimalizací :)
-	$stmt->execute(array($_SESSION["user_id"]));
+	$stmt->execute([$_SESSION["user_id"]]);
 
   //načteme záznam z DB do proměnné $currentUser, která následně bude dostupná v celé aplikaci
 	$currentUser = $stmt->fetch(PDO::FETCH_ASSOC);
