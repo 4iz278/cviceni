@@ -105,6 +105,11 @@ Další zdroje informací:
     header("Content-Type: application/json;charset=utf-8"); //budeme odesílat data jako JSON; obdobně by vypadala hlavička pro XML  
     ```      
 
+- pokud chceme, aby API bylo možné používat také z JavaScriptu ze stránek na jiných doménách, je potřeba ze serveru posílat hlavičku:
+    ```
+    Access-Control-Allow-Origin: *
+    ```
+
 :point_right:
 
 #### Autentifikace uživatele API
