@@ -68,7 +68,8 @@
             <td><?php echo htmlspecialchars($row['description']); ?></td>
 
             <td class="center">
-              <a href='update.php?id=<?php echo $row['id']; ?>'>Edit</a> |
+              <a href='update_optimistic.php?id=<?php echo $row['id']; ?>'>Edit (optimistic lock)</a> |
+              <a href='update_pessimistic.php?id=<?php echo $row['id']; ?>'>Edit (pessimistic lock)</a> |
               <a href='delete.php?id=<?php echo $row['id']; ?>'>Delete</a>
             </td>
           </tr>
