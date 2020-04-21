@@ -71,6 +71,19 @@ Další zdroje:
 
 TODO 
 
+### Ukázka implementace přihlašování včetně možnosti obnovy zapomenutého hesla
+:point_right:
+
+V rámci ukázkového příkladu si vytvoříme základ aplikace s lokální autentizací uživatelů - tj. s údaji uloženými v databázi a přihlášením uživatele pomocí SESSION.
+
+Aplikace bude obsahovat:
+- formuláře přo přihlášení existujícího uživatele a registraci uživatele nového
+- možnost odhlášení a zobrazení informace o tom, zda je uživatel přihlášen
+- možnost poslání požadavku na změnu hesla, zaslání příslušného odkazu e-mailem a možnost změnit zapomenuté heslo na nové
+
+:orange_book:
+- [prezentace s komentovaným postupem implementace přihlašování a obnovy zapomenutého hesla](./11-local-login/prezentace-postup-vyvoje-local-login.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./11-local-login)
 
 ## Přihlašování pomocí protokolu OAuth
 :point_right:
