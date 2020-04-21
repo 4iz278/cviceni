@@ -77,7 +77,7 @@
 		
 		<input type="hidden" name="id" value="<?php echo $goods['id']; ?>" />
 		
-		<input type="submit" value="Save" /> or <a href="/">Cancel</a>
+		<input type="submit" value="Save" /> or <a href="index.php">Cancel</a>
 		
 	</form>
 
