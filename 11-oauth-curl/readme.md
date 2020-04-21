@@ -69,7 +69,18 @@ Další zdroje:
 ## Obnova zapomenutého hesla
 :point_right:
 
-TODO 
+Možnost obnovy zapomenutého hesla je jedním z obvyklých požadavků kladených na aplikace, do kterých se musejí uživatelé přihlašovat. Jak již ale víme, všechny přijatelně napsané aplikace mají místo původních hesel uloženy v databázi jen jejich hashe, ze kterých nejde původní hesla rekonstruovat. Aplikace tedy nemůže odeslat uživateli původní heslo, ale může mu nabídnout nastavení hesla nového. Ideálně tak, aby si jej vybral dotyčný uživatel sám.
+
+:point_right:
+
+**Obvyklý postup obnovy hesla:**
+1. uživatel zjistí, že mu nejde se do aplikace přihlásit => pravděpodobně zapomněl heslo
+2. uživatel vyplní formulář s požadavkem na obnovu zapomenutého hesla
+3. aplikace musí nějak ověřit identitu uživatele
+    - u běžných aplikací je vygenerován dočasný kód na změnu hesla, který je uživateli zaslán e-mailem (tj. je ověřeno, že uživatel má přístup do dané e-mailové schránky); kód má omezenou platnost (časově a počtem použití)
+    - u kritičtějších aplikací je očekávána větší úroveň zabezpečení - z automatizovaných lze využít např. zaslání dalšího kódu SMSkou atp., ale lze se setkat i s ověřením identity reálnými pracovníky
+4. aplikace uživateli heslo rovnou změní na nějaké dočasné, nebo uživatel využije odkaz na změnu hesla a nastaví si jej sám
+    - druhá varianta je lepší, neboť tím nezpůsobíme problémy uživatelům, kterým se někdo snaží do účtu neúspěšně nabourat (tj. někdo odeslal požadavek na změnu hesla bez vědomí uživatele), nebo kteří si později na původní heslo vzpomenou
 
 ### Ukázka implementace přihlašování včetně možnosti obnovy zapomenutého hesla
 :point_right:
