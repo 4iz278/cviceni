@@ -33,7 +33,7 @@ CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` set('user','admin') NOT NULL DEFAULT 'admin'
+  `role` set('user','admin') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
