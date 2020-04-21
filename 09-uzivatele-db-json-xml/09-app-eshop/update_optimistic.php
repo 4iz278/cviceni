@@ -11,6 +11,7 @@
   $goods = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if (!$goods){
+    //pokud zboří neexistuje (např. bylo mezitím smazáno), nepokračujeme dál - i když chyba by určitě mohla být vypsána hezčeji :)
     die("Unable to find goods!");
   }
 
