@@ -53,7 +53,7 @@
 
       <!--TODO tady by bylo vhodné další pole pro potvrzení správnosti hesla -->
 	
-			<input type="submit" value="Create Account"> or <a href="/index.php">Cancel</a>
+			<input type="submit" value="Create Account"> or <a href="index.php">Cancel</a>
 		</form>
 	
   </body>
