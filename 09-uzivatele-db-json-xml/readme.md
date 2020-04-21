@@ -20,6 +20,31 @@ TODO
 
 ---
 
+## Práce s datem a časem
+:point_right:
+
+TODO
+
+## Víceuživatelský přístup k databázi
+:point_right:
+
+TODO
+
+### Ukázková aplikace se zamykáním záznamů
+:point_right:
+
+TODO
+
+Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
+
+:blue_book:
+- postup zprovoznění ukázkové aplikace:
+    1. stáhněte si celou složku aplikace ([09-app-eshop](./09-app-eshop)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./09-app-eshop/09-schema.sql) (pozor, schéma není stejné jako u předchozí verze e-shopu)
+    3. nahrajte do MariaDB [ukázková data](./09-app-eshop/09-data.sql)
+    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./09-app-eshop/db.php)
+
+TODO
 
 ## JSON a XML
 :point_right:
@@ -148,10 +173,26 @@ if (!empty($xml->osoba)){
 }
 ```
 
-
 :blue_book:
 - [příklad SimpleXML](./09-xml/simplexml.php)
 - [příklad DOMDocument](./09-xml/domdocument.php)
 - [příklad validace](./09-xml/validace.php)
 - [příklad XSL transformace](./09-xml/transformace.php)
 - [příklad RSS čtečka](./09-xml/rss-reader.php)
+
+## Domácí úkol
+:house:
+> Domácí úkol vychází z ukázkového e-shopu ve verzi, na které jsme si na dnešním cvičení vysvětlovali zamykání záznamů při víceuživatelském přístupu.
+>
+> **Nezbytná příprava:**
+> 1. stáhněte si [zdrojové kódy](./09-app-eshop)
+> 2. nahrajte zdrojový kód aplikace na server eso.vse.cz
+> 3. naimportujte do databáze [export struktury databáze](./09-app-eshop/09-schema.sql) i [ukázková data](./09-app-eshop/09-data.sql)
+>
+> **Váš úkol:**
+>
+> Upravte řešení optimistického zamykání záznamů (v souboru [update_optimistic.php](./09-app-eshop/update_optimistic.php)) tak, aby aplikace při zjištění konfliktu zobrazila změněná data a zeptala se uživatele, zda si je přeje přepsat daty svými.
+>
+> **Způsob a termín odevzdání:**
+>
+> Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 1. 5. 2020 23:59.
