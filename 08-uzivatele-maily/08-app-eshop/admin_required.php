@@ -19,7 +19,7 @@
 
   if (!$validated) {
     //uživatel není přihlášený => odešleme HTTP hlavičky pro výzvu k přihlášení
-    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('WWW-Authenticate: Basic realm="Admin login"');
     header('HTTP/1.0 401 Unauthorized');
     die ("Unauthorized");
   }
