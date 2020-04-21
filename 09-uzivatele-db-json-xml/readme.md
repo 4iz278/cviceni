@@ -33,7 +33,11 @@ TODO
 ### Ukázková aplikace se zamykáním záznamů
 :point_right:
 
-TODO
+Pro ukázku použití zamykání záznamů při víceuživatelském přístupu se podívejme na další verzi aplikace jednoduchého e-shopu, která v tomto případě jak optimistickým, tak také pesimistickým zámkem při editace zboží.
+- stejně jako ve verzi z minulého cvičení využívá aplikace autentizaci uživatelů dle údajů v databázi, informace o přihlášení je uložena v session
+- oproti minulému cvičení je i administrátor ověřován podle údajů v databázi
+    - pro testování je v aplikaci připraven uživatel s e-mailem ```admin@eshop.tld``` a heslem ```admin```, ale příslušnou roli můžete v databázi přidat i libovolnému jinému uživateli 
+- aplikace nemá ošetřené vstupy (prázdné heslo atp), pouze zamezuje SQL inject útoku - DIY :)   
 
 Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 
@@ -43,8 +47,24 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     2. nahrajte do MariaDB [strukturu databáze](./09-app-eshop/09-schema.sql) (pozor, schéma není stejné jako u předchozí verze e-shopu)
     3. nahrajte do MariaDB [ukázková data](./09-app-eshop/09-data.sql)
     4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./09-app-eshop/db.php)
+- část pro nepřihlášeného uživatele/databázová autentizace:
+    - [signup.php](./09-app-eshop/signup.php) - registrace nového uživatele, ukázka práce s funkcí password_hash
+    - [signin.php](./09-app-eshop/signin.php) - přihlášení existujícího uživatele, ukázka práce s funkcí password_verify
+- část pro autorizaci a autentizaci:
+    - [user required.php](./09-app-eshop/user_required.php) - soubor pro require, vynucení přihlášení uživatele, autentizace uložená v SESSION
+    - [admin required.php](./09-app-eshop/admin_required.php) - soubor pro require, ověřuje, zda je přihlášený uživatel v roli "admin" (jde vlastně o rozšíření souboru user_required.pph)    
+- část pro přihlášeného uživatele:
+    - [index.php](./09-app-eshop/index.php) - výpis zboží v e-shopu
+    - [buy.php](./09-app-eshop/buy.php) - přidání zboží do košíku podle jeho ID
+    - [cart.php](./09-app-eshop/cart.php) - výpis zboží přidaného do košíku
+    - [remove.php](./09-app-eshop/remove.php) - smazání zboží z košíku
+    - [signout.php](./09-app-eshop/signout.php) - odhlášení, zruší session
+- část pro administátora:
+    - [new.php](./09-app-eshop/new.php) - přidání nového zboží do e-shopu, začne se nabízet ke koupi
+    - [delete.php](./09-app-eshop/delete.php) - smazání zboží z e-shopu, přestane se nabízet ke koupi
+    - [update_optimistic.php](./09-app-eshop/update_optimistic.php) - **úprava zboží v e-shopu s optimistickým zamykáním záznamů**
+    - [update_pessimistic.php](./09-app-eshop/update_pessimistic.php) - **úprava zboží v e-shopu s pesimistickým zamykáním záznamů** 
 
-TODO
 
 ## JSON a XML
 :point_right:
