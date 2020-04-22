@@ -74,7 +74,7 @@ $timestamp = strtotime('2020-04-22 10:00:00');
 //funkce pro naformátování data do požadovaného tvaru
 echo date('d.m.Y H:i:s', $timestamp);
 ```
-**Objektový přístup k datu a času***
+**Objektový přístup k datu a času**
 
 Objekty představující časové údaje používáme zejména v případě, kdy chceme používat kontrolu datových typů u funkcí/metod, nebo používáme objektově-relační mapování při ukládání dat do databáze.
 
@@ -94,7 +94,8 @@ $date = DateTime::createFromFormat('Y-m-d', '2020-04-22');
 Funkcí i tříd pracujících pro práci s datem a časem existuje poměrně velké množství, podrobněji si je představíme v následujících 2 ukázkových příkladech. 
 
 :blue_book:
-- TODO
+- [příklad použití funkcí pro práci s datem a časem](./09-datetime-functions.php)
+- [příklad použití objektů pro práci s datem a časem](./09-datetime-objects.php)
 - [funkce date() v PHP manuálu](https://www.php.net/manual/en/function.date.php)
 - [Class DateTime v PHP manuálu](https://www.php.net/manual/en/class.datetime.php)
 - [PHP Date/Time Functions na w3schols.com](https://www.w3schools.com/php/php_ref_date.asp)
