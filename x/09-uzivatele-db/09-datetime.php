@@ -2,16 +2,16 @@
 	
 # ukazka funkci pro praci s datem/casem
 
-# http://php.net/manual/en/intro.datetime.php - ˙vod do pr·ce s datem/Ëasem v PHP.
+# http://php.net/manual/en/intro.datetime.php - √∫vod do pr√°ce s datem/ƒçasem v PHP.
 # http://php.net/manual/en/function.date.php - funkce date.
-# http://php.net/manual/en/function.date-default-timezone-set.php - nastavenÌ default ËasovÈ zÛny
-# http://php.net/manual/en/ref.datetime.php - funkce pro pr·ci s datem/Ëasem v PHP.
-# http://php.net/manual/en/class.dateinterval.php - pr·ce s intervaly data/Ëasu v PHP.
-# http://php.net/manual/en/timezones.php - podporovanÈ ËasovÈ zÛny v PHP (naπe je **Europe/Prague**)
-# http://php.net/manual/en/datetime.add.php - sËÌt·nÌ data a Ëasu
-# http://php.net/manual/en/function.date-create.php - vytvo¯enÌ objektu data a Ëasu
-# http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvo¯enÌ intervalu (objekt pro sËÌt·nÌ k objektu data/Ëasu) z ¯etÏzce
-# http://php.net/manual/en/function.time.php - aktu·lnÌ Ëas
+# http://php.net/manual/en/function.date-default-timezone-set.php - nastaven√≠ default ƒçasov√© z√≥ny
+# http://php.net/manual/en/ref.datetime.php - funkce pro pr√°ci s datem/ƒçasem v PHP.
+# http://php.net/manual/en/class.dateinterval.php - pr√°ce s intervaly data/ƒçasu v PHP.
+# http://php.net/manual/en/timezones.php - podporovan√© ƒçasov√© z√≥ny v PHP (naƒÖe je **Europe/Prague**)
+# http://php.net/manual/en/datetime.add.php - sƒç√≠t√°n√≠ data a ƒçasu
+# http://php.net/manual/en/function.date-create.php - vytvo≈ôen√≠ objektu data a ƒçasu
+# http://php.net/manual/en/function.date-interval-create-from-date-string.php - vytvo≈ôen√≠ intervalu (objekt pro sƒç√≠t√°n√≠ k objektu data/ƒçasu) z ≈ôetƒõzce
+# http://php.net/manual/en/function.time.php - aktu√°ln√≠ ƒças
 
 # casovou zonu jsme uz nastavili v souboru .htaccess (na Europe/Prague), takhle ji muzeme zmenit treba na UTC
 date_default_timezone_set('Europe/Prague');
@@ -27,17 +27,17 @@ echo date(DATE_W3C);
 
 # dalsi formaty:
 
-# DATE_ATOM - Atom (example: 2005-08-15T15:52:01+00:00), form·t Y-m-d\TH:i:sP
-# DATE_COOKIE - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC), form·t l, d-M-Y H:i:s T
-# DATE_ISO8601 - ISO-8601 (example: 2005-08-15T15:52:01+0000), form·t Y-m-d\TH:i:sO
-# DATE_RFC822 - RFC 822 (example: Mon, 15 Aug 05 15:52:01 +0000), form·t D, d M y H:i:s O
-# DATE_RFC850 - RFC 850 (example: Monday, 15-Aug-05 15:52:01 UTC), form·t l, d-M-y H:i:s T
-# DATE_RFC1036 - RFC 1036 (example: Mon, 15 Aug 05 15:52:01 +0000), form·t D, d M y H:i:s O
-# DATE_RFC1123 - RFC 1123 (example: Mon, 15 Aug 2005 15:52:01 +0000), form·t D, d M Y H:i:s O
-# DATE_RFC2822 - RFC 2822 (example: Mon, 15 Aug 2005 15:52:01 +0000), form·t D, d M Y H:i:s O
-# DATE_RFC3339 - RFC 3339 (example: 2005-08-15T15:52:01+00:00) - stejn˝ form·t jako ATOM
-# DATE_RSS - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000), form·t D, d M Y H:i:s O
-# DATE_W3C - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00), form·t Y-m-d\TH:i:sP
+# DATE_ATOM - Atom (example: 2005-08-15T15:52:01+00:00), form√°t Y-m-d\TH:i:sP
+# DATE_COOKIE - HTTP Cookies (example: Monday, 15-Aug-2005 15:52:01 UTC), form√°t l, d-M-Y H:i:s T
+# DATE_ISO8601 - ISO-8601 (example: 2005-08-15T15:52:01+0000), form√°t Y-m-d\TH:i:sO
+# DATE_RFC822 - RFC 822 (example: Mon, 15 Aug 05 15:52:01 +0000), form√°t D, d M y H:i:s O
+# DATE_RFC850 - RFC 850 (example: Monday, 15-Aug-05 15:52:01 UTC), form√°t l, d-M-y H:i:s T
+# DATE_RFC1036 - RFC 1036 (example: Mon, 15 Aug 05 15:52:01 +0000), form√°t D, d M y H:i:s O
+# DATE_RFC1123 - RFC 1123 (example: Mon, 15 Aug 2005 15:52:01 +0000), form√°t D, d M Y H:i:s O
+# DATE_RFC2822 - RFC 2822 (example: Mon, 15 Aug 2005 15:52:01 +0000), form√°t D, d M Y H:i:s O
+# DATE_RFC3339 - RFC 3339 (example: 2005-08-15T15:52:01+00:00) - stejn√Ω form√°t jako ATOM
+# DATE_RSS - RSS (example: Mon, 15 Aug 2005 15:52:01 +0000), form√°t D, d M Y H:i:s O
+# DATE_W3C - World Wide Web Consortium (example: 2005-08-15T15:52:01+00:00), form√°t Y-m-d\TH:i:sP
 
 echo "<br>";
 
