@@ -35,7 +35,7 @@ Ohledně **posílání mailů** byste měli vědět, že:
 - strukturované datové formáty
     - [JSON](#json)
     - [XML](#xml)
-- [zadání domácího úkolu](#dom%C3%A1c%C3%AD-%C3%BAkol) (za maximálně 3 body)
+- [zadání domácího úkolu](#dom%C3%A1c%C3%AD-%C3%BAkol)
 
 ---
 
