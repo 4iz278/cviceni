@@ -1,0 +1,16 @@
+{
+	"name": "vojir/example-login",
+	"description": "Ukázka přihlašování",
+	"type": "project",
+	"require": {
+		"php": ">= 7.2",
+		"phpmailer/phpmailer": "^6.1",
+		"facebook/graph-sdk": "^5.7"
+	},
+	"minimum-stability": "stable",
+	"config": {
+		"platform": {
+			"php": "7.2"
+		}
+	}
+}
