@@ -1,9 +1,4 @@
-# 9. Uživatelé a DB, víceuživatelský přístup, práce s datem/časem, OAuth
-
 :no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry:
-
-Do našeho e-shopu přidáme zamykání záznamů pro případ, kdyby jeden záznam potřebovalo upravovat více uživatelů najednou.
-Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme se přihlásit se do aplikace pomocí Facebooku (OAuth protokol).
 
 ## 1. Zdroje pro cvičení:
 
@@ -19,18 +14,6 @@ Dále se naučíme pracovat s některými funkcemi pro datum a čas a naučíme 
 * http://php.net/manual/en/function.time.php - aktuální čas
 * Facebook PHP SDK: https://developers.facebook.com/docs/reference/php
 * Facebook PHP SDK, přihlášení přes OAuth: https://developers.facebook.com/docs/php/howto/example_facebook_login
-
-### Poznámky a otázky k aplikaci
-
-* **Optimistic lock = optimistické zamykání** - více uživatelů může začít měnit stejný záznam, ale předpokládáme, že nakonec se záznam nezmění. Při uložení zkontrolujeme čas poslední aktualizace a pokud se změnil od doby, kdy jsme začali záznam editovat (=záznam byl v mezičase upraven někým jiným), nepovolíme uložení. Není velký overkill pro systém. Má smysl v případě, pokud víme, že uživatelé začnou úpravu záznamu, ale většinou nakonec nic nezmění (záznamy se mění jen sporadicky). Viz soubor [update optimistic](./09-app/update_optimistic.php).
-* **Pessimistic lock = pesimistické zamykání** - při začátku editace záznamu zamkneme záznam pro všechny ostatní uživatele. Ostatní uživatelé musí počkat, než dokončíme editaci. Velký overkill pro systém. Má smysl v případě, že většina pokusů o úpravu záznamu skončí jeho změnou (záznamy se aktualizují často). Viz soubor [update pessimistic](./09-app/update_pessimistic.php).
-
-* **Otázky:**
-  * Jaký způsob zamykání byste zvolili pro vaši semestrální práci (pokud již máte téma) a proč?
-  * Musíme zamykání záznamů použít vždy? Kdy ano a kdy ne?
-  * Jak se dá vyřešit v aplikaci konflikt v případě použití optimistického zámku? Jak se může aplikace zachovat?
-  * Ukázka optimistického zamykání [update optimistic](./09-app/update_optimistic.php) používá předání data a času poslední editace přes formulářové hidden pole *last_updated_at*. Tato data však mohou být při odeslání formuláře změněna/podstrčena uživatelem. Jak se jde proti tomu bránit? Má smysl to ošetřovat? Kdy ano/ne?
-
 
 ## 6. Práce s datem/časem v PHP
 * Před voláním [PHP funkcí pro datum a čas](http://php.net/manual/en/ref.datetime.php) musíme nastavit časovou zónu, jinak PHP bude vyhazovat varování - buď funkcí [date_default_timezone_set](http://php.net/manual/en/function.date-default-timezone-set.php), nebo INI nastavením *date.timezone* (viz soubor [.htaccess](./.htaccess) a nastavení *php_value date.timezone 'Europe/Prague'*, případně globálně v souboru *php.ini*.

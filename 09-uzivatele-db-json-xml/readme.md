@@ -5,7 +5,7 @@
 ## Opakování z předchozího cvičení
 :point_right:
 
-Na předchozím cvičení jsme se zabývali autentizací a autorizací uživatelů a zasíláním e-mailů. Na tyto znalosti budeme navazovat jak na dnešním cvičení, tak na cvičení 11. Pojďme si to tedy trochu připomenout.
+Na [předchozím cvičení](../08-uzivatele-maily) jsme se zabývali autentizací a autorizací uživatelů a zasíláním e-mailů. Na tyto znalosti budeme navazovat jak na dnešním cvičení, tak na [cvičení 11](../11-oauth-curl). Pojďme si to tedy trochu připomenout.
 
 :point_right:
 
@@ -47,7 +47,37 @@ TODO
 ## Víceuživatelský přístup k databázi
 :point_right:
 
-TODO
+Webové aplikace jsou samozřejmě určeny pro větší množtví uživatelů, kteří je mohou používat ve stejný čas. Otázka, kterou si ale musíme při tvorbě aplikace položit, je ta, zda mohou uživatelé upravovat stejná data (např. administrátoři e-shopu mohou spravovat zboží, objednávky atp.), či nikoliv (např. každý uživatel může upravovat svůj profil).
+
+V případě, že existuje riziko, že bude chtít najednou upravovat více uživatelů jedna a ta samá data, měli bychom v aplikaci implementovat **zamykání záznamů**.
+
+### Typy zámků 
+:point_right:
+
+V aplikaci můžeme využít buď optimistické, nebo pesimistické zamykání záznamů. Vybereme si z nich podle toho, zda očekáváme, že každý uživatel, který si data otevře k úpravě, nějakou úpravu opravdu provede.
+Pojďme si je tedy blíže představit.
+
+:point_right:
+
+#### Optimistic lock = optimistické zamykání
+Více uživatelů může najednou začít upravovat stejný záznam, ale očekáváme, že jej většina z nich neuloží (např. záznam ve sdíleném adresáři).
+
+Postup:
+1. při otevření záznamu pro úpravu si zapamatujeme datum a čas jeho poslední změny
+2. v okamžiku uložení změněného záznamu zkontrolujeme, jestli se náš uložený datum a čas poslední změny shodují s datem a časem, kdy byl záznam opravdu naposledy upraven
+    - pokud v mezičase došlo ke změně, data neuložíme, ale upozorníme uživatele na tuto změnu
+
+:point_right:
+
+#### Pessimistic lock = pesimistické zamykání
+Očekáváme, že téměř každý uživatel, který si otevře záznam k úpravě, jej opravdu upraví. (např. stránku v CMS) V okamžiku otevření záznamu k úpravě jej tedy pro ostatní uživatele uzamkneme a nedovolíme jim jej začít upravovat. Ostatní uživatelé musí počkat, než dokončíme editaci.
+
+Postup:     
+1. při otevření záznamu pro úpravu si k němu do databáze uložíme ID uživatele, který začal záznam upravovat, a také aktuální datum a čas (pro časové omezení platnosti zámku)
+2. pokud se záznam pokusí otevřít pro úpravu jiný uživatel, ověříme, jestli je stále platný u něj uložený zámek
+    - pokud ano, neumožníme uživatel záznam pro úpravu otevřít)
+3. při ukládání záznamu zkontrolujeme, zda není záznam uzamčen pro jiného uživatele (např. po časovém vypršení našeho vlastního zámku)
+4. při uložení záznamu či potvrzení zrušení jeho úpravy smažeme u daného záznamu informace o uživateli a čas zamčení daného záznamu 
 
 ### Ukázková aplikace se zamykáním záznamů
 :point_right:
@@ -84,6 +114,10 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     - [update_optimistic.php](./09-app-eshop/update_optimistic.php) - **úprava zboží v e-shopu s optimistickým zamykáním záznamů**
     - [update_pessimistic.php](./09-app-eshop/update_pessimistic.php) - **úprava zboží v e-shopu s pesimistickým zamykáním záznamů** 
 
+:point_right:
+*Otázky k zamyšlení:*
+- *Musíme zamykání záznamů použít vždy? Kdy ano a kdy ne?*
+- *Ukázka optimistického zamykání [update optimistic](./09-app-eshop/update_optimistic.php) používá předání data a času poslední editace přes formulářové hidden pole. Tato data však mohou být při odeslání formuláře změněna/podstrčena uživatelem. Jak se jde proti tomu bránit? Má smysl to ošetřovat? Kdy ano/ne?*
 
 ## JSON a XML
 :point_right:
