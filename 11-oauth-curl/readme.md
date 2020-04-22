@@ -1,6 +1,4 @@
-# 11. Přihlašování přes OAuth, CURL
-
-:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry: 
+# 11. Přihlašování přes OAuth, zapomenuté heslo, CURL 
 
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičení 8. 5. 2020, doporučuji ji však ke studiu také studentům z pátečních cvičení.**
 
@@ -25,7 +23,7 @@ Ohledně lokálního přihlašování je vhodné si připomenout, že:
 **Na tomto cvičení nás čeká:**
 - [volání vzdáleného API](#vol%C3%A1n%C3%AD-vzd%C3%A1len%C3%A9ho-api)
 - [ukázka obnovy zapomenutého hesla](#obnova-zapomenut%C3%A9ho-hesla)
-- [přihlašování pomocí protokolu Oauth](#p%C5%99ihla%C5%A1ov%C3%A1n%C3%AD-pomoc%C3%AD-protokolu-oauth)
+- [přihlašování pomocí protokolu OAuth](#p%C5%99ihla%C5%A1ov%C3%A1n%C3%AD-pomoc%C3%AD-protokolu-oauth)
 
 ---
 
@@ -99,7 +97,43 @@ Aplikace bude obsahovat:
 ## Přihlašování pomocí protokolu OAuth
 :point_right:
 
-TODO
+- Vedle lokálního přihlašování uživatelů poskytuje velké množství aplikací také přihlášení pomocí účtů např. na sociálních sítích. Proč tomu tak je?
+    - uživatelé si nemusí pamatovat další přihlašovací údaje
+    - nemusíme řešit zabezpečení přihlašovacích údajů ve vlastní aplikaci, řešit dvoufaktorovou autentizaci atp.
+    - společně s e-mailem získáme z daného účtu 
+- většina služeb poskytujících přihlašování podporuje protokol OAuth 2.0
+    - např. Facebook, Google, Twitter, GitHub,...
+- výsledkem přihlášení je získání ID uživatele přidělené danou službou a také přístup k API, které daná služba poskytuje (a pomocí něj můžeme získat další informace o uživateli) 
+- alternativně bychom mohli použít např. autentizační protokol OpenID
+
+### Kam ukládat identifikaci uživatelů ve vlastní aplikaci?
+:point_right:
+
+- z každé ze služeb vždy získáme ID uživatele, pod kterým je vedený v dané službě
+- pro uložení ID si doplníme příslušný sloupec do tabulky s uživateli (v reálu jich může být i víc - např. ```facebook_id```, ```google_id``` atp.)
+- pokud budeme chtít více pracovat s API dané služby, uložíme si kromě id a údajů daného uživatele také **access token**
+    - např. do session - budeme jej dále potřebovat pro přístup k API dané služby    
+- výhodou tohoto uložení informace o uživatelském účtu je to, že můžeme v aplikaci umožnit přihlašování lokálně i pomocí jiných služeb najednou (a uživatel je může dokonce střídat)
+  
+### Postup registrace a přihlašování uživatelů pomocí protokolu OAuth
+:point_right:
+
+1. aplikaci musíme mít zaregistrovanou na serveru poskytovatele
+2. v aplikaci vygenerujeme odkaz, který uživatele přesměruje na server poskytovatele
+    - s vygenerováním odkazu nám obvykle pomůže knihovna pracující s daným API
+    - odkaz umístíme na web do přihlašovacího tlačítka, nebo na něj uživatele přesměrujeme z nějaké naší vlastní stránky
+3. uživateli se zobrazí standardní okno pro přihlášení danou službou a při prvním přihlášení také výzva k udělení oprávnění pro naši aplikaci
+4. ať už nám uživatel přihlášení schválil, nebo odmítl, je přesměrován zpět do naší aplikaci
+    - uživatel se dostane na callback URL, kterou jsme odeslali v požadavku na přihlášení a zaregistrovali ji v nastavení na serveru poskytovatele
+5. pokud se uživatel úspěšně přihlásil, získáme access token pro přístup k API dané služby
+6. pomocí access tokenu získáme potřebné informace o uživateli (ID, jméno, e-mail, fotku atp.)
+7. ve vlastní databázi v tabulce s uživateli vyhledáme uživatele podle ID v dané službě
+    - pokud jej nalezneme, přihlásíme ho, jako kdyby zadal správnou kombinaci e-mailu a hesla
+8. pokud uživatele podle ID nenalezneme, zkusíme jej najít pomocí e-mailu
+    - pokud jej nalezneme, přihlásíme ho, jako kdyby zadal správnou kombinaci e-mailu a hesla
+    - zároveň si do DB uložíme ID uživatel v dané službě
+9. pokud jsme uživatele nenašli ani podle ID, ani podle e-mailu, uložíme jej do databáze jako uživatele nového
+    - a samozřejmě jej přihlásíme
 
 ### Ukázka implementace přihlašování pomocí Facebooku
 :point_right:
