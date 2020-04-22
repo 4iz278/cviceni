@@ -52,7 +52,7 @@ Web předmětu: **http://4iz278.github.io**
   * tvorba API
   * AJAX
   * mPDF 
-11. **[Přihlašování přes OAuth, CURL](./11-oauth-curl)** *(7. 5. 2020)*  
+11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](./11-oauth-curl)** *(7. 5. 2020)*  
   * CURL  
   * zapomenuté heslo
   * OAuth
@@ -74,4 +74,4 @@ Web předmětu: **http://4iz278.github.io**
 
 ### Zdroje informací
  * [Prezentace z přednášek](http://4iz278.github.io/prednasky/)
- * Zdroje uvedené v [sylabu předmětu](./sylabus.pdf)
+ * Zdroje uvedené v [sylabu předmětu](https://insis.vse.cz/katalog/syllabus.pl?predmet=156338)
