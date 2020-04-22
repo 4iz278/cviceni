@@ -42,7 +42,62 @@ Ohledně **posílání mailů** byste měli vědět, že:
 ## Práce s datem a časem
 :point_right:
 
-TODO
+S datem a časem se setkáváme ve větším množství případů, než by se mohlo na první pohled zdát. V každém redakčním systému máme zobrazenou informaci o poslední změně článku, e-maily a objednávky mají své datum odeslání, ale např. také ban, který dostaneme na diskusním fóru, má své datum vypršení. Je tedy nezbytné, abychom se seznámili s tím, jak s datem a časem pracovat z PHP.
+
+:point_right:
+
+- pro práci s datem a časem máme v PHP na výběr 2 varianty:
+    1. funkce, se kterými můžeme pracovat s konkrétními hodnotami časových údajů (např. funkce ```date()```)
+    2. objektový přístup, ve kterém jsou časové údaje instancemi tříd (např. ```DateTime```, ```TimeInterval``` atd.)
+- existuje celá řada způsobů formátování data a času do čitelné podoby
+    - pro zobrazení uživatelům bychom měli volit takový formát, který pro něj přirozený (např. u nás je příjemnější si přečíst datum *22.4.2020*, než *2020-04-22*)
+    - pro specifické případy (např. cookies, rss atp.) existují předdefinované tvary zápisu data, ale jinak si můžeme datum naformátovat dle svého uvážení
+- nezapomeňte, že s datem a časem jde pracovat i přímo v SQL dotazech
+    - pokud např. chceme vybrat z databáze články, které se změnily v posledním týdnu, napíšeme daný posun času přímo do SQL - rozhodně tedy nenačítáme všechny články do PHP, abychom je teprve poté filtrovali
+    
+:point_right:
+
+***Základní funkce pro práci s datem a časem**         
+
+Pro základní práci s datem a časem si ve většině případů vystačíme dokonce jen se třemi funkcemi. Pojďme se na ně podívat:
+
+```php
+//funkce time() nám vrací aktuální timestamp (počet sekund od 1.1.1970)
+$timestamp = time(); 
+
+//timestamp je číslo, můžeme tedy s ním tak pracovat
+$timestampPred5Minutami = $timestamp - 5*60;
+
+//funkce pro převod řetězce obsahujícího datum a čas na timestamp (tuto funkci používáme např. pro převod datumu získaného z SQL dotazu)
+$timestamp = strtotime('2020-04-22 10:00:00');
+
+//funkce pro naformátování data do požadovaného tvaru
+echo date('d.m.Y H:i:s', $timestamp);
+```
+***Objektový přístup k datu a času***
+
+Objekty představující časové údaje používáme zejména v případě, kdy chceme používat kontrolu datových typů u funkcí/metod, nebo používáme objektově-relační mapování při ukládání dat do databáze.
+
+```php
+//vytvoření objektu DateTime s hodnotou aktuálního data a času
+$date = new DateTime();
+
+//výpis naformátovaného data
+echo $date->format('d.m.Y');
+
+//vytvoření DateTime z naformátovaného řetězce
+$date = DateTime::createFromFormat('Y-m-d', '2020-04-22');
+``` 
+
+:point_right:
+
+Funkcí i tříd pracujících pro práci s datem a časem existuje poměrně velké množství, podrobněji si je představíme v následujících 2 ukázkových příkladech. 
+
+:blue_book:
+- TODO
+- [funkce date() v PHP manuálu](https://www.php.net/manual/en/function.date.php)
+- [Class DateTime v PHP manuálu](https://www.php.net/manual/en/class.datetime.php)
+- [PHP Date/Time Functions na w3schols.com](https://www.w3schools.com/php/php_ref_date.asp)
 
 ## Víceuživatelský přístup k databázi
 :point_right:
