@@ -1,6 +1,7 @@
 # 9. Uživatelé a DB, JSON, XML
 
-:no_entry: **TYTO PODKLADY BUDOU TEPRVE AKTUALIZOVÁNY** :no_entry: 
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 23. a  24. 4. 2020.**
+Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady. 
 
 ## Opakování z předchozího cvičení
 :point_right:

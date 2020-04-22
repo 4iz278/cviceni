@@ -46,7 +46,7 @@
   echo strtotime('last Monday');
   echo '<br />';
 
-  //zjištění rozdílu mezi 2 daty
+  //zjištění rozdílu mezi 2 daty (tady už na pomezí s používáním objektů)
   $a = date_create('2020-04-19');
   $b = date_create('2021-05-06');
   $interval =  date_diff($b, $a);
