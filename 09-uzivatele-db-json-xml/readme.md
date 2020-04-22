@@ -57,7 +57,7 @@ S datem a časem se setkáváme ve větším množství případů, než by se m
     
 :point_right:
 
-***Základní funkce pro práci s datem a časem**         
+**Základní funkce pro práci s datem a časem**         
 
 Pro základní práci s datem a časem si ve většině případů vystačíme dokonce jen se třemi funkcemi. Pojďme se na ně podívat:
 
@@ -74,7 +74,7 @@ $timestamp = strtotime('2020-04-22 10:00:00');
 //funkce pro naformátování data do požadovaného tvaru
 echo date('d.m.Y H:i:s', $timestamp);
 ```
-***Objektový přístup k datu a času***
+**Objektový přístup k datu a času***
 
 Objekty představující časové údaje používáme zejména v případě, kdy chceme používat kontrolu datových typů u funkcí/metod, nebo používáme objektově-relační mapování při ukládání dat do databáze.
 
