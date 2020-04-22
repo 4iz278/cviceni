@@ -100,3 +100,23 @@ Aplikace bude obsahovat:
 :point_right:
 
 TODO
+
+### Ukázka implementace přihlašování pomocí Facebooku
+:point_right:
+
+Jako příklad přihlášení pomocí externího ověření uživatele protokolem OAuth si do aplikace z dnešního cvičení doplníme možnost přihlašování pomocí uživatelského účtu na síti Facebook.
+
+Pro realizaci budete potřebovat vlastní uživatelský účet na Facebooku. Pokud jej nepoužíváte, velmi podobně by vypadalo přihlášení např. pomocí účtu Google, Twitter atp.
+
+:point_right:
+
+**Řešení přímo navazuje na předchozí příklad** s registrací, přihlašováním a obnovou zapomenutého hesla. Pokud jste jej z nějakého důvodu neabsolvovali:
+1. stáhněte si [zdrojový kód](./11-local-login)
+2. nahrajte zdrojový kód aplikace na server eso.vse.cz
+3. naimportujte [SQL export](./11-local-login/local-login.sql) do databáze
+
+:orange_book:
+
+**Řešení:**
+- [prezentace s komentovaným postupem řešení](./11-facebook-login/prezentace-postup-vyvoje-facebook-login.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./11-facebook-login)
