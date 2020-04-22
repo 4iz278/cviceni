@@ -48,7 +48,7 @@ Web předmětu: **http://4iz278.github.io**
   * datum a čas
   * víceuživatelský přístup k DB
   * strukturované datové formáty
-10. **[REST API, PDF](./10-mvc/10-db.sql)** *(30. 4. 2020)*
+10. **[REST API, PDF](./10-rest-api-pdf)** *(30. 4. 2020)*
   * tvorba API
   * AJAX
   * mPDF 
