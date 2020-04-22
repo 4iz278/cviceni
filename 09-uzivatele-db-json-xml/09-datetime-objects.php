@@ -35,7 +35,7 @@
 
   //ukázka jednoduché změny data a času (obdobně, jako bychom použili funkci strtotime())
   $date->modify('+1 day');
-  echo $date->format(DATE_ISO8601);
+  echo $date->format(DateTimeInterface::W3C);
   echo '<br />';
 
   //pro časové posuny a zjištění rozdílů mezi daty slouží instance objektu DateInterval
@@ -44,7 +44,7 @@
 
   //posuneme datum o daný DateInterval
   $date->add($interval);
-  echo $date->format(DATE_ISO8601);
+  echo $date->format(DateTimeInterface::W3C);
   echo '<br />';
 
   //zjištění rozdílu mezi 2 instancemi DateTime
