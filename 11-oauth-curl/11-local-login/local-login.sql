@@ -2,10 +2,7 @@
 -- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Počítač: localhost
--- Vytvořeno: Pon 20. dub 2020, 23:33
--- Verze serveru: 10.3.22-MariaDB-log
--- Verze PHP: 7.3.16
+
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -43,7 +40,7 @@ CREATE TABLE `forgotten_passwords` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8mb4_czech_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_czech_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
