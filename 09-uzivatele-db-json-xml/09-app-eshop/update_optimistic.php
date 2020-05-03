@@ -83,7 +83,7 @@
       <label for="name">Name</label><br/>
       <input type="text" name="name" id="name" value="<?php echo htmlspecialchars(@$name);?>" required><br/><br/>
 
-      <label for="price">Price<br/>
+      <label for="price">Price</label><br/>
       <input type="number" min="0" name="price" id="price" required value="<?php echo htmlspecialchars(@$price)?>"><br/><br/>
 
       <label for="description">Description</label><br/>
