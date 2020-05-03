@@ -7,7 +7,7 @@
 
   #region načtení zboží k aktualizaci a výpočet zámku pro pessimistic lock
   //výpočet zámku: ve výsledku máme sloupec edit_expired s boolean hodnotou danou ověřením, jestli již zámek vypršel (tj. jestli je starší než 5 minut)
-  $stmt = $db->prepare('SELECT goods.*, users.email, now() > last_edit_starts_at + INTERVAL 5 MINUTE AS edit_expired FROM goods LEFT JOIN users ON users.id=goods.last_edit_starts_by_user WHERE id=:id');
+  $stmt = $db->prepare('SELECT goods.*, users.email, now() > last_edit_starts_at + INTERVAL 5 MINUTE AS edit_expired FROM goods LEFT JOIN users ON users.id=goods.last_edit_starts_by_user WHERE goods.id=:id');
   $stmt->execute([':id'=>@$_REQUEST['id']]);
   $goods = $stmt->fetch(PDO::FETCH_ASSOC);
 
