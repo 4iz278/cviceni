@@ -21,7 +21,7 @@
     ]);
     if ($existingRequest=$query->fetch(PDO::FETCH_ASSOC)){
       //zkontrolujeme, jestli je kód ještě platný
-      if (strtotime($existingRequest->created)<(time()-24*3600)){//kontrola, jestli není kód starší než 24 hodin
+      if (strtotime($existingRequest['created'])<(time()-24*3600)){//kontrola, jestli není kód starší než 24 hodin
         $invalidCode=true;
       }
     }else{

@@ -97,7 +97,7 @@
             echo ($errors?'<div class="invalid-feedback">Neplatný e-mail.</div>':'');
           ?>
         </div>
-        <a href="forgotten-password.php" class="btn btn-primary">zaslat e-mail k obnově hesla</a>
+        <button type="submit" class="btn btn-primary">zaslat e-mail k obnově hesla</button>
         <a href="login.php" class="btn btn-light">přihlásit se</a>
         <a href="index.php" class="btn btn-light">zrušit</a>
       </form>

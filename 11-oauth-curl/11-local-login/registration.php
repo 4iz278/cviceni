@@ -47,7 +47,7 @@
       //zaregistrování uživatele
       $password=password_hash($_POST['password'],PASSWORD_DEFAULT);
 
-      $query=$db->prepare('INSERT INTO users (name, email, password, active) VALUES (:name, :email, :password, 1);');
+      $query=$db->prepare('INSERT INTO users (name, email, password) VALUES (:name, :email, :password);');
       $query->execute([
         ':name'=>$name,
         ':email'=>$email,
