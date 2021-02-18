@@ -12,7 +12,7 @@
  * vaše soubory jsou dostupné na adrese **http://eso.vse.cz/~xname/**
 
 ### Přístupové údaje
- * protokol: **SCP**
+ * protokol: **SFTP**
  * port: **22**
  * server: **eso.vse.cz**
  * login: **xname**
@@ -24,6 +24,8 @@
  * [SFTP plugin pro Total Commander](http://www.ghisler.com/plugins.htm)
     * po nainstalování jej naleznete v položce "Síť"
     * je nutné dokopírovat DLL soubory
+ * [FileZilla](https://filezilla-project.org)
+ * namapování deploye v rámci vývojového prostředi (např. PhpStorm)
 
 ### Přístup k MySQL
  * pro přístup k databázi je potřebné speciální heslo, které naleznete po přihlášení k serveru v souboru *mysql-heslo.txt*
