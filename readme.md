@@ -1,6 +1,6 @@
 # 4iz268 - cvičení
 
-Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze **platné v letním semestru 2019/2020**.
+Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze.
 
 Web předmětu: **http://4iz278.github.io**
 
