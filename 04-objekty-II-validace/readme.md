@@ -1,6 +1,6 @@
 # 4. Objekty v PHP II., validace formulářů
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 19. a 20. 3. 2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k online výuce.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
@@ -404,8 +404,4 @@ V následujícím příkladu budeme chtít od uživatele chtít získat jméno a
 >   - formulář pro přidání nového zaměstnance
 >       - povinnými údaji jsou u každého zaměstnance jméno, příjmení, obec, psc
 >       - zaměstanec, který je dělníkem, musí mít zadaného nadřízeného (vybraného se selectu, ne zapsaného ručně!)
-> - pokud možno napište aplikaci za využití objektů (tj. záznam každého zaměstnance bude instancí objektu)
->
-> **Způsob a termín odevzdání:**
-> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 27.3.2020 23:59.
-> - Připomínám, že kladně hodnocen bude každý pokus o aplikaci (i pokud se Vám některý z požadavků nepovede splnit). 
+
