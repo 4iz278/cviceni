@@ -404,4 +404,4 @@ V následujícím příkladu budeme chtít od uživatele chtít získat jméno a
 >   - formulář pro přidání nového zaměstnance
 >       - povinnými údaji jsou u každého zaměstnance jméno, příjmení, obec, psc
 >       - zaměstanec, který je dělníkem, musí mít zadaného nadřízeného (vybraného se selectu, ne zapsaného ručně!)
-
+>   - možnost úpravy či smazání konkrétního zaměstnance
