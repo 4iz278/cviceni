@@ -1,6 +1,6 @@
 # 5. SQL a databáze
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 26. a 27. 3. 2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
@@ -440,4 +440,4 @@ Na nástěnce bude možné mít umístěné příspěvky přiřazené do kategor
 > - doplňte do aplikace možnost zobrazit si příspěvky jen ze zvolené kategorie
 >
 > **Způsob a termín odevzdání:**
-> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 3.4.2020 23:59.
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a odkaz na ni odevzdejte v zadání DÚ v MS Teams.
