@@ -1,6 +1,6 @@
 # 6. Opakování práce s databází, session, cookies
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 2. a 3. 4. 2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z minulého cvičení
@@ -13,11 +13,6 @@ V rámci [minulého cvičení](../05-sql-databaze) jsme se zabývali vlastnostmi
 - a [ukázali tvorbu databázové aplikace v rámci komentované prezentace](../05-sql-databaze#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
 
 Místo podrobného opakování se rovnou vrhneme na obsah dnešního cvičení, protože se na práci s databází podíváme ještě v dalším komentovaném ukázkovém příkladu. 
-
-    
-:house:
-
-Ještě připomínám, že součástí byl také [domácí úkol](../05-sql-databaze#dom%C3%A1c%C3%AD-%C3%BAkol). Pokud jej máte (byť i jen z části) hotový, nezapomeňte na jeho odevzdání.
     
 ---
 
