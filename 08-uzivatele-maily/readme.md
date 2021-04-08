@@ -1,6 +1,6 @@
 # 8. Uživatelé, maily
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 16. a  17. 4. 2020.**
+:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Opakování z předchozích cvičení
@@ -44,60 +44,6 @@ Na předchozích cvičeních jsme se zabývali také kontrolami formulářů. S 
     1. kliknete pravým tlačítkem myši na vybrané pole a zvolíte prozkoumat/inspect
     2. kontrolu hodnot atp. odstraníme v rámci vývojářské konzole (jde tak např. dopsat i chybnou hodnotu do selectu atp.).  
 
-### Řešení domácího úkolu s e-shopem
-
-:house:
-
-V rámci [domácího úkolu](../06-session-cookies#dom%C3%A1c%C3%AD-%C3%BAkol) odevzdávaného do 10. 4. 2020 bylo vaším úkolem aplikaci nejen spustit někde na serveru, ale také ji rozšířit o možnost mít v košíku více kusů od každého druhu zboží.
-Ačkoliv jsou domácí úkoly již opraveny, je vhodné, abychom si alespoň nastínili, jak mohlo vypadat jeho vypracování.
-
-:point_right:
-
-Měli bychom se snažit o to, aby aplikace byla uživatelsky přívětivá. K tomu by mělo platit, že
-- pokud mám v košíku víc kusů u jednoho zboží, bude dané zboží jen na jednom řádku a budu tam mít uvednou informaci o počtu kusů, ceně za kus a celkové ceně za daný typ zboží;
-- když už mám v košíku položku X a poté chci zase do košíku přidat položku X, tak se počet kusů v košíku zvýší;
-- z košíku můžu odebrat i jen jeden kus zboží X, ne ho nutně odebrat všechno;
-- když se počet kusů zboží X sníží na 0, zboží z košíku úplně zmizí.
-
-Pokud bychom šli v uživatelské přívětivosti o něco dále:
-- v košíku by mělo jít měnit počet kusů zboží
-    - šlo to realizovat nejen klasickým formulářem, ale také např. pomocí odkazů **+** a **-**
-- při koupi zboží je hezké mít možnost vložit do košíku např. 10 kusů zboží X a nemuset je klikat jednotlivě.
-
-:point_right:
-
-#### Jak to realizovat v rámci session?
-
-- v SESSION bude zboží uložené jen v 1 poli (např. v ```$_SESSION['cart']```)
-- nejjednodušší variantou je to, abychom dané pole indexovali pomocí IDček zboží a jako hodnoty tam měli počet kusů.    
-
-```php
-//ukázka možného přidání zboží do košíku
-if (isset($_SESSION['cart'][$idZbozi])){
-  $_SESSION['cart'][$idZbozi]++;
-}else{
-  $_SESSION['cart'][$idZbozi]=1;
-}
-
-//ukázka odebrání zboží z košíku
-if (isset($_SESSION['cart'][$idZbozi])){
-  if ($_SESSION['cart'][$idZbozi]>1){
-    $_SESSION['cart'][$idZbozi]--;
-  }else{
-    unset($_SESSION['cart'][$idZbozi]);
-  }
-}
-```
-
-:point_right:
-
-#### Na co nezapomenout?
-
-Pokud máme v aplikaci formulářové pole či odkazy na přidávání/odebírání kusů zboží, nesmíme zapomenout na kontroly. Aplikace by neměla připustit, abychom do košíku dostali záporný počet kusů.
-
-Máme-li změnu realizovanou např. pomocí odkazu, tak to, že při 0 položkách daný odkaz nezobrazíme, ještě neznamená, že nám uživatel na server daný požadavek nepošle!
-
----
 
 :point_right:
 
@@ -477,4 +423,4 @@ Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, 
 >
 > **Způsob a termín odevzdání:**
 >
-> Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 24. 4. 2020 23:59. 
+> Vytvořenou aplikaci nahrajte na server eso.vse.cz a odkaz na ni vložte do příslušného zadání v MS Teams.
