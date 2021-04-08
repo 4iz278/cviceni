@@ -199,8 +199,7 @@ Výzva k zamyšlení:
 > Domácí úkol vychází z ukázkové aplikace [jednoduchého e-shopu](./06-app-eshop).
 > Vaším úkolem je:
 > - spustit aplikaci na serveru eso.vse.cz *(0,5 bodu)*
->   - pokud jste to stihli již v rámci učení se místo cvičení, tím lépe :) 
 > - upravit aplikaci tak, aby bylo možné do košíku přidat více kusů od každého druhu zboží *(1,5 bodu)*
 >
 > **Způsob a termín odevzdání:**
-> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 10. 4. 2020 23:59.
+> - Vytvořenou aplikaci nahrajte na server eso.vse.cz a odkaz na ni vložte do příslušného zadání v MS Teams.
