@@ -403,7 +403,7 @@ Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, 
 
 ## Domácí úkol
 :house:
-> Domácí úkol vychází z ukázkové aplikace **Nástěnka s uživatelskými účty**, kterou jsme vytvářeli na Velikonočním cvičení.
+> Domácí úkol vychází z ukázkové aplikace **Nástěnka s uživatelskými účty**.
 >
 > **Nezbytná příprava:**
 > 1. pokud jste ji zatím neviděli, prohlédněte si [prezentaci s postupem implementace přihlašování uživatelů](../07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx) :orange_book:
