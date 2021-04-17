@@ -2,7 +2,7 @@
 
 :grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
 
-## Opakování z minulého cvičení
+## Opakování z minulých cvičení
 
 :point_right:
 
@@ -36,7 +36,7 @@ V rámci domácího úkolu bylo požadováno doplnění možnosti editace přís
 ## Uživatelské účty
 :point_right:
 
-Uživatelskými účty se podrobněji budeme zabývat až na dalším cvičení. V tomto cvičení jen uveďme pár základních pravidel:
+Pár základních pravidel pro uživatelské účty:
 - pro lokální přihlašování obvykle používáme kombinaci uživatelského jména (či e-mailu) a hesla
 - heslo nikdy neukládáme do databáze v čitelné podobě, ale vždy hashovaně
     - heslo je pak chráněné i v případě, kdy se nám někdo dostane do databáze
@@ -51,7 +51,7 @@ Pro registraci i přihlášení uživatele použijeme normální formulář v ap
 ### Uživatelské účty v aplikaci Nástěnka
 :point_right:
 
-Jako další část dnešního cvičení si do aplikace Nástěnka doplníme možnost jednoduché registrace a přihlášení uživatelů.
+Dále si do aplikace Nástěnka doplníme možnost jednoduché registrace a přihlášení uživatelů.
 
 Nebudeme řešit oprávnění uživatelů, každý z přihlášených uživatelů bude moct přidávat příspěvky a také všechny příspěvky upravovat.  
 
