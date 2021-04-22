@@ -325,4 +325,4 @@ if (!empty($xml->osoba)){
 >
 > **Způsob a termín odevzdání:**
 >
-> Vytvořenou aplikaci nahrajte na server eso.vse.cz a zašlete mi odkaz na ni na e-mail stanislav.vojir@vse.cz nejpozději do 1. 5. 2020 23:59.
+> Vytvořenou aplikaci nahrajte na server eso.vse.cz a odkaz na ni odevzdejte dle pokynů v MS Teams.
