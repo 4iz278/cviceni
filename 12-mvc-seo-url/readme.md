@@ -1,6 +1,6 @@
 # 12. MVC, SEO URL
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 14. a  15. 5. 2020.**
+:grey_exclamation: **Tato složka obsahuje rozšířené podklady pro distanční výuku.**
 Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
 
 ## Stručná rekapitulace
@@ -218,7 +218,7 @@ Jelikož máme poslední cvičení, je vhodné si připomenout, co vše musíte 
 
 Obecné požadavky jsou uvedeny [na webu předmětu](https://4iz278.github.io/zakonceni/). 
 
-### Obhajoby PHP aplikací v letním semestru 2019/2020
+### Obhajoby PHP aplikací v letním semestru 2020/2021
 :key: 
 
 **Obhajoby budou probíhat přes MS Teams za následujících podmínek:**
