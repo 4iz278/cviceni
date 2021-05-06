@@ -1,6 +1,6 @@
 # 10. REST API, PDF
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičení 1. 5. 2020, doporučuji ji však ke studiu také studentům z pátečních cvičení.**
+:grey_exclamation: **Tato složka obsahuje rozšířené podklady pro distanční výuku.**
 
 ## Opakování z předchozího cvičení
 :point_right:
