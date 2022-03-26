@@ -15,7 +15,7 @@
     #region výpis příspěvků
     echo '<div class="row">';
     foreach ($posts as $post){
-      echo '<article class="col-12 col-md-6 col-lg-4 col-xxl-3 border border-dark mx-1 my-1 px-2 py-1">';
+      echo '<article class="col-12 col-md-6 col-lg-4 col-xl-3 border border-dark mx-1 my-1 px-2 py-1">';
       echo '  <div><span class="badge badge-secondary">'.htmlspecialchars($post['category_name']).'</span></div>';
       echo '  <div>'.nl2br(htmlspecialchars($post['text'])).'</div>';
       echo '  <div class="small text-muted mt-1">';
