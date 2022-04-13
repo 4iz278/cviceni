@@ -1,8 +1,5 @@
 # 8. Uživatelé, maily
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
-Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
-
 ## Opakování z předchozích cvičení
 
 :point_right:
