@@ -1,8 +1,5 @@
 # 12. MVC, SEO URL
 
-:grey_exclamation: **Tato složka obsahuje rozšířené podklady pro distanční výuku.**
-Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
-
 ## Stručná rekapitulace
 :point_right:
 
@@ -217,16 +214,3 @@ Jelikož máme poslední cvičení, je vhodné si připomenout, co vše musíte 
 - napsat a následně obhájit databázovou aplikaci v PHP
 
 Obecné požadavky jsou uvedeny [na webu předmětu](https://4iz278.github.io/zakonceni/). 
-
-### Obhajoby PHP aplikací v letním semestru 2020/2021
-:key: 
-
-**Obhajoby budou probíhat přes MS Teams za následujících podmínek:**
-- k obhajobě je nutné se přihlásit prostřednictvím systém InSIS
-- vaše PHP aplikace musí být dostupná přes internet
-- na začátku obhajoby bude nutné se připojit přes webkameru a pomocí ukázání školní karty či OP prokázat svoji totožnost
-- následně bude potřeba nasdílet vlastní obrazovku s promítnutím aplikace a zdrojového kódu
-    - počítejte s tím, že bude nutné v aplikaci během obhajoby provést nějakou menší úpravu - tj. je nutné nasdílení z počítače či notebooku, ne telefonu (abyste mohli kód přímo upravovat)
-- stále je platná možnost případného dodělání či opravy aplikace v rámci opakované obhajoby, ale již k 1. pokusu musí být aplikace pokud možno hotová (tj. ne prázdná stránka s nadpisem)
-- připomínám, že je doporučeno verzovat aplikaci během vývoje systémem GIT
-    - není to povinné, ale pokud budete mít aplikaci v nějakém repozitáři na internetu (např. GitHub, Bitbucket, GitLab... - nemusí jít o veřejný repozitář) a bude zřejmé, jak jste na aplikaci postupně pracovali, máte možnost získat k obhajobě 3 bonusové body  
