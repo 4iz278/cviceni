@@ -5,22 +5,25 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Http;
 
 
 /**
- * IHttpResponse interface.
+ * HTTP response interface.
+ * @method self deleteHeader(string $name)
  */
 interface IResponse
 {
-	/** @var int cookie expiration: forever (23.1.2037) */
-	const PERMANENT = 2116333333;
+	/** @deprecated */
+	public const PERMANENT = 2116333333;
 
-	/** @var int cookie expiration: until the browser is closed */
-	const BROWSER = 0;
+	/** @deprecated */
+	public const BROWSER = 0;
 
 	/** HTTP 1.1 response code */
-	const
+	public const
 		S100_CONTINUE = 100,
 		S101_SWITCHING_PROTOCOLS = 101,
 		S102_PROCESSING = 102,
@@ -82,98 +85,146 @@ interface IResponse
 		S510_NOT_EXTENDED = 510,
 		S511_NETWORK_AUTHENTICATION_REQUIRED = 511;
 
+	public const REASON_PHRASES = [
+		100 => 'Continue',
+		101 => 'Switching Protocols',
+		102 => 'Processing',
+		200 => 'OK',
+		201 => 'Created',
+		202 => 'Accepted',
+		203 => 'Non-Authoritative Information',
+		204 => 'No Content',
+		205 => 'Reset Content',
+		206 => 'Partial Content',
+		207 => 'Multi-status',
+		208 => 'Already Reported',
+		226 => 'IM Used',
+		300 => 'Multiple Choices',
+		301 => 'Moved Permanently',
+		302 => 'Found',
+		303 => 'See Other',
+		304 => 'Not Modified',
+		305 => 'Use Proxy',
+		307 => 'Temporary Redirect',
+		308 => 'Permanent Redirect',
+		400 => 'Bad Request',
+		401 => 'Unauthorized',
+		402 => 'Payment Required',
+		403 => 'Forbidden',
+		404 => 'Not Found',
+		405 => 'Method Not Allowed',
+		406 => 'Not Acceptable',
+		407 => 'Proxy Authentication Required',
+		408 => 'Request Time-out',
+		409 => 'Conflict',
+		410 => 'Gone',
+		411 => 'Length Required',
+		412 => 'Precondition Failed',
+		413 => 'Request Entity Too Large',
+		414 => 'Request-URI Too Large',
+		415 => 'Unsupported Media Type',
+		416 => 'Requested range not satisfiable',
+		417 => 'Expectation Failed',
+		421 => 'Misdirected Request',
+		422 => 'Unprocessable Entity',
+		423 => 'Locked',
+		424 => 'Failed Dependency',
+		426 => 'Upgrade Required',
+		428 => 'Precondition Required',
+		429 => 'Too Many Requests',
+		431 => 'Request Header Fields Too Large',
+		451 => 'Unavailable For Legal Reasons',
+		500 => 'Internal Server Error',
+		501 => 'Not Implemented',
+		502 => 'Bad Gateway',
+		503 => 'Service Unavailable',
+		504 => 'Gateway Time-out',
+		505 => 'HTTP Version not supported',
+		506 => 'Variant Also Negotiates',
+		507 => 'Insufficient Storage',
+		508 => 'Loop Detected',
+		510 => 'Not Extended',
+		511 => 'Network Authentication Required',
+	];
+
+	/** SameSite cookie */
+	public const
+		SAME_SITE_LAX = 'Lax',
+		SAME_SITE_STRICT = 'Strict',
+		SAME_SITE_NONE = 'None';
+
 	/**
 	 * Sets HTTP response code.
-	 * @param  int
 	 * @return static
 	 */
-	function setCode($code);
+	function setCode(int $code, ?string $reason = null);
 
 	/**
 	 * Returns HTTP response code.
-	 * @return int
 	 */
-	function getCode();
+	function getCode(): int;
 
 	/**
 	 * Sends a HTTP header and replaces a previous one.
-	 * @param  string  header name
-	 * @param  string  header value
 	 * @return static
 	 */
-	function setHeader($name, $value);
+	function setHeader(string $name, string $value);
 
 	/**
 	 * Adds HTTP header.
-	 * @param  string  header name
-	 * @param  string  header value
 	 * @return static
 	 */
-	function addHeader($name, $value);
+	function addHeader(string $name, string $value);
 
 	/**
 	 * Sends a Content-type HTTP header.
-	 * @param  string  mime-type
-	 * @param  string  charset
 	 * @return static
 	 */
-	function setContentType($type, $charset = null);
+	function setContentType(string $type, ?string $charset = null);
 
 	/**
 	 * Redirects to a new URL.
-	 * @param  string  URL
-	 * @param  int     HTTP code
-	 * @return void
 	 */
-	function redirect($url, $code = self::S302_FOUND);
+	function redirect(string $url, int $code = self::S302_FOUND): void;
 
 	/**
-	 * Sets the number of seconds before a page cached on a browser expires.
-	 * @param  string|int|\DateTimeInterface  time, value 0 means "until the browser is closed"
+	 * Sets the time (like '20 minutes') before a page cached on a browser expires, null means "must-revalidate".
 	 * @return static
 	 */
-	function setExpiration($seconds);
+	function setExpiration(?string $expire);
 
 	/**
 	 * Checks if headers have been sent.
-	 * @return bool
 	 */
-	function isSent();
+	function isSent(): bool;
 
 	/**
 	 * Returns value of an HTTP header.
-	 * @param  string
-	 * @param  string|null
-	 * @return string|null
 	 */
-	function getHeader($header, $default = null);
+	function getHeader(string $header): ?string;
 
 	/**
-	 * Returns a list of headers to sent.
-	 * @return array (name => value)
+	 * Returns a associative array of headers to sent.
 	 */
-	function getHeaders();
+	function getHeaders(): array;
 
 	/**
 	 * Sends a cookie.
-	 * @param  string name of the cookie
-	 * @param  string value
-	 * @param  string|int|\DateTimeInterface  time, value 0 means "until the browser is closed"
-	 * @param  string
-	 * @param  string
-	 * @param  bool
-	 * @param  bool
+	 * @param  string|int|\DateTimeInterface $expire  time, value null means "until the browser session ends"
 	 * @return static
 	 */
-	function setCookie($name, $value, $expire, $path = null, $domain = null, $secure = null, $httpOnly = null);
+	function setCookie(
+		string $name,
+		string $value,
+		$expire,
+		?string $path = null,
+		?string $domain = null,
+		?bool $secure = null,
+		?bool $httpOnly = null
+	);
 
 	/**
 	 * Deletes a cookie.
-	 * @param  string name of the cookie.
-	 * @param  string
-	 * @param  string
-	 * @param  bool
-	 * @return void
 	 */
-	function deleteCookie($name, $path = null, $domain = null, $secure = null);
+	function deleteCookie(string $name, ?string $path = null, ?string $domain = null, ?bool $secure = null);
 }

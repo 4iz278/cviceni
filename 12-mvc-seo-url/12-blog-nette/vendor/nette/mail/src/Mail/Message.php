@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Mail;
 
 use Nette;
@@ -20,7 +22,8 @@ use Nette\Utils\Strings;
 class Message extends MimePart
 {
 	/** Priority */
-	const HIGH = 1,
+	public const
+		HIGH = 1,
 		NORMAL = 3,
 		LOW = 5;
 
@@ -50,12 +53,10 @@ class Message extends MimePart
 
 
 	/**
-	 * Sets the sender of the message.
-	 * @param  string  email or format "John Doe" <doe@example.com>
-	 * @param  string
+	 * Sets the sender of the message. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function setFrom($email, $name = null)
+	public function setFrom(string $email, string $name = null)
 	{
 		$this->setHeader('From', $this->formatEmail($email, $name));
 		return $this;
@@ -64,21 +65,18 @@ class Message extends MimePart
 
 	/**
 	 * Returns the sender of the message.
-	 * @return array
 	 */
-	public function getFrom()
+	public function getFrom(): ?array
 	{
 		return $this->getHeader('From');
 	}
 
 
 	/**
-	 * Adds the reply-to address.
-	 * @param  string  email or format "John Doe" <doe@example.com>
-	 * @param  string
+	 * Adds the reply-to address. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addReplyTo($email, $name = null)
+	public function addReplyTo(string $email, string $name = null)
 	{
 		$this->setHeader('Reply-To', $this->formatEmail($email, $name), true);
 		return $this;
@@ -87,10 +85,9 @@ class Message extends MimePart
 
 	/**
 	 * Sets the subject of the message.
-	 * @param  string
 	 * @return static
 	 */
-	public function setSubject($subject)
+	public function setSubject(string $subject)
 	{
 		$this->setHeader('Subject', $subject);
 		return $this;
@@ -99,21 +96,18 @@ class Message extends MimePart
 
 	/**
 	 * Returns the subject of the message.
-	 * @return string|null
 	 */
-	public function getSubject()
+	public function getSubject(): ?string
 	{
 		return $this->getHeader('Subject');
 	}
 
 
 	/**
-	 * Adds email recipient.
-	 * @param  string  email or format "John Doe" <doe@example.com>
-	 * @param  string
+	 * Adds email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addTo($email, $name = null) // addRecipient()
+	public function addTo(string $email, string $name = null) // addRecipient()
 	{
 		$this->setHeader('To', $this->formatEmail($email, $name), true);
 		return $this;
@@ -121,12 +115,10 @@ class Message extends MimePart
 
 
 	/**
-	 * Adds carbon copy email recipient.
-	 * @param  string  email or format "John Doe" <doe@example.com>
-	 * @param  string
+	 * Adds carbon copy email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addCc($email, $name = null)
+	public function addCc(string $email, string $name = null)
 	{
 		$this->setHeader('Cc', $this->formatEmail($email, $name), true);
 		return $this;
@@ -134,12 +126,10 @@ class Message extends MimePart
 
 
 	/**
-	 * Adds blind carbon copy email recipient.
-	 * @param  string  email or format "John Doe" <doe@example.com>
-	 * @param  string
+	 * Adds blind carbon copy email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addBcc($email, $name = null)
+	public function addBcc(string $email, string $name = null)
 	{
 		$this->setHeader('Bcc', $this->formatEmail($email, $name), true);
 		return $this;
@@ -148,26 +138,26 @@ class Message extends MimePart
 
 	/**
 	 * Formats recipient email.
-	 * @param  string
-	 * @param  string|null
-	 * @return array
 	 */
-	private function formatEmail($email, $name)
+	private function formatEmail(string $email, string $name = null): array
 	{
-		if (!$name && preg_match('#^(.+) +<(.*)>\z#', $email, $matches)) {
-			return [$matches[2] => $matches[1]];
-		} else {
-			return [$email => $name];
+		if (!$name && preg_match('#^(.+) +<(.*)>$#D', $email, $matches)) {
+			[, $name, $email] = $matches;
+			$name = stripslashes($name);
+			$tmp = substr($name, 1, -1);
+			if ($name === '"' . $tmp . '"') {
+				$name = $tmp;
+			}
 		}
+		return [$email => $name];
 	}
 
 
 	/**
 	 * Sets the Return-Path header of the message.
-	 * @param  string  email
 	 * @return static
 	 */
-	public function setReturnPath($email)
+	public function setReturnPath(string $email)
 	{
 		$this->setHeader('Return-Path', $email);
 		return $this;
@@ -176,9 +166,8 @@ class Message extends MimePart
 
 	/**
 	 * Returns the Return-Path header.
-	 * @return string
 	 */
-	public function getReturnPath()
+	public function getReturnPath(): ?string
 	{
 		return $this->getHeader('Return-Path');
 	}
@@ -186,36 +175,31 @@ class Message extends MimePart
 
 	/**
 	 * Sets email priority.
-	 * @param  int
 	 * @return static
 	 */
-	public function setPriority($priority)
+	public function setPriority(int $priority)
 	{
-		$this->setHeader('X-Priority', (int) $priority);
+		$this->setHeader('X-Priority', (string) $priority);
 		return $this;
 	}
 
 
 	/**
 	 * Returns email priority.
-	 * @return int
 	 */
-	public function getPriority()
+	public function getPriority(): ?int
 	{
-		return $this->getHeader('X-Priority');
+		$priority = $this->getHeader('X-Priority');
+		return is_numeric($priority) ? (int) $priority : null;
 	}
 
 
 	/**
 	 * Sets HTML body.
-	 * @param  string
-	 * @param  string
 	 * @return static
 	 */
-	public function setHtmlBody($html, $basePath = null)
+	public function setHtmlBody(string $html, string $basePath = null)
 	{
-		$html = (string) $html;
-
 		if ($basePath) {
 			$cids = [];
 			$matches = Strings::matchAll(
@@ -225,7 +209,7 @@ class Message extends MimePart
 					|<body[^<>]*\s background\s*=\s*
 					|<[^<>]+\s style\s*=\s* ["\'][^"\'>]+[:\s] url\(
 					|<style[^>]*>[^<]+ [:\s] url\()
-					(["\']?)(?![a-z]+:|[/\\#])([^"\'>)\s]+)
+					(["\']?)(?![a-z]+:|[/\#])([^"\'>)\s]+)
 					|\[\[ ([\w()+./@~-]+) \]\]
 				#ix',
 				PREG_OFFSET_CAPTURE
@@ -235,16 +219,18 @@ class Message extends MimePart
 				if (!isset($cids[$file])) {
 					$cids[$file] = substr($this->addEmbeddedFile($file)->getHeader('Content-ID'), 1, -1);
 				}
-				$html = substr_replace($html,
+				$html = substr_replace(
+					$html,
 					"{$m[1][0]}{$m[2][0]}cid:{$cids[$file]}",
-					$m[0][1], strlen($m[0][0])
+					$m[0][1],
+					strlen($m[0][0])
 				);
 			}
 		}
 
 		if ($this->getSubject() == null) { // intentionally ==
-			$html = Strings::replace($html, '#<title>(.+?)</title>#is', function ($m) {
-				$this->setSubject(html_entity_decode($m[1], ENT_QUOTES, 'UTF-8'));
+			$html = Strings::replace($html, '#<title>(.+?)</title>#is', function (array $m): void {
+				$this->setSubject(Nette\Utils\Html::htmlToText($m[1]));
 			});
 		}
 
@@ -260,9 +246,8 @@ class Message extends MimePart
 
 	/**
 	 * Gets HTML body.
-	 * @return string
 	 */
-	public function getHtmlBody()
+	public function getHtmlBody(): string
 	{
 		return $this->htmlBody;
 	}
@@ -270,12 +255,8 @@ class Message extends MimePart
 
 	/**
 	 * Adds embedded file.
-	 * @param  string
-	 * @param  string
-	 * @param  string
-	 * @return MimePart
 	 */
-	public function addEmbeddedFile($file, $content = null, $contentType = null)
+	public function addEmbeddedFile(string $file, string $content = null, string $contentType = null): MimePart
 	{
 		return $this->inlines[$file] = $this->createAttachment($file, $content, $contentType, 'inline')
 			->setHeader('Content-ID', $this->getRandomId());
@@ -284,7 +265,6 @@ class Message extends MimePart
 
 	/**
 	 * Adds inlined Mime Part.
-	 * @param  MimePart
 	 * @return static
 	 */
 	public function addInlinePart(MimePart $part)
@@ -296,12 +276,8 @@ class Message extends MimePart
 
 	/**
 	 * Adds attachment.
-	 * @param  string
-	 * @param  string
-	 * @param  string
-	 * @return MimePart
 	 */
-	public function addAttachment($file, $content = null, $contentType = null)
+	public function addAttachment(string $file, string $content = null, string $contentType = null): MimePart
 	{
 		return $this->attachments[] = $this->createAttachment($file, $content, $contentType, 'attachment');
 	}
@@ -311,7 +287,7 @@ class Message extends MimePart
 	 * Gets all email attachments.
 	 * @return MimePart[]
 	 */
-	public function getAttachments()
+	public function getAttachments(): array
 	{
 		return $this->attachments;
 	}
@@ -319,22 +295,17 @@ class Message extends MimePart
 
 	/**
 	 * Creates file MIME part.
-	 * @param  string
-	 * @param  string|null
-	 * @param  string|null
-	 * @param  string
-	 * @return MimePart
 	 */
-	private function createAttachment($file, $content, $contentType, $disposition)
-	{
+	private function createAttachment(
+		string $file,
+		?string $content,
+		?string $contentType,
+		string $disposition
+	): MimePart {
 		$part = new MimePart;
 		if ($content === null) {
-			$content = @file_get_contents($file); // @ is escalated to exception
-			if ($content === false) {
-				throw new Nette\FileNotFoundException("Unable to read file '$file'.");
-			}
-		} else {
-			$content = (string) $content;
+			$content = Nette\Utils\FileSystem::read($file);
+			$file = Strings::fixEncoding(basename($file));
 		}
 		if (!$contentType) {
 			$contentType = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $content);
@@ -348,7 +319,7 @@ class Message extends MimePart
 		$part->setBody($content);
 		$part->setContentType($contentType);
 		$part->setEncoding(preg_match('#(multipart|message)/#A', $contentType) ? self::ENCODING_8BIT : self::ENCODING_BASE64);
-		$part->setHeader('Content-Disposition', $disposition . '; filename="' . Strings::fixEncoding(basename($file)) . '"');
+		$part->setHeader('Content-Disposition', $disposition . '; filename="' . addcslashes($file, '"\\') . '"');
 		return $part;
 	}
 
@@ -358,9 +329,8 @@ class Message extends MimePart
 
 	/**
 	 * Returns encoded message.
-	 * @return string
 	 */
-	public function generateMessage()
+	public function generateMessage(): string
 	{
 		return $this->build()->getEncodedMessage();
 	}
@@ -370,10 +340,10 @@ class Message extends MimePart
 	 * Builds email. Does not modify itself, but returns a new object.
 	 * @return static
 	 */
-	protected function build()
+	public function build()
 	{
 		$mail = clone $this;
-		$mail->setHeader('Message-ID', $this->getRandomId());
+		$mail->setHeader('Message-ID', $mail->getHeader('Message-ID') ?? $this->getRandomId());
 
 		$cursor = $mail;
 		if ($mail->attachments) {
@@ -416,29 +386,27 @@ class Message extends MimePart
 
 	/**
 	 * Builds text content.
-	 * @param  string
-	 * @return string
 	 */
-	protected function buildText($html)
+	protected function buildText(string $html): string
 	{
-		$text = Strings::replace($html, [
-			'#<(style|script|head).*</\\1>#Uis' => '',
+		$html = Strings::replace($html, [
+			'#<(style|script|head).*</\1>#Uis' => '',
 			'#<t[dh][ >]#i' => ' $0',
 			'#<a\s[^>]*href=(?|"([^"]+)"|\'([^\']+)\')[^>]*>(.*?)</a>#is' => '$2 &lt;$1&gt;',
 			'#[\r\n]+#' => ' ',
 			'#<(/?p|/?h\d|li|br|/tr)[ >/]#i' => "\n$0",
 		]);
-		$text = html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8');
+		$text = Nette\Utils\Html::htmlToText($html);
 		$text = Strings::replace($text, '#[ \t]+#', ' ');
+		$text = implode("\n", array_map('trim', explode("\n", $text)));
 		return trim($text);
 	}
 
 
-	/** @return string */
-	private function getRandomId()
+	private function getRandomId(): string
 	{
 		return '<' . Nette\Utils\Random::generate() . '@'
-			. preg_replace('#[^\w.-]+#', '', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : php_uname('n'))
+			. preg_replace('#[^\w.-]+#', '', $_SERVER['HTTP_HOST'] ?? php_uname('n'))
 			. '>';
 	}
 }

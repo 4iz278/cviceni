@@ -25,9 +25,13 @@ class Type
 		CALLABLE = 'callable',
 		ITERABLE = 'iterable',
 		VOID = 'void',
+		NEVER = 'never',
+		MIXED = 'mixed',
+		FALSE = 'false',
 		NULL = 'null',
 		SELF = 'self',
-		PARENT = 'parent';
+		PARENT = 'parent',
+		STATIC = 'static';
 
 
 	public static function nullable(string $type, bool $state = true): string
@@ -39,6 +43,12 @@ class Type
 	public static function union(string ...$types): string
 	{
 		return implode('|', $types);
+	}
+
+
+	public static function intersection(string ...$types): string
+	{
+		return implode('&', $types);
 	}
 
 

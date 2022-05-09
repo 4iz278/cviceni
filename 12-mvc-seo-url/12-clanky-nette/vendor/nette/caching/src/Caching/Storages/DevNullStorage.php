@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Caching\Storages;
 
 use Nette;
@@ -13,31 +15,31 @@ use Nette;
 /**
  * Cache dummy storage.
  */
-class DevNullStorage implements Nette\Caching\IStorage
+class DevNullStorage implements Nette\Caching\Storage
 {
 	use Nette\SmartObject;
 
-	public function read($key)
+	public function read(string $key)
 	{
 	}
 
 
-	public function lock($key)
+	public function lock(string $key): void
 	{
 	}
 
 
-	public function write($key, $data, array $dependencies)
+	public function write(string $key, $data, array $dependencies): void
 	{
 	}
 
 
-	public function remove($key)
+	public function remove(string $key): void
 	{
 	}
 
 
-	public function clean(array $conditions)
+	public function clean(array $conditions): void
 	{
 	}
 }

@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Application\UI;
 
 use Nette;
@@ -13,17 +15,17 @@ use Nette;
 /**
  * Control is renderable Presenter component.
  *
- * @property-read ITemplate|Nette\Bridges\ApplicationLatte\Template|\stdClass $template
+ * @property-read Template|Nette\Bridges\ApplicationLatte\DefaultTemplate|\stdClass $template
  */
-abstract class Control extends Component implements IRenderable
+abstract class Control extends Component implements Renderable
 {
 	/** @var bool */
 	public $snippetMode;
 
-	/** @var ITemplateFactory */
+	/** @var TemplateFactory */
 	private $templateFactory;
 
-	/** @var ITemplate */
+	/** @var Template */
 	private $template;
 
 	/** @var array */
@@ -33,64 +35,82 @@ abstract class Control extends Component implements IRenderable
 	/********************* template factory ****************d*g**/
 
 
-	public function setTemplateFactory(ITemplateFactory $templateFactory)
+	final public function setTemplateFactory(TemplateFactory $templateFactory)
 	{
 		$this->templateFactory = $templateFactory;
+		return $this;
 	}
 
 
-	/**
-	 * @return ITemplate
-	 */
-	public function getTemplate()
+	final public function getTemplate(): Template
 	{
 		if ($this->template === null) {
-			$value = $this->createTemplate();
-			if (!$value instanceof ITemplate && $value !== null) {
-				$class2 = get_class($value);
-				$class = get_class($this);
-				throw new Nette\UnexpectedValueException("Object returned by $class::createTemplate() must be instance of Nette\\Application\\UI\\ITemplate, '$class2' given.");
-			}
-			$this->template = $value;
+			$this->template = $this->createTemplate();
 		}
+
 		return $this->template;
 	}
 
 
 	/**
-	 * @return ITemplate
+	 * @param  string  $class
 	 */
-	protected function createTemplate()
+	protected function createTemplate(/*string $class = null*/): Template
 	{
+		$class = func_num_args() // back compatibility
+			? func_get_arg(0)
+			: $this->formatTemplateClass();
 		$templateFactory = $this->templateFactory ?: $this->getPresenter()->getTemplateFactory();
-		return $templateFactory->createTemplate($this);
+		return $templateFactory->createTemplate($this, $class);
+	}
+
+
+	public function formatTemplateClass(): ?string
+	{
+		return $this->checkTemplateClass(preg_replace('#Control$#', '', static::class) . 'Template');
+	}
+
+
+	/** @internal */
+	protected function checkTemplateClass(string $class): ?string
+	{
+		if (!class_exists($class)) {
+			return null;
+		} elseif (!is_a($class, Template::class, true)) {
+			trigger_error(sprintf(
+				'%s: class %s was found but does not implement the %s, so it will not be used for the template.',
+				static::class,
+				$class,
+				Template::class
+			), E_USER_NOTICE);
+			return null;
+		} else {
+			return $class;
+		}
 	}
 
 
 	/**
 	 * Descendant can override this method to customize template compile-time filters.
-	 * @param  ITemplate
-	 * @return void
 	 */
-	public function templatePrepareFilters($template)
+	public function templatePrepareFilters(Template $template): void
 	{
 	}
 
 
 	/**
 	 * Saves the message to template, that can be displayed after redirect.
-	 * @param  string
-	 * @param  string
-	 * @return \stdClass
+	 * @param  string|\stdClass|Nette\HtmlStringable  $message
 	 */
-	public function flashMessage($message, $type = 'info')
+	public function flashMessage($message, string $type = 'info'): \stdClass
 	{
 		$id = $this->getParameterId('flash');
-		$messages = $this->getPresenter()->getFlashSession()->$id;
-		$messages[] = $flash = (object) [
+		$flash = $message instanceof \stdClass ? $message : (object) [
 			'message' => $message,
 			'type' => $type,
 		];
+		$messages = $this->getPresenter()->getFlashSession()->$id;
+		$messages[] = $flash;
 		$this->getTemplate()->flashes = $messages;
 		$this->getPresenter()->getFlashSession()->$id = $messages;
 		return $flash;
@@ -102,12 +122,11 @@ abstract class Control extends Component implements IRenderable
 
 	/**
 	 * Forces control or its snippet to repaint.
-	 * @return void
 	 */
-	public function redrawControl($snippet = null, $redraw = true)
+	public function redrawControl(?string $snippet = null, bool $redraw = true): void
 	{
 		if ($redraw) {
-			$this->invalidSnippets[$snippet === null ? "\0" : $snippet] = true;
+			$this->invalidSnippets[$snippet ?? "\0"] = true;
 
 		} elseif ($snippet === null) {
 			$this->invalidSnippets = [];
@@ -118,66 +137,40 @@ abstract class Control extends Component implements IRenderable
 	}
 
 
-	/** @deprecated */
-	public function invalidateControl($snippet = null)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use $this->redrawControl($snippet) instead.', E_USER_DEPRECATED);
-		$this->redrawControl($snippet);
-	}
-
-
-	/** @deprecated */
-	public function validateControl($snippet = null)
-	{
-		trigger_error(__METHOD__ . '() is deprecated; use $this->redrawControl($snippet, false) instead.', E_USER_DEPRECATED);
-		$this->redrawControl($snippet, false);
-	}
-
-
 	/**
 	 * Is required to repaint the control or its snippet?
-	 * @param  string  snippet name
-	 * @return bool
 	 */
-	public function isControlInvalid($snippet = null)
+	public function isControlInvalid(?string $snippet = null): bool
 	{
-		if ($snippet === null) {
-			if (count($this->invalidSnippets) > 0) {
-				return true;
+		if ($snippet !== null) {
+			return $this->invalidSnippets[$snippet] ?? isset($this->invalidSnippets["\0"]);
 
-			} else {
-				$queue = [$this];
-				do {
-					foreach (array_shift($queue)->getComponents() as $component) {
-						if ($component instanceof IRenderable) {
-							if ($component->isControlInvalid()) {
-								// $this->invalidSnippets['__child'] = true; // as cache
-								return true;
-							}
-
-						} elseif ($component instanceof Nette\ComponentModel\IContainer) {
-							$queue[] = $component;
-						}
-					}
-				} while ($queue);
-
-				return false;
-			}
-
-		} elseif (isset($this->invalidSnippets[$snippet])) {
-			return $this->invalidSnippets[$snippet];
-		} else {
-			return isset($this->invalidSnippets["\0"]);
+		} elseif (count($this->invalidSnippets) > 0) {
+			return true;
 		}
+
+		$queue = [$this];
+		do {
+			foreach (array_shift($queue)->getComponents() as $component) {
+				if ($component instanceof Renderable) {
+					if ($component->isControlInvalid()) {
+						// $this->invalidSnippets['__child'] = true; // as cache
+						return true;
+					}
+				} elseif ($component instanceof Nette\ComponentModel\IContainer) {
+					$queue[] = $component;
+				}
+			}
+		} while ($queue);
+
+		return false;
 	}
 
 
 	/**
 	 * Returns snippet HTML ID.
-	 * @param  string  snippet name
-	 * @return string
 	 */
-	public function getSnippetId($name = null)
+	public function getSnippetId(string $name): string
 	{
 		// HTML 4 ID & NAME: [A-Za-z][A-Za-z0-9:_.-]*
 		return 'snippet-' . $this->getUniqueId() . '-' . $name;

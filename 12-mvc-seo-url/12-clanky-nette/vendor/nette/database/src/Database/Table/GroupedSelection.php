@@ -5,11 +5,13 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Table;
 
 use Nette;
-use Nette\Database\Context;
-use Nette\Database\IConventions;
+use Nette\Database\Conventions;
+use Nette\Database\Explorer;
 
 
 /**
@@ -33,25 +35,25 @@ class GroupedSelection extends Selection
 
 	/**
 	 * Creates filtered and grouped table representation.
-	 * @param  Context
-	 * @param  IConventions
-	 * @param  string  database table name
-	 * @param  string  joining column
-	 * @param  Selection
-	 * @param  Nette\Caching\IStorage|null
 	 */
-	public function __construct(Context $context, IConventions $conventions, $tableName, $column, Selection $refTable, Nette\Caching\IStorage $cacheStorage = null)
-	{
+	public function __construct(
+		Explorer $explorer,
+		Conventions $conventions,
+		string $tableName,
+		string $column,
+		Selection $refTable,
+		?Nette\Caching\IStorage $cacheStorage = null
+	) {
 		$this->refTable = $refTable;
 		$this->column = $column;
-		parent::__construct($context, $conventions, $tableName, $cacheStorage);
+		parent::__construct($explorer, $conventions, $tableName, $cacheStorage);
 	}
 
 
 	/**
 	 * Sets active group.
 	 * @internal
-	 * @param  int  primary key of grouped rows
+	 * @param  int|string  $active  primary key of grouped rows
 	 * @return static
 	 */
 	public function setActive($active)
@@ -77,7 +79,7 @@ class GroupedSelection extends Selection
 	/**
 	 * @return static
 	 */
-	public function order($columns, ...$params)
+	public function order(string $columns, ...$params)
 	{
 		if (!$this->sqlBuilder->getOrder()) {
 			// improve index utilization
@@ -91,7 +93,10 @@ class GroupedSelection extends Selection
 	/********************* aggregations ****************d*g**/
 
 
-	public function aggregation($function)
+	/**
+	 * @return mixed
+	 */
+	public function aggregation(string $function, ?string $groupFunction = null)
 	{
 		$aggregation = &$this->getRefTable($refPath)->aggregation[$refPath . $function . $this->sqlBuilder->getSelectQueryHash($this->getPreviousAccessedColumns())];
 
@@ -100,12 +105,21 @@ class GroupedSelection extends Selection
 
 			$selection = $this->createSelectionInstance();
 			$selection->getSqlBuilder()->importConditions($this->getSqlBuilder());
-			$selection->select($function);
-			$selection->select("$this->name.$this->column");
-			$selection->group("$this->name.$this->column");
 
-			foreach ($selection as $row) {
-				$aggregation[$row[$this->column]] = $row;
+			if ($groupFunction && $selection->getSqlBuilder()->importGroupConditions($this->getSqlBuilder())) {
+				$selection->select("$function AS aggregate, $this->name.$this->column AS groupname");
+				$selection->group($selection->getSqlBuilder()->getGroup() . ", $this->name.$this->column");
+				$query = "SELECT $groupFunction(aggregate) AS groupaggregate, groupname FROM (" . $selection->getSql() . ') AS aggregates GROUP BY groupname';
+				foreach ($this->context->query($query, ...$selection->getSqlBuilder()->getParameters()) as $row) {
+					$aggregation[$row->groupname] = $row;
+				}
+			} else {
+				$selection->select($function);
+				$selection->select("$this->name.$this->column");
+				$selection->group("$this->name.$this->column");
+				foreach ($selection as $row) {
+					$aggregation[$row[$this->column]] = $row;
+				}
 			}
 		}
 
@@ -114,23 +128,22 @@ class GroupedSelection extends Selection
 				return $val;
 			}
 		}
+
+		return 0;
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public function count($column = null)
+	public function count(?string $column = null): int
 	{
 		$return = parent::count($column);
-		return isset($return) ? $return : 0;
+		return $return ?? 0;
 	}
 
 
 	/********************* internal ****************d*g**/
 
 
-	protected function execute()
+	protected function execute(): void
 	{
 		if ($this->rows !== null) {
 			$this->observeCache = $this;
@@ -149,6 +162,7 @@ class GroupedSelection extends Selection
 			if ($limit && $rows > 1) {
 				$this->sqlBuilder->setLimit(null, null);
 			}
+
 			parent::execute();
 			$this->sqlBuilder->setLimit($limit, null);
 			$data = [];
@@ -157,11 +171,17 @@ class GroupedSelection extends Selection
 			foreach ((array) $this->rows as $key => $row) {
 				$ref = &$data[$row[$this->column]];
 				$skip = &$offset[$row[$this->column]];
-				if ($limit === null || $rows <= 1 || (count($ref ?: []) < $limit && $skip >= $this->sqlBuilder->getOffset())) {
+				if (
+					$limit === null
+					|| $rows <= 1
+					|| (count($ref ?? []) < $limit
+						&& $skip >= $this->sqlBuilder->getOffset())
+				) {
 					$ref[$key] = $row;
 				} else {
 					unset($this->rows[$key]);
 				}
+
 				$skip++;
 				unset($ref, $skip);
 			}
@@ -177,15 +197,13 @@ class GroupedSelection extends Selection
 			foreach ($this->data as $row) {
 				$row->setTable($this); // injects correct parent GroupedSelection
 			}
+
 			reset($this->data);
 		}
 	}
 
 
-	/**
-	 * @return Selection
-	 */
-	protected function getRefTable(&$refPath)
+	protected function getRefTable(&$refPath): Selection
 	{
 		$refObj = $this->refTable;
 		$refPath = $this->name . '.';
@@ -198,7 +216,7 @@ class GroupedSelection extends Selection
 	}
 
 
-	protected function loadRefCache()
+	protected function loadRefCache(): void
 	{
 		$hash = $this->getSpecificCacheKey();
 		$referencing = &$this->refCache['referencing'][$this->getGeneralCacheKey()];
@@ -214,7 +232,7 @@ class GroupedSelection extends Selection
 	}
 
 
-	protected function emptyResultSet($saveCache = true, $deleteRererencedCache = true)
+	protected function emptyResultSet(bool $saveCache = true, bool $deleteRererencedCache = true): void
 	{
 		parent::emptyResultSet($saveCache, false);
 	}
@@ -223,7 +241,7 @@ class GroupedSelection extends Selection
 	/********************* manipulation ****************d*g**/
 
 
-	public function insert($data)
+	public function insert(iterable $data)
 	{
 		if ($data instanceof \Traversable && !$data instanceof Selection) {
 			$data = iterator_to_array($data);
@@ -241,7 +259,7 @@ class GroupedSelection extends Selection
 	}
 
 
-	public function update($data)
+	public function update(iterable $data): int
 	{
 		$builder = $this->sqlBuilder;
 
@@ -254,7 +272,7 @@ class GroupedSelection extends Selection
 	}
 
 
-	public function delete()
+	public function delete(): int
 	{
 		$builder = $this->sqlBuilder;
 

@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Bridges\SecurityTracy;
 
 use Nette;
@@ -30,30 +32,33 @@ class UserPanel implements Tracy\IBarPanel
 
 	/**
 	 * Renders tab.
-	 * @return string
 	 */
-	public function getTab()
+	public function getTab(): ?string
 	{
-		if (headers_sent() && !session_id()) {
-			return;
+		if (!session_id()) {
+			return null;
 		}
 
-		ob_start(function () {});
-		$user = $this->user;
-		require __DIR__ . '/templates/UserPanel.tab.phtml';
-		return ob_get_clean();
+		return Nette\Utils\Helpers::capture(function () {
+			$status = session_status() === PHP_SESSION_ACTIVE
+				? $this->user->isLoggedIn()
+				: '?';
+			require __DIR__ . '/templates/UserPanel.tab.phtml';
+		});
 	}
 
 
 	/**
 	 * Renders panel.
-	 * @return string
 	 */
-	public function getPanel()
+	public function getPanel(): ?string
 	{
-		ob_start(function () {});
-		$user = $this->user;
-		require __DIR__ . '/templates/UserPanel.panel.phtml';
-		return ob_get_clean();
+		if (session_status() !== PHP_SESSION_ACTIVE) {
+			return null;
+		}
+		return Nette\Utils\Helpers::capture(function () {
+			$user = $this->user;
+			require __DIR__ . '/templates/UserPanel.panel.phtml';
+		});
 	}
 }

@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms\Controls;
 
 use Nette;
@@ -31,7 +33,7 @@ class CheckboxList extends MultiChoiceControl
 
 
 	/**
-	 * @param  string|object
+	 * @param  string|object  $label
 	 */
 	public function __construct($label = null, array $items = null)
 	{
@@ -39,16 +41,25 @@ class CheckboxList extends MultiChoiceControl
 		$this->control->type = 'checkbox';
 		$this->container = Html::el();
 		$this->separator = Html::el('br');
-		// $this->itemLabel = Html::el('label'); back compatiblity
+		$this->itemLabel = Html::el('label');
 		$this->setOption('type', 'checkbox');
 	}
 
 
-	/**
-	 * Generates control's HTML element.
-	 * @return Html
-	 */
-	public function getControl()
+	public function loadHttpData(): void
+	{
+		$data = $this->getForm()->getHttpData(Nette\Forms\Form::DATA_TEXT, substr($this->getHtmlName(), 0, -2));
+		$data = $data === null
+			? $this->getHttpData(Nette\Forms\Form::DATA_TEXT)
+			: explode(',', $data);
+		$this->value = array_keys(array_flip($data));
+		if (is_array($this->disabled)) {
+			$this->value = array_diff($this->value, array_keys($this->disabled));
+		}
+	}
+
+
+	public function getControl(): Html
 	{
 		$input = parent::getControl();
 		$items = $this->getItems();
@@ -64,28 +75,20 @@ class CheckboxList extends MultiChoiceControl
 					'required' => null,
 					'data-nette-rules:' => [key($items) => $input->attrs['data-nette-rules']],
 				]),
-				$this->itemLabel ? $this->itemLabel->attrs : $this->label->attrs,
+				$this->itemLabel->attrs,
 				$this->separator
 			)
 		);
 	}
 
 
-	/**
-	 * Generates label's HTML element.
-	 * @param  string|object
-	 * @return Html
-	 */
-	public function getLabel($caption = null)
+	public function getLabel($caption = null): Html
 	{
 		return parent::getLabel($caption)->for(null);
 	}
 
 
-	/**
-	 * @return Html
-	 */
-	public function getControlPart($key = null)
+	public function getControlPart($key = null): Html
 	{
 		$key = key([(string) $key => null]);
 		return parent::getControl()->addAttributes([
@@ -98,12 +101,9 @@ class CheckboxList extends MultiChoiceControl
 	}
 
 
-	/**
-	 * @return Html
-	 */
-	public function getLabelPart($key = null)
+	public function getLabelPart($key = null): Html
 	{
-		$itemLabel = $this->itemLabel ? clone $this->itemLabel : clone $this->label;
+		$itemLabel = clone $this->itemLabel;
 		return func_num_args()
 			? $itemLabel->setText($this->translate($this->items[$key]))->for($this->getHtmlId() . '-' . $key)
 			: $this->getLabel();
@@ -112,9 +112,8 @@ class CheckboxList extends MultiChoiceControl
 
 	/**
 	 * Returns separator HTML element template.
-	 * @return Html
 	 */
-	public function getSeparatorPrototype()
+	public function getSeparatorPrototype(): Html
 	{
 		return $this->separator;
 	}
@@ -122,9 +121,8 @@ class CheckboxList extends MultiChoiceControl
 
 	/**
 	 * Returns container HTML element template.
-	 * @return Html
 	 */
-	public function getContainerPrototype()
+	public function getContainerPrototype(): Html
 	{
 		return $this->container;
 	}
@@ -132,10 +130,9 @@ class CheckboxList extends MultiChoiceControl
 
 	/**
 	 * Returns item label HTML element template.
-	 * @return Html
 	 */
-	public function getItemLabelPrototype()
+	public function getItemLabelPrototype(): Html
 	{
-		return $this->itemLabel ?: $this->itemLabel = Html::el('label');
+		return $this->itemLabel;
 	}
 }

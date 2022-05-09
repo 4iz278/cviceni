@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Http;
 
 use Nette;
@@ -22,14 +24,16 @@ use Nette;
  * @property-read bool $ok
  * @property-read string|null $contents
  */
-class FileUpload
+final class FileUpload
 {
 	use Nette\SmartObject;
+
+	public const IMAGE_MIME_TYPES = ['image/gif', 'image/png', 'image/jpeg', 'image/webp'];
 
 	/** @var string */
 	private $name;
 
-	/** @var string */
+	/** @var string|false|null */
 	private $type;
 
 	/** @var int */
@@ -42,7 +46,7 @@ class FileUpload
 	private $error;
 
 
-	public function __construct($value)
+	public function __construct(?array $value)
 	{
 		foreach (['name', 'size', 'tmp_name', 'error'] as $key) {
 			if (!isset($value[$key]) || !is_scalar($value[$key])) {
@@ -50,6 +54,7 @@ class FileUpload
 				return; // or throw exception?
 			}
 		}
+
 		$this->name = $value['name'];
 		$this->size = $value['size'];
 		$this->tmpName = $value['tmp_name'];
@@ -58,103 +63,118 @@ class FileUpload
 
 
 	/**
-	 * Returns the file name.
-	 * @return string
+	 * @deprecated use getUntrustedName()
 	 */
-	public function getName()
+	public function getName(): string
 	{
 		return $this->name;
 	}
 
 
 	/**
-	 * Returns the sanitized file name.
-	 * @return string
+	 * Returns the original file name as submitted by the browser. Do not trust the value returned by this method.
+	 * A client could send a malicious filename with the intention to corrupt or hack your application.
 	 */
-	public function getSanitizedName()
+	public function getUntrustedName(): string
 	{
-		return trim(Nette\Utils\Strings::webalize($this->name, '.', false), '.-');
+		return $this->name;
 	}
 
 
 	/**
-	 * Returns the MIME content type of an uploaded file.
-	 * @return string|null
+	 * Returns the sanitized file name. The resulting name contains only ASCII characters [a-zA-Z0-9.-].
+	 * If the name does not contain such characters, it returns 'unknown'. If the file is JPEG, PNG, GIF, or WebP image,
+	 * it returns the correct file extension. Do not blindly trust the value returned by this method.
 	 */
-	public function getContentType()
+	public function getSanitizedName(): string
+	{
+		$name = Nette\Utils\Strings::webalize($this->name, '.', false);
+		$name = str_replace(['-.', '.-'], '.', $name);
+		$name = trim($name, '.-');
+		$name = $name === '' ? 'unknown' : $name;
+		if ($this->isImage()) {
+			$name = preg_replace('#\.[^.]+$#D', '', $name);
+			$name .= '.' . ($this->getImageFileExtension() ?? 'unknown');
+		}
+
+		return $name;
+	}
+
+
+	/**
+	 * Detects the MIME content type of the uploaded file based on its signature. Requires PHP extension fileinfo.
+	 * If the upload was not successful or the detection failed, it returns null.
+	 */
+	public function getContentType(): ?string
 	{
 		if ($this->isOk() && $this->type === null) {
 			$this->type = finfo_file(finfo_open(FILEINFO_MIME_TYPE), $this->tmpName);
 		}
-		return $this->type;
+
+		return $this->type ?: null;
 	}
 
 
 	/**
-	 * Returns the size of an uploaded file.
-	 * @return int
+	 * Returns the path of the temporary location of the uploaded file.
 	 */
-	public function getSize()
+	public function getSize(): int
 	{
 		return $this->size;
 	}
 
 
 	/**
-	 * Returns the path to an uploaded file.
-	 * @return string
+	 * Returns the path of the temporary location of the uploaded file.
 	 */
-	public function getTemporaryFile()
+	public function getTemporaryFile(): string
 	{
 		return $this->tmpName;
 	}
 
 
 	/**
-	 * Returns the path to an uploaded file.
-	 * @return string
+	 * Returns the path of the temporary location of the uploaded file.
 	 */
-	public function __toString()
+	public function __toString(): string
 	{
-		return (string) $this->tmpName;
+		return $this->tmpName;
 	}
 
 
 	/**
-	 * Returns the error code. {@link http://php.net/manual/en/features.file-upload.errors.php}
-	 * @return int
+	 * Returns the error code. It is be one of UPLOAD_ERR_XXX constants.
+	 * @see http://php.net/manual/en/features.file-upload.errors.php
 	 */
-	public function getError()
+	public function getError(): int
 	{
 		return $this->error;
 	}
 
 
 	/**
-	 * Is there any error?
-	 * @return bool
+	 * Returns true if the file was uploaded successfully.
 	 */
-	public function isOk()
+	public function isOk(): bool
 	{
 		return $this->error === UPLOAD_ERR_OK;
 	}
 
 
 	/**
-	 * @return bool
+	 * Returns true if the user has uploaded a file.
 	 */
-	public function hasFile()
+	public function hasFile(): bool
 	{
 		return $this->error !== UPLOAD_ERR_NO_FILE;
 	}
 
 
 	/**
-	 * Move uploaded file to new location.
-	 * @param  string
+	 * Moves an uploaded file to a new location. If the destination file already exists, it will be overwritten.
 	 * @return static
 	 */
-	public function move($dest)
+	public function move(string $dest)
 	{
 		$dir = dirname($dest);
 		Nette\Utils\FileSystem::createDir($dir);
@@ -162,7 +182,7 @@ class FileUpload
 		Nette\Utils\Callback::invokeSafe(
 			is_uploaded_file($this->tmpName) ? 'move_uploaded_file' : 'rename',
 			[$this->tmpName, $dest],
-			function ($message) use ($dest) {
+			function (string $message) use ($dest): void {
 				throw new Nette\InvalidStateException("Unable to move uploaded file '$this->tmpName' to '$dest'. $message");
 			}
 		);
@@ -173,43 +193,55 @@ class FileUpload
 
 
 	/**
-	 * Is uploaded file GIF, PNG or JPEG?
-	 * @return bool
+	 * Returns true if the uploaded file is a JPEG, PNG, GIF, or WebP image.
+	 * Detection is based on its signature, the integrity of the file is not checked. Requires PHP extension fileinfo.
 	 */
-	public function isImage()
+	public function isImage(): bool
 	{
-		return in_array($this->getContentType(), ['image/gif', 'image/png', 'image/jpeg'], true);
+		return in_array($this->getContentType(), self::IMAGE_MIME_TYPES, true);
 	}
 
 
 	/**
-	 * Returns the image.
-	 * @return Nette\Utils\Image
-	 * @throws Nette\Utils\ImageException
+	 * Loads an image.
+	 * @throws Nette\Utils\ImageException  If the upload was not successful or is not a valid image
 	 */
-	public function toImage()
+	public function toImage(): Nette\Utils\Image
 	{
 		return Nette\Utils\Image::fromFile($this->tmpName);
 	}
 
 
 	/**
-	 * Returns the dimensions of an uploaded image as array.
-	 * @return array|null
+	 * Returns a pair of [width, height] with dimensions of the uploaded image.
 	 */
-	public function getImageSize()
+	public function getImageSize(): ?array
 	{
-		return $this->isOk() ? @getimagesize($this->tmpName) : null; // @ - files smaller than 12 bytes causes read error
+		return $this->isImage()
+			? array_intersect_key(getimagesize($this->tmpName), [0, 1])
+			: null;
 	}
 
 
 	/**
-	 * Get file contents.
-	 * @return string|null
+	 * Returns image file extension based on detected content type (without dot).
 	 */
-	public function getContents()
+	public function getImageFileExtension(): ?string
+	{
+		return $this->isImage()
+			? explode('/', $this->getContentType())[1]
+			: null;
+	}
+
+
+	/**
+	 * Returns the contents of the uploaded file. If the upload was not successful, it returns null.
+	 */
+	public function getContents(): ?string
 	{
 		// future implementation can try to work around safe_mode and open_basedir limitations
-		return $this->isOk() ? file_get_contents($this->tmpName) : null;
+		return $this->isOk()
+			? file_get_contents($this->tmpName)
+			: null;
 	}
 }

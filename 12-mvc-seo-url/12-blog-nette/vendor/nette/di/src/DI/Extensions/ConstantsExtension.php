@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\DI\Extensions;
 
 use Nette;
@@ -13,12 +15,12 @@ use Nette;
 /**
  * Constant definitions.
  */
-class ConstantsExtension extends Nette\DI\CompilerExtension
+final class ConstantsExtension extends Nette\DI\CompilerExtension
 {
-	public function afterCompile(Nette\PhpGenerator\ClassType $class)
+	public function loadConfiguration()
 	{
 		foreach ($this->getConfig() as $name => $value) {
-			$class->getMethod('initialize')->addBody('define(?, ?);', [$name, $value]);
+			$this->initialization->addBody('define(?, ?);', [$name, $value]);
 		}
 	}
 }

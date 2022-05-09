@@ -5,17 +5,14 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Table;
 
 use Nette\Database;
 
 
-/**
- * Container of database result fetched into IRow objects.
- *
- * @method     IRow|bool  fetch() Fetches single row object.
- * @method     IRow[]     fetchAll() Fetches all rows.
- */
+/** @deprecated use Selection */
 interface IRowContainer extends Database\IRowContainer
 {
 }

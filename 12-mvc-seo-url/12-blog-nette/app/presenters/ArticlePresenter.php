@@ -81,10 +81,10 @@ class ArticlePresenter extends BasePresenter{
       ->setRequired('Je nutné zadat název článku');
     $form->addTextArea('perex','Perex:')
       ->setRequired('Je nutné zadat perex článku.')
-      ->setAttribute('class','wysiwyg');
+      ->setHtmlAttribute('class','wysiwyg');
     $form->addTextArea('content','Obsah článku:')
       ->setRequired('Je nuté zadat obsah článku.')
-      ->setAttribute('class','wysiwyg');
+      ->setHtmlAttribute('class','wysiwyg');
     $categories=$this->categoriesModel->findAll();
     $categoriesArr=[];
     foreach($categories as $category){

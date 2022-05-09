@@ -11,7 +11,7 @@ namespace Nette\Utils;
 
 
 /**
- * Provides atomicity and isolation for thread safe file manipulation using stream nette.safe://
+ * Provides isolation for thread safe file manipulation using stream nette.safe://
  *
  * <code>
  * file_put_contents('nette.safe://myfile.txt', $content);
@@ -30,17 +30,11 @@ class SafeStream
 	/** @var resource  orignal file handle */
 	private $handle;
 
-	/** @var resource|null  temporary file handle */
-	private $tempHandle;
-
 	/** @var string  orignal file path */
-	private $file;
+	private $filePath;
 
-	/** @var string  temporary file path */
-	private $tempFile;
-
-	/** @var bool */
-	private $deleteFile;
+	/** @var int  starting position in file (for appending) */
+	private $startPos = 0;
 
 	/** @var bool  error detected? */
 	private $writeError = false;
@@ -54,8 +48,9 @@ class SafeStream
 		foreach (array_intersect(stream_get_wrappers(), ['safe', self::PROTOCOL]) as $name) {
 			stream_wrapper_unregister($name);
 		}
-		stream_wrapper_register('safe', __CLASS__); // old protocol
-		return stream_wrapper_register(self::PROTOCOL, __CLASS__);
+
+		stream_wrapper_register('safe', self::class); // old protocol
+		return stream_wrapper_register(self::PROTOCOL, self::class);
 	}
 
 
@@ -65,97 +60,35 @@ class SafeStream
 	public function stream_open(string $path, string $mode, int $options): bool
 	{
 		$path = substr($path, strpos($path, ':') + 3);  // trim protocol nette.safe://
-
 		$flag = trim($mode, 'crwax+');  // text | binary mode
-		$mode = trim($mode, 'tb');     // mode
-		$use_path = (bool) (STREAM_USE_PATH & $options); // use include_path?
+		$resMode = rtrim($mode, 'tb');
+		$lock = $resMode === 'r' ? LOCK_SH : LOCK_EX;
+		$use_path = (bool) (STREAM_USE_PATH & $options);
+		if ($resMode[0] === 'w') {
+			$resMode[0] = 'c';
+		}
 
-		// open file
-		if ($mode === 'r') { // provides only isolation
-			return $this->checkAndLock($this->tempHandle = fopen($path, 'r' . $flag, $use_path), LOCK_SH);
-
-		} elseif ($mode === 'r+') {
-			if (!$this->checkAndLock($this->handle = fopen($path, 'r' . $flag, $use_path), LOCK_EX)) {
-				return false;
-			}
-
-		} elseif ($mode[0] === 'x') {
-			if (!$this->checkAndLock($this->handle = fopen($path, 'x' . $flag, $use_path), LOCK_EX)) {
-				return false;
-			}
-			$this->deleteFile = true;
-
-		} elseif ($mode[0] === 'w' || $mode[0] === 'a' || $mode[0] === 'c') {
-			if ($this->checkAndLock($this->handle = @fopen($path, 'x' . $flag, $use_path), LOCK_EX)) { // intentionally @
-				$this->deleteFile = true;
-
-			} elseif (!$this->checkAndLock($this->handle = fopen($path, 'a+' . $flag, $use_path), LOCK_EX)) {
-				return false;
-			}
-
-		} else {
-			trigger_error("Unknown mode $mode", E_USER_WARNING);
+		$handle = @fopen($path, $resMode . $flag, $use_path); // @ may fail
+		if (!$handle || !flock($handle, $lock)) {
 			return false;
 		}
 
-		// create temporary file in the same directory to provide atomicity
-		$tmp = '~~' . lcg_value() . '.tmp';
-		if (!$this->tempHandle = fopen($path . $tmp, (strpos($mode, '+') ? 'x+' : 'x') . $flag, $use_path)) {
-			$this->clean();
-			return false;
-		}
-		$this->tempFile = realpath($path . $tmp);
-		$this->file = substr($this->tempFile, 0, -strlen($tmp));
-
-		// copy to temporary file
-		if ($mode === 'r+' || $mode[0] === 'a' || $mode[0] === 'c') {
-			$stat = fstat($this->handle);
-			fseek($this->handle, 0);
-			if (stream_copy_to_stream($this->handle, $this->tempHandle) !== $stat['size']) {
-				$this->clean();
-				return false;
+		if ($resMode === 'r') { // re-take lock if file is empty
+			$counter = 100;
+			while ($counter-- && !fstat($handle)['size']) {
+				flock($handle, LOCK_UN);
+				usleep(1);
+				flock($handle, LOCK_SH);
 			}
+		} elseif ($mode[0] === 'a') {
+			$this->startPos = fstat($handle)['size'];
 
-			if ($mode[0] === 'a') { // emulate append mode
-				fseek($this->tempHandle, 0, SEEK_END);
-			}
+		} elseif ($mode[0] === 'w') {
+			ftruncate($handle, 0);
 		}
 
+		$this->handle = $handle;
 		return true;
-	}
-
-
-	/**
-	 * Checks handle and locks file.
-	 */
-	private function checkAndLock($handle, int $lock): bool
-	{
-		if (!$handle) {
-			return false;
-
-		} elseif (!flock($handle, $lock)) {
-			fclose($handle);
-			return false;
-		}
-
-		return true;
-	}
-
-
-	/**
-	 * Error destructor.
-	 */
-	private function clean(): void
-	{
-		flock($this->handle, LOCK_UN);
-		fclose($this->handle);
-		if ($this->deleteFile) {
-			unlink($this->file);
-		}
-		if ($this->tempHandle) {
-			fclose($this->tempHandle);
-			unlink($this->tempFile);
-		}
 	}
 
 
@@ -164,22 +97,12 @@ class SafeStream
 	 */
 	public function stream_close(): void
 	{
-		if (!$this->tempFile) { // 'r' mode
-			flock($this->tempHandle, LOCK_UN);
-			fclose($this->tempHandle);
-			return;
+		if ($this->writeError) {
+			ftruncate($this->handle, $this->startPos);
 		}
 
 		flock($this->handle, LOCK_UN);
 		fclose($this->handle);
-		fclose($this->tempHandle);
-
-		if ($this->writeError || !rename($this->tempFile, $this->file)) { // try to rename temp file
-			unlink($this->tempFile); // otherwise delete temp file
-			if ($this->deleteFile) {
-				unlink($this->file);
-			}
-		}
 	}
 
 
@@ -188,7 +111,7 @@ class SafeStream
 	 */
 	public function stream_read(int $length)
 	{
-		return fread($this->tempHandle, $length);
+		return fread($this->handle, $length);
 	}
 
 
@@ -198,7 +121,7 @@ class SafeStream
 	public function stream_write(string $data)
 	{
 		$len = strlen($data);
-		$res = fwrite($this->tempHandle, $data, $len);
+		$res = fwrite($this->handle, $data, $len);
 
 		if ($res !== $len) { // disk full?
 			$this->writeError = true;
@@ -213,7 +136,7 @@ class SafeStream
 	 */
 	public function stream_truncate(int $size): bool
 	{
-		return ftruncate($this->tempHandle, $size);
+		return ftruncate($this->handle, $size);
 	}
 
 
@@ -222,7 +145,7 @@ class SafeStream
 	 */
 	public function stream_tell(): int
 	{
-		return ftell($this->tempHandle);
+		return ftell($this->handle);
 	}
 
 
@@ -231,7 +154,7 @@ class SafeStream
 	 */
 	public function stream_eof(): bool
 	{
-		return feof($this->tempHandle);
+		return feof($this->handle);
 	}
 
 
@@ -240,16 +163,16 @@ class SafeStream
 	 */
 	public function stream_seek(int $offset, int $whence = SEEK_SET): bool
 	{
-		return fseek($this->tempHandle, $offset, $whence) === 0;
+		return fseek($this->handle, $offset, $whence) === 0; // ???
 	}
 
 
 	/**
-	 * Gets information about a file referenced by $this->tempHandle.
+	 * Gets information about a file referenced by $this->handle.
 	 */
 	public function stream_stat()
 	{
-		return fstat($this->tempHandle);
+		return fstat($this->handle);
 	}
 
 
@@ -278,7 +201,7 @@ class SafeStream
 	/**
 	 * Does nothing, but since PHP 7.4 needs to be implemented when using wrapper for includes
 	 */
-	public function stream_set_option(int $option, int $arg1 , int $arg2) : bool
+	public function stream_set_option(int $option, int $arg1, int $arg2): bool
 	{
 		return false;
 	}

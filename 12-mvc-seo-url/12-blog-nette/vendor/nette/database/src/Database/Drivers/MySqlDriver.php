@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Drivers;
 
 use Nette;
@@ -13,15 +15,14 @@ use Nette;
 /**
  * Supplemental MySQL database driver.
  */
-class MySqlDriver implements Nette\Database\ISupplementalDriver
+class MySqlDriver implements Nette\Database\Driver
 {
 	use Nette\SmartObject;
 
-	const ERROR_ACCESS_DENIED = 1045;
-
-	const ERROR_DUPLICATE_ENTRY = 1062;
-
-	const ERROR_DATA_TRUNCATED = 1265;
+	public const
+		ERROR_ACCESS_DENIED = 1045,
+		ERROR_DUPLICATE_ENTRY = 1062,
+		ERROR_DATA_TRUNCATED = 1265;
 
 	/** @var Nette\Database\Connection */
 	private $connection;
@@ -32,24 +33,24 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 	 *   - charset => character encoding to set (default is utf8 or utf8mb4 since MySQL 5.5.3)
 	 *   - sqlmode => see http://dev.mysql.com/doc/refman/5.0/en/server-sql-mode.html
 	 */
-	public function __construct(Nette\Database\Connection $connection, array $options)
+	public function initialize(Nette\Database\Connection $connection, array $options): void
 	{
 		$this->connection = $connection;
-		$charset = isset($options['charset'])
-			? $options['charset']
-			: (version_compare($connection->getPdo()->getAttribute(\PDO::ATTR_SERVER_VERSION), '5.5.3', '>=') ? 'utf8mb4' : 'utf8');
+		$charset = $options['charset']
+			?? (version_compare($connection->getPdo()->getAttribute(\PDO::ATTR_SERVER_VERSION), '5.5.3', '>=') ? 'utf8mb4' : 'utf8');
 		if ($charset) {
-			$connection->query("SET NAMES '$charset'");
+			$connection->query('SET NAMES ?', $charset);
 		}
+
 		if (isset($options['sqlmode'])) {
-			$connection->query("SET sql_mode='$options[sqlmode]'");
+			$connection->query('SET sql_mode=?', $options['sqlmode']);
 		}
 	}
 
 
-	public function convertException(\PDOException $e)
+	public function convertException(\PDOException $e): Nette\Database\DriverException
 	{
-		$code = isset($e->errorInfo[1]) ? $e->errorInfo[1] : null;
+		$code = $e->errorInfo[1] ?? null;
 		if (in_array($code, [1216, 1217, 1451, 1452, 1701], true)) {
 			return Nette\Database\ForeignKeyConstraintViolationException::from($e);
 
@@ -71,32 +72,26 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 	/********************* SQL ****************d*g**/
 
 
-	public function delimite($name)
+	public function delimite(string $name): string
 	{
 		// @see http://dev.mysql.com/doc/refman/5.0/en/identifiers.html
 		return '`' . str_replace('`', '``', $name) . '`';
 	}
 
 
-	public function formatBool($value)
-	{
-		return $value ? '1' : '0';
-	}
-
-
-	public function formatDateTime(/*\DateTimeInterface*/ $value)
+	public function formatDateTime(\DateTimeInterface $value): string
 	{
 		return $value->format("'Y-m-d H:i:s'");
 	}
 
 
-	public function formatDateInterval(\DateInterval $value)
+	public function formatDateInterval(\DateInterval $value): string
 	{
 		return $value->format("'%r%h:%I:%S'");
 	}
 
 
-	public function formatLike($value, $pos)
+	public function formatLike(string $value, int $pos): string
 	{
 		$value = str_replace('\\', '\\\\', $value);
 		$value = addcslashes(substr($this->connection->quote($value), 1, -1), '%_');
@@ -104,42 +99,37 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 	}
 
 
-	public function applyLimit(&$sql, $limit, $offset)
+	public function applyLimit(string &$sql, ?int $limit, ?int $offset): void
 	{
 		if ($limit < 0 || $offset < 0) {
 			throw new Nette\InvalidArgumentException('Negative offset or limit.');
 
 		} elseif ($limit !== null || $offset) {
 			// see http://dev.mysql.com/doc/refman/5.0/en/select.html
-			$sql .= ' LIMIT ' . ($limit === null ? '18446744073709551615' : (int) $limit)
-				. ($offset ? ' OFFSET ' . (int) $offset : '');
+			$sql .= ' LIMIT ' . ($limit ?? '18446744073709551615')
+				. ($offset ? ' OFFSET ' . $offset : '');
 		}
-	}
-
-
-	public function normalizeRow($row)
-	{
-		return $row;
 	}
 
 
 	/********************* reflection ****************d*g**/
 
 
-	public function getTables()
+	public function getTables(): array
 	{
 		$tables = [];
 		foreach ($this->connection->query('SHOW FULL TABLES') as $row) {
 			$tables[] = [
 				'name' => $row[0],
-				'view' => isset($row[1]) && $row[1] === 'VIEW',
+				'view' => ($row[1] ?? null) === 'VIEW',
 			];
 		}
+
 		return $tables;
 	}
 
 
-	public function getColumns($table)
+	public function getColumns(string $table): array
 	{
 		$columns = [];
 		foreach ($this->connection->query('SHOW FULL COLUMNS FROM ' . $this->delimite($table)) as $row) {
@@ -150,7 +140,6 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 				'table' => $table,
 				'nativetype' => strtoupper($type[0]),
 				'size' => isset($type[1]) ? (int) $type[1] : null,
-				'unsigned' => (bool) strstr($row['type'], 'unsigned'),
 				'nullable' => $row['null'] === 'YES',
 				'default' => $row['default'],
 				'autoincrement' => $row['extra'] === 'auto_increment',
@@ -158,43 +147,44 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 				'vendor' => (array) $row,
 			];
 		}
+
 		return $columns;
 	}
 
 
-	public function getIndexes($table)
+	public function getIndexes(string $table): array
 	{
 		$indexes = [];
 		foreach ($this->connection->query('SHOW INDEX FROM ' . $this->delimite($table)) as $row) {
-			$row = array_change_key_case((array) $row, CASE_LOWER);
-			$indexes[$row['key_name']]['name'] = $row['key_name'];
-			$indexes[$row['key_name']]['unique'] = !$row['non_unique'];
-			$indexes[$row['key_name']]['primary'] = $row['key_name'] === 'PRIMARY';
-			$indexes[$row['key_name']]['columns'][$row['seq_in_index'] - 1] = $row['column_name'];
+			$id = $row['Key_name'];
+			$indexes[$id]['name'] = $id;
+			$indexes[$id]['unique'] = !$row['Non_unique'];
+			$indexes[$id]['primary'] = $row['Key_name'] === 'PRIMARY';
+			$indexes[$id]['columns'][$row['Seq_in_index'] - 1] = $row['Column_name'];
 		}
+
 		return array_values($indexes);
 	}
 
 
-	public function getForeignKeys($table)
+	public function getForeignKeys(string $table): array
 	{
 		$keys = [];
 		$query = 'SELECT CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM information_schema.KEY_COLUMN_USAGE '
 			. 'WHERE TABLE_SCHEMA = DATABASE() AND REFERENCED_TABLE_NAME IS NOT NULL AND TABLE_NAME = ' . $this->connection->quote($table);
 
 		foreach ($this->connection->query($query) as $id => $row) {
-			$row = array_change_key_case((array) $row, CASE_LOWER);
-			$keys[$id]['name'] = $row['constraint_name']; // foreign key name
-			$keys[$id]['local'] = $row['column_name']; // local columns
-			$keys[$id]['table'] = $row['referenced_table_name']; // referenced table
-			$keys[$id]['foreign'] = $row['referenced_column_name']; // referenced columns
+			$keys[$id]['name'] = $row['CONSTRAINT_NAME'];
+			$keys[$id]['local'] = $row['COLUMN_NAME'];
+			$keys[$id]['table'] = $row['REFERENCED_TABLE_NAME'];
+			$keys[$id]['foreign'] = $row['REFERENCED_COLUMN_NAME'];
 		}
 
 		return array_values($keys);
 	}
 
 
-	public function getColumnTypes(\PDOStatement $statement)
+	public function getColumnTypes(\PDOStatement $statement): array
 	{
 		$types = [];
 		$count = $statement->columnCount();
@@ -207,11 +197,12 @@ class MySqlDriver implements Nette\Database\ISupplementalDriver
 				}
 			}
 		}
+
 		return $types;
 	}
 
 
-	public function isSupported($item)
+	public function isSupported(string $item): bool
 	{
 		// MULTI_COLUMN_AS_OR_COND due to mysql bugs:
 		// - http://bugs.mysql.com/bug.php?id=31188

@@ -1,8 +1,8 @@
-Nette SafeStream: Atomic Operations
-===================================
+SafeStream: Safety for Files
+============================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/safe-stream.svg)](https://packagist.org/packages/nette/safe-stream)
-[![Build Status](https://travis-ci.org/nette/safe-stream.svg?branch=master)](https://travis-ci.org/nette/safe-stream)
+[![Tests](https://github.com/nette/safe-stream/workflows/Tests/badge.svg?branch=master)](https://github.com/nette/safe-stream/actions)
 [![Coverage Status](https://coveralls.io/repos/github/nette/safe-stream/badge.svg?branch=master)](https://coveralls.io/github/nette/safe-stream?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/nette/safe-stream/v/stable)](https://github.com/nette/safe-stream/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/safe-stream/blob/master/license.md)
@@ -11,71 +11,63 @@ Nette SafeStream: Atomic Operations
 Introduction
 ------------
 
-The Nette SafeStream protocol for file manipulation guarantees atomicity and isolation of every file operation.
+SafeStream guarantees that every read and write to a file is isolated. This means that no thread will start reading a file that is not yet fully written, or multiple threads will not overwrite the same file.
 
-Documentation can be found on the [website](https://doc.nette.org/safestream).
+Installation:
 
-If you like Nette, **[please make a donation now](https://nette.org/donate)**. Thank you!
+```shell
+composer require nette/safe-stream
+```
 
-Why is it actually good? Let's start with a simple example, where we repeatedly write the same string to the file and then read it:
+
+What is it good for?
+--------------------
+
+What are isolated operations actually good for? Let's start with a simple example that repeatedly writes to a file and then reads the same string from it:
 
 ```php
 $s = str_repeat('Long String', 10000);
 
 $counter = 1000;
 while ($counter--) {
-	file_put_contents('file', $s);       // write it
-	$read = file_get_contents('file');   // read it
-	if ($s !== $read) {                    // check it
-		echo 'Strings are different!';
+	file_put_contents('file', $s); // write it
+	$readed = file_get_contents('file'); // read it
+	if ($s !== $readed) { // check it
+		echo 'strings are different!';
 	}
 }
 ```
 
-It may seem that the `echo 'Strings are different!'` command can't ever get executed. The opposite is true. Try to run this script in
-two browsers simultaneously. The error occurs almost immediately.
+It may seem that `echo 'strings differ!'` can never occur. The opposite is true. Try running this script in two browser tabs at the same time. The error will occur almost immediately.
 
-It's because the code is not safe when performed repeatedly at the same time (ie, in multiple threads). And that is nothing unusual
-on the Internet, where several people often connect to one website at the same time. Therefore, it's very important to ensure
-that your application can handle multiple threads at once - that it's *thread-safe*, because native PHP functions are not.
-Otherwise, you can expect data loss and strange errors occuring.
+One of the tabs will read the file at a time when the other hasn't had a chance to write it all, so the content will not be complete.
 
-How to ensure, that functions like file_get_contets or `fwrite` behave atomically? The SafeStream protocol offers a secure solution,
-so we can atomically manipulate files through standard PHP functions. To register this protocol install SafeStream via Composer.
-After that, you just need prefix the filename with `nette.safe://`:
+Therefore, the code is not safe if it is executed multiple times at the same time (i.e. in multiple threads). Which is not uncommon on the internet, often a server is responding to a large number of users at one time. So ensuring that your application works reliably even when executed in multiple threads (thread-safe) is very important. Otherwise, data will be lost and hard-to-detect errors will occur.
 
-```php
-$handle = fopen('nette.safe://test.txt', 'x'); // prefix the filename with nette.safe://
+But as you can see, PHP's native file read and write functions are not isolated and atomic.
 
-fwrite($handle, 'Nette Framework'); // for now, the data is written into a temporary file
 
-fclose($handle); // and only now the file is renamed to test.txt
-```
+How to use SafeStream?
+----------------------
 
-You can of course use all the familiar functions, such as:
+SafeStream creates a secure protocol to read and write files in isolation using standard PHP functions. All you need to do is to specify `nette.safe://` before the file name:
 
 ```php
-file_put_contents('nette.safe://test.txt', $content);
-
-$ini = parse_ini_file('nette.safe://autoload.ini');
+file_put_contents('nette.safe://file', $s);
+$s = file_get_contents('nette.safe://file');
 ```
 
-SafeStream guarantees:
+SafeStream ensures that at most one thread can write to the file at a time. The other threads are waiting in the queue. If no thread is writing, any number of threads can read the file in parallel.
 
-- **Atomicity**: The file is written either as a whole or not written at all.
-- **Isolation**: No one can start to read a file that is not yet fully written.
+All common PHP functions can be used with the protocol, for example:
 
-If you write to an existing file in the '`a`' mode (append), SafeStream creates it's copy and only after successfully writing it
-renames it to the original name. Write in this mode is therefore more resource-consuming than in other modes.
+```php
+// 'r' means open read-only
+$handle = fopen('nette.safe://file.txt', 'r');
 
-
-Installation
-------------
-
-The recommended way to install is via Composer:
-
-```
-composer require nette/safe-stream
+$ini = parse_ini_file('nette.safe://translations.neon');
 ```
 
-It requires PHP version 7.1.
+-----
+
+Documentation can be found on the [website](https://doc.nette.org/safe-stream). If you like it, **[please make a donation now](https://github.com/sponsors/dg)**. Thank you!

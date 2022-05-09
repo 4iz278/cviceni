@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms;
 
 use Nette;
@@ -17,7 +19,7 @@ class Rule
 {
 	use Nette\SmartObject;
 
-	/** @var IControl */
+	/** @var Control */
 	public $control;
 
 	/** @var mixed */
@@ -29,9 +31,17 @@ class Rule
 	/** @var bool */
 	public $isNegative = false;
 
-	/** @var string */
+	/** @var string|null */
 	public $message;
 
-	/** @var Rules  for conditions */
+	/** @var Rules|null  for conditions */
 	public $branch;
+
+
+	/** @internal */
+	public function canExport(): bool
+	{
+		return is_string($this->validator)
+			|| Nette\Utils\Callback::isStatic($this->validator);
+	}
 }

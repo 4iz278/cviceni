@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Application\Routers;
 
 use Nette;
@@ -14,35 +16,24 @@ use Nette\Application;
 /**
  * The bidirectional route for trivial routing via query parameters.
  */
-class SimpleRouter implements Application\IRouter
+final class SimpleRouter extends Nette\Routing\SimpleRouter implements Nette\Routing\Router
 {
-	use Nette\SmartObject;
-
-	const PRESENTER_KEY = 'presenter';
-
-	const MODULE_KEY = 'module';
-
-	/** @var string */
-	private $module = '';
-
-	/** @var array */
-	private $defaults;
+	private const
+		PRESENTER_KEY = 'presenter',
+		MODULE_KEY = 'module';
 
 	/** @var int */
 	private $flags;
 
 
-	/**
-	 * @param  array   default values
-	 * @param  int     flags
-	 */
-	public function __construct($defaults = [], $flags = 0)
+	public function __construct($defaults = [], int $flags = 0)
 	{
 		if (is_string($defaults)) {
-			list($presenter, $action) = Nette\Application\Helpers::splitName($defaults);
+			[$presenter, $action] = Nette\Application\Helpers::splitName($defaults);
 			if (!$presenter) {
 				throw new Nette\InvalidArgumentException("Argument must be array or string in format Presenter:action, '$defaults' given.");
 			}
+
 			$defaults = [
 				self::PRESENTER_KEY => $presenter,
 				'action' => $action === '' ? Application\UI\Presenter::DEFAULT_ACTION : $action,
@@ -50,101 +41,36 @@ class SimpleRouter implements Application\IRouter
 		}
 
 		if (isset($defaults[self::MODULE_KEY])) {
-			$this->module = $defaults[self::MODULE_KEY] . ':';
-			unset($defaults[self::MODULE_KEY]);
+			throw new Nette\DeprecatedException(__METHOD__ . '() parameter module is deprecated, use RouteList::withModule() instead.');
+		} elseif ($flags) {
+			trigger_error(__METHOD__ . '() parameter $flags is deprecated, use RouteList::add(..., $flags) instead.', E_USER_DEPRECATED);
 		}
 
-		$this->defaults = $defaults;
 		$this->flags = $flags;
-		if ($flags & self::SECURED) {
-			trigger_error('IRouter::SECURED is deprecated, router by default keeps the used protocol.', E_USER_DEPRECATED);
-		}
+		parent::__construct($defaults);
 	}
 
 
 	/**
-	 * Maps HTTP request to a Request object.
-	 * @return Nette\Application\Request|null
+	 * Constructs absolute URL from array.
 	 */
-	public function match(Nette\Http\IRequest $httpRequest)
-	{
-		if ($httpRequest->getUrl()->getPathInfo() !== '') {
-			return null;
-		}
-		// combine with precedence: get, (post,) defaults
-		$params = $httpRequest->getQuery();
-		$params += $this->defaults;
-
-		if (!isset($params[self::PRESENTER_KEY]) || !is_string($params[self::PRESENTER_KEY])) {
-			return null;
-		}
-
-		$presenter = $this->module . $params[self::PRESENTER_KEY];
-		unset($params[self::PRESENTER_KEY]);
-
-		return new Application\Request(
-			$presenter,
-			$httpRequest->getMethod(),
-			$params,
-			$httpRequest->getPost(),
-			$httpRequest->getFiles(),
-			[Application\Request::SECURED => $httpRequest->isSecured()]
-		);
-	}
-
-
-	/**
-	 * Constructs absolute URL from Request object.
-	 * @return string|null
-	 */
-	public function constructUrl(Application\Request $appRequest, Nette\Http\Url $refUrl)
+	public function constructUrl(array $params, Nette\Http\UrlScript $refUrl): ?string
 	{
 		if ($this->flags & self::ONE_WAY) {
 			return null;
 		}
-		$params = $appRequest->getParameters();
 
-		// presenter name
-		$presenter = $appRequest->getPresenterName();
-		if (strncmp($presenter, $this->module, strlen($this->module)) === 0) {
-			$params[self::PRESENTER_KEY] = substr($presenter, strlen($this->module));
-		} else {
-			return null;
-		}
-
-		// remove default values; null values are retain
-		foreach ($this->defaults as $key => $value) {
-			if (isset($params[$key]) && $params[$key] == $value) { // intentionally ==
-				unset($params[$key]);
-			}
-		}
-
-		$url = ($this->flags & self::SECURED ? 'https://' : $refUrl->getScheme() . '://') . $refUrl->getAuthority() . $refUrl->getPath();
-		$sep = ini_get('arg_separator.input');
-		$query = http_build_query($params, '', $sep ? $sep[0] : '&');
-		if ($query != '') { // intentionally ==
-			$url .= '?' . $query;
-		}
-		return $url;
+		return parent::constructUrl($params, $refUrl);
 	}
 
 
-	/**
-	 * Returns default values.
-	 * @return array
-	 */
-	public function getDefaults()
+	/** @deprecated */
+	public function getFlags(): int
 	{
-		return $this->defaults;
-	}
-
-
-	/**
-	 * Returns flags.
-	 * @return int
-	 */
-	public function getFlags()
-	{
+		trigger_error(__METHOD__ . '() is deprecated.', E_USER_DEPRECATED);
 		return $this->flags;
 	}
 }
+
+
+interface_exists(Nette\Application\IRouter::class);

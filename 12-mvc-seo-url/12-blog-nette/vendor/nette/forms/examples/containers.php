@@ -4,6 +4,8 @@
  * Nette Forms containers example.
  */
 
+declare(strict_types=1);
+
 
 if (@!include __DIR__ . '/../vendor/autoload.php') {
 	die('Install packages using `composer install`');
@@ -57,6 +59,6 @@ if ($form->isSuccess()) {
 
 <h1>Nette Forms containers example</h1>
 
-<?php echo $form ?>
+<?php $form->render() ?>
 
 <footer><a href="https://doc.nette.org/en/forms">see documentation</a></footer>

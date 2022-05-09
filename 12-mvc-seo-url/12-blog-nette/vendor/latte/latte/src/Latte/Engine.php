@@ -17,8 +17,8 @@ class Engine
 {
 	use Strict;
 
-	public const VERSION = '2.7.1';
-	public const VERSION_ID = 20701;
+	public const VERSION = '2.11.3';
+	public const VERSION_ID = 21103;
 
 	/** Content types */
 	public const
@@ -32,6 +32,9 @@ class Engine
 
 	/** @var callable[] */
 	public $onCompile = [];
+
+	/** @internal */
+	public $probe;
 
 	/** @var Parser|null */
 	private $parser;
@@ -48,7 +51,7 @@ class Engine
 	/** @var \stdClass */
 	private $functions;
 
-	/** @var array */
+	/** @var mixed[] */
 	private $providers = [];
 
 	/** @var string */
@@ -63,38 +66,59 @@ class Engine
 	/** @var bool */
 	private $strictTypes = false;
 
+	/** @var Policy|null */
+	private $policy;
+
+	/** @var bool */
+	private $sandboxed = false;
+
 
 	public function __construct()
 	{
 		$this->filters = new Runtime\FilterExecutor;
 		$this->functions = new \stdClass;
+		$this->probe = function () {};
+
+		$defaults = new Runtime\Defaults;
+		foreach ($defaults->getFilters() as $name => $callback) {
+			$this->filters->add($name, $callback);
+		}
+
+		foreach ($defaults->getFunctions() as $name => $callback) {
+			$this->functions->$name = $callback;
+		}
 	}
 
 
 	/**
 	 * Renders template to output.
-	 * @param  object|array  $params
+	 * @param  object|mixed[]  $params
 	 */
-	public function render(string $name, $params = [], string $block = null): void
+	public function render(string $name, $params = [], ?string $block = null): void
 	{
-		$this->createTemplate($name, $this->processParams($params))
-			->render($block);
+		$template = $this->createTemplate($name, $this->processParams($params));
+		$template->global->coreCaptured = false;
+		($this->probe)($template);
+		$template->render($block);
 	}
 
 
 	/**
 	 * Renders template to string.
-	 * @param  object|array  $params
+	 * @param  object|mixed[]  $params
 	 */
-	public function renderToString(string $name, $params = [], string $block = null): string
+	public function renderToString(string $name, $params = [], ?string $block = null): string
 	{
 		$template = $this->createTemplate($name, $this->processParams($params));
+		$template->global->coreCaptured = true;
+		($this->probe)($template);
 		return $template->capture(function () use ($template, $block) { $template->render($block); });
 	}
 
 
 	/**
 	 * Creates template object.
+	 * @param  mixed[]  $params
 	 */
 	public function createTemplate(string $name, array $params = []): Runtime\Template
 	{
@@ -102,8 +126,9 @@ class Engine
 		if (!class_exists($class, false)) {
 			$this->loadTemplate($name);
 		}
+
 		$this->providers['fn'] = $this->functions;
-		return new $class($this, $params, $this->filters, $this->providers, $name);
+		return new $class($this, $params, $this->filters, $this->providers, $name, $this->sandboxed ? $this->policy : null);
 	}
 
 
@@ -112,12 +137,18 @@ class Engine
 	 */
 	public function compile(string $name): string
 	{
+		if ($this->sandboxed && !$this->policy) {
+			throw new \LogicException('In sandboxed mode you need to set a security policy.');
+		}
+
 		foreach ($this->onCompile ?: [] as $cb) {
 			(Helpers::checkCallback($cb))($this);
 		}
+
 		$this->onCompile = [];
 
 		$source = $this->getLoader()->getContent($name);
+		$comment = preg_match('#\n|\?#', $name) ? null : "source: $name";
 
 		try {
 			$tokens = $this->getParser()
@@ -127,23 +158,21 @@ class Engine
 			$code = $this->getCompiler()
 				->setContentType($this->contentType)
 				->setFunctions(array_keys((array) $this->functions))
-				->compile($tokens, $this->getTemplateClass($name));
+				->setFilters($this->filters->_origNames)
+				->setPolicy($this->sandboxed ? $this->policy : null)
+				->compile($tokens, $this->getTemplateClass($name), $comment, $this->strictTypes);
 
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			if (!$e instanceof CompileException) {
-				$e = new CompileException("Thrown exception '{$e->getMessage()}'", 0, $e);
+				$e = new CompileException($e instanceof SecurityViolationException ? $e->getMessage() : "Thrown exception '{$e->getMessage()}'", 0, $e);
 			}
-			$line = isset($tokens) ? $this->getCompiler()->getLine() : $this->getParser()->getLine();
+
+			$line = isset($tokens)
+				? $this->getCompiler()->getLine()
+				: $this->getParser()->getLine();
 			throw $e->setSource($source, $line, $name);
 		}
 
-		if ($this->strictTypes) {
-			$code = "<?php\ndeclare(strict_types=1);\n?>" . $code;
-		}
-		if (!preg_match('#\n|\?#', $name)) {
-			$code = "<?php\n// source: $name\n?>" . $code;
-		}
-		$code = PhpHelpers::reformatCode($code);
 		return $code;
 	}
 
@@ -173,43 +202,66 @@ class Engine
 				throw (new CompileException('Error in template: ' . error_get_last()['message']))
 					->setSource($code, error_get_last()['line'], "$name (compiled)");
 			}
+
 			return;
 		}
 
+		// Solving atomicity to work everywhere is really pain in the ass.
+		// 1) We want to do as little as possible IO calls on production and also directory and file can be not writable
+		// so on Linux we include the file directly without shared lock, therefore, the file must be created atomically by renaming.
+		// 2) On Windows file cannot be renamed-to while is open (ie by include), so we have to acquire a lock.
 		$file = $this->getCacheFile($name);
+		$lock = defined('PHP_WINDOWS_VERSION_BUILD')
+			? $this->acquireLock("$file.lock", LOCK_SH)
+			: null;
 
 		if (!$this->isExpired($file, $name) && (@include $file) !== false) { // @ - file may not exist
 			return;
 		}
 
-		if (!is_dir($this->tempDirectory) && !@mkdir($this->tempDirectory) && !is_dir($this->tempDirectory)) { // @ - dir may already exist
-			throw new \RuntimeException("Unable to create directory '$this->tempDirectory'. " . error_get_last()['message']);
+		if ($lock) {
+			flock($lock, LOCK_UN); // release shared lock so we can get exclusive
 		}
 
-		$handle = @fopen("$file.lock", 'c+'); // @ is escalated to exception
-		if (!$handle) {
-			throw new \RuntimeException("Unable to create file '$file.lock'. " . error_get_last()['message']);
-		} elseif (!@flock($handle, LOCK_EX)) { // @ is escalated to exception
-			throw new \RuntimeException("Unable to acquire exclusive lock on '$file.lock'. " . error_get_last()['message']);
-		}
+		$lock = $this->acquireLock("$file.lock", LOCK_EX);
 
+		// while waiting for exclusive lock, someone might have already created the cache
 		if (!is_file($file) || $this->isExpired($file, $name)) {
 			$code = $this->compile($name);
 			if (file_put_contents("$file.tmp", $code) !== strlen($code) || !rename("$file.tmp", $file)) {
 				@unlink("$file.tmp"); // @ - file may not exist
-				throw new \RuntimeException("Unable to create '$file'.");
-			} elseif (function_exists('opcache_invalidate')) {
+				throw new RuntimeException("Unable to create '$file'.");
+			}
+
+			if (function_exists('opcache_invalidate')) {
 				@opcache_invalidate($file, true); // @ can be restricted
 			}
 		}
 
 		if ((include $file) === false) {
-			throw new \RuntimeException("Unable to load '$file'.");
+			throw new RuntimeException("Unable to load '$file'.");
+		}
+	}
+
+
+	/**
+	 * @return resource
+	 */
+	private function acquireLock(string $file, int $mode)
+	{
+		$dir = dirname($file);
+		if (!is_dir($dir) && !@mkdir($dir) && !is_dir($dir)) { // @ - dir may already exist
+			throw new RuntimeException("Unable to create directory '$dir'. " . error_get_last()['message']);
 		}
 
-		flock($handle, LOCK_UN);
-		fclose($handle);
-		@unlink("$file.lock"); // @ file may become locked on Windows
+		$handle = @fopen($file, 'w'); // @ is escalated to exception
+		if (!$handle) {
+			throw new RuntimeException("Unable to create file '$file'. " . error_get_last()['message']);
+		} elseif (!@flock($handle, $mode)) { // @ is escalated to exception
+			throw new RuntimeException('Unable to acquire ' . ($mode & LOCK_EX ? 'exclusive' : 'shared') . " lock on file '$file'. " . error_get_last()['message']);
+		}
+
+		return $handle;
 	}
 
 
@@ -231,7 +283,13 @@ class Engine
 
 	public function getTemplateClass(string $name): string
 	{
-		$key = serialize([$this->getLoader()->getUniqueId($name), self::VERSION, array_keys((array) $this->functions)]);
+		$key = serialize([
+			$this->getLoader()->getUniqueId($name),
+			self::VERSION,
+			array_keys((array) $this->functions),
+			$this->sandboxed,
+			$this->contentType,
+		]);
 		return 'Template' . substr(md5($key), 0, 10);
 	}
 
@@ -242,7 +300,28 @@ class Engine
 	 */
 	public function addFilter(?string $name, callable $callback)
 	{
+		if ($name === null) {
+			trigger_error('For dynamic filters, use the addFilterLoader() where you pass a callback as a parameter that returns the filter callback.', E_USER_DEPRECATED);
+		} elseif (!preg_match('#^[a-z]\w*$#iD', $name)) {
+			throw new \LogicException("Invalid filter name '$name'.");
+		}
+
 		$this->filters->add($name, $callback);
+		return $this;
+	}
+
+
+	/**
+	 * Registers filter loader.
+	 * @return static
+	 */
+	public function addFilterLoader(callable $callback)
+	{
+		$this->filters->add(null, function ($name) use ($callback) {
+			if ($filter = $callback($name)) {
+				$this->filters->add($name, $filter);
+			}
+		});
 		return $this;
 	}
 
@@ -259,6 +338,7 @@ class Engine
 
 	/**
 	 * Call a run-time filter.
+	 * @param  mixed[]  $args
 	 * @return mixed
 	 */
 	public function invokeFilter(string $name, array $args)
@@ -284,17 +364,44 @@ class Engine
 	 */
 	public function addFunction(string $name, callable $callback)
 	{
+		if (!preg_match('#^[a-z]\w*$#iD', $name)) {
+			throw new \LogicException("Invalid function name '$name'.");
+		}
+
 		$this->functions->$name = $callback;
 		return $this;
 	}
 
 
 	/**
+	 * Call a run-time function.
+	 * @param  mixed[]  $args
+	 * @return mixed
+	 */
+	public function invokeFunction(string $name, array $args)
+	{
+		if (!isset($this->functions->$name)) {
+			$hint = ($t = Helpers::getSuggestion(array_keys((array) $this->functions), $name))
+				? ", did you mean '$t'?"
+				: '.';
+			throw new \LogicException("Function '$name' is not defined$hint");
+		}
+
+		return ($this->functions->$name)(...$args);
+	}
+
+
+	/**
 	 * Adds new provider.
+	 * @param  mixed  $value
 	 * @return static
 	 */
 	public function addProvider(string $name, $value)
 	{
+		if (!preg_match('#^[a-z]\w*$#iD', $name)) {
+			throw new \LogicException("Invalid provider name '$name'.");
+		}
+
 		$this->providers[$name] = $value;
 		return $this;
 	}
@@ -302,10 +409,35 @@ class Engine
 
 	/**
 	 * Returns all providers.
+	 * @return mixed[]
 	 */
 	public function getProviders(): array
 	{
 		return $this->providers;
+	}
+
+
+	/** @return static */
+	public function setPolicy(?Policy $policy)
+	{
+		$this->policy = $policy;
+		return $this;
+	}
+
+
+	/** @return static */
+	public function setExceptionHandler(callable $callback)
+	{
+		$this->providers['coreExceptionHandler'] = $callback;
+		return $this;
+	}
+
+
+	/** @return static */
+	public function setSandboxMode(bool $on = true)
+	{
+		$this->sandboxed = $on;
+		return $this;
 	}
 
 
@@ -355,6 +487,7 @@ class Engine
 		if (!$this->parser) {
 			$this->parser = new Parser;
 		}
+
 		return $this->parser;
 	}
 
@@ -366,6 +499,7 @@ class Engine
 			Macros\CoreMacros::install($this->compiler);
 			Macros\BlockMacros::install($this->compiler);
 		}
+
 		return $this->compiler;
 	}
 
@@ -383,12 +517,14 @@ class Engine
 		if (!$this->loader) {
 			$this->loader = new Loaders\FileLoader;
 		}
+
 		return $this->loader;
 	}
 
 
 	/**
-	 * @param  object|array  $params
+	 * @param  object|mixed[]  $params
+	 * @return mixed[]
 	 */
 	private function processParams($params): array
 	{
@@ -400,11 +536,16 @@ class Engine
 
 		$methods = (new \ReflectionClass($params))->getMethods(\ReflectionMethod::IS_PUBLIC);
 		foreach ($methods as $method) {
-			if (strpos((string) $method->getDocComment(), '@filter')) {
-				$this->addFilter($method->getName(), [$params, $method->getName()]);
+			if ((PHP_VERSION_ID >= 80000 && $method->getAttributes(Attributes\TemplateFilter::class))
+				|| (strpos((string) $method->getDocComment(), '@filter'))
+			) {
+				$this->addFilter($method->name, [$params, $method->name]);
 			}
-			if (strpos((string) $method->getDocComment(), '@function')) {
-				$this->addFunction($method->getName(), [$params, $method->getName()]);
+
+			if ((PHP_VERSION_ID >= 80000 && $method->getAttributes(Attributes\TemplateFunction::class))
+				|| (strpos((string) $method->getDocComment(), '@function'))
+			) {
+				$this->addFunction($method->name, [$params, $method->name]);
 			}
 		}
 

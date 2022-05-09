@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms;
 
 use Nette;
@@ -17,10 +19,12 @@ class Rules implements \IteratorAggregate
 {
 	use Nette\SmartObject;
 
-	/** @deprecated */
-	public static $defaultMessages;
+	private const NEG_RULES = [
+		Form::FILLED => Form::BLANK,
+		Form::BLANK => Form::FILLED,
+	];
 
-	/** @var Rule|false|null */
+	/** @var Rule|null */
 	private $required;
 
 	/** @var Rule[] */
@@ -32,11 +36,11 @@ class Rules implements \IteratorAggregate
 	/** @var array */
 	private $toggles = [];
 
-	/** @var IControl */
+	/** @var Control */
 	private $control;
 
 
-	public function __construct(IControl $control)
+	public function __construct(Control $control)
 	{
 		$this->control = $control;
 	}
@@ -44,15 +48,15 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Makes control mandatory.
-	 * @param  mixed  state or error message
+	 * @param  string|bool  $value
 	 * @return static
 	 */
 	public function setRequired($value = true)
 	{
 		if ($value) {
-			$this->addRule(Form::REQUIRED, $value === true ? null : $value);
+			$this->addRule(Form::FILLED, $value === true ? null : $value);
 		} else {
-			$this->required = false;
+			$this->required = null;
 		}
 		return $this;
 	}
@@ -60,28 +64,17 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Is control mandatory?
-	 * @return bool
 	 */
-	public function isRequired()
+	public function isRequired(): bool
 	{
 		return (bool) $this->required;
 	}
 
 
 	/**
-	 * @internal
-	 */
-	public function isOptional()
-	{
-		return $this->required === false;
-	}
-
-
-	/**
 	 * Adds a validation rule for the current control.
-	 * @param  mixed
-	 * @param  string|object
-	 * @param  mixed
+	 * @param  callable|string  $validator
+	 * @param  string|object  $errorMessage
 	 * @return static
 	 */
 	public function addRule($validator, $errorMessage = null, $arg = null)
@@ -95,7 +88,7 @@ class Rules implements \IteratorAggregate
 		$this->adjustOperation($rule);
 		$rule->arg = $arg;
 		$rule->message = $errorMessage;
-		if ($rule->validator === Form::REQUIRED) {
+		if ($rule->validator === Form::FILLED) {
 			$this->required = $rule;
 		} else {
 			$this->rules[] = $rule;
@@ -105,9 +98,27 @@ class Rules implements \IteratorAggregate
 
 
 	/**
+	 * Removes a validation rule for the current control.
+	 * @param  callable|string  $validator
+	 * @return static
+	 */
+	public function removeRule($validator)
+	{
+		if ($validator === Form::FILLED) {
+			$this->required = null;
+		} else {
+			foreach ($this->rules as $i => $rule) {
+				if (!$rule->branch && $rule->validator === $validator) {
+					unset($this->rules[$i]);
+				}
+			}
+		}
+		return $this;
+	}
+
+
+	/**
 	 * Adds a validation condition and returns new branch.
-	 * @param  mixed
-	 * @param  mixed
 	 * @return static       new branch
 	 */
 	public function addCondition($validator, $arg = null)
@@ -124,12 +135,9 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Adds a validation condition on specified control a returns new branch.
-	 * @param  IControl
-	 * @param  mixed
-	 * @param  mixed
 	 * @return static     new branch
 	 */
-	public function addConditionOn(IControl $control, $validator, $arg = null)
+	public function addConditionOn(Control $control, $validator, $arg = null)
 	{
 		$rule = new Rule;
 		$rule->control = $control;
@@ -151,7 +159,11 @@ class Rules implements \IteratorAggregate
 	public function elseCondition()
 	{
 		$rule = clone end($this->parent->rules);
-		$rule->isNegative = !$rule->isNegative;
+		if (isset(self::NEG_RULES[$rule->validator])) {
+			$rule->validator = self::NEG_RULES[$rule->validator];
+		} else {
+			$rule->isNegative = !$rule->isNegative;
+		}
 		$rule->branch = new static($this->parent->control);
 		$rule->branch->parent = $this->parent;
 		$this->parent->rules[] = $rule;
@@ -163,7 +175,7 @@ class Rules implements \IteratorAggregate
 	 * Ends current validation condition.
 	 * @return Rules      parent branch
 	 */
-	public function endCondition()
+	public function endCondition(): self
 	{
 		return $this->parent;
 	}
@@ -171,16 +183,14 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Adds a filter callback.
-	 * @param  callable
 	 * @return static
 	 */
-	public function addFilter($filter)
+	public function addFilter(callable $filter)
 	{
-		Nette\Utils\Callback::check($filter);
 		$this->rules[] = $rule = new Rule;
 		$rule->control = $this->control;
-		$rule->validator = function (IControl $control) use ($filter) {
-			$control->setValue(call_user_func($filter, $control->getValue()));
+		$rule->validator = function (Control $control) use ($filter): bool {
+			$control->setValue($filter($control->getValue()));
 			return true;
 		};
 		return $this;
@@ -189,40 +199,38 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Toggles HTML element visibility.
-	 * @param  string
-	 * @param  bool
 	 * @return static
 	 */
-	public function toggle($id, $hide = true)
+	public function toggle(string $id, bool $hide = true)
 	{
 		$this->toggles[$id] = $hide;
 		return $this;
 	}
 
 
-	/**
-	 * @param  bool
-	 * @return array
-	 */
-	public function getToggles($actual = false)
+	public function getToggles(bool $actual = false): array
 	{
 		return $actual ? $this->getToggleStates() : $this->toggles;
 	}
 
 
-	/**
-	 * @internal
-	 * @return array
-	 */
-	public function getToggleStates($toggles = [], $success = true)
+	/** @internal */
+	public function getToggleStates(array $toggles = [], bool $success = true, bool $emptyOptional = null): array
 	{
 		foreach ($this->toggles as $id => $hide) {
 			$toggles[$id] = ($success xor !$hide) || !empty($toggles[$id]);
 		}
 
-		foreach ($this->rules as $rule) {
+		$emptyOptional = $emptyOptional ?? (!$this->isRequired() && !$this->control->isFilled());
+		foreach ($this as $rule) {
 			if ($rule->branch) {
-				$toggles = $rule->branch->getToggleStates($toggles, $success && static::validateRule($rule));
+				$toggles = $rule->branch->getToggleStates(
+					$toggles,
+					$success && static::validateRule($rule),
+					$rule->validator === Form::BLANK ? false : $emptyOptional
+				);
+			} elseif (!$emptyOptional || $rule->validator === Form::FILLED) {
+				$success = $success && static::validateRule($rule);
 			}
 		}
 		return $toggles;
@@ -231,18 +239,21 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Validates against ruleset.
-	 * @return bool
 	 */
-	public function validate($emptyOptional = false)
+	public function validate(bool $emptyOptional = null): bool
 	{
-		$emptyOptional = $emptyOptional || $this->isOptional() && !$this->control->isFilled();
+		$emptyOptional = $emptyOptional ?? (!$this->isRequired() && !$this->control->isFilled());
 		foreach ($this as $rule) {
 			if (!$rule->branch && $emptyOptional && $rule->validator !== Form::FILLED) {
 				continue;
 			}
 
 			$success = $this->validateRule($rule);
-			if ($success && $rule->branch && !$rule->branch->validate($rule->validator === Form::BLANK ? false : $emptyOptional)) {
+			if (
+				$success
+				&& $rule->branch
+				&& !$rule->branch->validate($rule->validator === Form::BLANK ? false : $emptyOptional)
+			) {
 				return false;
 
 			} elseif (!$success && !$rule->branch) {
@@ -255,32 +266,9 @@ class Rules implements \IteratorAggregate
 
 
 	/**
-	 * @internal
-	 */
-	public function check()
-	{
-		if ($this->required !== null) {
-			return;
-		}
-		foreach ($this->rules as $rule) {
-			if ($rule->control === $this->control && ($rule->validator === Form::FILLED || $rule->validator === Form::BLANK)) {
-				// ignore
-			} elseif ($rule->branch) {
-				if ($rule->branch->check() === true) {
-					return true;
-				}
-			} else {
-				trigger_error("Missing setRequired(true | false) on field '{$rule->control->getName()}' in form '{$rule->control->getForm()->getName()}'.", E_USER_WARNING);
-				return true;
-			}
-		}
-	}
-
-
-	/**
 	 * Clear all validation rules.
 	 */
-	public function reset()
+	public function reset(): void
 	{
 		$this->rules = [];
 	}
@@ -288,55 +276,61 @@ class Rules implements \IteratorAggregate
 
 	/**
 	 * Validates single rule.
-	 * @return bool
 	 */
-	public static function validateRule(Rule $rule)
+	public static function validateRule(Rule $rule): bool
 	{
 		$args = is_array($rule->arg) ? $rule->arg : [$rule->arg];
 		foreach ($args as &$val) {
-			$val = $val instanceof IControl ? $val->getValue() : $val;
+			$val = $val instanceof Control ? $val->getValue() : $val;
 		}
 		return $rule->isNegative
-			xor call_user_func(self::getCallback($rule), $rule->control, is_array($rule->arg) ? $args : $args[0]);
+			xor self::getCallback($rule)($rule->control, is_array($rule->arg) ? $args : $args[0]);
 	}
 
 
 	/**
 	 * Iterates over complete ruleset.
-	 * @return \Iterator
+	 * @return \ArrayIterator<int, Rule>
 	 */
-	public function getIterator()
+	public function getIterator(): \Iterator
 	{
-		$rules = $this->rules;
-		if ($this->required) {
-			array_unshift($rules, $this->required);
+		$priorities = [
+			0 => [], // BLANK
+			1 => $this->required ? [$this->required] : [],
+			2 => [], // other rules
+		];
+		foreach ($this->rules as $rule) {
+			$priorities[$rule->validator === Form::BLANK && $rule->control === $this->control ? 0 : 2][] = $rule;
 		}
-		return new \ArrayIterator($rules);
+		return new \ArrayIterator(array_merge(...$priorities));
 	}
 
 
 	/**
 	 * Process 'operation' string.
-	 * @return void
 	 */
-	private function adjustOperation(Rule $rule)
+	private function adjustOperation(Rule $rule): void
 	{
 		if (is_string($rule->validator) && ord($rule->validator[0]) > 127) {
 			$rule->isNegative = true;
 			$rule->validator = ~$rule->validator;
 			if (!$rule->branch) {
-				$name = strncmp($rule->validator, ':', 1) ? $rule->validator : 'Form:' . strtoupper($rule->validator);
+				$name = strncmp($rule->validator, ':', 1)
+					? $rule->validator
+					: 'Form:' . strtoupper($rule->validator);
 				trigger_error("Negative validation rules such as ~$name are deprecated.", E_USER_DEPRECATED);
 			}
-			if ($rule->validator === Form::FILLED) {
-				$rule->validator = Form::BLANK;
+			if (isset(self::NEG_RULES[$rule->validator])) {
+				$rule->validator = self::NEG_RULES[$rule->validator];
 				$rule->isNegative = false;
-				trigger_error('Replace negative validation rule ~Form::FILLED with Form::BLANK.', E_USER_DEPRECATED);
+				trigger_error('Replace negative validation rule ~Form::FILLED with Form::BLANK and vice versa.', E_USER_DEPRECATED);
 			}
 		}
 
 		if (!is_callable($this->getCallback($rule))) {
-			$validator = is_scalar($rule->validator) ? " '$rule->validator'" : '';
+			$validator = is_scalar($rule->validator)
+				? " '$rule->validator'"
+				: '';
 			throw new Nette\InvalidArgumentException("Unknown validator$validator for control '{$rule->control->name}'.");
 		}
 	}
@@ -345,12 +339,8 @@ class Rules implements \IteratorAggregate
 	private static function getCallback(Rule $rule)
 	{
 		$op = $rule->validator;
-		if (is_string($op) && strncmp($op, ':', 1) === 0) {
-			return 'Nette\Forms\Validator::validate' . ltrim($op, ':');
-		} else {
-			return $op;
-		}
+		return is_string($op) && strncmp($op, ':', 1) === 0
+			? [Validator::class, 'validate' . ltrim($op, ':')]
+			: $op;
 	}
 }
-
-Rules::$defaultMessages = &Validator::$messages;

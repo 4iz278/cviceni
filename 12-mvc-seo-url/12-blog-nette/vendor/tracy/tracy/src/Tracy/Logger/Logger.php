@@ -37,7 +37,7 @@ class Logger implements ILogger
 	/**
 	 * @param  string|array|null  $email
 	 */
-	public function __construct(?string $directory, $email = null, BlueScreen $blueScreen = null)
+	public function __construct(?string $directory, $email = null, ?BlueScreen $blueScreen = null)
 	{
 		$this->directory = $directory;
 		$this->email = $email;
@@ -61,7 +61,7 @@ class Logger implements ILogger
 		}
 
 		$exceptionFile = $message instanceof \Throwable
-			? $this->getExceptionFile($message)
+			? $this->getExceptionFile($message, $level)
 			: null;
 		$line = static::formatLogLine($message, $exceptionFile);
 		$file = $this->directory . '/' . strtolower($level ?: self::INFO) . '.log';
@@ -88,13 +88,13 @@ class Logger implements ILogger
 	public static function formatMessage($message): string
 	{
 		if ($message instanceof \Throwable) {
-			while ($message) {
-				$tmp[] = ($message instanceof \ErrorException
-					? Helpers::errorTypeToString($message->getSeverity()) . ': ' . $message->getMessage()
-					: Helpers::getClass($message) . ': ' . $message->getMessage() . ($message->getCode() ? ' #' . $message->getCode() : '')
-				) . ' in ' . $message->getFile() . ':' . $message->getLine();
-				$message = $message->getPrevious();
+			foreach (Helpers::getExceptionChain($message) as $exception) {
+				$tmp[] = ($exception instanceof \ErrorException
+					? Helpers::errorTypeToString($exception->getSeverity()) . ': ' . $exception->getMessage()
+					: Helpers::getClass($exception) . ': ' . $exception->getMessage() . ($exception->getCode() ? ' #' . $exception->getCode() : '')
+				) . ' in ' . $exception->getFile() . ':' . $exception->getLine();
 			}
+
 			$message = implode("\ncaused by ", $tmp);
 
 		} elseif (!is_string($message)) {
@@ -108,10 +108,10 @@ class Logger implements ILogger
 	/**
 	 * @param  mixed  $message
 	 */
-	public static function formatLogLine($message, string $exceptionFile = null): string
+	public static function formatLogLine($message, ?string $exceptionFile = null): string
 	{
 		return implode(' ', [
-			@date('[Y-m-d H-i-s]'), // @ timezone may not be set
+			date('[Y-m-d H-i-s]'),
 			preg_replace('#\s*\r?\n\s*#', ' ', static::formatMessage($message)),
 			' @  ' . Helpers::getSource(),
 			$exceptionFile ? ' @@  ' . basename($exceptionFile) : null,
@@ -119,15 +119,15 @@ class Logger implements ILogger
 	}
 
 
-	public function getExceptionFile(\Throwable $exception): string
+	public function getExceptionFile(\Throwable $exception, string $level = self::EXCEPTION): string
 	{
-		while ($exception) {
+		foreach (Helpers::getExceptionChain($exception) as $exception) {
 			$data[] = [
 				get_class($exception), $exception->getMessage(), $exception->getCode(), $exception->getFile(), $exception->getLine(),
 				array_map(function (array $item): array { unset($item['args']); return $item; }, $exception->getTrace()),
 			];
-			$exception = $exception->getPrevious();
 		}
+
 		$hash = substr(md5(serialize($data)), 0, 10);
 		$dir = strtr($this->directory . '/', '\\/', DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR);
 		foreach (new \DirectoryIterator($this->directory) as $file) {
@@ -135,7 +135,8 @@ class Logger implements ILogger
 				return $dir . $file;
 			}
 		}
-		return $dir . 'exception--' . @date('Y-m-d--H-i') . "--$hash.html"; // @ timezone may not be set
+
+		return $dir . $level . '--' . date('Y-m-d--H-i') . "--$hash.html";
 	}
 
 
@@ -143,7 +144,7 @@ class Logger implements ILogger
 	 * Logs exception to the file if file doesn't exist.
 	 * @return string logged error filename
 	 */
-	protected function logException(\Throwable $exception, string $file = null): string
+	protected function logException(\Throwable $exception, ?string $file = null): string
 	{
 		$file = $file ?: $this->getExceptionFile($exception);
 		$bs = $this->blueScreen ?: new BlueScreen;
@@ -159,7 +160,7 @@ class Logger implements ILogger
 	{
 		$snooze = is_numeric($this->emailSnooze)
 			? $this->emailSnooze
-			: @strtotime($this->emailSnooze) - time(); // @ timezone may not be set
+			: strtotime($this->emailSnooze) - time();
 
 		if (
 			$this->email

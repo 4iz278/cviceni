@@ -5,16 +5,18 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Conventions;
 
-use Nette\Database\IConventions;
+use Nette\Database\Conventions;
 use Nette\Database\IStructure;
 
 
 /**
  * Conventions based on database structure.
  */
-class DiscoveredConventions implements IConventions
+class DiscoveredConventions implements Conventions
 {
 	/** @var IStructure */
 	protected $structure;
@@ -26,13 +28,13 @@ class DiscoveredConventions implements IConventions
 	}
 
 
-	public function getPrimary($table)
+	public function getPrimary(string $table)
 	{
 		return $this->structure->getPrimaryKey($table);
 	}
 
 
-	public function getHasManyReference($nsTable, $key)
+	public function getHasManyReference(string $nsTable, string $key): ?array
 	{
 		$candidates = $columnCandidates = [];
 		$targets = $this->structure->getHasManyReference($nsTable);
@@ -81,7 +83,7 @@ class DiscoveredConventions implements IConventions
 	}
 
 
-	public function getBelongsToReference($table, $key)
+	public function getBelongsToReference(string $table, string $key): ?array
 	{
 		$tableColumns = $this->structure->getBelongsToReference($table);
 

@@ -21,9 +21,13 @@ final class Constant
 	use Traits\NameAware;
 	use Traits\VisibilityAware;
 	use Traits\CommentAware;
+	use Traits\AttributeAware;
 
 	/** @var mixed */
 	private $value;
+
+	/** @var bool */
+	private $final = false;
 
 
 	/** @return static */
@@ -37,5 +41,19 @@ final class Constant
 	public function getValue()
 	{
 		return $this->value;
+	}
+
+
+	/** @return static */
+	public function setFinal(bool $state = true): self
+	{
+		$this->final = $state;
+		return $this;
+	}
+
+
+	public function isFinal(): bool
+	{
+		return $this->final;
 	}
 }

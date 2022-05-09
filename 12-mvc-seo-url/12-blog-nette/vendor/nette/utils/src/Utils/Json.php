@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Utils;
 
 use Nette;
@@ -13,25 +15,26 @@ use Nette;
 /**
  * JSON encoder and decoder.
  */
-class Json
+final class Json
 {
 	use Nette\StaticClass;
 
-	const FORCE_ARRAY = 0b0001;
-
-	const PRETTY = 0b0010;
+	public const FORCE_ARRAY = JSON_OBJECT_AS_ARRAY;
+	public const PRETTY = JSON_PRETTY_PRINT;
+	public const ESCAPE_UNICODE = 1 << 19;
 
 
 	/**
-	 * Returns the JSON representation of a value.
-	 * @param  mixed
-	 * @param  int  accepts Json::PRETTY
-	 * @return string
+	 * Converts value to JSON format. The flag can be Json::PRETTY, which formats JSON for easier reading and clarity,
+	 * and Json::ESCAPE_UNICODE for ASCII output.
+	 * @param  mixed  $value
+	 * @throws JsonException
 	 */
-	public static function encode($value, $options = 0)
+	public static function encode($value, int $flags = 0): string
 	{
-		$flags = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-			| ($options & self::PRETTY ? JSON_PRETTY_PRINT : 0)
+		$flags = ($flags & self::ESCAPE_UNICODE ? 0 : JSON_UNESCAPED_UNICODE)
+			| JSON_UNESCAPED_SLASHES
+			| ($flags & ~self::ESCAPE_UNICODE)
 			| (defined('JSON_PRESERVE_ZERO_FRACTION') ? JSON_PRESERVE_ZERO_FRACTION : 0); // since PHP 5.6.6 & PECL JSON-C 1.3.7
 
 		$json = json_encode($value, $flags);
@@ -39,39 +42,18 @@ class Json
 			throw new JsonException(json_last_error_msg(), $error);
 		}
 
-		if (PHP_VERSION_ID < 70100) {
-			$json = str_replace(["\xe2\x80\xa8", "\xe2\x80\xa9"], ['\u2028', '\u2029'], $json);
-		}
-
 		return $json;
 	}
 
 
 	/**
-	 * Decodes a JSON string.
-	 * @param  string
-	 * @param  int  accepts Json::FORCE_ARRAY
+	 * Parses JSON to PHP value. The flag can be Json::FORCE_ARRAY, which forces an array instead of an object as the return value.
 	 * @return mixed
+	 * @throws JsonException
 	 */
-	public static function decode($json, $options = 0)
+	public static function decode(string $json, int $flags = 0)
 	{
-		$forceArray = (bool) ($options & self::FORCE_ARRAY);
-		$flags = JSON_BIGINT_AS_STRING;
-
-		if (PHP_VERSION_ID < 70000) {
-			$json = (string) $json;
-			if ($json === '') {
-				throw new JsonException('Syntax error');
-			} elseif (!$forceArray && preg_match('#(?<=[^\\\\]")\\\\u0000(?:[^"\\\\]|\\\\.)*+"\s*+:#', $json)) {
-				throw new JsonException('The decoded property name is invalid'); // fatal error when object key starts with \u0000
-			} elseif (defined('JSON_C_VERSION') && !preg_match('##u', $json)) {
-				throw new JsonException('Invalid UTF-8 sequence', 5);
-			} elseif (defined('JSON_C_VERSION') && PHP_INT_SIZE === 8) {
-				$flags &= ~JSON_BIGINT_AS_STRING; // not implemented in PECL JSON-C 1.3.2 for 64bit systems
-			}
-		}
-
-		$value = json_decode($json, $forceArray, 512, $flags);
+		$value = json_decode($json, null, 512, $flags | JSON_BIGINT_AS_STRING);
 		if ($error = json_last_error()) {
 			throw new JsonException(json_last_error_msg(), $error);
 		}

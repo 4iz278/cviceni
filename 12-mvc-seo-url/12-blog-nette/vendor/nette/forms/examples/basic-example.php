@@ -4,6 +4,8 @@
  * Nette Forms basic example.
  */
 
+declare(strict_types=1);
+
 
 if (@!include __DIR__ . '/../vendor/autoload.php') {
 	die('Install packages using `composer install`');
@@ -91,7 +93,6 @@ $form->addPassword('password2', 'Reenter password:')
 	->addRule($form::EQUAL, 'Passwords do not match', $form['password']);
 
 $form->addUpload('avatar', 'Picture:')
-	->setRequired(false)
 	->addRule($form::IMAGE, 'Uploaded file is not image');
 
 $form->addHidden('userid');
@@ -122,10 +123,10 @@ if ($form->isSuccess()) {
 <meta charset="utf-8">
 <title>Nette Forms basic example</title>
 <link rel="stylesheet" media="screen" href="assets/style.css" />
-<script src="https://nette.github.io/resources/js/2/netteForms.js"></script>
+<script src="https://nette.github.io/resources/js/3/netteForms.js"></script>
 
 <h1>Nette Forms basic example</h1>
 
-<?php echo $form ?>
+<?php $form->render() ?>
 
 <footer><a href="https://doc.nette.org/en/forms">see documentation</a></footer>

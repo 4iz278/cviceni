@@ -6,7 +6,9 @@ use Nette;
 use Tracy\ILogger;
 
 
-class ErrorPresenter extends Nette\Object implements Nette\Application\IPresenter{
+class ErrorPresenter implements Nette\Application\IPresenter{
+  use Nette\SmartObject;
+
   /** @var ILogger */
   private $logger;
 
@@ -17,9 +19,9 @@ class ErrorPresenter extends Nette\Object implements Nette\Application\IPresente
 
 
   /**
-   * @return Nette\Application\IResponse
+   * @return Nette\Application\Response
    */
-  public function run(Nette\Application\Request $request){
+  public function run(Nette\Application\Request $request): Nette\Application\Response {
     $e=$request->getParameter('exception');
 
     if($e instanceof Nette\Application\BadRequestException){

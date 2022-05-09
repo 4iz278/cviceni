@@ -21,6 +21,7 @@ final class Closure
 {
 	use Nette\SmartObject;
 	use Traits\FunctionLike;
+	use Traits\AttributeAware;
 
 	/** @var Parameter[] */
 	private $uses = [];
@@ -40,6 +41,7 @@ final class Closure
 			if (PHP_VERSION_ID >= 70400) {
 				throw $e;
 			}
+
 			trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", E_USER_ERROR);
 			return '';
 		}

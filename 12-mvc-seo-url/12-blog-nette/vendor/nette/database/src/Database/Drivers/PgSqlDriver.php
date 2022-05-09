@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Database\Drivers;
 
 use Nette;
@@ -13,7 +15,7 @@ use Nette;
 /**
  * Supplemental PostgreSQL database driver.
  */
-class PgSqlDriver implements Nette\Database\ISupplementalDriver
+class PgSqlDriver implements Nette\Database\Driver
 {
 	use Nette\SmartObject;
 
@@ -21,15 +23,15 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	private $connection;
 
 
-	public function __construct(Nette\Database\Connection $connection, array $options)
+	public function initialize(Nette\Database\Connection $connection, array $options): void
 	{
 		$this->connection = $connection;
 	}
 
 
-	public function convertException(\PDOException $e)
+	public function convertException(\PDOException $e): Nette\Database\DriverException
 	{
-		$code = isset($e->errorInfo[0]) ? $e->errorInfo[0] : null;
+		$code = $e->errorInfo[0] ?? null;
 		if ($code === '0A000' && strpos($e->getMessage(), 'truncate') !== false) {
 			return Nette\Database\ForeignKeyConstraintViolationException::from($e);
 
@@ -54,32 +56,26 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	/********************* SQL ****************d*g**/
 
 
-	public function delimite($name)
+	public function delimite(string $name): string
 	{
 		// @see http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS
 		return '"' . str_replace('"', '""', $name) . '"';
 	}
 
 
-	public function formatBool($value)
-	{
-		return $value ? 'TRUE' : 'FALSE';
-	}
-
-
-	public function formatDateTime(/*\DateTimeInterface*/ $value)
+	public function formatDateTime(\DateTimeInterface $value): string
 	{
 		return $value->format("'Y-m-d H:i:s'");
 	}
 
 
-	public function formatDateInterval(\DateInterval $value)
+	public function formatDateInterval(\DateInterval $value): string
 	{
 		throw new Nette\NotSupportedException;
 	}
 
 
-	public function formatLike($value, $pos)
+	public function formatLike(string $value, int $pos): string
 	{
 		$bs = substr($this->connection->quote('\\'), 1, -1); // standard_conforming_strings = on/off
 		$value = substr($this->connection->quote($value), 1, -1);
@@ -88,30 +84,26 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	}
 
 
-	public function applyLimit(&$sql, $limit, $offset)
+	public function applyLimit(string &$sql, ?int $limit, ?int $offset): void
 	{
 		if ($limit < 0 || $offset < 0) {
 			throw new Nette\InvalidArgumentException('Negative offset or limit.');
 		}
+
 		if ($limit !== null) {
-			$sql .= ' LIMIT ' . (int) $limit;
+			$sql .= ' LIMIT ' . $limit;
 		}
+
 		if ($offset) {
-			$sql .= ' OFFSET ' . (int) $offset;
+			$sql .= ' OFFSET ' . $offset;
 		}
-	}
-
-
-	public function normalizeRow($row)
-	{
-		return $row;
 	}
 
 
 	/********************* reflection ****************d*g**/
 
 
-	public function getTables()
+	public function getTables(): array
 	{
 		$tables = [];
 		foreach ($this->connection->query("
@@ -123,7 +115,7 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 				pg_catalog.pg_class AS c
 				JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace
 			WHERE
-				c.relkind IN ('r', 'v', 'm')
+				c.relkind IN ('r', 'v', 'm', 'p')
 				AND n.nspname = ANY (pg_catalog.current_schemas(FALSE))
 			ORDER BY
 				c.relname
@@ -135,7 +127,7 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	}
 
 
-	public function getColumns($table)
+	public function getColumns(string $table): array
 	{
 		$columns = [];
 		foreach ($this->connection->query("
@@ -144,20 +136,21 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 				c.relname::varchar AS table,
 				upper(t.typname) AS nativetype,
 				CASE WHEN a.atttypmod = -1 THEN NULL ELSE a.atttypmod -4 END AS size,
-				FALSE AS unsigned,
 				NOT (a.attnotnull OR t.typtype = 'd' AND t.typnotnull) AS nullable,
 				pg_catalog.pg_get_expr(ad.adbin, 'pg_catalog.pg_attrdef'::regclass)::varchar AS default,
-				coalesce(co.contype = 'p' AND strpos(ad.adsrc, 'nextval') = 1, FALSE) AS autoincrement,
+				coalesce(co.contype = 'p' AND (seq.relname IS NOT NULL OR strpos(pg_catalog.pg_get_expr(ad.adbin, ad.adrelid), 'nextval') = 1), FALSE) AS autoincrement,
 				coalesce(co.contype = 'p', FALSE) AS primary,
-				substring(pg_catalog.pg_get_expr(ad.adbin, 'pg_catalog.pg_attrdef'::regclass) from 'nextval[(]''\"?([^''\"]+)') AS sequence
+				coalesce(seq.relname, substring(pg_catalog.pg_get_expr(ad.adbin, 'pg_catalog.pg_attrdef'::regclass) from 'nextval[(]''\"?([^''\"]+)')) AS sequence
 			FROM
 				pg_catalog.pg_attribute AS a
 				JOIN pg_catalog.pg_class AS c ON a.attrelid = c.oid
 				JOIN pg_catalog.pg_type AS t ON a.atttypid = t.oid
+				LEFT JOIN pg_catalog.pg_depend AS d ON d.refobjid = c.oid AND d.refobjsubid = a.attnum AND d.deptype = 'i'
+				LEFT JOIN pg_catalog.pg_class AS seq ON seq.oid = d.objid AND seq.relkind = 'S'
 				LEFT JOIN pg_catalog.pg_attrdef AS ad ON ad.adrelid = c.oid AND ad.adnum = a.attnum
 				LEFT JOIN pg_catalog.pg_constraint AS co ON co.connamespace = c.relnamespace AND contype = 'p' AND co.conrelid = c.oid AND a.attnum = ANY(co.conkey)
 			WHERE
-				c.relkind IN ('r', 'v')
+				c.relkind IN ('r', 'v', 'm', 'p')
 				AND c.oid = {$this->connection->quote($this->delimiteFQN($table))}::regclass
 				AND a.attnum > 0
 				AND NOT a.attisdropped
@@ -175,7 +168,7 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	}
 
 
-	public function getIndexes($table)
+	public function getIndexes(string $table): array
 	{
 		$indexes = [];
 		foreach ($this->connection->query("
@@ -190,20 +183,21 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 				JOIN pg_catalog.pg_class AS c2 ON i.indexrelid = c2.oid
 				LEFT JOIN pg_catalog.pg_attribute AS a ON c1.oid = a.attrelid AND a.attnum = ANY(i.indkey)
 			WHERE
-				c1.relkind = 'r'
+				c1.relkind IN ('r', 'p')
 				AND c1.oid = {$this->connection->quote($this->delimiteFQN($table))}::regclass
 		") as $row) {
-			$indexes[$row['name']]['name'] = $row['name'];
-			$indexes[$row['name']]['unique'] = $row['unique'];
-			$indexes[$row['name']]['primary'] = $row['primary'];
-			$indexes[$row['name']]['columns'][] = $row['column'];
+			$id = $row['name'];
+			$indexes[$id]['name'] = $id;
+			$indexes[$id]['unique'] = $row['unique'];
+			$indexes[$id]['primary'] = $row['primary'];
+			$indexes[$id]['columns'][] = $row['column'];
 		}
 
 		return array_values($indexes);
 	}
 
 
-	public function getForeignKeys($table)
+	public function getForeignKeys(string $table): array
 	{
 		/* Does't work with multicolumn foreign keys */
 		return $this->connection->query("
@@ -227,18 +221,19 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 	}
 
 
-	public function getColumnTypes(\PDOStatement $statement)
+	public function getColumnTypes(\PDOStatement $statement): array
 	{
 		static $cache;
 		$item = &$cache[$statement->queryString];
 		if ($item === null) {
 			$item = Nette\Database\Helpers::detectTypes($statement);
 		}
+
 		return $item;
 	}
 
 
-	public function isSupported($item)
+	public function isSupported(string $item): bool
 	{
 		return $item === self::SUPPORT_SEQUENCE || $item === self::SUPPORT_SUBSELECT || $item === self::SUPPORT_SCHEMA;
 	}
@@ -246,10 +241,8 @@ class PgSqlDriver implements Nette\Database\ISupplementalDriver
 
 	/**
 	 * Converts: schema.name => "schema"."name"
-	 * @param  string
-	 * @return string
 	 */
-	private function delimiteFQN($name)
+	private function delimiteFQN(string $name): string
 	{
 		return implode('.', array_map([$this, 'delimite'], explode('.', $name)));
 	}

@@ -5,14 +5,15 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Security;
 
 use Nette;
 
 
 /**
- * Default implementation of IIdentity.
- *
+ * @deprecated  use Nette\Security\SimpleIdentity
  * @property   mixed $id
  * @property   array $roles
  * @property   array $data
@@ -35,26 +36,26 @@ class Identity implements IIdentity
 	private $data;
 
 
-	/**
-	 * @param  mixed
-	 * @param  mixed
-	 * @param  iterable
-	 */
-	public function __construct($id, $roles = null, $data = null)
+	public function __construct($id, $roles = null, iterable $data = null)
 	{
 		$this->setId($id);
 		$this->setRoles((array) $roles);
-		$this->data = $data instanceof \Traversable ? iterator_to_array($data) : (array) $data;
+		$this->data = $data instanceof \Traversable
+			? iterator_to_array($data)
+			: (array) $data;
 	}
 
 
 	/**
 	 * Sets the ID of user.
-	 * @param  mixed
+	 * @param  string|int  $id
 	 * @return static
 	 */
 	public function setId($id)
 	{
+		if (!is_string($id) && !is_int($id)) {
+			throw new Nette\InvalidArgumentException('Identity identifier must be string|int, but type "' . gettype($id) . '" given.');
+		}
 		$this->id = is_numeric($id) && !is_float($tmp = $id * 1) ? $tmp : $id;
 		return $this;
 	}
@@ -83,9 +84,8 @@ class Identity implements IIdentity
 
 	/**
 	 * Returns a list of roles that the user is a member of.
-	 * @return array
 	 */
-	public function getRoles()
+	public function getRoles(): array
 	{
 		return $this->roles;
 	}
@@ -93,9 +93,8 @@ class Identity implements IIdentity
 
 	/**
 	 * Returns a user data.
-	 * @return array
 	 */
-	public function getData()
+	public function getData(): array
 	{
 		return $this->data;
 	}
@@ -103,11 +102,8 @@ class Identity implements IIdentity
 
 	/**
 	 * Sets user data value.
-	 * @param  string
-	 * @param  mixed
-	 * @return void
 	 */
-	public function __set($key, $value)
+	public function __set(string $key, $value): void
 	{
 		if ($this->parentIsSet($key)) {
 			$this->parentSet($key, $value);
@@ -120,10 +116,9 @@ class Identity implements IIdentity
 
 	/**
 	 * Returns user data value.
-	 * @param  string
 	 * @return mixed
 	 */
-	public function &__get($key)
+	public function &__get(string $key)
 	{
 		if ($this->parentIsSet($key)) {
 			return $this->parentGet($key);
@@ -134,11 +129,7 @@ class Identity implements IIdentity
 	}
 
 
-	/**
-	 * @param  string
-	 * @return bool
-	 */
-	public function __isset($key)
+	public function __isset(string $key): bool
 	{
 		return isset($this->data[$key]) || $this->parentIsSet($key);
 	}

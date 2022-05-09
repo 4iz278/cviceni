@@ -5,17 +5,15 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Application;
 
 
 /**
- * Presenter converts Request to IResponse.
+ * Presenter converts Request to Response.
  */
 interface IPresenter
 {
-
-	/**
-	 * @return IResponse
-	 */
-	function run(Request $request);
+	function run(Request $request): Response;
 }

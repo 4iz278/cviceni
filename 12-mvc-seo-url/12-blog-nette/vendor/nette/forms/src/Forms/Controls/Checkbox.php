@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms\Controls;
 
 use Nette;
@@ -17,24 +19,23 @@ use Nette\Utils\Html;
 class Checkbox extends BaseControl
 {
 	/** @var Html  wrapper element template */
-	private $wrapper;
+	private $container;
 
 
 	/**
-	 * @param  string|object
+	 * @param  string|object  $label
 	 */
 	public function __construct($label = null)
 	{
 		parent::__construct($label);
 		$this->control->type = 'checkbox';
-		$this->wrapper = Html::el();
+		$this->container = Html::el();
 		$this->setOption('type', 'checkbox');
 	}
 
 
 	/**
 	 * Sets control's value.
-	 * @param  bool
 	 * @return static
 	 * @internal
 	 */
@@ -48,59 +49,51 @@ class Checkbox extends BaseControl
 	}
 
 
-	/**
-	 * Is control filled?
-	 * @return bool
-	 */
-	public function isFilled()
+	public function isFilled(): bool
 	{
 		return $this->getValue() !== false; // back compatibility
 	}
 
 
-	/**
-	 * Generates control's HTML element.
-	 * @return Html
-	 */
-	public function getControl()
+	public function getControl(): Html
 	{
-		return $this->wrapper->setHtml($this->getLabelPart()->insert(0, $this->getControlPart()));
+		return $this->container->setHtml($this->getLabelPart()->insert(0, $this->getControlPart()));
 	}
 
 
 	/**
 	 * Bypasses label generation.
-	 * @return void
 	 */
 	public function getLabel($caption = null)
 	{
+		return null;
 	}
 
 
-	/**
-	 * @return Html
-	 */
-	public function getControlPart()
+	public function getControlPart(): Html
 	{
 		return parent::getControl()->checked($this->value);
 	}
 
 
-	/**
-	 * @return Html
-	 */
-	public function getLabelPart()
+	public function getLabelPart(): Html
 	{
 		return parent::getLabel();
 	}
 
 
 	/**
-	 * Returns wrapper HTML element template.
-	 * @return Html
+	 * Returns container HTML element template.
 	 */
-	public function getSeparatorPrototype()
+	public function getContainerPrototype(): Html
 	{
-		return $this->wrapper;
+		return $this->container;
+	}
+
+
+	/** @deprecated  use getContainerPrototype() */
+	public function getSeparatorPrototype(): Html
+	{
+		return $this->container;
 	}
 }

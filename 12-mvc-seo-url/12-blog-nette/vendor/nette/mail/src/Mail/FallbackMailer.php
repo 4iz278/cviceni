@@ -5,19 +5,21 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Mail;
 
 use Nette;
 
 
-class FallbackMailer implements IMailer
+class FallbackMailer implements Mailer
 {
 	use Nette\SmartObject;
 
-	/** @var callable[]  function (FallbackMailer $sender, SendException $e, IMailer $mailer, Message $mail) */
+	/** @var callable[]  function (FallbackMailer $sender, SendException $e, Mailer $mailer, Message $mail): void */
 	public $onFailure;
 
-	/** @var IMailer[] */
+	/** @var Mailer[] */
 	private $mailers;
 
 	/** @var int */
@@ -28,11 +30,10 @@ class FallbackMailer implements IMailer
 
 
 	/**
-	 * @param IMailer[]
-	 * @param int
-	 * @param int in miliseconds
+	 * @param Mailer[]  $mailers
+	 * @param int  $retryWaitTime in miliseconds
 	 */
-	public function __construct(array $mailers, $retryCount = 3, $retryWaitTime = 1000)
+	public function __construct(array $mailers, int $retryCount = 3, int $retryWaitTime = 1000)
 	{
 		$this->mailers = $mailers;
 		$this->retryCount = $retryCount;
@@ -42,15 +43,15 @@ class FallbackMailer implements IMailer
 
 	/**
 	 * Sends email.
-	 * @return void
 	 * @throws FallbackMailerException
 	 */
-	public function send(Message $mail)
+	public function send(Message $mail): void
 	{
 		if (!$this->mailers) {
 			throw new Nette\InvalidArgumentException('At least one mailer must be provided.');
 		}
 
+		$failures = [];
 		for ($i = 0; $i < $this->retryCount; $i++) {
 			if ($i > 0) {
 				usleep($this->retryWaitTime * 1000);
@@ -74,10 +75,8 @@ class FallbackMailer implements IMailer
 	}
 
 
-	/**
-	 * @return static
-	 */
-	public function addMailer(IMailer $mailer)
+	/** @return static */
+	public function addMailer(Mailer $mailer)
 	{
 		$this->mailers[] = $mailer;
 		return $this;

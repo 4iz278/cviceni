@@ -1,7 +1,7 @@
 {
 	"name": "nette/safe-stream",
-	"description": "Nette SafeStream: atomic and safe manipulation with files via native PHP functions.",
-	"keywords": ["nette", "atomic", "safe", "filesystem"],
+	"description": "Nette SafeStream: provides isolation for thread safe manipulation with files via native PHP functions.",
+	"keywords": ["nette", "isolation", "thread safe", "atomic", "safe", "filesystem"],
 	"homepage": "https://nette.org",
 	"license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
 	"authors": [
@@ -27,12 +27,12 @@
 	},
 	"minimum-stability": "dev",
 	"scripts": {
-		"phpstan": "phpstan analyse --level 5 src",
+		"phpstan": "phpstan analyse",
 		"tester": "tester tests -s"
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "2.4-dev"
+			"dev-master": "2.5-dev"
 		}
 	}
 }

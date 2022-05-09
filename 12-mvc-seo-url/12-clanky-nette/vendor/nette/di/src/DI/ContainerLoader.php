@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\DI;
 
 use Nette;
@@ -24,7 +26,7 @@ class ContainerLoader
 	private $tempDirectory;
 
 
-	public function __construct($tempDirectory, $autoRebuild = false)
+	public function __construct(string $tempDirectory, bool $autoRebuild = false)
 	{
 		$this->tempDirectory = $tempDirectory;
 		$this->autoRebuild = $autoRebuild;
@@ -32,37 +34,30 @@ class ContainerLoader
 
 
 	/**
-	 * @param  callable  function (Nette\DI\Compiler $compiler): string|null
-	 * @param  mixed
-	 * @return string
+	 * @param  callable  $generator  function (Nette\DI\Compiler $compiler): string|null
+	 * @param  mixed  $key
 	 */
-	public function load($generator, $key = null)
+	public function load(callable $generator, $key = null): string
 	{
-		if (!is_callable($generator)) { // back compatiblity
-			trigger_error(__METHOD__ . ': order of arguments has been swapped.', E_USER_DEPRECATED);
-			list($generator, $key) = [$key, $generator];
-		}
 		$class = $this->getClassName($key);
 		if (!class_exists($class, false)) {
 			$this->loadFile($class, $generator);
 		}
+
 		return $class;
 	}
 
 
 	/**
-	 * @return string
+	 * @param  mixed  $key
 	 */
-	public function getClassName($key)
+	public function getClassName($key): string
 	{
 		return 'Container_' . substr(md5(serialize($key)), 0, 10);
 	}
 
 
-	/**
-	 * @return void
-	 */
-	private function loadFile($class, $generator)
+	private function loadFile(string $class, callable $generator): void
 	{
 		$file = "$this->tempDirectory/$class.php";
 		if (!$this->isExpired($file) && (@include $file) !== false) { // @ file may not exist
@@ -73,22 +68,23 @@ class ContainerLoader
 
 		$handle = @fopen("$file.lock", 'c+'); // @ is escalated to exception
 		if (!$handle) {
-			throw new Nette\IOException("Unable to create file '$file.lock'. " . error_get_last()['message']);
+			throw new Nette\IOException(sprintf("Unable to create file '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
 		} elseif (!@flock($handle, LOCK_EX)) { // @ is escalated to exception
-			throw new Nette\IOException("Unable to acquire exclusive lock on '$file.lock'. " . error_get_last()['message']);
+			// the lock will automatically be freed when $handle goes out of scope
+			throw new Nette\IOException(sprintf("Unable to acquire exclusive lock on '%s.lock'. %s", $file, Nette\Utils\Helpers::getLastError()));
 		}
 
 		if (!is_file($file) || $this->isExpired($file, $updatedMeta)) {
 			if (isset($updatedMeta)) {
 				$toWrite["$file.meta"] = $updatedMeta;
 			} else {
-				list($toWrite[$file], $toWrite["$file.meta"]) = $this->generate($class, $generator);
+				[$toWrite[$file], $toWrite["$file.meta"]] = $this->generate($class, $generator);
 			}
 
 			foreach ($toWrite as $name => $content) {
 				if (file_put_contents("$name.tmp", $content) !== strlen($content) || !rename("$name.tmp", $name)) {
 					@unlink("$name.tmp"); // @ - file may not exist
-					throw new Nette\IOException("Unable to create file '$name'.");
+					throw new Nette\IOException(sprintf("Unable to create file '%s'.", $name));
 				} elseif (function_exists('opcache_invalidate')) {
 					@opcache_invalidate($name, true); // @ can be restricted
 				}
@@ -96,33 +92,31 @@ class ContainerLoader
 		}
 
 		if ((@include $file) === false) { // @ - error escalated to exception
-			throw new Nette\IOException("Unable to include '$file'.");
+			throw new Nette\IOException(sprintf("Unable to include '%s'.", $file));
 		}
-		flock($handle, LOCK_UN);
 	}
 
 
-	private function isExpired($file, &$updatedMeta = null)
+	private function isExpired(string $file, ?string &$updatedMeta = null): bool
 	{
 		if ($this->autoRebuild) {
 			$meta = @unserialize((string) file_get_contents("$file.meta")); // @ - file may not exist
-			$orig = isset($meta[2]) ? $meta[2] : null;
+			$orig = $meta[2] ?? null;
 			return empty($meta[0])
 				|| DependencyChecker::isExpired(...$meta)
 				|| ($orig !== $meta[2] && $updatedMeta = serialize($meta));
 		}
+
 		return false;
 	}
 
 
-	/**
-	 * @return array of (code, file[])
-	 */
-	protected function generate($class, $generator)
+	/** @return array of (code, file[]) */
+	protected function generate(string $class, callable $generator): array
 	{
 		$compiler = new Compiler;
 		$compiler->setClassName($class);
-		$code = call_user_func_array($generator, [&$compiler]) ?: $compiler->compile();
+		$code = $generator(...[&$compiler]) ?: $compiler->compile();
 		return [
 			"<?php\n$code",
 			serialize($compiler->exportDependencies()),

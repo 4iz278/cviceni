@@ -5,50 +5,33 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Utils;
 
 use Nette;
+use function is_array, is_object, is_string;
 
 
 /**
  * PHP callable tools.
  */
-class Callback
+final class Callback
 {
 	use Nette\StaticClass;
 
 	/**
-	 * @param  mixed   class, object, callable
-	 * @param  string  method
-	 * @return \Closure
+	 * @param  string|object|callable  $callable  class, object, callable
+	 * @deprecated use Closure::fromCallable()
 	 */
-	public static function closure($callable, $m = null)
+	public static function closure($callable, ?string $method = null): \Closure
 	{
-		if ($m !== null) {
-			$callable = [$callable, $m];
-
-		} elseif (is_string($callable) && count($tmp = explode('::', $callable)) === 2) {
-			$callable = $tmp;
-
-		} elseif ($callable instanceof \Closure) {
-			return $callable;
-
-		} elseif (is_object($callable)) {
-			$callable = [$callable, '__invoke'];
+		trigger_error(__METHOD__ . '() is deprecated, use Closure::fromCallable().', E_USER_DEPRECATED);
+		try {
+			return \Closure::fromCallable($method === null ? $callable : [$callable, $method]);
+		} catch (\TypeError $e) {
+			throw new Nette\InvalidArgumentException($e->getMessage());
 		}
-
-		if (is_string($callable) && function_exists($callable)) {
-			return (new \ReflectionFunction($callable))->getClosure();
-
-		} elseif (is_array($callable) && method_exists($callable[0], $callable[1])) {
-			return (new \ReflectionMethod($callable[0], $callable[1]))->getClosure($callable[0]);
-		}
-
-		self::check($callable);
-		$_callable_ = $callable;
-		return function (...$args) use ($_callable_) {
-			return $_callable_(...$args);
-		};
 	}
 
 
@@ -59,8 +42,9 @@ class Callback
 	 */
 	public static function invoke($callable, ...$args)
 	{
+		trigger_error(__METHOD__ . '() is deprecated, use native invoking.', E_USER_DEPRECATED);
 		self::check($callable);
-		return call_user_func_array($callable, $args);
+		return $callable(...$args);
 	}
 
 
@@ -71,37 +55,34 @@ class Callback
 	 */
 	public static function invokeArgs($callable, array $args = [])
 	{
+		trigger_error(__METHOD__ . '() is deprecated, use native invoking.', E_USER_DEPRECATED);
 		self::check($callable);
-		return call_user_func_array($callable, $args);
+		return $callable(...$args);
 	}
 
 
 	/**
 	 * Invokes internal PHP function with own error handler.
-	 * @param  string
 	 * @return mixed
 	 */
-	public static function invokeSafe($function, array $args, $onError)
+	public static function invokeSafe(string $function, array $args, callable $onError)
 	{
-		$prev = set_error_handler(function ($severity, $message, $file) use ($onError, &$prev, $function) {
-			if ($file === '' && defined('HHVM_VERSION')) { // https://github.com/facebook/hhvm/issues/4625
-				$file = func_get_arg(5)[1]['file'];
-			}
+		$prev = set_error_handler(function ($severity, $message, $file) use ($onError, &$prev, $function): ?bool {
 			if ($file === __FILE__) {
-				$msg = $message;
-				if (ini_get('html_errors')) {
-					$msg = html_entity_decode(strip_tags($msg));
-				}
-				$msg = preg_replace("#^$function\(.*?\): #", '', $msg);
+				$msg = ini_get('html_errors')
+					? Html::htmlToText($message)
+					: $message;
+				$msg = preg_replace("#^$function\\(.*?\\): #", '', $msg);
 				if ($onError($msg, $severity) !== false) {
-					return;
+					return null;
 				}
 			}
+
 			return $prev ? $prev(...func_get_args()) : false;
 		});
 
 		try {
-			return call_user_func_array($function, $args);
+			return $function(...$args);
 		} finally {
 			restore_error_handler();
 		}
@@ -109,24 +90,31 @@ class Callback
 
 
 	/**
+	 * Checks that $callable is valid PHP callback. Otherwise throws exception. If the $syntax is set to true, only verifies
+	 * that $callable has a valid structure to be used as a callback, but does not verify if the class or method actually exists.
+	 * @param  mixed  $callable
 	 * @return callable
+	 * @throws Nette\InvalidArgumentException
 	 */
-	public static function check($callable, $syntax = false)
+	public static function check($callable, bool $syntax = false)
 	{
 		if (!is_callable($callable, $syntax)) {
-			throw new Nette\InvalidArgumentException($syntax
+			throw new Nette\InvalidArgumentException(
+				$syntax
 				? 'Given value is not a callable type.'
 				: sprintf("Callback '%s' is not callable.", self::toString($callable))
 			);
 		}
+
 		return $callable;
 	}
 
 
 	/**
-	 * @return string
+	 * Converts PHP callback to textual form. Class or method may not exists.
+	 * @param  mixed  $callable
 	 */
-	public static function toString($callable)
+	public static function toString($callable): string
 	{
 		if ($callable instanceof \Closure) {
 			$inner = self::unwrap($callable);
@@ -141,57 +129,56 @@ class Callback
 
 
 	/**
+	 * Returns reflection for method or function used in PHP callback.
+	 * @param  callable  $callable  type check is escalated to ReflectionException
 	 * @return \ReflectionMethod|\ReflectionFunction
+	 * @throws \ReflectionException  if callback is not valid
 	 */
-	public static function toReflection($callable)
+	public static function toReflection($callable): \ReflectionFunctionAbstract
 	{
 		if ($callable instanceof \Closure) {
 			$callable = self::unwrap($callable);
 		}
 
-		$class = class_exists(Nette\Reflection\Method::class) ? Nette\Reflection\Method::class : 'ReflectionMethod';
 		if (is_string($callable) && strpos($callable, '::')) {
-			return new $class($callable);
+			return new \ReflectionMethod($callable);
 		} elseif (is_array($callable)) {
-			return new $class($callable[0], $callable[1]);
+			return new \ReflectionMethod($callable[0], $callable[1]);
 		} elseif (is_object($callable) && !$callable instanceof \Closure) {
-			return new $class($callable, '__invoke');
+			return new \ReflectionMethod($callable, '__invoke');
 		} else {
-			$class = class_exists(Nette\Reflection\GlobalFunction::class) ? Nette\Reflection\GlobalFunction::class : 'ReflectionFunction';
-			return new $class($callable);
+			return new \ReflectionFunction($callable);
 		}
 	}
 
 
 	/**
-	 * @return bool
+	 * Checks whether PHP callback is function or static method.
 	 */
-	public static function isStatic($callable)
+	public static function isStatic(callable $callable): bool
 	{
 		return is_array($callable) ? is_string($callable[0]) : is_string($callable);
 	}
 
 
 	/**
-	 * Unwraps closure created by self::closure()
-	 * @internal
-	 * @return callable
+	 * Unwraps closure created by Closure::fromCallable().
+	 * @return callable|array
 	 */
 	public static function unwrap(\Closure $closure)
 	{
 		$r = new \ReflectionFunction($closure);
-		if (substr($r->getName(), -1) === '}') {
-			$vars = $r->getStaticVariables();
-			return isset($vars['_callable_']) ? $vars['_callable_'] : $closure;
+		if (substr($r->name, -1) === '}') {
+			return $closure;
 
 		} elseif ($obj = $r->getClosureThis()) {
-			return [$obj, $r->getName()];
+			return [$obj, $r->name];
 
 		} elseif ($class = $r->getClosureScopeClass()) {
-			return [$class->getName(), $r->getName()];
+			return [$class->name, $r->name];
 
 		} else {
-			return $r->getName();
+			return $r->name;
 		}
 	}
 }

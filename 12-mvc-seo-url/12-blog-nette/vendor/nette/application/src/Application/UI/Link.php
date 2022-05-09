@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Application\UI;
 
 use Nette;
@@ -14,7 +16,7 @@ use Nette;
  * Lazy encapsulation of Component::link().
  * Do not instantiate directly, use Component::lazyLink()
  */
-class Link
+final class Link
 {
 	use Nette\SmartObject;
 
@@ -31,7 +33,7 @@ class Link
 	/**
 	 * Link specification.
 	 */
-	public function __construct(Component $component, $destination, array $params = [])
+	public function __construct(Component $component, string $destination, array $params = [])
 	{
 		$this->component = $component;
 		$this->destination = $destination;
@@ -40,10 +42,18 @@ class Link
 
 
 	/**
-	 * Returns link destination.
-	 * @return string
+	 * Returns link component.
 	 */
-	public function getDestination()
+	public function getComponent(): Component
+	{
+		return $this->component;
+	}
+
+
+	/**
+	 * Returns link destination.
+	 */
+	public function getDestination(): string
 	{
 		return $this->destination;
 	}
@@ -51,11 +61,9 @@ class Link
 
 	/**
 	 * Changes link parameter.
-	 * @param  string
-	 * @param  mixed
 	 * @return static
 	 */
-	public function setParameter($key, $value)
+	public function setParameter(string $key, $value)
 	{
 		$this->params[$key] = $value;
 		return $this;
@@ -64,42 +72,47 @@ class Link
 
 	/**
 	 * Returns link parameter.
-	 * @param  string
 	 * @return mixed
 	 */
-	public function getParameter($key)
+	public function getParameter(string $key)
 	{
-		return isset($this->params[$key]) ? $this->params[$key] : null;
+		return $this->params[$key] ?? null;
 	}
 
 
 	/**
 	 * Returns link parameters.
-	 * @return array
 	 */
-	public function getParameters()
+	public function getParameters(): array
 	{
 		return $this->params;
 	}
 
 
 	/**
-	 * Converts link to URL.
-	 * @return string
+	 * Determines whether this links to the current page.
 	 */
-	public function __toString()
+	public function isLinkCurrent(): bool
+	{
+		return $this->component->isLinkCurrent($this->destination, $this->params);
+	}
+
+
+	/**
+	 * Converts link to URL.
+	 */
+	public function __toString(): string
 	{
 		try {
 			return $this->component->link($this->destination, $this->params);
 
-		} catch (\Exception $e) {
 		} catch (\Throwable $e) {
-		}
-		if (isset($e)) {
 			if (func_num_args() || PHP_VERSION_ID >= 70400) {
 				throw $e;
 			}
+
 			trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", E_USER_ERROR);
+			return '';
 		}
 	}
 }

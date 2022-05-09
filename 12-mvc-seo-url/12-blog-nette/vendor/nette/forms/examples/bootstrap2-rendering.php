@@ -4,6 +4,8 @@
  * Nette Forms & Bootstap v2 rendering example.
  */
 
+declare(strict_types=1);
+
 
 if (@!include __DIR__ . '/../vendor/autoload.php') {
 	die('Install packages using `composer install`');
@@ -16,7 +18,7 @@ use Tracy\Dumper;
 Debugger::enable();
 
 
-function makeBootstrap2(Form $form)
+function makeBootstrap2(Form $form): void
 {
 	$renderer = $form->getRenderer();
 	$renderer->wrappers['controls']['container'] = null;
@@ -91,5 +93,5 @@ if ($form->isSuccess()) {
 		<h1>Nette Forms & Bootstrap v2 rendering example</h1>
 	</div>
 
-	<?php echo $form ?>
+	<?php $form->render() ?>
 </div>

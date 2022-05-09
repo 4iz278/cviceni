@@ -19,11 +19,14 @@ class StringLoader implements Latte\Loader
 {
 	use Latte\Strict;
 
-	/** @var array|null [name => content] */
+	/** @var string[]|null  [name => content] */
 	private $templates;
 
 
-	public function __construct(array $templates = null)
+	/**
+	 * @param  string[]  $templates
+	 */
+	public function __construct(?array $templates = null)
 	{
 		$this->templates = $templates;
 	}
@@ -39,7 +42,7 @@ class StringLoader implements Latte\Loader
 		} elseif (isset($this->templates[$name])) {
 			return $this->templates[$name];
 		} else {
-			throw new \RuntimeException("Missing template '$name'.");
+			throw new Latte\RuntimeException("Missing template '$name'.");
 		}
 	}
 
@@ -58,6 +61,7 @@ class StringLoader implements Latte\Loader
 		if ($this->templates === null) {
 			throw new \LogicException("Missing template '$name'.");
 		}
+
 		return $name;
 	}
 

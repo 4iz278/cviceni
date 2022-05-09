@@ -4,6 +4,8 @@
  * Nette Forms manual form rendering.
  */
 
+declare(strict_types=1);
+
 
 if (@!include __DIR__ . '/../vendor/autoload.php') {
 	die('Install packages using `composer install`');
@@ -46,7 +48,7 @@ if ($form->isSuccess()) {
 	<meta charset="utf-8">
 	<title>Nette Forms manual form rendering</title>
 	<link rel="stylesheet" media="screen" href="assets/style.css" />
-	<script src="https://nette.github.io/resources/js/2/netteForms.js"></script>
+	<script src="https://nette.github.io/resources/js/3/netteForms.js"></script>
 </head>
 
 <body>

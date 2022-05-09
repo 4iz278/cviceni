@@ -5,6 +5,8 @@
  * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
+declare(strict_types=1);
+
 namespace Nette\Forms\Controls;
 
 use Nette;
@@ -36,7 +38,7 @@ abstract class TextBase extends BaseControl
 	{
 		if ($value === null) {
 			$value = '';
-		} elseif (!is_scalar($value) && !method_exists($value, '__toString')) {
+		} elseif (!is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
 			throw new Nette\InvalidArgumentException(sprintf("Value must be scalar or null, %s given in field '%s'.", gettype($value), $this->name));
 		}
 		$this->value = $value;
@@ -51,40 +53,39 @@ abstract class TextBase extends BaseControl
 	 */
 	public function getValue()
 	{
-		$value = $this->value === Strings::trim($this->translate($this->emptyValue)) ? '' : $this->value;
+		$value = $this->value === Strings::trim($this->translate($this->emptyValue))
+			? ''
+			: $this->value;
 		return $this->nullable && $value === '' ? null : $value;
 	}
 
 
 	/**
 	 * Sets whether getValue() returns null instead of empty string.
-	 * @param  bool
 	 * @return static
 	 */
-	public function setNullable($value = true)
+	public function setNullable(bool $value = true)
 	{
-		$this->nullable = (bool) $value;
+		$this->nullable = $value;
 		return $this;
 	}
 
 
 	/**
 	 * Sets the special value which is treated as empty string.
-	 * @param  string
 	 * @return static
 	 */
-	public function setEmptyValue($value)
+	public function setEmptyValue(string $value)
 	{
-		$this->emptyValue = (string) $value;
+		$this->emptyValue = $value;
 		return $this;
 	}
 
 
 	/**
 	 * Returns the special value which is treated as empty string.
-	 * @return string
 	 */
-	public function getEmptyValue()
+	public function getEmptyValue(): string
 	{
 		return $this->emptyValue;
 	}
@@ -92,29 +93,16 @@ abstract class TextBase extends BaseControl
 
 	/**
 	 * Sets the maximum number of allowed characters.
-	 * @param  int
 	 * @return static
 	 */
-	public function setMaxLength($length)
+	public function setMaxLength(int $length)
 	{
 		$this->control->maxlength = $length;
 		return $this;
 	}
 
 
-	/**
-	 * Appends input string filter callback.
-	 * @param  callable
-	 * @return static
-	 */
-	public function addFilter($filter)
-	{
-		$this->getRules()->addFilter($filter);
-		return $this;
-	}
-
-
-	public function getControl()
+	public function getControl(): Nette\Utils\Html
 	{
 		$el = parent::getControl();
 		if ($this->emptyValue !== '') {
@@ -127,10 +115,7 @@ abstract class TextBase extends BaseControl
 	}
 
 
-	/**
-	 * @return string|null
-	 */
-	protected function getRenderedValue()
+	protected function getRenderedValue(): ?string
 	{
 		return $this->rawValue === ''
 			? ($this->emptyValue === '' ? null : $this->translate($this->emptyValue))
@@ -138,15 +123,21 @@ abstract class TextBase extends BaseControl
 	}
 
 
-	/**
-	 * @return static
-	 */
+	/** @return static */
 	public function addRule($validator, $errorMessage = null, $arg = null)
 	{
+		foreach ($this->getRules() as $rule) {
+			if (!$rule->canExport() && !$rule->branch) {
+				return parent::addRule($validator, $errorMessage, $arg);
+			}
+		}
+
 		if ($validator === Form::LENGTH || $validator === Form::MAX_LENGTH) {
 			$tmp = is_array($arg) ? $arg[1] : $arg;
 			if (is_scalar($tmp)) {
-				$this->control->maxlength = isset($this->control->maxlength) ? min($this->control->maxlength, $tmp) : $tmp;
+				$this->control->maxlength = isset($this->control->maxlength)
+					? min($this->control->maxlength, $tmp)
+					: $tmp;
 			}
 		}
 		return parent::addRule($validator, $errorMessage, $arg);

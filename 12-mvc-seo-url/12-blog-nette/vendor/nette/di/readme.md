@@ -2,14 +2,46 @@ Nette Dependency Injection (DI)
 ===============================
 
 [![Downloads this Month](https://img.shields.io/packagist/dm/nette/di.svg)](https://packagist.org/packages/nette/di)
-[![Build Status](https://travis-ci.org/nette/di.svg?branch=master)](https://travis-ci.org/nette/di)
+[![Tests](https://github.com/nette/di/workflows/Tests/badge.svg?branch=master)](https://github.com/nette/di/actions)
 [![Coverage Status](https://coveralls.io/repos/github/nette/di/badge.svg?branch=master)](https://coveralls.io/github/nette/di?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/nette/di/v/stable)](https://github.com/nette/di/releases)
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](https://github.com/nette/di/blob/master/license.md)
 
+
+Introduction
+------------
+
 Purpose of the Dependecy Injection (DI) is to free classes from the responsibility for obtaining objects that they need for its operation (these objects are called **services**). To pass them these services on their instantiation instead.
 
 Nette DI is one of the most interesting part of framework. It is compiled DI container, extremely fast and easy to configure.
+
+Documentation can be found on the [website](https://doc.nette.org/dependency-injection).
+
+
+[Support Me](https://github.com/sponsors/dg)
+--------------------------------------------
+
+Do you like Nette DI? Are you looking forward to the new features?
+
+[![Buy me a coffee](https://files.nette.org/icons/donation-3.svg)](https://github.com/sponsors/dg)
+
+Thank you!
+
+
+Installation
+------------
+
+The recommended way to install is via Composer:
+
+```
+composer require nette/di
+```
+
+It requires PHP version 7.1 and supports PHP up to 8.1.
+
+
+Usage
+-----
 
 Let's have an application for sending newsletters. The code is maximally simplified and is available on the [GitHub](https://github.com/dg/di-example).
 
@@ -159,13 +191,7 @@ The big advantage is the shortness of configuration.
 
 Nette DI actually generates PHP code of container. Therefore it is extremely fast. Developer can see the code, so he knows exactly what it is doing. He can even trace it.
 
-Usage of Nette DI is very easy. In first, install it using Composer:
-
-```
-composer require nette/di
-```
-
-Save the (above) configuration to the file `config.neon` and let's create a container:
+Usage of Nette DI is very easy. Save the (above) configuration to the file `config.neon` and let's create a container:
 
 ```php
 $loader = new Nette\DI\ContainerLoader(__DIR__ . '/temp');

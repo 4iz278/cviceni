@@ -24,6 +24,7 @@ final class Method
 	use Traits\NameAware;
 	use Traits\VisibilityAware;
 	use Traits\CommentAware;
+	use Traits\AttributeAware;
 
 	/** @var string|null */
 	private $body = '';
@@ -55,6 +56,7 @@ final class Method
 			if (PHP_VERSION_ID >= 70400) {
 				throw $e;
 			}
+
 			trigger_error('Exception in ' . __METHOD__ . "(): {$e->getMessage()} in {$e->getFile()}:{$e->getLine()}", E_USER_ERROR);
 			return '';
 		}
@@ -62,9 +64,11 @@ final class Method
 
 
 	/** @return static */
-	public function setBody(?string $code, array $args = null): self
+	public function setBody(?string $code, ?array $args = null): self
 	{
-		$this->body = $args === null || $code === null ? $code : (new Dumper)->format($code, ...$args);
+		$this->body = $args === null || $code === null
+			? $code
+			: (new Dumper)->format($code, ...$args);
 		return $this;
 	}
 
@@ -117,11 +121,25 @@ final class Method
 	}
 
 
+	/**
+	 * @param  string  $name without $
+	 */
+	public function addPromotedParameter(string $name, $defaultValue = null): PromotedParameter
+	{
+		$param = new PromotedParameter($name);
+		if (func_num_args() > 1) {
+			$param->setDefaultValue($defaultValue);
+		}
+
+		return $this->parameters[$name] = $param;
+	}
+
+
 	/** @throws Nette\InvalidStateException */
 	public function validate(): void
 	{
-		if ($this->abstract && ($this->final || $this->visibility === ClassType::VISIBILITY_PRIVATE)) {
-			throw new Nette\InvalidStateException('Method cannot be abstract and final or private.');
+		if ($this->abstract && ($this->final || $this->visibility === ClassType::VisibilityPrivate)) {
+			throw new Nette\InvalidStateException("Method $this->name() cannot be abstract and final or private at the same time.");
 		}
 	}
 }
