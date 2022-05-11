@@ -185,7 +185,7 @@ Kód obou implementací je záměrně napsán tak, aby s vzájemně co nejvíce 
 :point_right:
 - jde o jednoduchou objektovou aplikaci, která načítá články z databáze a zobrazuje je na webu
 - data jsou v modelu načítána bez vytváření konkrétních entit (instancí konkrétních entitních tříd)
-- pozor: *pro spuštění Nette aplikace je potřeba načíst její podadresář www* (tj. například http://eso.vse.cz/~xname/10-blog-nette/www)
+- veřejná data jsou ve složce www, pro servery apache je zde nastavené podsunutí dat pomocí souboru .htaccess
 
 :blue_book:
 - [aplikace Články implementovaná v MVC bez použití frameworku](./12-clanky-mvc)
@@ -202,7 +202,8 @@ Kód obou implementací je záměrně napsán tak, aby s vzájemně co nejvíce 
 
 :blue_book:
 - [aplikace Blog implementovaná v MVC bez použití frameworku](./12-blog-mvc)
-- [aplikace Blog implementovaná v Nette](./12-blog-nette) 
+- [aplikace Blog implementovaná v Nette](./12-blog-nette)
+- pokud byste potřebovali při testování změn smazat cache (zejména na eso.vse.cz), načtěte z webu soubor [deleteCacheDir.php](./12-blog-nette/deleteCacheDir.php) 
 
 ---
 
