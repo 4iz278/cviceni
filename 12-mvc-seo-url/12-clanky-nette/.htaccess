@@ -1,0 +1,6 @@
+RewriteEngine On
+
+RewriteRule ^deleteCacheDir.php$ - [L]
+
+RewriteRule ^$ www/ [L,QSA]
+RewriteRule (.*) www/$1 [L,QSA]
