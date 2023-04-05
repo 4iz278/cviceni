@@ -28,7 +28,7 @@
 	  <form method="post">
       <!--máme tu jednoduchý "přihlašovací" formulář, ve kterém může uživatel jen zadat své jméno, zatím bez jakékoliv kontroly-->
       <label for="name">My Name</label><br/>
-		  <input type="text" name="name" id="name" value="<?php echo htmlspecialchars(@$_COOKIE['name']); ?>" required /><!--do formuláře vypisujeme jméno uložené v cookie (pokud tam je)-->
+		  <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($_COOKIE['name'] ?? ''); ?>" required /><!--do formuláře vypisujeme jméno uložené v cookie (pokud tam je)-->
       <br/><br/>
       <input type="submit" value="Save"> or <a href="./">Cancel</a>
 	  </form>
