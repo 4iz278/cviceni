@@ -4,7 +4,6 @@ namespace Mpdf\Tag;
 
 use Mpdf\Conversion\DecToAlpha;
 use Mpdf\Conversion\DecToRoman;
-
 use Mpdf\Utils\Arrays;
 use Mpdf\Utils\UtfString;
 
@@ -126,7 +125,7 @@ abstract class BlockTag extends Tag
 			}
 			// Cannot set block properties inside table - use Bold to indicate h1-h6
 			if ($tag === 'CENTER' && $this->mpdf->tdbegin) {
-				$this->mpdf->cell[$this->mpdf->row][$this->mpdf->col]['a'] = self::ALIGN['center'];
+				$this->mpdf->cell[$this->mpdf->row][$this->mpdf->col]['a'] = $this->getAlign('center');
 			}
 
 			$this->mpdf->InlineProperties['BLOCKINTABLE'] = $this->mpdf->saveInlineProperties();
@@ -248,10 +247,8 @@ abstract class BlockTag extends Tag
 
 		// If page-box has changed AND/OR PAGE-BREAK-BEFORE
 		// mPDF 6 (uses $p - preview of properties so blklvl can be imcremented after page-break)
-		if (!$this->mpdf->tableLevel && (($pagesel && (!isset($this->mpdf->page_box['current'])
-						|| $pagesel != $this->mpdf->page_box['current']))
-				|| (isset($p['PAGE-BREAK-BEFORE'])
-					&& $p['PAGE-BREAK-BEFORE']))) {
+		if (!$this->mpdf->tableLevel && (($pagesel && (!$this->mpdf->page_box['current'] || $pagesel != $this->mpdf->page_box['current']))
+				|| (isset($p['PAGE-BREAK-BEFORE']) && $p['PAGE-BREAK-BEFORE']))) {
 			// mPDF 6 pagebreaktype
 			$startpage = $this->mpdf->page;
 			$pagebreaktype = $this->mpdf->defaultPagebreakType;
@@ -259,7 +256,7 @@ abstract class BlockTag extends Tag
 			if ($this->mpdf->ColActive) {
 				$pagebreaktype = 'cloneall';
 			}
-			if ($pagesel && (!isset($this->mpdf->page_box['current']) || $pagesel != $this->mpdf->page_box['current'])) {
+			if ($pagesel && (!$this->mpdf->page_box['current'] || $pagesel != $this->mpdf->page_box['current'])) {
 				$pagebreaktype = 'cloneall';
 			}
 			$this->mpdf->_preForcedPagebreak($pagebreaktype);
@@ -318,7 +315,7 @@ abstract class BlockTag extends Tag
 				} // *CSS-PAGE*
 			} /* -- CSS-PAGE -- */
 			// Must Add new page if changed page properties
-			elseif (!isset($this->mpdf->page_box['current']) || $pagesel != $this->mpdf->page_box['current']) {
+			elseif (!$this->mpdf->page_box['current'] || $pagesel != $this->mpdf->page_box['current']) {
 				$this->mpdf->AddPage($this->mpdf->CurOrientation, '', '', '', '', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, 0, $pagesel);
 			}
 			/* -- END CSS-PAGE -- */
@@ -398,7 +395,7 @@ abstract class BlockTag extends Tag
 
 		// mPDF 6
 		if (!empty($attr['ALIGN'])) {
-			$currblk['block-align'] = self::ALIGN[strtolower($attr['ALIGN'])];
+			$currblk['block-align'] = $this->getAlign($attr['ALIGN']);
 		}
 
 
@@ -1066,7 +1063,7 @@ abstract class BlockTag extends Tag
 				$this->mpdf->pageoutput[$this->mpdf->page] = [];
 			}
 			// mod changes operands to integers before processing
-			$this->mpdf->y = (($this->mpdf->blk[$this->mpdf->blklvl]['float_endpos'] * 1000) % 1000000) / 1000;
+			$this->mpdf->y = (round($this->mpdf->blk[$this->mpdf->blklvl]['float_endpos'] * 1000) % 1000000) / 1000;
 		}
 		/* -- END CSS-FLOAT -- */
 
