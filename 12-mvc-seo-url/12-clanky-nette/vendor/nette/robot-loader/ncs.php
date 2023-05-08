@@ -8,7 +8,6 @@
 declare(strict_types=1);
 
 return [
-	// use function in src/Routing/Route.php
-	'single_import_per_statement' => false,
-	'ordered_imports' => false,
+	// RobotLoader.php
+	'Nette/statement_indentation' => false,
 ];

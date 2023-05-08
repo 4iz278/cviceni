@@ -9,14 +9,13 @@ use Blog\Model\Entities\Category;
  * @package Blog\Model
  */
 class CategoriesModel{
-  /** @var PDO $pdo */
-  private $pdo;
+  private PDO $pdo;
 
   /**
    * Funkce pro nalezení všech článků (v případě zadání parametru $category jen v dané kategorii)
    * @return Category[]
    */
-  public function findAll(){
+  public function findAll():array {
     $query=$this->pdo->prepare('SELECT * FROM categories ORDER BY `order`;');
     $query->execute();
     return $query->fetchAll(PDO::FETCH_CLASS,__NAMESPACE__.'\Entities\Category');
@@ -27,7 +26,7 @@ class CategoriesModel{
    * @param int $id
    * @return Category
    */
-  public function find($id){
+  public function find(int $id):Category {
     $query=$this->pdo->prepare('SELECT * FROM categories WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetchObject(__NAMESPACE__.'\Entities\Category');
@@ -39,7 +38,7 @@ class CategoriesModel{
    * ArticlesModel constructor
    * @param PDO $pdo
    */
-  public function __construct(\PDO $pdo){
+  public function __construct(PDO $pdo){
     $this->pdo=$pdo;
   }
 

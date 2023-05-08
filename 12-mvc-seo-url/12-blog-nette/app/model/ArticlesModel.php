@@ -9,15 +9,14 @@ use Blog\Model\Entities\Article;
  * @package Blog\Model
  */
 class ArticlesModel{
-  /** @var PDO $pdo */
-  private $pdo;
+  private PDO $pdo;
 
   /**
    * Funkce pro nalezení všech článků (v případě zadání parametru $category jen v dané kategorii)
    * @param null|int $category
    * @return Article[]
    */
-  public function findAll($category=null){
+  public function findAll(?int $category=null):array{
     if ($category>0){
       $query=$this->pdo->prepare('SELECT * FROM articles WHERE category=:category;');
       $query->execute([':category'=>$category]);
@@ -34,7 +33,7 @@ class ArticlesModel{
    * @param bool $includeTextAliases=false - pokud je true, dojde k načtení názvu kategorie a jména autora
    * @return Article
    */
-  public function find($id,$includeTextAliases=false){
+  public function find(int $id,bool $includeTextAliases=false):Article{
     if ($includeTextAliases){
       $sql='SELECT articles.*,users.name AS authorName,categories.name AS categoryName FROM articles LEFT JOIN users ON articles.author=users.id LEFT JOIN categories ON articles.category=categories.id WHERE articles.id=:id LIMIT 1;';
     }else{
@@ -50,7 +49,7 @@ class ArticlesModel{
    * @param Article|int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(Article|int $id):bool{
     if ($id instanceof Article){
       $id=$id->id;
     }
@@ -62,10 +61,10 @@ class ArticlesModel{
    * @param Article $article
    * @return bool
    */
-  public function save(Article $article){
+  public function save(Article $article):bool{
     $dataArr=$article->getDataArr();
     $paramsArr=[];
-    if (@$article->id>0){
+    if (!empty($article->id)){
       //updatujeme existující článek
       $sql='';
       foreach($dataArr as $key=>$value){

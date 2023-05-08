@@ -5,24 +5,23 @@ use Blog\Model\Entities\User;
 use Nette\Mail\Message;
 use Nette\Mail\SendmailMailer;
 use Nette\Security\AuthenticationException;
+use Nette\Security\Authenticator;
 use Nette\Security\Identity;
 use Nette\Security\IIdentity;
 use \PDO;
-use Blog\Model\Entities\Article;
 
 /**
  * Class UsersModel - třída pro práci s uživateli
  * @package Blog\Model
  */
-class UsersModel implements \Nette\Security\IAuthenticator{
-  /** @var PDO $pdo */
-  private $pdo;
+class UsersModel implements Authenticator{
+  private PDO $pdo;
 
   /**
    * Funkce pro nalezení všech uživatelů
    * @return User[]
    */
-  public function findAll(){
+  public function findAll():array {
     $query=$this->pdo->prepare('SELECT * FROM users');
     $query->execute();
     return $query->fetchAll(PDO::FETCH_CLASS,__NAMESPACE__.'\Entities\User');
@@ -33,7 +32,7 @@ class UsersModel implements \Nette\Security\IAuthenticator{
    * @param int $id
    * @return User
    */
-  public function findById($id){
+  public function findById(int $id):User {
     $query=$this->pdo->prepare('SELECT * FROM users WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetchObject(__NAMESPACE__.'\Entities\User');
@@ -44,7 +43,7 @@ class UsersModel implements \Nette\Security\IAuthenticator{
    * @param string $email
    * @return User
    */
-  public function findByEmail($email){
+  public function findByEmail(string $email):User {
     $query=$this->pdo->prepare('SELECT * FROM users WHERE email=:email LIMIT 1;');
     $query->execute([':email'=>$email]);
     return $query->fetchObject(__NAMESPACE__.'\Entities\User');
@@ -55,7 +54,7 @@ class UsersModel implements \Nette\Security\IAuthenticator{
    * @param User|int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(User|int $id):bool{
     if ($id instanceof User){
       $id=$id->id;
     }
@@ -67,7 +66,7 @@ class UsersModel implements \Nette\Security\IAuthenticator{
    * @param User $user
    * @return bool
    */
-  public function save(User $user){
+  public function save(User $user):bool {
     $dataArr=$user->getDataArr();
     $paramsArr=[];
     if (@$user->id>0){
@@ -116,12 +115,12 @@ class UsersModel implements \Nette\Security\IAuthenticator{
 
   /**
    * Funkce pro autentizaci uživatele (využívá metod frameworku)
-   * @param array $credentials
+   * @param string $username
+   * @param string $password
    * @return IIdentity
    * @throws AuthenticationException
    */
-  function authenticate(array $credentials){
-    list($username,$password)=$credentials;//TODO pamatujete si tuhle konstrukci?
+  function authenticate(string $username, string $password): IIdentity{
     $user=$this->findByEmail($username);
     if (!$user){
       throw new AuthenticationException('Uživatelský účet nenalezen.',self::IDENTITY_NOT_FOUND);
@@ -140,7 +139,7 @@ class UsersModel implements \Nette\Security\IAuthenticator{
    * ArticlesModel constructor
    * @param PDO $pdo
    */
-  public function __construct(\PDO $pdo){
+  public function __construct(PDO $pdo){
     $this->pdo=$pdo;
   }
 

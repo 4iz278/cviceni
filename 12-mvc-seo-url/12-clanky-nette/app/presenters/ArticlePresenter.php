@@ -7,13 +7,12 @@ use Nette\Application\BadRequestException;
  * @author Stanislav Vojíř
  */
 class ArticlePresenter extends \Nette\Application\UI\Presenter{
-  /** @var  ArticlesModel $articlesModel */
-  private $articlesModel;
+  private ArticlesModel $articlesModel;
 
   /**
    * Akce pro zobrazení přehledu článků
    */
-  public function renderList(){
+  public function renderList():void {
     $this->template->articles=$this->articlesModel->findAll();
   }
 
@@ -22,7 +21,7 @@ class ArticlePresenter extends \Nette\Application\UI\Presenter{
    * @param int $id
    * @throws BadRequestException
    */
-  public function renderView($id){
+  public function renderView(int $id):void {
     $article=$this->articlesModel->find($id);
     if ($article){
       $this->template->article=$article;
@@ -33,9 +32,8 @@ class ArticlePresenter extends \Nette\Application\UI\Presenter{
 
   /**
    * Funkce pro automatické vložení (injection) požadované služby, která je definována v config.neon
-   * @param ArticlesModel $articlesModel
    */
-  public function injectArticlesModel(ArticlesModel $articlesModel){
+  public function injectArticlesModel(ArticlesModel $articlesModel):void {
     $this->articlesModel=$articlesModel;
   }
 

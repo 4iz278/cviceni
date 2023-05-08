@@ -14,14 +14,13 @@ use Nette\Forms\Controls\SubmitButton;
  * @author Stanislav Vojíř
  */
 class ArticlePresenter extends BasePresenter{
-  /** @var  ArticlesModel $articlesModel */
-  private $articlesModel;
+  private ArticlesModel $articlesModel;
 
   /**
    * Akce pro zobrazení přehledu článků
    * @param int $category;
    */
-  public function renderList($category){
+  public function renderList(int $category):void {
     $this->template->category=$this->categoriesModel->find($category);
     $this->template->articles=$this->articlesModel->findAll($category);
   }
@@ -31,7 +30,7 @@ class ArticlePresenter extends BasePresenter{
    * @param int $id
    * @throws BadRequestException
    */
-  public function renderShow($id){
+  public function renderShow(int $id):void {
     $article=$this->articlesModel->find($id,true);
     if ($article){
       $this->template->article=$article;
@@ -44,7 +43,7 @@ class ArticlePresenter extends BasePresenter{
    * Akce pro přidání nového článku
    * @param int|null $category=null
    */
-  public function actionAdd($category=null){
+  public function actionAdd(?int $category=null):void {
     if ($category && $this->categoriesModel->find($category)){
       $form=$this->getComponent('editForm');
       $form->setDefaults(['category'=>$category]);
@@ -56,7 +55,7 @@ class ArticlePresenter extends BasePresenter{
    * @param int $id
    * @throws BadRequestException
    */
-  public function actionEdit($id){
+  public function actionEdit(int $id):void {
     if (!$article=$this->articlesModel->find($id)){
       throw new BadRequestException('Požadovaný článek nebyl nalezen.');
     }
@@ -74,9 +73,9 @@ class ArticlePresenter extends BasePresenter{
    * Funkce připravující formulář pro zadání nového/úpravu existujícího článku
    * @return Form
    */
-  public function createComponentEditForm(){
+  public function createComponentEditForm():Form {
     $form = new Form();
-    $form->addHidden('id');
+    $id=$form->addHidden('id');
     $form->addText('title','Název článku:',null,200)
       ->setRequired('Je nutné zadat název článku');
     $form->addTextArea('perex','Perex:')
@@ -128,7 +127,7 @@ class ArticlePresenter extends BasePresenter{
       }
     };
     $form->addSubmit('storno','zrušit')
-      ->setValidationScope([])
+      ->setValidationScope([$id])
       ->onClick[]=function(SubmitButton $button){
       //funkce po kliknutí na tlačítko pro zrušení
       $data=$button->form->getValues(true);
@@ -147,9 +146,8 @@ class ArticlePresenter extends BasePresenter{
   #region injections - metody zajišťující automatické načtení potřebných služeb
   /**
    * Funkce pro automatické vložení (injection) požadované služby, která je definována v config.neon
-   * @param ArticlesModel $articlesModel
    */
-  public function injectArticlesModel(ArticlesModel $articlesModel){
+  public function injectArticlesModel(ArticlesModel $articlesModel):void {
     $this->articlesModel=$articlesModel;
   }
   #endregion injections

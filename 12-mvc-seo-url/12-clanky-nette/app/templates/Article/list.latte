@@ -5,7 +5,7 @@
   {if !empty($articles)}
     <ul>
       {foreach $articles as $article}
-        <a href="{link Article:view id=>$article['id']}">{$article['title']}</a>
+        <li><a href="{link Article:view id=>$article['id']}">{$article['title']}</a></li>
       {/foreach}
     </ul>
   {else}

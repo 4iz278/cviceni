@@ -9,8 +9,7 @@ use Nette;
  * Base presenter obsahující funkce sdílené dalšími presentery
  */
 abstract class BasePresenter extends Nette\Application\UI\Presenter{
-  /** @var  CategoriesModel $categoriesModel */
-  protected $categoriesModel;
+  protected CategoriesModel $categoriesModel;
 
   /**
    * Funkce volaná před vykreslováním šablony
@@ -35,10 +34,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter{
   
   
   #region injections
-  /**
-   * @param CategoriesModel $categoriesModel
-   */
-  public function injectCategoriesModel(CategoriesModel $categoriesModel){
+  public function injectCategoriesModel(CategoriesModel $categoriesModel):void {
     $this->categoriesModel=$categoriesModel;
   }
   #endregion injections

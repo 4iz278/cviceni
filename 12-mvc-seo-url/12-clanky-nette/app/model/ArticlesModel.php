@@ -12,7 +12,7 @@ class ArticlesModel{
    * @param null|int $category
    * @return array
    */
-  public function findAll($category=null){
+  public function findAll(?int $category=null):array {
     if ($category>0){
       $query=$this->pdo->prepare('SELECT * FROM articles WHERE category=:category;');
       $query->execute([':category'=>$category]);
@@ -28,7 +28,7 @@ class ArticlesModel{
    * @param int $id
    * @return array
    */
-  public function find($id){
+  public function find(?int $id):array{
     $query=$this->pdo->prepare('SELECT * FROM articles WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetch(PDO::FETCH_ASSOC);
@@ -39,7 +39,7 @@ class ArticlesModel{
    * @param int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(int $id):bool {
     $query=$this->pdo->prepare('DELETE FROM articles WHERE id=:id LIMIT 1;');
     return $query->execute([':id'=>$id]);
   }
@@ -48,7 +48,7 @@ class ArticlesModel{
    * ArticlesModel constructor
    * @param PDO $pdo
    */
-  public function __construct(\PDO $pdo){
+  public function __construct(PDO $pdo){
     $this->pdo=$pdo;
   }
 

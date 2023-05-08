@@ -13,13 +13,12 @@ use Nette\Forms\Controls\TextInput;
  * @package Blog\Presenters
  */
 class UserPresenter extends BasePresenter{
-  /** @var  UsersModel $usersModel */
-  private $usersModel;
+  private UsersModel $usersModel;
 
   /**
    * Akce pro přihlášení uživatele
    */
-  public function actionLogin(){
+  public function actionLogin():void {
     if ($this->user->isLoggedIn()){
       $this->redirect('Homepage:default');
       return;
@@ -29,7 +28,7 @@ class UserPresenter extends BasePresenter{
   /**
    * Akce pro odhlášení uživatele
    */
-  public function actionLogout(){
+  public function actionLogout():void {
     if ($this->user->isLoggedIn()){
       $this->flashMessage('Byli jste úspěšně odhlášeni.');
       $this->user->logout(true);
@@ -40,7 +39,7 @@ class UserPresenter extends BasePresenter{
   /**
    * Akce pro registraci uživatele
    */
-  public function actionRegister(){
+  public function actionRegister():void {
     if ($this->user->isLoggedIn()){
       $this->flashMessage('Nelze registrovat nový účet, když jste přihlášeni.');
       $this->redirect('Homepage:default');
@@ -51,7 +50,7 @@ class UserPresenter extends BasePresenter{
    * Formulář pro přihlášení uživatele
    * @return Form
    */
-  public function createComponentLoginForm(){
+  public function createComponentLoginForm():Form {
     $form = new Form();
     $form->addText('email','E-mail')
       ->setRequired('Je nutné zadat e-mail.')
@@ -78,7 +77,7 @@ class UserPresenter extends BasePresenter{
    * Formulář pro registraci uživatele
    * @return Form
    */
-  public function createComponentRegistrationForm(){
+  public function createComponentRegistrationForm():Form {
     $form=new Form();
     $form->addText('name','Jméno a příjmení:')
       ->setRequired('Je nutné zadat jméno.');
@@ -115,7 +114,7 @@ class UserPresenter extends BasePresenter{
 
 
   #region injections
-  public function injectUsersModel(UsersModel $usersModel){
+  public function injectUsersModel(UsersModel $usersModel):void {
     $this->usersModel=$usersModel;
   }
   #endregion injections
