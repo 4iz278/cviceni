@@ -1,204 +1,203 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => '4iz278/blog',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '2bc698491349fa131045d366e02a5f2c86303acc',
+        'type' => 'project',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
     ),
-    'reference' => 'ec3c95df26def75412cdacd849720022a4c6a699',
-    'name' => '4iz278/blog',
-  ),
-  'versions' => 
-  array (
-    '4iz278/blog' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'ec3c95df26def75412cdacd849720022a4c6a699',
+    'versions' => array(
+        '4iz278/blog' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '2bc698491349fa131045d366e02a5f2c86303acc',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'latte/latte' => array(
+            'pretty_version' => 'v2.11.6',
+            'version' => '2.11.6.0',
+            'reference' => 'af4dbb23a6044b1cf4904830a9b00246318c93d4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../latte/latte',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/application' => array(
+            'pretty_version' => 'v3.1.11',
+            'version' => '3.1.11.0',
+            'reference' => 'b03bd4971b03e3fa582ac40ea429446cd00788bb',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/application',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/bootstrap' => array(
+            'pretty_version' => 'v3.2.0',
+            'version' => '3.2.0.0',
+            'reference' => '7fde23cc8a8cf97d545baf0ad7f8cd47c73feb17',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/bootstrap',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/caching' => array(
+            'pretty_version' => 'v3.2.2',
+            'version' => '3.2.2.0',
+            'reference' => 'ceb814d7f0a2bb4eb5afbe908467801001187745',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/caching',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/component-model' => array(
+            'pretty_version' => 'v3.0.3',
+            'version' => '3.0.3.0',
+            'reference' => '9d97c0e1916bbf8e306283ab187834501fd4b1f5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/component-model',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/database' => array(
+            'pretty_version' => 'v3.1.7',
+            'version' => '3.1.7.0',
+            'reference' => '1c37d95647429560c5a3df595f2159451825665e',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/database',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/di' => array(
+            'pretty_version' => 'v3.1.2',
+            'version' => '3.1.2.0',
+            'reference' => '355cefbd71011a76b670fda3340d612a6944f972',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/di',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/finder' => array(
+            'pretty_version' => 'v2.6.0',
+            'version' => '2.6.0.0',
+            'reference' => '991aefb42860abeab8e003970c3809a9d83cb932',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/finder',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/forms' => array(
+            'pretty_version' => 'v3.1.11',
+            'version' => '3.1.11.0',
+            'reference' => '64cdc2d6796a8fe1265bb21a6ee5e9ff93e2b3a4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/forms',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/http' => array(
+            'pretty_version' => 'v3.2.2',
+            'version' => '3.2.2.0',
+            'reference' => '9105c26de3dd47da5e7cf6b4132b5d871f835e25',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/http',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/mail' => array(
+            'pretty_version' => 'v3.1.10',
+            'version' => '3.1.10.0',
+            'reference' => '23380ff0220c7a595d21253ac9ea64e32a1869c7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/mail',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/neon' => array(
+            'pretty_version' => 'v3.4.0',
+            'version' => '3.4.0.0',
+            'reference' => '372d945c156ee7f35c953339fb164538339e6283',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/neon',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/php-generator' => array(
+            'pretty_version' => 'v4.0.7',
+            'version' => '4.0.7.0',
+            'reference' => 'de1843fbb692125e307937c85d43937d0dc0c1d4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/php-generator',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/robot-loader' => array(
+            'pretty_version' => 'v3.4.2',
+            'version' => '3.4.2.0',
+            'reference' => '970c8f82be98ec54180c88a468cd2b057855d993',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/robot-loader',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/routing' => array(
+            'pretty_version' => 'v3.0.4',
+            'version' => '3.0.4.0',
+            'reference' => 'eaefe6375303799366f3e43977daaf33f5f89b95',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/routing',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/safe-stream' => array(
+            'pretty_version' => 'v2.5.1',
+            'version' => '2.5.1.0',
+            'reference' => '96c57055927d0f2b4d0fe545896a7a0335adbeb5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/safe-stream',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/schema' => array(
+            'pretty_version' => 'v1.2.3',
+            'version' => '1.2.3.0',
+            'reference' => 'abbdbb70e0245d5f3bf77874cea1dfb0c930d06f',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/schema',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/security' => array(
+            'pretty_version' => 'v3.1.7',
+            'version' => '3.1.7.0',
+            'reference' => '4c5f0435fe8534ba5a7e2eac595b8a777cc7fff1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/security',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nette/utils' => array(
+            'pretty_version' => 'v3.2.9',
+            'version' => '3.2.9.0',
+            'reference' => 'c91bac3470c34b2ecd5400f6e6fdf0b64a836a5c',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nette/utils',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'tracy/tracy' => array(
+            'pretty_version' => 'v2.10.2',
+            'version' => '2.10.2.0',
+            'reference' => '882fee7cf4258a602ad4a37461e837ed2ca1406b',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../tracy/tracy',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
     ),
-    'latte/latte' => 
-    array (
-      'pretty_version' => 'v2.11.3',
-      'version' => '2.11.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'f2e16d3ec6968854029740452c20c38a514e6842',
-    ),
-    'nette/application' => 
-    array (
-      'pretty_version' => 'v3.1.5',
-      'version' => '3.1.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'fa5da6a90ff71724353568894a4839aec627eae3',
-    ),
-    'nette/bootstrap' => 
-    array (
-      'pretty_version' => 'v3.1.2',
-      'version' => '3.1.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '3ab4912a08af0c16d541c3709935c3478b5ee090',
-    ),
-    'nette/caching' => 
-    array (
-      'pretty_version' => 'v3.1.2',
-      'version' => '3.1.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '27d8f0048eb1a9c7e49e0268f39b2db7d3ce7ae9',
-    ),
-    'nette/component-model' => 
-    array (
-      'pretty_version' => 'v3.0.2',
-      'version' => '3.0.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '20a39df12009029c7e425bc5e0439ee4ab5304af',
-    ),
-    'nette/database' => 
-    array (
-      'pretty_version' => 'v3.1.5',
-      'version' => '3.1.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b138afb94d6ce93c3a7ad9786c2e925ac1ac501f',
-    ),
-    'nette/di' => 
-    array (
-      'pretty_version' => 'v3.0.13',
-      'version' => '3.0.13.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '9878f2958a0a804b08430dbc719a52e493022739',
-    ),
-    'nette/finder' => 
-    array (
-      'pretty_version' => 'v2.5.3',
-      'version' => '2.5.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '64dc25b7929b731e72a1bc84a9e57727f5d5d3e8',
-    ),
-    'nette/forms' => 
-    array (
-      'pretty_version' => 'v3.1.6',
-      'version' => '3.1.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '4ed52434b61d7e532cb3bc77b048717703b91b0b',
-    ),
-    'nette/http' => 
-    array (
-      'pretty_version' => 'v3.1.6',
-      'version' => '3.1.6.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '65bfe68f9c611e7cd1935a5f794a560c52e4614f',
-    ),
-    'nette/mail' => 
-    array (
-      'pretty_version' => 'v3.1.8',
-      'version' => '3.1.8.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '69b43ae9a5c63ff68804531ef0113c372c676ce6',
-    ),
-    'nette/neon' => 
-    array (
-      'pretty_version' => 'v3.3.3',
-      'version' => '3.3.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '22e384da162fab42961d48eb06c06d3ad0c11b95',
-    ),
-    'nette/php-generator' => 
-    array (
-      'pretty_version' => 'v3.6.7',
-      'version' => '3.6.7.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b9ba414c9895fd9420887f20eeb4eabde123677f',
-    ),
-    'nette/robot-loader' => 
-    array (
-      'pretty_version' => 'v3.4.1',
-      'version' => '3.4.1.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'e2adc334cb958164c050f485d99c44c430f51fe2',
-    ),
-    'nette/routing' => 
-    array (
-      'pretty_version' => 'v3.0.3',
-      'version' => '3.0.3.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '5e02bdde257029db0223d3291c281d913abd587f',
-    ),
-    'nette/safe-stream' => 
-    array (
-      'pretty_version' => 'v2.5.0',
-      'version' => '2.5.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '8bbbeda8415b8352642d7566dfa18169d40c2e54',
-    ),
-    'nette/schema' => 
-    array (
-      'pretty_version' => 'v1.2.2',
-      'version' => '1.2.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '9a39cef03a5b34c7de64f551538cbba05c2be5df',
-    ),
-    'nette/security' => 
-    array (
-      'pretty_version' => 'v3.1.5',
-      'version' => '3.1.5.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'c120893f561b09494486c66594720b2abcb099b2',
-    ),
-    'nette/utils' => 
-    array (
-      'pretty_version' => 'v3.2.7',
-      'version' => '3.2.7.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '0af4e3de4df9f1543534beab255ccf459e7a2c99',
-    ),
-    'tracy/tracy' => 
-    array (
-      'pretty_version' => 'v2.9.2',
-      'version' => '2.9.2.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '03965a7cb94d284dbf7e3b788b3691715c13d401',
-    ),
-  ),
 );

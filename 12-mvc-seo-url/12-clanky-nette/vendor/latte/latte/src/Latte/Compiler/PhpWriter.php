@@ -92,28 +92,38 @@ class PhpWriter
 
 				switch ($source) {
 					case 'node_':
-						$arg = $word; break;
+						$arg = $word;
+						break;
 					case '':
-						$arg = current($args); next($args); break;
+						$arg = current($args);
+						next($args);
+						break;
 					default:
-						$arg = $args[(int) $source]; break;
+						$arg = $args[(int) $source];
+						break;
 				}
 
 				switch ($format) {
 					case 'word':
-						$code = $this->formatWord($arg); break;
+						$code = $this->formatWord($arg);
+						break;
 					case 'args':
-						$code = $this->formatArgs(); break;
+						$code = $this->formatArgs();
+						break;
 					case 'array':
 						$code = $this->formatArray();
-						$code = $cond && $code === '[]' ? '' : $code; break;
+						$code = $cond && $code === '[]' ? '' : $code;
+						break;
 					case 'var':
-						$code = PhpHelpers::dump($arg); break;
+						$code = PhpHelpers::dump($arg);
+						break;
 					case 'raw':
-						$code = (string) $arg; break;
+						$code = (string) $arg;
+						break;
 					case 'line':
 						$l = trim($l);
-						$code = $this->line ? " /* line $this->line */" : ''; break;
+						$code = $this->line ? " /* line $this->line */" : '';
+						break;
 				}
 
 				if ($cond && $code === '') {
@@ -255,6 +265,9 @@ class PhpWriter
 				|| ($this->policy && $tokens->isCurrent('$this'))
 			) {
 				throw new CompileException("Forbidden variable {$tokenValue}.");
+
+			} elseif ($tokenValue === '$iterations') {
+				trigger_error("Variable \$iterations is deprecated (on line {$tokens->currentToken()[2]})", E_USER_DEPRECATED);
 			}
 		}
 
@@ -860,8 +873,8 @@ class PhpWriter
 
 					$res->prepend(
 						$isContent
-							? '$this->filters->filterContent(' . PhpHelpers::dump($lower) . ', $ʟ_fi, '
-							: '($this->filters->' . $lower . ')('
+							? '$this->filters->filterContent(' . PhpHelpers::dump($name) . ', $ʟ_fi, '
+							: '($this->filters->' . $name . ')('
 					);
 					$inside = true;
 				}

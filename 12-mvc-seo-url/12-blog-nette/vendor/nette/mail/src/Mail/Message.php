@@ -48,6 +48,7 @@ class Message extends MimePart
 		foreach (static::$defaultHeaders as $name => $value) {
 			$this->setHeader($name, $value);
 		}
+
 		$this->setHeader('Date', date('r'));
 	}
 
@@ -56,7 +57,7 @@ class Message extends MimePart
 	 * Sets the sender of the message. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function setFrom(string $email, string $name = null)
+	public function setFrom(string $email, ?string $name = null)
 	{
 		$this->setHeader('From', $this->formatEmail($email, $name));
 		return $this;
@@ -76,7 +77,7 @@ class Message extends MimePart
 	 * Adds the reply-to address. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addReplyTo(string $email, string $name = null)
+	public function addReplyTo(string $email, ?string $name = null)
 	{
 		$this->setHeader('Reply-To', $this->formatEmail($email, $name), true);
 		return $this;
@@ -107,7 +108,7 @@ class Message extends MimePart
 	 * Adds email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addTo(string $email, string $name = null) // addRecipient()
+	public function addTo(string $email, ?string $name = null) // addRecipient()
 	{
 		$this->setHeader('To', $this->formatEmail($email, $name), true);
 		return $this;
@@ -118,7 +119,7 @@ class Message extends MimePart
 	 * Adds carbon copy email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addCc(string $email, string $name = null)
+	public function addCc(string $email, ?string $name = null)
 	{
 		$this->setHeader('Cc', $this->formatEmail($email, $name), true);
 		return $this;
@@ -129,7 +130,7 @@ class Message extends MimePart
 	 * Adds blind carbon copy email recipient. Email or format "John Doe" <doe@example.com>
 	 * @return static
 	 */
-	public function addBcc(string $email, string $name = null)
+	public function addBcc(string $email, ?string $name = null)
 	{
 		$this->setHeader('Bcc', $this->formatEmail($email, $name), true);
 		return $this;
@@ -139,7 +140,7 @@ class Message extends MimePart
 	/**
 	 * Formats recipient email.
 	 */
-	private function formatEmail(string $email, string $name = null): array
+	private function formatEmail(string $email, ?string $name = null): array
 	{
 		if (!$name && preg_match('#^(.+) +<(.*)>$#D', $email, $matches)) {
 			[, $name, $email] = $matches;
@@ -149,6 +150,7 @@ class Message extends MimePart
 				$name = $tmp;
 			}
 		}
+
 		return [$email => $name];
 	}
 
@@ -198,7 +200,7 @@ class Message extends MimePart
 	 * Sets HTML body.
 	 * @return static
 	 */
-	public function setHtmlBody(string $html, string $basePath = null)
+	public function setHtmlBody(string $html, ?string $basePath = null)
 	{
 		if ($basePath) {
 			$cids = [];
@@ -219,6 +221,7 @@ class Message extends MimePart
 				if (!isset($cids[$file])) {
 					$cids[$file] = substr($this->addEmbeddedFile($file)->getHeader('Content-ID'), 1, -1);
 				}
+
 				$html = substr_replace(
 					$html,
 					"{$m[1][0]}{$m[2][0]}cid:{$cids[$file]}",
@@ -256,7 +259,7 @@ class Message extends MimePart
 	/**
 	 * Adds embedded file.
 	 */
-	public function addEmbeddedFile(string $file, string $content = null, string $contentType = null): MimePart
+	public function addEmbeddedFile(string $file, ?string $content = null, ?string $contentType = null): MimePart
 	{
 		return $this->inlines[$file] = $this->createAttachment($file, $content, $contentType, 'inline')
 			->setHeader('Content-ID', $this->getRandomId());
@@ -277,7 +280,7 @@ class Message extends MimePart
 	/**
 	 * Adds attachment.
 	 */
-	public function addAttachment(string $file, string $content = null, string $contentType = null): MimePart
+	public function addAttachment(string $file, ?string $content = null, ?string $contentType = null): MimePart
 	{
 		return $this->attachments[] = $this->createAttachment($file, $content, $contentType, 'attachment');
 	}
@@ -301,15 +304,18 @@ class Message extends MimePart
 		?string $content,
 		?string $contentType,
 		string $disposition
-	): MimePart {
+	): MimePart
+	{
 		$part = new MimePart;
 		if ($content === null) {
 			$content = Nette\Utils\FileSystem::read($file);
 			$file = Strings::fixEncoding(basename($file));
 		}
+
 		if (!$contentType) {
 			$contentType = finfo_buffer(finfo_open(FILEINFO_MIME_TYPE), $content);
 		}
+
 		if (!strcasecmp($contentType, 'message/rfc822')) { // not allowed for attached files
 			$contentType = 'application/octet-stream';
 		} elseif (!strcasecmp($contentType, 'image/svg')) { // Troublesome for some mailers...
@@ -365,6 +371,7 @@ class Message extends MimePart
 					$tmp->addPart($value);
 				}
 			}
+
 			$alt->setContentType('text/html', 'UTF-8')
 				->setEncoding(preg_match('#[^\n]{990}#', $mail->htmlBody)
 					? self::ENCODING_QUOTED_PRINTABLE

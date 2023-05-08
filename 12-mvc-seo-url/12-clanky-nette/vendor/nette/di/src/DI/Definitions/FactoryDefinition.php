@@ -58,6 +58,12 @@ final class FactoryDefinition extends Definition
 			));
 		}
 
+		try {
+			Helpers::ensureClassType(Type::fromReflection($method), "return type of $interface::create()");
+		} catch (Nette\DI\ServiceCreationException $e) {
+			trigger_error($e->getMessage(), E_USER_DEPRECATED);
+		}
+
 		return parent::setType($interface);
 	}
 
@@ -89,89 +95,31 @@ final class FactoryDefinition extends Definition
 	}
 
 
-	/**
-	 * @deprecated use ->getResultDefinition()->setFactory()
-	 * @return static
-	 */
-	public function setFactory($factory, array $args = [])
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->setFactory()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		$this->resultDefinition->setFactory($factory, $args);
-		return $this;
-	}
-
-
-	/** @deprecated use ->getResultDefinition()->getFactory() */
-	public function getFactory(): ?Statement
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->getFactory()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		return $this->resultDefinition->getFactory();
-	}
-
-
-	/**
-	 * @deprecated use ->getResultDefinition()->getEntity()
-	 * @return mixed
-	 */
-	public function getEntity()
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->getEntity()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		return $this->resultDefinition->getEntity();
-	}
-
-
-	/**
-	 * @deprecated use ->getResultDefinition()->setArguments()
-	 * @return static
-	 */
-	public function setArguments(array $args = [])
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->setArguments()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		$this->resultDefinition->setArguments($args);
-		return $this;
-	}
-
-
-	/**
-	 * @deprecated use ->getResultDefinition()->setSetup()
-	 * @return static
-	 */
-	public function setSetup(array $setup)
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->setSetup()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		$this->resultDefinition->setSetup($setup);
-		return $this;
-	}
-
-
-	/** @deprecated use ->getResultDefinition()->getSetup() */
-	public function getSetup(): array
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->getSetup()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		return $this->resultDefinition->getSetup();
-	}
-
-
-	/**
-	 * @deprecated use ->getResultDefinition()->addSetup()
-	 * @return static
-	 */
-	public function addSetup($entity, array $args = [])
-	{
-		trigger_error(sprintf('Service %s: %s() is deprecated, use ->getResultDefinition()->addSetup()', $this->getName(), __METHOD__), E_USER_DEPRECATED);
-		$this->resultDefinition->addSetup($entity, $args);
-		return $this;
-	}
-
-
-	/** @return static */
+	/** @deprecated */
 	public function setParameters(array $params)
 	{
+		if ($params) {
+			$old = $new = [];
+			foreach ($params as $k => $v) {
+				$tmp = explode(' ', is_int($k) ? $v : $k);
+				$old[] = '%' . end($tmp) . '%';
+				$new[] = '$' . end($tmp);
+			}
+
+			trigger_error(sprintf(
+				"Service '%s': Option 'parameters' is deprecated and should be removed. The %s should be replaced with %s in configuration.",
+				$this->getName(),
+				implode(', ', $old),
+				implode(', ', $new)
+			), E_USER_DEPRECATED);
+		}
+
 		$this->parameters = $params;
 		return $this;
 	}
 
 
+	/** @deprecated */
 	public function getParameters(): array
 	{
 		return $this->parameters;
@@ -219,14 +167,14 @@ final class FactoryDefinition extends Definition
 				$this->completeParameters($resolver);
 			}
 
-			$this->convertArguments($resultDef->getFactory()->arguments);
+			$this->convertArguments($resultDef->getCreator()->arguments);
 			foreach ($resultDef->getSetup() as $setup) {
 				$this->convertArguments($setup->arguments);
 			}
 
-			if ($resultDef->getEntity() instanceof Reference && !$resultDef->getFactory()->arguments) {
-				$resultDef->setFactory([ // render as $container->createMethod()
-					new Reference(Nette\DI\ContainerBuilder::THIS_CONTAINER),
+			if ($resultDef->getEntity() instanceof Reference && !$resultDef->getCreator()->arguments) {
+				$resultDef->setCreator([ // render as $container->createMethod()
+					new Reference(Nette\DI\ContainerBuilder::ThisContainer),
 					Nette\DI\Container::getMethodName($resultDef->getEntity()->getValue()),
 				]);
 			}
@@ -243,7 +191,7 @@ final class FactoryDefinition extends Definition
 
 		$ctorParams = [];
 		if (
-			($class = $resolver->resolveEntityType($this->resultDefinition->getFactory()))
+			($class = $resolver->resolveEntityType($this->resultDefinition->getCreator()))
 			&& ($ctor = (new \ReflectionClass($class))->getConstructor())
 		) {
 			foreach ($ctor->getParameters() as $param) {
@@ -265,7 +213,7 @@ final class FactoryDefinition extends Definition
 					));
 				}
 
-				$this->resultDefinition->getFactory()->arguments[$ctorParam->getPosition()] = new Php\Literal('$' . $ctorParam->name);
+				$this->resultDefinition->getCreator()->arguments[$ctorParam->getPosition()] = new Php\Literal('$' . $ctorParam->name);
 
 			} elseif (!$this->resultDefinition->getSetup()) {
 				$hint = Nette\Utils\Helpers::getSuggestion(array_keys($ctorParams), $param->name);

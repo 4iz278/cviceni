@@ -32,11 +32,11 @@ class MimePart
 	/** @internal */
 	public const EOL = "\r\n";
 
-	public const LINE_LENGTH = 76;
+	public const LineLength = 76;
 
 	private const
-		SEQUENCE_VALUE = 1, // value, RFC 2231
-		SEQUENCE_WORD = 2;  // encoded-word, RFC 2047
+		SequenceValue = 1, // value, RFC 2231
+		SequenceWord = 2;  // encoded-word, RFC 2047
 
 	/** @var array */
 	private $headers = [];
@@ -63,7 +63,6 @@ class MimePart
 			if (!$append) {
 				unset($this->headers[$name]);
 			}
-
 		} elseif (is_array($value)) { // email
 			$tmp = &$this->headers[$name];
 			if (!$append || !is_array($tmp)) {
@@ -78,17 +77,19 @@ class MimePart
 				} elseif (preg_match('#[\r\n]#', $recipient)) {
 					throw new Nette\InvalidArgumentException('Name must not contain line separator.');
 				}
+
 				Nette\Utils\Validators::assert($email, 'email', "header '$name'");
 				$tmp[$email] = $recipient;
 			}
-
 		} else {
 			$value = (string) $value;
 			if (!Strings::checkEncoding($value)) {
 				throw new Nette\InvalidArgumentException('Header is not valid UTF-8 string.');
 			}
+
 			$this->headers[$name] = preg_replace('#[\r\n]+#', ' ', $value);
 		}
+
 		return $this;
 	}
 
@@ -128,16 +129,18 @@ class MimePart
 			$s = '';
 			foreach ($this->headers[$name] as $email => $name) {
 				if ($name != null) { // intentionally ==
-					$s .= self::encodeSequence($name, $offset, self::SEQUENCE_WORD);
+					$s .= self::encodeSequence($name, $offset, self::SequenceWord);
 					$email = " <$email>";
 				}
+
 				$s .= self::append($email . ',', $offset);
 			}
+
 			return ltrim(substr($s, 0, -1)); // last comma
 
 		} elseif (preg_match('#^(\S+; (?:file)?name=)"(.*)"$#D', $this->headers[$name], $m)) { // Content-Disposition
 			$offset += strlen($m[1]);
-			return $m[1] . self::encodeSequence(stripslashes($m[2]), $offset, self::SEQUENCE_VALUE);
+			return $m[1] . self::encodeSequence(stripslashes($m[2]), $offset, self::SequenceValue);
 
 		} else {
 			return ltrim(self::encodeSequence($this->headers[$name], $offset));
@@ -158,7 +161,7 @@ class MimePart
 	 * Sets Content-Type header.
 	 * @return static
 	 */
-	public function setContentType(string $contentType, string $charset = null)
+	public function setContentType(string $contentType, ?string $charset = null)
 	{
 		$this->setHeader('Content-Type', $contentType . ($charset ? "; charset=$charset" : ''));
 		return $this;
@@ -188,7 +191,7 @@ class MimePart
 	/**
 	 * Adds or creates new multipart.
 	 */
-	public function addPart(self $part = null): self
+	public function addPart(?self $part = null): self
 	{
 		return $this->parts[] = $part ?? new self;
 	}
@@ -230,8 +233,10 @@ class MimePart
 			if ($this->parts && $name === 'Content-Type') {
 				$output .= ';' . self::EOL . "\tboundary=\"$boundary\"";
 			}
+
 			$output .= self::EOL;
 		}
+
 		$output .= self::EOL;
 
 		$body = $this->body;
@@ -242,7 +247,7 @@ class MimePart
 					break;
 
 				case self::ENCODING_BASE64:
-					$output .= rtrim(chunk_split(base64_encode($body), self::LINE_LENGTH, self::EOL));
+					$output .= rtrim(chunk_split(base64_encode($body), self::LineLength, self::EOL));
 					break;
 
 				case self::ENCODING_7BIT:
@@ -264,9 +269,11 @@ class MimePart
 			if (substr($output, -strlen(self::EOL)) !== self::EOL) {
 				$output .= self::EOL;
 			}
+
 			foreach ($this->parts as $part) {
 				$output .= '--' . $boundary . self::EOL . $part->getEncodedMessage() . self::EOL;
 			}
+
 			$output .= '--' . $boundary . '--';
 		}
 
@@ -280,15 +287,16 @@ class MimePart
 	/**
 	 * Converts a 8 bit header to a string.
 	 */
-	private static function encodeSequence(string $s, int &$offset = 0, int $type = null): string
+	private static function encodeSequence(string $s, int &$offset = 0, ?int $type = null): string
 	{
 		if (
-			(strlen($s) < self::LINE_LENGTH - 3) && // 3 is tab + quotes
+			(strlen($s) < self::LineLength - 3) && // 3 is tab + quotes
 			strspn($s, "!\"#$%&\\'()*+,-./0123456789:;<>@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^`abcdefghijklmnopqrstuvwxyz{|}~=? _\r\n\t") === strlen($s)
 		) {
 			if ($type && preg_match('#[^ a-zA-Z0-9!\#$%&\'*+/?^_`{|}~-]#', $s)) { // RFC 2822 atext except =
 				return self::append('"' . addcslashes($s, '"\\') . '"', $offset);
 			}
+
 			return self::append($s, $offset);
 		}
 
@@ -306,9 +314,10 @@ class MimePart
 
 		$offset = strlen($s) - strrpos($s, "\n");
 		$s = substr($s, $old + 2); // adds ': '
-		if ($type === self::SEQUENCE_VALUE) {
+		if ($type === self::SequenceValue) {
 			$s = '"' . $s . '"';
 		}
+
 		$s = str_replace("\n ", "\n\t", $s);
 		return $o . $s;
 	}
@@ -316,10 +325,11 @@ class MimePart
 
 	private static function append(string $s, int &$offset = 0): string
 	{
-		if ($offset + strlen($s) > self::LINE_LENGTH) {
+		if ($offset + strlen($s) > self::LineLength) {
 			$offset = 1;
 			$s = self::EOL . "\t" . $s;
 		}
+
 		$offset += strlen($s);
 		return $s;
 	}

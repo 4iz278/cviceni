@@ -15,17 +15,11 @@ namespace Nette\PhpGenerator;
  */
 class Literal
 {
-	/** @var string */
-	private $value;
-
-	/** @var ?array */
-	private $args;
-
-
-	public function __construct(string $value, ?array $args = null)
-	{
-		$this->value = $value;
-		$this->args = $args;
+	public function __construct(
+		private string $value,
+		/** @var ?mixed[] */
+		private ?array $args = null,
+	) {
 	}
 
 

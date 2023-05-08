@@ -5,11 +5,23 @@
 class BlueScreen
 {
 	static init(ajax) {
+		BlueScreen.globalInit();
+
 		let blueScreen = document.getElementById('tracy-bs');
 
+		document.documentElement.classList.add('tracy-bs-visible');
 		if (navigator.platform.indexOf('Mac') > -1) {
 			blueScreen.classList.add('tracy-mac');
 		}
+
+		blueScreen.addEventListener('tracy-toggle', (e) => {
+			if (e.target.matches('#tracy-bs-toggle')) { // blue screen toggle
+				document.documentElement.classList.toggle('tracy-bs-visible', !e.detail.collapsed);
+
+			} else if (!e.target.matches('.tracy-dump *') && e.detail.originalEvent) { // panel toggle
+				e.detail.relatedTarget.classList.toggle('tracy-panel-fadein', !e.detail.collapsed);
+			}
+		});
 
 		if (!ajax) {
 			document.body.appendChild(blueScreen);
@@ -18,11 +30,15 @@ class BlueScreen
 			sessionStorage.setItem('tracy-toggles-bskey', id);
 		}
 
-		if (inited) {
-			return;
-		}
-		inited = true;
+		(new ResizeObserver(stickyFooter)).observe(blueScreen);
 
+		if (document.documentElement.classList.contains('tracy-bs-visible')) {
+			window.scrollTo(0, 0);
+		}
+	}
+
+
+	static globalInit() {
 		// enables toggling via ESC
 		document.addEventListener('keyup', (e) => {
 			if (e.keyCode === 27 && !e.shiftKey && !e.altKey && !e.ctrlKey && !e.metaKey) { // ESC
@@ -30,18 +46,12 @@ class BlueScreen
 			}
 		});
 
-		blueScreen.addEventListener('tracy-toggle', (e) => {
-			if (!e.target.matches('.tracy-dump *') && e.detail.originalEvent) {
-				e.detail.relatedTarget.classList.toggle('tracy-panel-fadein', !e.detail.collapsed);
-			}
-		});
-
 		Tracy.TableSort.init();
 		Tracy.Tabs.init();
 
-		// sticky footer
 		window.addEventListener('scroll', stickyFooter);
-		(new ResizeObserver(stickyFooter)).observe(blueScreen);
+
+		BlueScreen.globalInit = function() {};
 	}
 
 
@@ -54,7 +64,6 @@ class BlueScreen
 		ajaxBs = document.getElementById('tracy-bs');
 		Tracy.Dumper.init(ajaxBs);
 		BlueScreen.init(true);
-		window.scrollTo(0, 0);
 	}
 }
 
@@ -63,8 +72,6 @@ function stickyFooter() {
 	footer.classList.toggle('tracy-footer--sticky', false); // to measure footer.offsetTop
 	footer.classList.toggle('tracy-footer--sticky', footer.offsetHeight + footer.offsetTop - window.innerHeight - document.documentElement.scrollTop < 0);
 }
-
-let inited;
 
 let Tracy = window.Tracy = window.Tracy || {};
 Tracy.BlueScreen = Tracy.BlueScreen || BlueScreen;

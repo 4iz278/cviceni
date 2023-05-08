@@ -24,5 +24,10 @@
 		"nette/utils": "^3.2",
 		"latte/latte": "^2.11",
 		"tracy/tracy": "^2.9"
+	},
+	"config": {
+		"platform": {
+			"php": "8.2"
+		}
 	}
 }
