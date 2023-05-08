@@ -6,14 +6,16 @@ use Blog\Library\View;
 /**
  * Class User_LoginView
  * @package Blog\Views
- * @property string $formError
- * @property string $email
  */
 class User_LoginView extends View{
+
+  public string $formError;
+  public string $email;
+
   /**
    *  Vypsání samotného generovaného obsahu stránky
    */
-  public function display(){
+  public function display():void {
     echo '<h1>Přihlásit se...</h1>';
     if($this->formError){
       echo '<div class="errors">'.$this->formError.'</div>';
@@ -22,7 +24,7 @@ class User_LoginView extends View{
             <table>
               <tr>
                 <td><label for="email">E-mail:</label></td>
-                <td><input type="text" name="email" id="email" value="'.htmlspecialchars(@$this->email).'" required /></td>
+                <td><input type="text" name="email" id="email" value="'.htmlspecialchars($this->email ?? '').'" required /></td>
               </tr>
               <tr>
                 <td><label for="password">Heslo:</label></td>

@@ -10,7 +10,7 @@ class HomepageController extends BaseController{
   /**
    *  Funkce pro vypsání HP
    */
-  public function defaultAction(){
+  public function defaultAction():void {
     //jde o anonyma
     $view=$this->getView('default');
     $view->display();

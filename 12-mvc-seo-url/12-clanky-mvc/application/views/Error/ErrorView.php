@@ -8,7 +8,7 @@
     /**
      *  Vypsání samotného generovaného obsahu stránky
      */
-    public function display(){
+    public function display():void {
       echo '<h1>Error ';
       if($this->errorCode>0){
         echo $this->errorCode;

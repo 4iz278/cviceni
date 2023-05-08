@@ -7,7 +7,7 @@ namespace Blog\Library;
  * @package Blog\Library
  */
 trait Singleton{
-  private static $instances=array();
+  private static $instances=[];
   protected static $instance;
 
   /**

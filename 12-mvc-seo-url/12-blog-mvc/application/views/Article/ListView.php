@@ -9,15 +9,16 @@ use Blog\Model\Entities\Category;
 /**
  * Class Article_ListView - view pro zobrazení přehledu článků
  * @package Blog\Views
- * @property Category $category
- * @property Article[] $articles
  */
 class Article_ListView extends View{
+  public Category $category;
+  /** @var Article[] $articles */
+  public array $articles;
 
   /**
    * Funkce pro zobrazení view
    */
-  function display(){
+  public function display():void {
     /** @var CurrentUser $currentUser */
     $currentUser=CurrentUser::getInstance();
     echo '<h1>'.htmlspecialchars($this->category->name).'</h1>';

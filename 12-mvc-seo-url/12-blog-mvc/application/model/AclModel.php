@@ -15,14 +15,14 @@ class AclModel extends BaseModel{
    * @param string $role
    * @return string[]
    */
-  public function findInheritedRoles($role){
+  public function findInheritedRoles(string $role):array {
     $result=[];
-    $query=self::$pdo->prepare('SELECT * FROM roles WHERE `role`=:role;');
+    $query=self::$pdo->prepare('SELECT * FROM roles WHERE `id`=:role;');
     $query->execute([':role'=>$role]);
     if ($resultRole=$query->fetchObject()){
-      $result[]=$role;
-      if ($role->parent_role){
-        array_merge($result,$this->findInheritedRoles($role->parent_role));
+      $result[]=$resultRole->id;
+      if ($resultRole->parent_id){
+        $result=array_merge($result,$this->findInheritedRoles($resultRole->parent_id));
       }
     }
     return $result;
@@ -33,7 +33,7 @@ class AclModel extends BaseModel{
    * @param string[] $rolesArr
    * @return array
    */
-  public function findResourcesByRoles($rolesArr){
+  public function findResourcesByRoles(array $rolesArr):array {
     if (count($rolesArr)>0){
       foreach($rolesArr as &$role){
         $role="'".$role."'";
@@ -54,7 +54,7 @@ class AclModel extends BaseModel{
    * @param string $action
    * @return bool
    */
-  public function isAllowed($userRole, $resource, $action){
+  public function isAllowed(string $userRole, string $resource, string $action):bool {
     $rolesArr=$this->findInheritedRoles($userRole);
     if (count($rolesArr)>0){
       foreach($rolesArr as &$role){
@@ -64,9 +64,10 @@ class AclModel extends BaseModel{
     }else{
       $rolesSql="'guest'";
     }
+
     $query=self::$pdo->prepare('SELECT role FROM resources WHERE `role` in ('.$rolesSql.') AND resource=:resource AND (`action`=\'\' OR `action`=:action);');
     $query->execute([':resource'=>$resource,':action'=>$action]);
-    return ($query->fetchAll()>0);
+    return ($query->rowCount()>0);
   }
 
 }

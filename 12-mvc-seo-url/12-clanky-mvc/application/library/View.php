@@ -1,12 +1,12 @@
 <?php
+/**
+ * Abstract class View
+ */
+abstract class View{
   /**
-   * Abstract class View
+   * Funkce pro zobrazení view
    */
-  abstract class View{
-    /**
-     * Funkce pro zobrazení view
-     */
-    abstract function display();
+  abstract function display():void;
 
 
-  }
+}

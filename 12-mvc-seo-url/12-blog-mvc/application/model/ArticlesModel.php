@@ -18,7 +18,7 @@ class ArticlesModel extends BaseModel{
    * @param null|int $category
    * @return Article[]
    */
-  public function findAll($category=null){
+  public function findAll(?int $category=null):array {
     if ($category>0){
       $query=self::$pdo->prepare('SELECT * FROM articles WHERE category=:category;');
       $query->execute([':category'=>$category]);
@@ -35,7 +35,7 @@ class ArticlesModel extends BaseModel{
    * @param bool $includeTextAliases=false - pokud je true, dojde k načtení názvu kategorie a jména autora
    * @return Article
    */
-  public function find($id,$includeTextAliases=false){
+  public function find(int $id, bool $includeTextAliases=false):Article {
     if ($includeTextAliases){
       $sql='SELECT articles.*,users.name AS authorName,categories.name AS categoryName FROM articles LEFT JOIN users ON articles.author=users.id LEFT JOIN categories ON articles.category=categories.id WHERE articles.id=:id LIMIT 1;';
     }else{
@@ -51,22 +51,22 @@ class ArticlesModel extends BaseModel{
    * @param Article|int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(Article|int $id):bool {
     if ($id instanceof Article){
       $id=$id->id;
     }
     $query=self::$pdo->prepare('DELETE FROM articles WHERE id=:id LIMIT 1;');
-    return $query->execute([':id'=>$id]);
+    return (bool)$query->execute([':id'=>$id]);
   }
 
   /**
    * @param Article $article
    * @return bool
    */
-  public function save(Article $article){
+  public function save(Article $article):bool {
     $dataArr=$article->getDataArr();
     $paramsArr=[];
-    if (@$article->id>0){
+    if (!empty($article->id)){
       //updatujeme existující článek
       $sql='';
       foreach($dataArr as $key=>$value){
@@ -92,7 +92,7 @@ class ArticlesModel extends BaseModel{
       $result=$query->execute($paramsArr);
       $article->id=self::$pdo->lastInsertId('articles');
     }
-    return $result;
+    return (bool)$result;
   }
 
 }

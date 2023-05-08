@@ -2,7 +2,7 @@ php_flag display_errors on
 
 
 RewriteEngine on
-#RewriteBase /~xname/10-blog-mvc
+#RewriteBase /~xname/12-blog-mvc
 
 ErrorDocument 404 /error/notFound
 

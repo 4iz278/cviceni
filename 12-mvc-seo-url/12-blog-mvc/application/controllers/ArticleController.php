@@ -15,15 +15,13 @@ use Blog\Views\Article_ShowView;
  * @package Blog\Controllers
  */
 class ArticleController extends BaseController{
-  /** @var  int $currentCategory */
-  public $currentCategory;
-  /** @var  string $formErrors */
-  private $formErrors;
+  public int $currentCategory;
+  private string $formErrors = '';
 
   /**
    * Akce pro zobrazení článků v konkrétní kategorii
    */
-  public function listAction(){
+  public function listAction():void {
     $category=$this->categoriesModel->find(@$_REQUEST['category']);
     if (!$category){
       $this->generateError(404,'Požadovaný obsah nebyl nalezen.');
@@ -45,10 +43,10 @@ class ArticleController extends BaseController{
   /**
    * Akce pro zobrazení jednoho článku
    */
-  public function showAction(){
+  public function showAction():void {
     /** @var ArticlesModel $articlesModel */
     $articlesModel=ArticlesModel::getInstance();
-    if (!($article=$articlesModel->find(@$_REQUEST['id'],true))){
+    if (!($article=$articlesModel->find(intval(@$_REQUEST['id']),true))){
       $this->generateError(404,'Požadovaný obsah nebyl nalezen.');
       return;
     }
@@ -64,7 +62,7 @@ class ArticleController extends BaseController{
   /**
    * Akce pro vytvoření článku
    */
-  public function addAction(){
+  public function addAction():void {
     $article=new Article();
     if (!empty($_REQUEST['category']) && $this->categoriesModel->find($_REQUEST['category'])){
       $article->category=$_REQUEST['category'];
@@ -101,10 +99,10 @@ class ArticleController extends BaseController{
   /**
    * Akce pro úpravu článku
    */
-  public function editAction(){
+  public function editAction():void {
     /** @var ArticlesModel $articlesModel */
     $articlesModel=ArticlesModel::getInstance();
-    if (!($article=$articlesModel->find(@$_REQUEST['id'],true))){
+    if (!($article=$articlesModel->find(intval(@$_REQUEST['id']),true))){
       $this->generateError(404,'Požadovaný obsah nebyl nalezen.');
       return;
     }
@@ -136,7 +134,7 @@ class ArticleController extends BaseController{
    * @param Article $article
    * @return bool
    */
-  private function checkEditForm(Article &$article){
+  private function checkEditForm(Article &$article):bool {
     $errors='';
     $article->title=trim(@$_POST['title']);
     if (!$article->title){

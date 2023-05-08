@@ -5,14 +5,14 @@ namespace Blog\Model\Entities;
 /**
  * Class User
  * @package Blog\Model\Entities
- * @property int $id
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $role
- * @property bool $active
  */
 class User{
+  public int $id;
+  public string $name;
+  public string $email;
+  public string $password;
+  public string $role;
+  public bool $active;
 
   const DEFAULT_REGISTERED_ROLE='registered';
 
@@ -21,7 +21,7 @@ class User{
    * @param string $password
    * @return string
    */
-  public static function encodePassword($password){
+  public static function encodePassword(string $password):string {
     //využíváme nám již známé funkce pro práci s hesly, v Nette bych doporučil využití třídy Nette\Security\Passwords
     return password_hash($password,PASSWORD_BCRYPT);
   }
@@ -32,7 +32,7 @@ class User{
    * @param string $passwordHash
    * @return bool
    */
-  public static function verifyPassword($password, $passwordHash){
+  public static function verifyPassword(string $password, string $passwordHash):bool {
     return password_verify($password,$passwordHash);
   }
 
@@ -41,7 +41,7 @@ class User{
    * @param string $password
    * @return bool
    */
-  public function isValidPassword($password){
+  public function isValidPassword(string $password):bool {
     return self::verifyPassword($password,$this->password);
   }
 
@@ -49,13 +49,13 @@ class User{
    * Funkce vracející pole s daty pro ukládání v DB
    * @return array
    */
-  public function getDataArr(){
+  public function getDataArr():array {
     $result=[
-      'name'=>@$this->name,
-      'email'=>@$this->email,
-      'password'=>@$this->password,
-      'role'=>@$this->role,
-      'active'=>@$this->active,
+      'name'=>$this->name ?? '',
+      'email'=>$this->email ?? '',
+      'password'=>$this->password ?? '',
+      'role'=>$this->role ?? '',
+      'active'=>$this->active ?? '',
     ];
     if (!empty($this->id)){
       $result['id']=$this->id;

@@ -27,7 +27,7 @@ if(Autoloader::controllerExists($controllerName)){
   if (method_exists($controller,$action)){
       $controller->$action();
   }else{
-    $controller->generateError('404','Požadovaná stránka nebyla nalezena.');
+    $controller->generateError(404,'Požadovaná stránka nebyla nalezena.');
   }
 }else{
   header("HTTP/1.0 404 Not Found");

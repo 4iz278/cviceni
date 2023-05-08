@@ -6,15 +6,16 @@ use Blog\Library\View;
 /**
  * Class User_RegisterView
  * @package Blog\Views
- * @property string $formError
- * @property string $name
- * @property string $email
  */
 class User_RegisterView extends View{
+  public string $formError;
+  public string $name;
+  public string $email;
+
   /**
    *  Vypsání samotného generovaného obsahu stránky
    */
-  public function display(){
+  public function display():void {
     echo '<h1>Zaregistrovat se...</h1>';
     if($this->formError){
       echo '<div class="errors">'.$this->formError.'</div>';

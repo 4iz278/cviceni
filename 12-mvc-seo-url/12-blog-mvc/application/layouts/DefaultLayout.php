@@ -11,13 +11,12 @@ use Blog\Model\Entities\Category;
  * @package Blog\Layouts
  */
 class DefaultLayout{
-  /** @var  Controller $controller */
-  public $controller;
+  public Controller $controller;
 
   /**
    *  Funkce pro vykreslení obsahu stránky
    */
-  public function display($content){
+  public function display(string $content):void {
     $currentUser=CurrentUser::getInstance();
     $title=$this->controller->getTitle();
     echo '<!DOCTYPE html>

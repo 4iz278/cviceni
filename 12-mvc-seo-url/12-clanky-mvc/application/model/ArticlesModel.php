@@ -12,7 +12,7 @@ class ArticlesModel extends BaseModel{
    * @param null|int $category
    * @return array
    */
-  public function findAll($category=null){
+  public function findAll(?int $category=null):array {
     if ($category>0){
       $query=self::$pdo->prepare('SELECT * FROM articles WHERE category=:category;');
       $query->execute([':category'=>$category]);
@@ -28,7 +28,7 @@ class ArticlesModel extends BaseModel{
    * @param int $id
    * @return array
    */
-  public function find($id){
+  public function find(int $id):array {
     $query=self::$pdo->prepare('SELECT * FROM articles WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetch(PDO::FETCH_ASSOC);
@@ -39,9 +39,9 @@ class ArticlesModel extends BaseModel{
    * @param int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(int $id):bool{
     $query=self::$pdo->prepare('DELETE FROM articles WHERE id=:id LIMIT 1;');
-    return $query->execute([':id'=>$id]);
+    return (bool)$query->execute([':id'=>$id]);
   }
 
 }

@@ -5,7 +5,7 @@
  */
 class ArticleController extends Controller{
 
-  public function listAction(){
+  public function listAction():void {
     $articlesModel=ArticlesModel::getInstance();
     $this->setTitle('Přehled článků');
     $view=$this->getView();
@@ -16,7 +16,7 @@ class ArticleController extends Controller{
   /**
    * Akce pro zobrazení jednoho článku
    */
-  public function viewAction(){
+  public function viewAction():void {
     $articlesModel=ArticlesModel::getInstance();
     if (!($article=$articlesModel->find(@$_GET['id']))){
       $this->generateError(404, 'Požadovaný článek nebyl nalezen.');

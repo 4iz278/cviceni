@@ -9,14 +9,13 @@ use \PDO;
  * @package Blog\Model
  */
 abstract class BaseModel{
-  /** @var PDO */
-  protected static $pdo;
+  protected static ?PDO $pdo = null;
 
   /**
    * BaseModel constructor - zajišťuje připojení k DB
    */
   public function __construct(){
-    if (!self::$pdo instanceof PDO){
+    if (!self::$pdo){
       self::$pdo= new PDO(DB_CONNECTION_STRING,DB_USERNAME,DB_PASSWORD);
     }
   }

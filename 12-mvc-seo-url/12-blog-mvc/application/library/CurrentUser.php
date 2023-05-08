@@ -9,14 +9,11 @@ use Blog\Model\UsersModel;
  * Třída pro práci s aktuálně přihlášeným uživatelem
  */
 class CurrentUser{
-  /** @var  CurrentUser $instance */
-  private static $instance;
-  /** @var  string $name */
-  public $name;
-  /** @var  string $email */
-  public $email;
-  /** @var int $id */
-  public $id;
+  private static ?CurrentUser $instance;
+
+  public string $name;
+  public string $email;
+  public int $id;
 
   /**
    *  Funkce pro připravení instance currentUser po přihlášení uživatele
@@ -25,11 +22,11 @@ class CurrentUser{
    * @param User $user
    * @return CurrentUser
    */
-  public static function login(User $user){
+  public static function login(User $user):CurrentUser {
     $newUser=new CurrentUser();
-    $newUser->name=@$user->name;
-    $newUser->email=@$user->email;
-    $newUser->id=@$user->id;
+    $newUser->name=$user->name ?? '';
+    $newUser->email=$user->email ?? '';
+    $newUser->id=$user->id;
     self::$instance=&$newUser;
     session_regenerate_id();
 
@@ -41,7 +38,7 @@ class CurrentUser{
   /**
    *  Funkce pro odhlášení uživatele
    */
-  public static function logout(){
+  public static function logout():CurrentUser {
     unset($_SESSION['user']);
     session_regenerate_id();
     self::$instance=null;
@@ -51,7 +48,7 @@ class CurrentUser{
   /**
    *  Funkce pro ověření, jestli má uživatel přístup ke konkrétní části aplikace
    */
-  public function hasAccess($controller,$action=''){//FIXME
+  public function hasAccess(string $controller, string $action=''){
     /** @var UsersModel $usersModel */
     $usersModel=UsersModel::getInstance();
     /** @var AclModel $aclModel */
@@ -70,7 +67,7 @@ class CurrentUser{
   /**
    * Funkce pro kontrolu, jestli je uživatel přihlášen
    */
-  public function isLoggedIn(){
+  public function isLoggedIn():bool {
     return ($this->id>0);
   }
 
@@ -78,19 +75,19 @@ class CurrentUser{
    * CurrentUser constructor.
    */
   private function __construct(){
-    if (!is_array($_SESSION['user'])){
+    if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])){
       $_SESSION['user']=['name'=>'','email'=>'','id'=>0];
     }
-    $this->name=@$_SESSION['user']['name'];
-    $this->id=@$_SESSION['user']['id'];
-    $this->email=@$_SESSION['user']['email'];
+    $this->name=@$_SESSION['user']['name'] ?? '';
+    $this->id=@$_SESSION['user']['id'] ?? '';
+    $this->email=@$_SESSION['user']['email'] ?? '';
   }
 
   /**
    * Metoda pro Singleton
    * @return CurrentUser
    */
-  public static function getInstance(){
+  public static function getInstance():CurrentUser {
     if (!isset(self::$instance)){
       self::$instance=new CurrentUser();
     }

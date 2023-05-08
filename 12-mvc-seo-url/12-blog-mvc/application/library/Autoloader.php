@@ -5,11 +5,11 @@
   class Autoloader{
     const BASE_PATH='./application/';
     
-    public static function controllerExists($class){
+    public static function controllerExists(string $class):string {
       return file_exists(self::BASE_PATH.'controllers/'.$class.'.php');
     }
     
-    public static function autoloadWithNamespaces($class){
+    public static function autoloadWithNamespaces(string $class):bool {
       if (substr($class,0,5)!='Blog\\'){return false;}
       if (substr($class,0,13)=='Blog\\Library\\'){
         $file='library/'.substr($class,13).'.php';
@@ -30,12 +30,12 @@
       return self::_autoload($file);
     }
 
-    public static function autoloadLibrary($class){
+    public static function autoloadLibrary(string $class):bool {
       $file = 'library/'.str_replace('_', '/', $class). '.php';
       return self::_autoload($file);
     }
    
-    private static function _autoload($file){
+    private static function _autoload(string $file):bool {
       if (file_exists(self::BASE_PATH.$file)) {
           @include_once self::BASE_PATH.$file;
           return true;
@@ -43,9 +43,9 @@
       return false;
     }
 
-    public static function registerSplAutoload(){
-      spl_autoload_register(array('Blog\Library\Autoloader','autoloadWithNamespaces'));
-      spl_autoload_register(array('Blog\Library\Autoloader','autoloadLibrary'));
+    public static function registerSplAutoload():void {
+      spl_autoload_register(['Blog\Library\Autoloader', 'autoloadWithNamespaces']);
+      spl_autoload_register(['Blog\Library\Autoloader', 'autoloadLibrary']);
     }
   }
 

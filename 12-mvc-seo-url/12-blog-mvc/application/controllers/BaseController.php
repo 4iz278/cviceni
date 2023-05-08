@@ -11,10 +11,9 @@ use Blog\Model\Entities\Category;
  * @package Blog\Controllers
  */
 abstract class BaseController extends Controller{
-  /** @var CategoriesModel $categoriesModel */
-  protected $categoriesModel;
-  /** @var  Category[] $categories */
-  public $categories;
+  protected CategoriesModel $categoriesModel;
+  /** @var Category[] $categories */
+  public array $categories;
 
   /**
    * BaseController constructor.

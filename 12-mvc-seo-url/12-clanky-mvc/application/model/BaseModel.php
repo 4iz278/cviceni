@@ -2,8 +2,7 @@
 
 
 abstract class BaseModel{
-  /** @var PDO */
-  protected static $pdo;
+  protected static ?PDO $pdo = null;
 
   /**
    * BaseModel constructor - zajišťuje připojení k DB

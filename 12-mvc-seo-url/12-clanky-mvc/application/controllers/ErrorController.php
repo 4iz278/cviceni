@@ -1,9 +1,10 @@
 <?php
   class ErrorController extends Controller{
 
-    var $errorCode,$errorMessage;
+    public int $errorCode;
+    public string $errorMessage;
 
-    public function errorAction(){
+    public function errorAction():void {
       if($this->errorCode>0){
         $errorHttpMessage=self::getErrorMessage($this->errorCode);
         header('HTTP/1.0 '.$this->errorCode.' '.$errorHttpMessage);
@@ -23,17 +24,17 @@
       $view->display();
     }
 
-    public function notFoundAction(){
+    public function notFoundAction():void {
       $this->errorCode=404;
       $this->errorMessage='Požadovaný soubor nebyl nalezen.';
       $this->errorAction();
     }
 
     /**
-     * @param $errorCode
+     * @param int $errorCode
      * @return string|null
      */
-    private static function getErrorMessage($errorCode){
+    private static function getErrorMessage(int $errorCode):?string {
       $errorMessages=array(
         400=>'Bad request',
         401=>'Unauthorized',
@@ -49,7 +50,7 @@
         501=>'Not Implemented',
         503=>'Service Unavailable'
       );
-      return @$errorMessages[$errorCode];
+      return isset($errorMessages[$errorCode])?$errorMessages[$errorCode]:null;
     }
 
   }

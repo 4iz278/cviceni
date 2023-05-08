@@ -12,7 +12,7 @@ class Homepage_DefaultView extends View{
   /**
    *  Vypsání samotného generovaného obsahu stránky
    */
-  public function display(){
+  public function display():void {
     echo '<h1>Vítejte na ukázkovém webu, který je součástí podkladů předmětu 4iz278</h1>';
   }
   

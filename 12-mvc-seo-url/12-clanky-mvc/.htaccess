@@ -2,7 +2,7 @@ php_flag display_errors on
 
 
 RewriteEngine on
-RewriteBase /~xname/clanky
+RewriteBase /~xname/12-clanky-mvc
 
 ErrorDocument 404 /error/notFound
 

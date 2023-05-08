@@ -3,11 +3,11 @@
   class Autoloader{
     const BASE_PATH='./application/';
     
-    public static function controllerExists($class){
+    public static function controllerExists(string $class):bool {
       return file_exists(self::BASE_PATH.'controllers/'.$class.'.php');
     }
     
-    public static function autoload($class){
+    public static function autoload(string $class):bool {
       if (strpos($class,'Controller')){
         $file='controllers/'.$class.'.php';
       }elseif (strpos($class,'Model')){
@@ -21,7 +21,7 @@
       return self::_autoload($file);
     }
    
-    public static function autoloadWithSeparator($class){
+    public static function autoloadWithSeparator(string $class):bool {
       if (strpos($class,'View')){   
         $file='views/'.str_replace('_', '/', $class).'.php';
       }else{
@@ -30,7 +30,7 @@
       return self::_autoload($file);
     }
    
-    private static function _autoload($file){
+    private static function _autoload(string $file):bool {
       if (file_exists(self::BASE_PATH.$file)) {
           require_once self::BASE_PATH.$file;
           return true;
@@ -38,7 +38,7 @@
       return false;
     }
 
-    public static function registerSplAutoload(){
+    public static function registerSplAutoload():void {
       spl_autoload_register(array('Autoloader','autoload'));
       spl_autoload_register(array('Autoloader','autoloadWithSeparator'));
     }

@@ -5,17 +5,17 @@ namespace Blog\Model\Entities;
 /**
  * Class Article
  * @package Blog\Model\Entities
- * @property int $id
- * @property string $title
- * @property string $perex
- * @property string $content
- * @property int $category
- * @property string|null $categoryName
- * @property int $author
- * @property string|null $authorName
- * @property string $last_modified
  */
 class Article{
+  public int $id;
+  public string $title;
+  public string $perex;
+  public string $content;
+  public int $category;
+  public ?string $categoryName;
+  public int $author;
+  public ?string $authorName;
+  public string $last_modified;
 
   /**
    * Funkce vracející celý obsah článku
@@ -31,11 +31,11 @@ class Article{
    */
   public function getDataArr(){
     $result=[
-      'title'=>@$this->title,
-      'perex'=>@$this->perex,
-      'content'=>@$this->content,
-      'category'=>@$this->category,
-      'author'=>@$this->author,
+      'title'=>$this->title ?? '',
+      'perex'=>$this->perex ?? '',
+      'content'=>$this->content ?? '',
+      'category'=>$this->category ?? '',
+      'author'=>$this->author ?? '',
     ];
     if (!empty($this->id)){
       $result['id']=$this->id;

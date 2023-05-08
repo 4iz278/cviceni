@@ -26,9 +26,9 @@ class UsersModel extends BaseModel{
   /**
    * Funkce pro nalezení jednoho uživatele podle ID
    * @param int $id
-   * @return User
+   * @return User|bool
    */
-  public function findById($id){
+  public function findById(int $id):User|bool {
     $query=self::$pdo->prepare('SELECT * FROM users WHERE id=:id LIMIT 1;');
     $query->execute([':id'=>$id]);
     return $query->fetchObject(__NAMESPACE__.'\Entities\User');
@@ -39,7 +39,7 @@ class UsersModel extends BaseModel{
    * @param string $email
    * @return User
    */
-  public function findByEmail($email){
+  public function findByEmail(string $email):User {
     $query=self::$pdo->prepare('SELECT * FROM users WHERE email=:email LIMIT 1;');
     $query->execute([':email'=>$email]);
     return $query->fetchObject(__NAMESPACE__.'\Entities\User');
@@ -50,19 +50,19 @@ class UsersModel extends BaseModel{
    * @param User|int $id
    * @return bool
    */
-  public function delete($id){
+  public function delete(User|int $id):bool {
     if ($id instanceof User){
       $id=$id->id;
     }
     $query=self::$pdo->prepare('DELETE FROM users WHERE id=:id LIMIT 1;');
-    return $query->execute([':id'=>$id]);
+    return (bool)$query->execute([':id'=>$id]);
   }
 
   /**
    * @param User $user
    * @return bool
    */
-  public function save(User $user){
+  public function save(User $user):bool {
     $dataArr=$user->getDataArr();
     $paramsArr=[];
     if (@$user->id>0){
@@ -91,14 +91,14 @@ class UsersModel extends BaseModel{
       $result=$query->execute($paramsArr);
       $user->id=self::$pdo->lastInsertId('users');
     }
-    return $result;
+    return (bool)$result;
   }
 
   /**
    * Funkce pro odeslání potvrzovacího e-mailu po registraci uživatele
    * @param User $user
    */
-  public function sendRegistrationMail(User $user){
+  public function sendRegistrationMail(User $user):void {
     $mailer=new PHPMailer();
     $mailer->isSendmail();//nastavení, že se mail má odeslat přes sendmail
     $mailer->addAddress($user->email);

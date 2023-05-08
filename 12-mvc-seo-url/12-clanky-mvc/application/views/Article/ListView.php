@@ -8,7 +8,7 @@ class Article_ListView extends View{
   /**
    * Funkce pro zobrazení view
    */
-  function display(){
+  public function display():void {
     echo '<h1>Přehled článků</h1>';
     
     if (empty($this->articles)){

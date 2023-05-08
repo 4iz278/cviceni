@@ -8,14 +8,14 @@ use Blog\Model\Entities\Article;
 /**
  * Class Article_ShowView
  * @package Blog\Views
- * @property Article $article
  */
 class Article_ShowView extends View{
+  public Article $article;
 
   /**
    * Funkce pro zobrazení view
    */
-  function display(){
+  public function display():void {
     /** @var CurrentUser $currentUser */
     $currentUser=CurrentUser::getInstance();
     echo '<article>';

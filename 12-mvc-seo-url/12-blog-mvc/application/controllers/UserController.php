@@ -12,15 +12,13 @@ use Blog\Views\User_RegisterView;
  * @package Blog\Controllers
  */
 class UserController extends BaseController{
-  /** @var string $formErrors */
-  private $formErrors='';
-  /** @var UsersModel $usersModel */
-  private $usersModel;
+  private string $formErrors='';
+  private UsersModel $usersModel;
 
   /**
    * Akce pro přihlášení uživatele
    */
-  public function loginAction(){
+  public function loginAction():void {
     $this->setTitle('Přihlásit se...');
     $currentUser=CurrentUser::getInstance();
     if($currentUser->isLoggedIn()){
@@ -28,7 +26,7 @@ class UserController extends BaseController{
       return;
     }
     $prihlaseno=false;
-    $email=@$_POST['email'];
+    $email=$_POST['email'] ?? '';
     //exit(var_dump($_POST));
     if($email!=''){
       //máme zaslané přihlašovací uživatele
@@ -39,12 +37,8 @@ class UserController extends BaseController{
         //kontrola, jestli bylo spravne zadano heslo
         if($user->isValidPassword(@$_POST['password'])){
           //uzivatel je přihlášen
-          $redirectUrl=self::getLoginReferer();
           CurrentUser::login($user);
-          if(!$redirectUrl){
-            $redirectUrl=BASE_URL;
-          }
-          $this->setRedirect($redirectUrl);
+          $this->setRedirect(self::getLoginReferer() ?? BASE_URL);
         }else{
           $this->formErrors='<p>Chybně zadané uživatelské jméno či heslo</p>';
         }
@@ -71,7 +65,7 @@ class UserController extends BaseController{
   /**
    * Akce pro odhlášení uživatele
    */
-  public function logoutAction(){
+  public function logoutAction():void {
     CurrentUser::logout();
     $this->setRedirect(BASE_URL);
   }
@@ -79,7 +73,7 @@ class UserController extends BaseController{
   /**
    * Akce pro registraci uživatele
    */
-  public function registerAction(){
+  public function registerAction():void {
     $this->setTitle('Zaregistrovat se...');
     if (!empty($_POST)){
       $user=new User();
@@ -98,8 +92,8 @@ class UserController extends BaseController{
 
     /** @var User_RegisterView $view */
     $view=$this->getView('register');
-    $view->email=@$_REQUEST['email'];
-    $view->name=@$_REQUEST['name'];
+    $view->email=$_REQUEST['email'] ?? '';
+    $view->name=$_REQUEST['name'] ?? '';
     $view->formError=@$this->formErrors;
     $view->display();
   }
@@ -110,8 +104,8 @@ class UserController extends BaseController{
    * @return  bool
    */
   private function checkRegisterForm(User &$user){
-    $user->name=trim(@$_POST['name']);
-    $user->email=trim(@$_POST['email']);
+    $user->name=trim($_POST['name'] ?? '');
+    $user->email=trim($_POST['email'] ?? '');
     $errors='';
     if (empty($user->email) ||(!filter_var($user->email, FILTER_VALIDATE_EMAIL) !== false)){
       $errors.='<p>Musíte zadat platnou e-mailovou adresu.</p>';
@@ -120,10 +114,10 @@ class UserController extends BaseController{
         $errors.='<p>Účet s danou e-mailovou adresou již existuje.</p>';
       }
     }
-    if (strlen(@$_POST['password'])<=3){
+    if (strlen($_POST['password'] ?? '')<=3){
       $errors.='<p>Heslo musí mit minimálně 4 znaky.</p>';
     }
-    if (@$_POST['password']!=@$_POST['password2']){
+    if (!empty($_POST['password']) && ($_POST['password']!=($_POST['password2']??''))){
       $errors.='<p>Zadaná hesla se neshodují.</p>';
     }
     $this->formErrors.=$errors;
@@ -133,17 +127,20 @@ class UserController extends BaseController{
   /**
    * Statická funkce pro nastavení URL pro zpětné přesměrování po přihlášení
    */
-  public static function setLoginReferer($returnUrl){
+  public static function setLoginReferer(string $returnUrl):void {
     $_SESSION['LOGIN_REFERER']=$returnUrl;
   }
 
   /**
    * Statická funkce vracející info pro zpětné přesměrování po přihlášení
    */
-  public static function getLoginReferer(){
-    $loginReferer=@$_SESSION['LOGIN_REFERER'];
-    unset($_SESSION['LOGIN_REFERER']);
-    return $loginReferer;
+  public static function getLoginReferer():?string {
+    if (!empty($_SESSION['LOGIN_REFERER'])){
+      $loginReferer=$_SESSION['LOGIN_REFERER'] ;
+      unset($_SESSION['LOGIN_REFERER']);
+      return $loginReferer;
+    }
+    return null;
   }
 
   /**

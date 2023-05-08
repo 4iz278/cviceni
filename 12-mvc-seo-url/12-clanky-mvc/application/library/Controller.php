@@ -4,16 +4,16 @@
  * Class Controller
  */
 abstract class Controller{
-  public $layout='Default';
-  public $pageTitle='';
-  public $pageDescription='';
-  private $redirectUrl;
+  public string $layout='Default';
+  public string $pageTitle='';
+  public string $pageDescription='';
+  private string $redirectUrl;
 
   /**
    *  Funkce vracející instanci view se zadaným jménem
    *  @return View
    */
-  public function getView($viewName=''){
+  public function getView(string $viewName=''):View {
     if($viewName==''){
       $viewName=$_REQUEST['action'];
     }
@@ -27,28 +27,28 @@ abstract class Controller{
   /**
    *  Funkce pro nastavení title pro danou stránku
    */
-  public function setTitle($title=''){
+  public function setTitle(string $title=''):void {
     $this->pageTitle=$title;
   }
 
   /**
    *  Funkce pro nastavení description pro danou stránku
    */
-  public function setDescription($description=''){
+  public function setDescription(string $description=''):void {
     $this->pageDescription=$description;
   }
 
   /**
    *  Funkce vracející title pro aktuální stránku
    */
-  public function getTitle(){
+  public function getTitle():string {
     return $this->pageTitle;
   }
 
   /**
    *  Funkce vracející description pro aktuální stránku
    */
-  public function getDescription(){
+  public function getDescription():string {
     return $this->pageDescription;
   }
 
@@ -60,7 +60,7 @@ abstract class Controller{
   /**
    *  Funkce pro nastavení přesměrování
    */
-  public function setRedirect($redirectUrl){
+  public function setRedirect(string $redirectUrl):void {
     if(!strpos($redirectUrl, '://')){
       $this->redirectUrl=BASE_URL.$redirectUrl;
     }else{
@@ -71,7 +71,7 @@ abstract class Controller{
   /**
    *  Funkce nastavující info zprávu pro zobrazení
    */
-  public static function addInfoMessage($text, $type='info'){
+  public static function addInfoMessage(string $text, string $type='info'):void {
     if(!is_array($_SESSION['info_messages'])){
       $_SESSION['info_messages']=array();
     }
@@ -84,11 +84,11 @@ abstract class Controller{
   /**
    *  Funkce vracející info zprávy pro zobrazení
    */
-  public function getInfoMessages(){
+  public function getInfoMessages():array {
     if(isset($_SESSION['info_messages'])){
       $returnArr=$_SESSION['info_messages'];
     }else{
-      $returnArr=array();
+      $returnArr=[];
     }
     unset($_SESSION['info_messages']);
     return $returnArr;
@@ -98,7 +98,7 @@ abstract class Controller{
   /**
    *  Funkce pro zobrazení layoutu a vypsání obsahu
    */
-  public function display(){
+  public function display():void {
     if(isset($this->redirectUrl)){
       header('Location: '.$this->redirectUrl);
       return;
@@ -119,7 +119,7 @@ abstract class Controller{
   /**
    *  Funkce pro vygenerování chybové stránky
    */
-  public function generateError($errorCode, $text){
+  public function generateError(int $errorCode, string $text){
     $controller=new ErrorController();
     $controller->errorCode=$errorCode;
     $controller->errorMessage=$text;

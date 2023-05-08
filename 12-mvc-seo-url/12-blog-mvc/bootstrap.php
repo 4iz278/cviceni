@@ -11,7 +11,7 @@ if (@$_REQUEST['controller']!=''){
   $controllerName=ucfirst(trim($_REQUEST['controller'])).'Controller';
 }else{
   $controllerName='HomepageController';
-  $_REQUEST['controller']='default';
+  $_REQUEST['controller']='homepage';
 }
 if (isset($_REQUEST['action'])){
   $action=trim($_REQUEST['action']).'Action';
@@ -29,7 +29,7 @@ if(\Blog\Library\Autoloader::controllerExists($controllerName)){
   $controller=new $controllerName();
   if (method_exists($controller,$action)){
     //kontrola přístupu
-    if ($currentUser->hasAccess($_REQUEST['controller'],@$_REQUEST['action'])){
+    if ($currentUser->hasAccess($_REQUEST['controller'], $_REQUEST['action']??'')){
       $controller->$action();
     }elseif(!$currentUser->isLoggedIn()){
       //zobrazime vyzvu pro prihlaseni
@@ -37,14 +37,14 @@ if(\Blog\Library\Autoloader::controllerExists($controllerName)){
       $controller->setRedirect(BASE_URL.'/user/login');
     }else{
       //zobrazime chybu o tom, ze uzivatel nema opravneni stranku zobrazit
-      $controller->generateError('401','Nemáte oprávnění k zobrazení požadovaného modulu.');
+      $controller->generateError(401,'Nemáte oprávnění k zobrazení požadovaného modulu.');
     }
   }else{
-    $controller->generateError('404','Požadovaná stránka nebyla nalezena.');
+    $controller->generateError(404,'Požadovaná stránka nebyla nalezena.');
   }
 }else{
   $controller=new \Blog\Controllers\ErrorController();
-  $controller->generateError('404','Požadovaná stránka nebyla nalezena.');
+  $controller->generateError(404,'Požadovaná stránka nebyla nalezena.');
 }
 
 $controller->display();
