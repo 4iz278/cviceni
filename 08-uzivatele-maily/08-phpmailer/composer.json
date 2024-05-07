@@ -3,13 +3,13 @@
 	"description": "Ukázka použití knihovny PHPMailer",
 	"type": "project",
 	"require": {
-		"php": ">= 7.2",
-		"phpmailer/phpmailer": "^6.1"
+		"php": ">= 8.1",
+		"phpmailer/phpmailer": "^6.9"
 	},
 	"minimum-stability": "stable",
 	"config": {
 		"platform": {
-			"php": "7.2"
+			"php": "8.2"
 		}
 	}
 }
