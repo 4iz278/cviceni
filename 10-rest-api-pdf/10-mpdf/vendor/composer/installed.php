@@ -3,7 +3,7 @@
         'name' => 'vojir/example-mpdf',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '0eacbff77554150b087701ebdff782d4a62e52b3',
+        'reference' => 'f191a40fa1cc8f80f52266a082c30eba0c1d2ce3',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -85,7 +85,7 @@
         'vojir/example-mpdf' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '0eacbff77554150b087701ebdff782d4a62e52b3',
+            'reference' => 'f191a40fa1cc8f80f52266a082c30eba0c1d2ce3',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
