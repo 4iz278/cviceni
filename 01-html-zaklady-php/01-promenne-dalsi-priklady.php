@@ -4,7 +4,7 @@
 
 //promenne
 
-//case sensitive
+//case-sensitive
 
 //a= pocet studentu na vse
 $a = 20; 

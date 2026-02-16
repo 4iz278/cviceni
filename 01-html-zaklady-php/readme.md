@@ -5,16 +5,14 @@
   * pokud budete hledat podklady k HTML či CSS, mrkněte na [podklady k předmětu 4iz268](https://github.com/4iz268/cviceni)
 
 ### Opakování základů HTML a CSS
-* [příklad jednoduchá xHTML stránka](./html/simpleXHTML.html)
 * [příklad jednoduchá HTML 5 stránka](./html/simpleHTML5.html)
 * [příklad bootstrap](./html/bootstrap.html)
 
 
 ## PHP
 * interpretovaný programovací jazyk spouštěný na straně serveru
-* aktuálně obvykle využívána řada 5.x
-  * od prosince 2015 je k dispozici také verze 7
-  * jednotlivé verze se řeší ve funkcionalitě, některé zastaralé funkce jsou postupně odstraňovány
+* aktuálně obvykle využívána řada 8.x
+  * pozor na to, že novější verze nejsou vždy plně zpětně kompatibilní se starším kódem
 * PHP soubory mají obvykle příponu **.php**
 * nejčastěji je PHP využíváno ke generování textových výstupů (HTML, XML, JSON, plain text atp.), ale je možné generovat také jakýkoliv jiný obsah (PDF, obrázky), či mít skript, který na výstup nevrací nic
 * obvykle spouštěno přes webový server (typicky Apache)
@@ -106,6 +104,11 @@
   var_dump($promenna); //vypíše obsah proměnné
   exit(); //ukončí běh skriptu
 ```
+* PHP umožňuje zapnout striktní kontrolu datových typů pomocí direktivy **declare(strict_types=1);**, která ovlivňuje chování typových deklarací u funkcí.
+  * Při zapnutém strict types PHP neprovádí automatické přetypování argumentů funkcí a při nesouladu datových typů dojde k chybě.
+```php
+declare(strict_types=1); //chceme kontrolu datových typů bez přetypování
+```
 
 * [příklad proměnné](./01-promenne.php)
 
@@ -132,7 +135,7 @@
 | *                  | násobení                                            | $vysledek = $a * $b;                 |
 | /                  | dělení                                              | $vysledek = $a / $b;                 |
 | %                  | modulo (zbytek po celočíselném dělení)              | $vysledek = $a % 10;                 |
-| **                 | exponent (jen v PHP 5.6+)                           | $vysledek = $a ** 2;                 |
+| **                 | exponent                                            | $vysledek = $a ** 2;                 |
 | .                  | spojení řetězců                                     | $text = $a.$b;                       |
 | +=, -=, *=, /=, .= | zkrácené operátory upravující hodnotu dané proměnné | $a+=10; (= ekvivalentní k $a=$a+10;) |
 | ++                 | zvětšení hodnoty proměnné o 1                       | $a++; ++$b;                          |
@@ -187,6 +190,17 @@ $x = ( $a=="tykani" ? "Ahoj" : "Dobrý den" );
 ```
 * [příklad podmínky](./01-podminky.php)
 
+#### Null coalescing operátor
+* operátor **??** umožňuje nastavit výchozí hodnotu proměnné, pokud není definovaná nebo má hodnotu *null*
+* jde o alternativu ke zkrácené podmínce s funkcí *isset* (či případně *empty* - ale pozor, tam by neprošla ani hodnota 0)
+```php
+//aktuální použití null coalescing operátoru
+$vek = $vek ?? 18;
+
+//ukecaná varianta s podmínkou
+$vek = isset($vek) ? $vek : 18;
+```
+
 #### Cykly
 ##### Cyklus s podmínkou na začátku (while)
 * asi nejčastěji využívaný
@@ -240,34 +254,95 @@ for($x=0;$x<10;$x++){
 * kód je vykonáván od příslušné shody podmínky a pokračuje až do příkazu *break;* (nebo prostě dál...)
 ```php
 switch ($promenna){
-    case "A":
-      /*blok kódu*/
-      break;
-    case "B":
-      /*blok kódu*/
-    default:
-      /*blok kódu*/
+  case "A":
+    /*blok kódu*/
+    break;
+  case "B":
+    /*blok kódu*/
+  default:
+    /*blok kódu*/
 }
 ```
 * [příklad switch](./01-switch.php)
+
+### Match
+* pokud chcete vracet hodnotu (např. nějaký řetězec) nebo vybrat funkci k zavolání podle hodnoty zvolené proměnné, je příkaz *match* jednodušší a přehlednější variantou než *switch* (ale nejde o alternativu pro každý switch!)
+* porovnání je striktní (porovnává se s kontrolou datového typu, tj. ===)
+* není potřeba příkaz break - nedojde ke spuštění dalších větví
+* lze spojit více hodnot do jedné větve
+```php
+$stav = 200;
+
+$text = match ($stav){
+  200 => 'OK',
+  400, 404 => 'nenalezeno',
+  500 => 'chyba serveru',
+  default => 'neznámý stav'
+};
+
+echo $text;
+```
 
 #### Funkce
 * pro pojmenování funkcí platí stejné podmínky, jako pro názvy proměnných (jen *nezačínají znakem $*)
 * funkce nemusejí být zabaleny v žádných třídách
 * u funkcí je podporována typová kontrola parametrů, pokud jimi mají být instance tříd
 * funkce mohou mít také volitelné parametry, které mají rovnou přiřazenou nějakou hodnotu
-```php
-  /**
-   * Ukázková funkce
-   * @param string $a
-   * @param string $b="x"
-   */
-  function mojeFunkce($a, $b="x"){
-    echo 'hodnota A byla '.$a.', hodnota B byla '.$b;
-  }
-```
 * návratová hodnota se vrací pomocí příkazu **return**
 * parametry funkcí jsou jen vstupní, pokud před jejich název nepřidáme znak **&** - pak je předávána reference místo hodnoty a danou proměnnou lze přepsat z těla funkce
+* při deklaraci datových typů proměnných i u návratových typů lze používat tzv. multitypy
+  * **string|int** akceptuje string nebo integer
+  * **?string** akceptuje string nebo null
+* speciální návratové datové typy:
+  * **void** nevrací žádnou hodnotu
+  * **never** nevrací žádnou hodnotu a kód dál nepokračuje (např. končíte funkcí exit, přesměrováním...)
+```php
+/**
+ * Ukázková funkce
+ */
+function funkce1(string $a, string $b="x"):void{
+  echo 'hodnota A byla '.$a.', hodnota B byla '.$b;
+}
+
+/**
+ * Ukázková funkce bez deklarovaných datových typů 
+ * @param $a
+ * @param $b
+ * @return void
+ */
+function funkce2($a, $b="x"){
+  echo 'hodnota A byla '.$a.', hodnota B byla '.$b;
+}
+```
+* funkce je možné definovat také jako *anonymní* - uložit je do proměnné, nebo je předat jako parametr funkce
+* anonymní funkce je možné zkrátit také do zápisu v podobě tzv. *arrow funkce*
+```php
+$pozdrav = function (string $jmeno): string {
+  return "Hello $jmeno!";
+};
+  
+$pozdrav = fn (string $jmeno): string => "Hello $jmeno!"; 
+
+echo $pozdrav('world');
+```
+* pokud do funkce předané jako parametr budete potřebovat předat proměnnou definovanou mimo funkci, lze použít konstrukt s *use* (jen u klasických, ne u arrow funkcí - tam se nepíše)
+```php
+$sazbaDph = 21;
+
+function spocitejCenuSDph(int $cena, callable $vypocet): int {
+  return $vypocet($cena);
+}
+  
+$vysledek = spocitejCenuSDph(1000, function (int $cena) use ($sazbaDph): int {
+  return (int)($cena + ($cena * $sazbaDph / 100));
+});  
+
+$vysledek = spocitejCenuSDph(
+  1000,
+  fn (int $cena): int => (int)($cena + ($cena * $sazbaDph / 100))
+);
+```
+
 * [příklady definice funkcí](./01-funkce.php)
 
 
