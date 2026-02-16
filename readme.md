@@ -6,57 +6,57 @@ Web předmětu: **http://4iz278.github.io**
 
 ## Plán cvičení
 
-1. **[HTML, základy PHP syntaxe](./01-html-zaklady-php/)** *(20. a 21. 2. 2020 - ve škole)*
+1. **[HTML, základy PHP syntaxe](./01-html-zaklady-php/)**
   * HTML - stručné opakování
   * základy syntaxe
   * nahrání stránek na výukový server
-2. **[Řetězce, soubory](./02-retezce-soubory)** *(27. a 28. 2. 2020 - ve škole)*
+2. **[Řetězce, soubory](./02-retezce-soubory)**
   * řetězcové funkce
   * include, require
   * GET, POST
   * čtení a zápis souborů
-3. **[Objekty v PHP](./03-objekty)** *(5. a 6. 3. 2020) - ve škole*
+3. **[Objekty v PHP](./03-objekty)**
   * práce s file systémem
   * definice tříd, rozhraní atd.
   * namespaces
   * výjimky
-4. **[Objekty v PHP II., validace formulářů](./04-objekty-II-validace)** *(19. a 20. 3. 2020)*
+4. **[Objekty v PHP II., validace formulářů](./04-objekty-II-validace)**
   * class loader
   * magické metody objektů
   * validace formulářů
   * composer
   * praktická aplikace
-5. **[SQL a databáze](./05-sql-databaze)** *(26. a 27. 3. 2020)*
+5. **[SQL a databáze](./05-sql-databaze)**
   * opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
   * práce s databází z PHP
   * tvorba jednoduché databázové aplikace
-6. **[Opakování práce s databází, session, cookies](./06-session-cookies)** *(2. a 3. 4. 2020)*
+6. **[Opakování práce s databází, session, cookies](./06-session-cookies)**
   * ukázková aplikace na práci s databází
   * cookies
   * session  
   * ukázková aplikace na práci se session a cookies
-7. **[Ukázková aplikace](./07-ukazkova-aplikace)** *(9. 4. 2020)*  
+7. **[Ukázková aplikace](./07-ukazkova-aplikace)**  
   * ukázka vyřešení domácího úkolu s nástěnkou
   * ukázka rozšíření nástěnky o uživatelské účty
-8. **[Uživatelé, maily](./08-uzivatele-maily)** *(16. a 17. 4. 2020)*
+8. **[Uživatelé, maily](./08-uzivatele-maily)**
   * autorizace, autentizace
   * lokální přihlašování uživatelů
   * posílání e-mailů
-9. **[Uživatelé a DB, JSON, XML](./09-uzivatele-db-json-xml)** *(23. a 24. 4. 2020)* 
+9. **[Uživatelé a DB, JSON, XML](./09-uzivatele-db-json-xml)** 
   * datum a čas
   * víceuživatelský přístup k DB
   * strukturované datové formáty
-10. **[REST API, PDF](./10-rest-api-pdf)** *(30. 4. 2020)*
+10. **[REST API, PDF](./10-rest-api-pdf)**
   * tvorba API
   * AJAX
   * mPDF 
-11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](./11-oauth-curl)** *(7. 5. 2020)*  
+11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](./11-oauth-curl)**  
   * CURL  
   * zapomenuté heslo
   * OAuth
-12. **[MVC, SEO URL](./12-mvc-seo-url)** *(14. a 15. 5. 2020)*   
+12. **[MVC, SEO URL](./12-mvc-seo-url)**   
   * .htaccess
   * návrhový vzor MVC
   * objektová tvorba aplikací  
@@ -69,9 +69,10 @@ Web předmětu: **http://4iz278.github.io**
 
 ## Požadavky na absolvování
  * vytvoření databázové PHP aplikace - 50 bodů
- * napsání závěrečného testu - 40 bodů
+ * napsání závěrečného testu - 30 bodů
  * aktivita na cvičeních - 10 bodů
+ * aktivita na přednáškách - 10 bodů
 
 ### Zdroje informací
  * [Prezentace z přednášek](http://4iz278.github.io/prednasky/)
- * Zdroje uvedené v [sylabu předmětu](https://insis.vse.cz/katalog/syllabus.pl?predmet=156338)
+ * Zdroje uvedené v [sylabu předmětu](https://insis.vse.cz/katalog/syllabus.pl?predmet=215571)
