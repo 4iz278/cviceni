@@ -2,6 +2,10 @@
 
   $file = ''; //TODO doplňte sem název reálného souboru a vyzkoušejte si to v praxi
 
+  if (!file_exists($file)){
+    exit('Soubor neexistuje.');
+  }
+
   $filename = basename($file);  //funkce pro zjištění jména souboru
   $path = dirname($file);       //funkce pro zjištění jména adresáře
 
@@ -29,6 +33,8 @@
   #endregion manipulace s adresáři
 
   #region TEMP
-  echo tmpfile(); //funkce tmpfile() vygeneruje unikátní temp soubor
+  $tmp = tmpfile(); //funkce tmpfile() vygeneruje unikátní temp soubor
+  var_dump($tmp);
+
   echo tempnam(__DIR__,"TMP0"); //funkce tempnam() vytvoří dočasný soubor v zadaném adresáři, 2. parametr = prefix názvu souboru
   #endregion TEMP

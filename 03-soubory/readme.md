@@ -143,6 +143,34 @@ if ($file){
 * [příklad kontrola zapisovatelnosti souboru](../03-soubory/03-file-exists.php)
 
 
+## Práce se souborovým systémem
+* PHP samozřejmě disponuje také funkcemi pro práci s celými soubory
+* nejčastěji užívané funkce (většina z nich vrací true/false podle toho, zda se operace povedla):
+  * **copy($source, $dest)**
+    * funkce pro zkopírování souboru
+  * **rename($source, $dest)**
+    * funkce pro přejmenování či přesun souboru či adresáře
+  * **unlink($file)**
+    * smazání souboru (opravdu maže, žádný koš...)
+  * **mkdir($dir)**
+    * funkce vytvoření adresáře
+  * **rmdir($dir)**
+    * funkce pro smazání prázdného adresáře
+  * **scandir($dir)**
+    * funkce pro získání seznamu souborů a adresářů v daném adresáři
+  * **move_uploaded_file($source, $dest)**
+    * funkce pro přesun souboru nahraného pomocí formuláře (metodou POST)
+      * běžné přejmenování se k danému souboru obvykle nedostane
+  * **is_dir($dir)**, **is_file($file)**
+    * funkce pro rozlišení, zda se pod daným názvem skrývá adresář nebo soubor
+  * a také funkce, které už jsme zmiňovali dříve - **file_exists()** a **is_writable()**
+
+* [příklad kontrola čtení/zápisu](./03-soubory-stav.php)
+* [příklad manipulace se soubory](./03-soubory-manipulace.php)
+* [příklad výpis adresáře](./03-soubory-scandir.php)
+
+
+
 # Příklad na procvičení
 > Vytvořte jednoduchou knihu návštěv, která bude mít všechna data uložena v textovém souboru.
 > Chcete trochu napovědět?

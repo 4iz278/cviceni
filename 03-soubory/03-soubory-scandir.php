@@ -16,7 +16,8 @@
     //funkce opendir, readdir a closedir umožňují postupně procházet obsah adresářů obdobně, jako lze postupně číst soubory
     if ($directory = opendir($directoryPath)) {
       while (($file = readdir($directory)) !== false) {
-        echo "filename: $file : filetype: " . filetype($directoryPath . $file) . "\n";
+        //pozor na to, že vrací také . a .. - zvládli byste to přeskočit?
+        echo "filename: $file : filetype: " . filetype($directoryPath .DIRECTORY_SEPARATOR. $file) . "\n";
       }
       closedir($directory);
     }

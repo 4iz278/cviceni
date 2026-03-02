@@ -2,6 +2,10 @@
 
   $file = ''; //TODO doplňte sem název reálného souboru a vyzkoušejte si to v praxi
 
+  if (!file_exists($file)){
+    exit('Soubor neexistuje.');
+  }
+
   #region existence a přístupů
 
   if (file_exists($file)){
@@ -30,16 +34,17 @@
 
   echo "Last access: ".date("d.m.Y H:i:s.",fileatime($file))."\n";   //fileatime() vrací timestamp posledního přístupu k souboru
 
-  echo "Last modified: ".date("d.m.Y H:i:s.",filemtime($file))."\n"; //filemtime() vrací timestamp posledního přístupu k souboru
+  echo "Last modified: ".date("d.m.Y H:i:s.",filemtime($file))."\n"; //filemtime() vrací timestamp poslední změny souboru
 
-  echo 'Size: '.filesize($file)."\n"; //filesize() vrací velikost souboru (pozor, PHP tuto hodnotu kešuje, pro obnovení je možné zavolat funkci clearstatcache()
+  echo 'Size: '.filesize($file)."\n"; //filesize() vrací velikost souboru - pozor, PHP tuto hodnotu kešuje, pro obnovení je možné zavolat funkci clearstatcache()
 
   echo 'Přístupy: '.fileperms($file)."\n";
-  echo 'Přístupy v běžnější podobě zápisu: '.substr(sprintf("%o",fileperms("test.txt")),-4);
+  echo 'Přístupy v běžnější podobě zápisu: '.substr(sprintf("%o",fileperms($file)),-4);
 
   #endregion parametry souborů
 
   #region chmod
+  //pozor - změna práv nemusí fungovat na všech hostinzích (závisí na oprávněních PHP procesu)
 
   chmod($file, 0600); // Read and write for owner, nothing for everybody else
   chmod($file, 0644); // Read and write for owner, read for everybody else
