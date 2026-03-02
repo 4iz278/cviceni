@@ -26,7 +26,7 @@
 
   #endregion trim
 
-  #region substr, strpos
+  #region substr, strpos, str_contains
 
   $retezec = 'Tohle je nějaký ukázkový řetězec...';
   echo substr($retezec, 9);    //funkce vracející řetězec od dané pozice do konce
@@ -39,7 +39,11 @@
     echo 'Řetězec obsahuje T'."\n";
   }
 
-  #endregion substr, strpos
+  if (str_contains($retezec, 'T')){
+    echo 'Řetězec obsahuje T'."\n";
+  }
+
+  #endregion substr, strpos, str_contains
 
 
   #region replace

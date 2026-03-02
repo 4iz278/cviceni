@@ -227,7 +227,7 @@ for (inicializace iterátoru; podmínka; úprava hodnoty iterátoru){
   //příkazy cyklu
 }
 
-for($x=1; $x>=10; $x-=2){
+for($x=10; $x>=1; $x-=2){
   //příkazy cyklu
 }
 ```
@@ -240,12 +240,21 @@ for($x=1; $x>=10; $x-=2){
 ##### Řídící příkazy cyklu
 * **break;** - ukončí cyklus a pokračuje v kódu za ním
 * **continue;** - ukončí aktuální průchod cyklem a přejde na podmínku
+* v PHP lze tyto příkazy doplnit o číselný index umožňující vyskočit z více cyklů najednou
 ```php
 for($x=0;$x<10;$x++){
   if (podminka){
     continue;
   }
   //další příkazy
+}
+
+for($a=0;$a<10;$a++){
+  for($b=0;$b<10;$b++){
+    if (podminka){
+      continue 2; //přeskočí až na další průchod cyklem s proměnnou $a
+    }
+  }
 }
 ```
 

@@ -17,7 +17,7 @@
   }
 
 ?><!DOCTYPE html>
-<html>
+<html lang="cs">
 <head>
   <title>Ukázka HTML formuláře s jednoduchou kontrolou</title>
   <meta charset="UTF-8" />

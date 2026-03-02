@@ -1,9 +1,13 @@
-# 2. Řetězce, soubory
+# 2. Pole, řetězce, vstup od uživatele
 
 ## Pole
 * pole = v podstatě "tabulka hodnot", ve které jsou jednotlivé buňky označeny buď čísly, nebo názvy
   * číselné indexování začíná *0*
+  * pole s položkami označenými názvy označujeme jako *asociativní*
+  * pole si pamatuje pořadí položek bez ohledu na jejich indexy
 * s ohledem na práci s datovými typy v PHP může každá buňka obsahovat něco jiného
+  * nejjednodušší je dívat se na každou buňku pole jako na samostatnou proměnnou
+  * v případě vícedimenzionálního pole jednoduše může být v buňce další vnořené pole
 * vícedimenzionální (vícenásobné) pole = pole, ve kterém je v každé buňce uloženo další pole
 
 ### Definice nového pole
@@ -12,7 +16,7 @@
 ```php
   $pole1 = array();//vytvoří prázdné pole
   $pole2 = []; //vytvoří prázdné pole (zkrácená syntaxe)
-  $pole3 = array("a","b","c");//vytvoří pole s hodnotami "a", "b" a "c", uloženými pod číselnými indexy
+  $pole3 = array("a", "b", "c");//vytvoří pole s hodnotami "a", "b" a "c", uloženými pod číselnými indexy
   $pole4 = array(10=>"a");//vytvoří pole, pod index 10 uloží hodnotu "a"
 ```
 
@@ -22,7 +26,13 @@
   $pole[10]=$hodnota; //přidá prvek pod konkrétní číselný index
   $pole["klic"]=$hodnota; //přidá prvek pod konkrétní řetězcový index
 
+  echo $pole["klic"]; //vypsání prvku z pole
+
   unset($pole["klic"]); //smaže konkrétní prvek z pole
+
+  $pole2 = ["a", "b", "c", "d", "e"];
+  unset($pole2[1]); // smaže 2. prvek z pole, ale ostatní indexy nezmění - velikost bude 4, ale indexy 0, 2, 3, 4
+  var_dump($pole2);
 ```
 * s prvky jde pracovat také pomocí funkcí
   * **array_pop($pole)**
@@ -41,8 +51,28 @@
 * **array_key_exists($klic, $pole)**
   * funkce pro kontrolu, jestli je v poli daný klíč
 
+* **in_array($hodnota, $pole)**
+  * funkce pro kontrolu, zda pole obsahuje danou hodnotu (jednodušší, než to hledat cyklem)
+
 * **array_merge($pole, $pole2)**
   * funkce pro sloučení dvou polí
+  * u číslovaných polí se položky přečíslují
+  * u asociativních polí se stejně označené položky přepíšou
+  * alternativně lze sloučit pomocí **+**, ale v tomto případě se nepřepisují hodnoty a nemění se číselné indexy
+```php
+$pole1 = [
+  "a" => 1,
+  "b" => 2
+];
+
+$pole2 = [
+  "b" => 20,
+  "c" => 3
+];
+
+$sloucene = array_merge($pole1, $pole2); //buňka b je z 2. pole
+$doplnene = $pole1 + $pole2; //buňka b je z 1. pole
+```
 
 * **sort($pole)**
   * funkce pro seřazení indexovaného pole podle hodnot
@@ -58,6 +88,8 @@
 * **uksort()**
   * funkce pro seřazení asociačního pole pomocí uživatelem definované funkce (porovnává klíče)
   * viz [w3schools](http://www.w3schools.com/php/func_array_uksort.asp)
+
+* existují i další užitečné funkce, ale zatím se bez nich obejdeme - např. **array_filter()**, **array_reduce()** či **array_map()**
 
 * [příklad array](./02-array.php)
 * [příklad array-uasort](./02-array-uasort.php)
@@ -94,6 +126,8 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 ```
 * v PHP máme k dispozici globální proměnné **$_GET**, **$_POST** a **$_REQUEST**
   * jedná se o pole, ve kterých máme připravený uživatelský vstup
+  * **$_REQUEST** používáme jen v případě, že nám opravdu nezáleží na metodě předání dat (např. u vyhledávání)
+  * běžně bereme data z **$_GET** a **$_POST**
 * data získáváme od uživatelů nejčastěji z URL adres a pomocí formulářů
   * pokud nevíte jak napsat formulář, zkuste mrknout na [podklady z 4iz268](https://github.com/4iz268/cviceni/tree/master/10-formulare)
 
@@ -104,9 +138,10 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 
 ## Řetězcové funkce
 * **strlen($retezec)**
-  * funkce vracející počet znaků aktuálního řetězce
+  * funkce vracející počet bajtů aktuálního řetězce
+  * u kódování UTF-8 používáme **mb_strlen()** (více u [mb_funkcí](#mb_-funkce))
 
-* **trim** - funkce pro odstranění znaků ze začátku a konce řetězce
+* **trim($retezec)** - funkce pro odstranění znaků ze začátku a konce řetězce
   * ve výchozím stavu odstraňuje "prázdné" znaky, ale lze zadat, co se má odstranit
   * existují také funkce **ltrim** a **rtrim**
 ```php
@@ -120,6 +155,13 @@ $str3 = trim($binary, "\x00..\x1F"); //odstraní znaky s binárním kódem 0-31 
   * parametr *$offset* je jen volitelný
   * pozor, ve výsledku je nutné rozlišovat hodnoty *0* a *false* (použijte operátor  ===, event. !==)
   * *zkuste si tuto funkci najít v PHP manuálu...*
+
+* **str_contains($haystack, $needle)**
+  * funkce pro zjištění, zda řetězec obsahuje jiný řetězec
+  * často jednodušší než **strpos()** (pokud nepotřebujeme zjistit přesné místo výskytu)
+
+* **str_starts_with($haystack, $needle)**, **str_ends_with($haystack, $needle)** 
+  * zjištění, zda řetězec začíná/končí zadanou hodnotou
 
 * **substr($string, $start[, $length])**
   * vrací část řetězce
@@ -151,7 +193,7 @@ $upravene = strip_tags($retezec,'<em><strong>');
   * funkce pro nahrazení speciálních znaků HTML entitami
   * jedná se o často využívanou funkci - měli bychom ji aplikovat na data, která byla získána od uživatele a vypisujeme je na výstup!
 ```php
-echo '<input type="text" name="x1" value="'.htmlspecialchars($_REQUEST['x1']).'">;
+echo '<input type="text" name="x1" value="'.htmlspecialchars($_REQUEST['x1']).'">';
 ```
 
 * **addslashes($retezec)**, **stripslashes($retezec)**
@@ -199,132 +241,3 @@ mb_internal_encoding("UTF-8");
 
 * [příklad řetězce](./02-retezce.php)
 * [příklad formuláře s jednoduchou kontrolou](./02-retezce-formular-kontrola.php)
-
-## Práce se soubory
-* PHP podporuje velké množství funkcí pro práci se soubory
-* pokud je povolený *fopen wrapper*, je možné pracovat se vzdálenými soubory obdobně, jako by šlo o soubory lokální
-* pozor na přístupová práva k souborům
-  * pokud chceme zapisovat do souboru/adresáře, je nutné na většině hostingů upravit dané položce přístupová práva
-
-### Include, require
-* PHP nevyžaduje rozdělení aplikace do jednotlivých souborů - i při objektové aplikaci můžeme vše napsat jen do jednoho souboru, ale...
-* pokud se máme v aplikaci vyznat, je vhodné ji rozčlenit na logické celky uložené v samostatných souborech
-* příkazy *include* a *require* jsou jedním z nejjednodušších využití PHP také na statických stránkách - pro oddělení hlavičky a patičky do samostatného souboru
-* *include* a *require* mohou být v kódu zapsány jak v podobě funkce, tak také v podobě příkazu (tj. bez závorek)
-* vkládané soubory by měly mít příponu PHP (aby nebylo možné stáhnout jejich zdroják pomocí prohlížeče)
-  * v případě neobjektové aplikace je vhodné vkládané soubory oddělit do samostatného adresáře, nebo jim např. dopsat do názvu *"inc"* => na první pohled je pak
-* *Jaký je rozdíl mezi "include" a "require"?*
-```php
-include "connection.inc.php";
-require "connection.inc.php";
-include_once "connection.inc.php"; //funkce s "_once" načtou soubor jen v tom případě, že dosud nebyl načten
-require_once "connection.inc.php";
-```
-* [příklad include](./02-include/index.php)
-
-### Načtení/uložení celého souboru
-* celý obsah souboru je možné načíst či uložit pomocí jednoho zavolání funkce
-
-#### file_get_contents
-* načte celý soubor
-* viz [w3schools - PHP file_get_contents() Function](http://www.w3schools.com/php/func_filesystem_file_get_contents.asp)
-  * k čemu jsou dobré další atributy dané funkce?
-```php
-$soubor = file_get_contents('soubor.txt');
-```
-#### file_put_contents
-* uloží celý soubor
-* pomocí 3. parametru je možné zapisovat až na konec
-* vhodné pro jednorázový zápis (např. poznámka logu, kde nechceme udržovat odkaz na otevřený soubor)
-```php
-file_put_contents('soubor.txt',$data,FILE_APPEND);//připojení obsahu na konec souboru
-```
-
-* [příklad file content](./02-file-content.php)
-
-
-#### readfile
-* funkce pro odeslání obsahu souboru na výstup (např. pro zabezpečené stahování PHP souborů)
-  * pokud chceme korektně nabídnout soubor ke stažení, je nutné doplnit odpovídající hlavičky pomocí funkce *header()*
-```php
-readfile("soubor.txt");
-```
-* [příklad readfile](./02-readfile/index.php)
-
-### Soubory - čtení, zápis
-* základní postup je
-  1. otevření souboru (s příslušným modifikátorem přístupu)
-  2. potřebné manipulace s obsahem (čtení, zápis)
-  3. zavření souboru
-
-```php
-$file = @fopen('data.txt','r');  //otevření souboru pro čtení
-if ($file){
-  while(!feof($file)){   //nedošli jsme zatím na konec souboru?
-    $row = fgets($file); //načtení řádku
-    //zpracování...
-  }
-  fclose($file);
-}
-```
-
-#### Kontrola existence a zapisovatelnosti souboru
-* **file_exists($jmenoSouboru)**
-  * funkce pro kontrolu, zda daný soubor existuje
-
-* **is_writable($jmenoSouboru)**
-  * funkce pro kontrolu, zda je možné zapisovat do daného souboru
-
-#### Potřebné funkce
-* **fopen($jmenoSouboru, $pristup)**
-  * modifikátory přístupu *r*, *w*, *a*, *r+*, *w+*, *a+*
-
-* **feof($file)**
-  * funkce pro zjištění, zda jsme došli na konec souboru
-
-* **fread($file, $delka)**
-  * čtení ze souboru (pro binární data)
-
-* **fgets($file[, $maximalniDelka])**
-  * čtení souboru po řádcích
-
-* **fwrite($file, $data[, $delka])**
-  * zápis dat do souboru
-  * pokud zadáme délku, jsou data buď příslušně zkrácena, nebo doplněna mezerami na danou délku
-
-* **fclose($file)**
-  * zavře soubor
-  * pokud dosud nebyla dozapsána nějaká data (jsou zatím v bufferu), dojde k tomu před uzavřením souboru
-
-* **fseek($file, $offset[, $whence])**
-  * funkce pro přesun pointeru v souboru
-  * *$offset* je určen počtem bytů od začátku souboru
-  * volitelně jde zadat parametr *$whence*
-    * SEEK_CUR - offset bude počítán od aktuální pozice, offset pak může být i záporný
-
-* máme i funkce pro přímou práci s CSV soubory
-  * *Co je to CSV soubor?*
-  * viz [PHP manuál - fgetcsv](http://php.net/manual/en/function.fgetcsv.php)
-  * viz [PHP manuál - fputcsv](http://php.net/manual/en/function.fputcsv.php)
-
-
-* [příklad čtení souboru](./02-fread.php)
-* [příklad zápisu do souboru](./02-fwrite.php)
-* [příklad čtení CSV](./02-csv/fgetcsv.php)
-* [příklad kontrola zapisovatelnosti souboru](./02-file-exists.php)
-
-
-## Příklad na procvičení
-> Vytvořte jednoduchou knihu návštěv, která bude mít všechna data uložena v textovém souboru.
-> Chcete trochu napovědět?
-> - stránka bude obsahovat formulář, pomocí kterého uživatel zadá své jméno, text příspěvku a e-mail (volitelný)
-> - pod formulářem budou vypsány již existující příspěvky
-> - data v souboru budou uložena v podobě, ve které se budou přímo zobrazovat na webu
->   - nezapomeňte na to, že uživatelé (a roboti) zadávají často do formulářů věci, které tam nepatří...
-> - pro vložení aktuálního data využijte konstrukci
-> ```php
-> $datum = date('d.m.Y H:i:s');
-> ```
-
-## DÚ
-> Zjistěte, k čemu je dobrá a jak se používá funkce **sprintf()**.

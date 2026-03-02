@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="cs">
   <head>
     <title>Ukázka HTML formuláře</title>
     <meta charset="UTF-8"/>
