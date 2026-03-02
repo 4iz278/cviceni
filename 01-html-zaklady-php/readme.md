@@ -235,7 +235,7 @@ for($x=1; $x>=10; $x-=2){
 
 ##### Cyklus pro procházení polí a kolekcí (foreach)
 * pro zpracování všech prvků v poli či kolekci
-* bude [vysvětlen společně s problematikou polí](../02-retezce-soubory#foreach-cyklus)
+* bude [vysvětlen společně s problematikou polí](../02-pole-retezce#foreach-cyklus)
 
 ##### Řídící příkazy cyklu
 * **break;** - ukončí cyklus a pokračuje v kódu za ním
@@ -348,20 +348,15 @@ $vysledek = spocitejCenuSDph(
 
 #### Konstanty
 * využíváme pro globální označení konkrétní hodnoty, které jsou využívány na více místech kódu
-* pro definici vlastních konstant využíváme funkci **define**
-  * volitelně nemusí být názvy konstant case sensitive
+* pro definici vlastních konstant využíváme funkci **define**, případně v novějších verzích PHP definice pomocí **const**
 ```php
 define("KONSTANTA", "hodnota");
-define("KONSTANTA2", "hodnota", true);//konstanta bez rozlišení velikosti písmen v názvu
+const KONSTANTA = "hodnota";
 ```
 * v PHP je k dispozici řada předdefinovaných konstant
   * např. **__DIR__**, **PHP_VERSION**, **__FILE__** atd.
   * [PHP manuál - konstanty](http://php.net/manual/en/reserved.constants.php)
   * [PHP manuál - magické konstanty](http://php.net/manual/en/language.constants.predefined.php)
-* v nových verzích PHP lze využívat také zjednodušenou definici
-```php
-const KONSTANTA = "hodnota";
-```
 * [příklady použití konstant](./01-konstanty.php)
 
 #### GOTO
