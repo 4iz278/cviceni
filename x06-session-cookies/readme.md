@@ -7,10 +7,10 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 
 :point_right:
 
-V rámci [minulého cvičení](../05-sql-databaze) jsme se zabývali vlastnostmi databáze MariaDB. Následně jsme si:
-- [ukázali práci s nástrojem phpMyAdmin](../05-sql-databaze/05-prezentace-phpmyadmin.pptx),
+V rámci [minulého cvičení](../x05-sql-databaze) jsme se zabývali vlastnostmi databáze MariaDB. Následně jsme si:
+- [ukázali práci s nástrojem phpMyAdmin](../x05-sql-databaze/05-prezentace-phpmyadmin.pptx),
 - probrali používání databáze pomocí PDO  
-- a [ukázali tvorbu databázové aplikace v rámci komentované prezentace](../05-sql-databaze#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
+- a [ukázali tvorbu databázové aplikace v rámci komentované prezentace](../x05-sql-databaze#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
 
 Místo podrobného opakování se rovnou vrhneme na obsah dnešního cvičení, protože se na práci s databází podíváme ještě v dalším komentovaném ukázkovém příkladu. 
     
@@ -103,7 +103,7 @@ Kdykoliv chceme v PHP session použít, musíme ji nejprve **nastartovat pomocí
 
 **Data v session** máme v PHP přístupná v globálním poli ```$_SESSION```.
 - Jde o normální asociační pole, do kterého můžeme informace ukládat kdekoliv v rámci skriptu.
-- Pokud do session chceme ukládat objekty, musí být serializovatelné (viz [4. cvičení](../04-objekty-II-validace#serializace-a-usp%C3%A1v%C3%A1n%C3%AD-objekt%C5%AF)) 
+- Pokud do session chceme ukládat objekty, musí být serializovatelné (viz [4. cvičení](../x04-objekty-II-validace#serializace-a-usp%C3%A1v%C3%A1n%C3%AD-objekt%C5%AF)) 
 
 ```php
 session_start(); //nastartování session

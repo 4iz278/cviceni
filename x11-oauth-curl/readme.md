@@ -5,13 +5,13 @@
 ## Opakování z předchozích cvičení
 :point_right:
 
-Na dnešním cvičení navážeme na [předchozí cvičení](../10-rest-api-pdf), na kterém jsme se zabývali **tvorbou API**. O tom bychom si měli pamatovat, že:
+Na dnešním cvičení navážeme na [předchozí cvičení](../x10-rest-api-pdf), na kterém jsme se zabývali **tvorbou API**. O tom bychom si měli pamatovat, že:
 - pro REST API využíváme HTTP metody GET, POST, PUT a DELETE,
-- pro komunikaci většinou používáme [JSON](../09-uzivatele-db-json-xml#json) nebo [XML](../09-uzivatele-db-json-xml#xml).
+- pro komunikaci většinou používáme [JSON](../x09-uzivatele-db-json-xml#json) nebo [XML](../x09-uzivatele-db-json-xml#xml).
 
 :point_right:
 
-Následně si nejprve připomeneme **práci s uživatelskými účty**, kterou jsme se zabývali [na cvičení 08](../08-uzivatele-maily).
+Následně si nejprve připomeneme **práci s uživatelskými účty**, kterou jsme se zabývali [na cvičení 08](../x08-uzivatele-maily).
 Ohledně lokálního přihlašování je vhodné si připomenout, že:
 - hesla ukládáme v aplikaci vždy šifrovaně (a při zapomenutém hesle jej tedy nemůžeme uživateli poslat),
 - informace o přihlášením uživateli si ukládáme do session.
@@ -48,7 +48,7 @@ V případě, že máme na serveru povolený *fopen wrapper* (o kterém jsme se 
 
 Pokud potřebujeme větší kontrolu nad odesláním požadavku, nebo máme na serveru z bezpečnostních důvodů fopen wrapper zakázaný, využijeme možnost využít **CURL**.
 
-Pro vyzkoušení volání můžete využít [API z minulého cvičení](../10-rest-api-pdf#tvorba-rest-api).
+Pro vyzkoušení volání můžete využít [API z minulého cvičení](../x10-rest-api-pdf#tvorba-rest-api).
 
 :blue_book:
 - [příklad využití REST API pomocí CURL](./11-php-client-curl.php)

@@ -56,7 +56,7 @@ Na předchozích cvičeních jsme se zabývali také kontrolami formulářů. S 
 ## Uživatelské účty
 :point_right:
 
-Příklad s uživatelskými účty jsme trochu nakousli už u [aplikace Nástěnka](../07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty), ale je nutné, abychom to probrali podrobněji.
+Příklad s uživatelskými účty jsme trochu nakousli už u [aplikace Nástěnka](../x07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty), ale je nutné, abychom to probrali podrobněji.
 
 Nejprve si projdeme trochu nezbytné teorie a poté se podíváme na praktický příklad.
 
@@ -98,7 +98,7 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
 - lokální ověření proti autentizačnímu serveru (LDAP, Active Directory od Microsoftu, ...)
 - přihlašování pomocí externí služby
     - např. pomocí Google účtu, účtu na Facebooku atp.
-    - v současnosti jde nejčastěji o přihlášení protokolem OAuth, což si ukážeme ve [cvičení 11](../11-oauth-curl)
+    - v současnosti jde nejčastěji o přihlášení protokolem OAuth, což si ukážeme ve [cvičení 11](../x11-oauth-curl)
     - patří sem také OpenId servery (např. mojeId), přihlašování pomocí Shibbolethu (používané např. v sítích univerzit) atp.
     - uživatele to zbavuje nutnosti pamatovat si další přihlašovací údaje a nás např. nutnosti implementovat dvoufaktorovou autentizaci 
 - ideální stav je takový, kdy si uživatel může vybrat mezi lokálním přihlášením a přihlášením pomocí externí služby
@@ -231,9 +231,9 @@ if ($user=$query->fetch(PDO::FETCH_ASSOC)){
 :blue_book:
 
 Příklady přihlašování v ukázkových aplikacích:
-- příklad lokálního přihlášení v Nástěnce (podrobněji bylo popsáno [tady](../07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty-v-aplikaci-n%C3%A1st%C4%9Bnka))
-    - [přihlášení](../07-ukazkova-aplikace/07-nastenka-uzivatele/login.php)
-    - [ověření platnosti přihlášení uživatele](../07-ukazkova-aplikace/07-nastenka-uzivatele/inc/user.php)
+- příklad lokálního přihlášení v Nástěnce (podrobněji bylo popsáno [tady](../x07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty-v-aplikaci-n%C3%A1st%C4%9Bnka))
+    - [přihlášení](../x07-ukazkova-aplikace/07-nastenka-uzivatele/login.php)
+    - [ověření platnosti přihlášení uživatele](../x07-ukazkova-aplikace/07-nastenka-uzivatele/inc/user.php)
 - příklad lokálního přihlášení v e-shopu (podrobněji [popsáno dále](#uk%C3%A1zkov%C3%A1-aplikace-s-u%C5%BEivatelsk%C3%BDmi-%C3%BA%C4%8Dty)):
     - [přihlášení](./08-app-eshop/signin.php)
     - [vynucení přihlášeného uživatele](./08-app-eshop/user_required.php)
@@ -282,7 +282,7 @@ V praxi to může vypadat tak, že evidujeme identifikátor zdroje a jednotlivé
 
 :blue_book:
 
-Příklad na ověřování oprávnění uživatelů pomocí zdrojů a rolí si [ukážeme za týden](../09-uzivatele-db-json-xml).
+Příklad na ověřování oprávnění uživatelů pomocí zdrojů a rolí si [ukážeme za týden](../x09-uzivatele-db-json-xml).
  
 
 ## Ukázková aplikace s uživatelskými účty
@@ -403,8 +403,8 @@ Otázka k zamyšlení: *Jak lze poznat, že uživatel dostal do schránky mail, 
 > Domácí úkol vychází z ukázkové aplikace **Nástěnka s uživatelskými účty**.
 >
 > **Nezbytná příprava:**
-> 1. pokud jste ji zatím neviděli, prohlédněte si [prezentaci s postupem implementace přihlašování uživatelů](../07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx) :orange_book:
-> 2. stáhněte si [zdrojové kódy](../07-ukazkova-aplikace/07-nastenka-uzivatele)
+> 1. pokud jste ji zatím neviděli, prohlédněte si [prezentaci s postupem implementace přihlašování uživatelů](../x07-ukazkova-aplikace/07-nastenka-uzivatele/prezentace-nastenka-uzivatele.pptx) :orange_book:
+> 2. stáhněte si [zdrojové kódy](../x07-ukazkova-aplikace/07-nastenka-uzivatele)
 > 3. nahrajte zdrojový kód aplikace na server eso.vse.cz
 > 4. naimportujte SQL export do databáze 
 >

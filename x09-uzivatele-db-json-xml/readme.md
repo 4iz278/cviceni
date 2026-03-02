@@ -6,7 +6,7 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 ## Opakování z předchozího cvičení
 :point_right:
 
-Na [předchozím cvičení](../08-uzivatele-maily) jsme se zabývali autentizací a autorizací uživatelů a zasíláním e-mailů. Na tyto znalosti budeme navazovat jak na dnešním cvičení, tak na [cvičení 11](../11-oauth-curl). Pojďme si to tedy trochu připomenout.
+Na [předchozím cvičení](../x08-uzivatele-maily) jsme se zabývali autentizací a autorizací uživatelů a zasíláním e-mailů. Na tyto znalosti budeme navazovat jak na dnešním cvičení, tak na [cvičení 11](../x11-oauth-curl). Pojďme si to tedy trochu připomenout.
 
 :point_right:
 

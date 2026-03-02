@@ -7,7 +7,7 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 
 :point_right:
 
-V rámci [minulého cvičení](../04-objekty-II-validace) byla dokončena problematika používání objektů v PHP, druhá část podkladů pak byla věnována problematice validace formulářů.
+V rámci [minulého cvičení](../x04-objekty-II-validace) byla dokončena problematika používání objektů v PHP, druhá část podkladů pak byla věnována problematice validace formulářů.
 
 
 :point_right:
@@ -38,7 +38,7 @@ Z hlediska **validace formulářů**:
 
 :house:
 
-Připomínám, že součástí byl také [domácí úkol](../04-objekty-II-validace#dom%C3%A1c%C3%AD-%C3%BAkol). Pokud jej máte hotový, nezapomeňte na jeho odevzdání.
+Připomínám, že součástí byl také [domácí úkol](../x04-objekty-II-validace#dom%C3%A1c%C3%AD-%C3%BAkol). Pokud jej máte hotový, nezapomeňte na jeho odevzdání.
 
 ---
 
