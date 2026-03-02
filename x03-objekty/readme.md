@@ -28,12 +28,12 @@
   * rozdílem je absence datových typů
   * je možné dynamicky definovat properties
   * PHP nepodporuje! vícenásobné definice metod
-  * lze využívat *magické metody* (ale o tom až na [4. cvičení](../04-objekty-II-validace))
+  * lze využívat *magické metody* (ale o tom až na [4. cvičení](../x04-objekty-II-validace))
   * **v PHP nejsou třídy automaticky potomkem žádné třídy!** (žádná výchozí třída *Object*)
 * budeme se bavit jen o objektech v PHP 5 (potažmo 7), ne v PHP 4 - tam se používaly jiné definice
 * PHP nevyžaduje, aby byla každá třída v samostatném souboru (ale bývá to dobrým zvykem)
   * v souvislosti s tím PHP neobsahuje standardní mechanismus pro načítání tříd, příslušné zdrojové kódy musí být načteny před použitím objektu
-  * je možné definovat vlastní autoload pro načítání požadovaných tříd (viz [4. cvičení](../04-objekty-II-validace#class-loader))
+  * je možné definovat vlastní autoload pro načítání požadovaných tříd (viz [4. cvičení](../x04-objekty-II-validace#class-loader))
 
 ### Definice jednoduché třídy, použití objektů
 * třída může (ale nemusí) rozšiřovat jinou třídu

@@ -7,7 +7,7 @@ Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětle
 
 :point_right:
 
-V [minulém cvičení](../03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
+V [minulém cvičení](../x03-objekty/) jsme dokončili problematiku práce se soubory, bavili jsme se o chybách a výjimkách a začali se zabývat prací s objekty.
 
 
 :point_right:
