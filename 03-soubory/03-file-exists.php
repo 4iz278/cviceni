@@ -1,6 +1,6 @@
 <?php
 
-  $soubor = '02-csv/example.csv';
+  $soubor = __DIR__.'/03-csv/example.csv';
 
   if (file_exists($soubor)){
     echo 'Soubor '.$soubor.' existuje.';

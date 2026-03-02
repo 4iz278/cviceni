@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html >
+<html lang="cs">
 <head>
   <title>Ukázková stránka</title>
   <meta charset="utf-8"/>
