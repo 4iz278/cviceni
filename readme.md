@@ -4,59 +4,61 @@ Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze.
 
 Web předmětu: **http://4iz278.github.io**
 
-## Plán cvičení
+## Tématické bloky
 
 1. **[HTML, základy PHP syntaxe](./01-html-zaklady-php/)**
   * HTML - stručné opakování
   * základy syntaxe
   * nahrání stránek na výukový server
-2. **[Řetězce, soubory](./02-retezce-soubory)**
+2. **[Pole, řetězce, vstup od uživatele](02-pole-retezce)**
+  * pole
   * řetězcové funkce
   * include, require
   * GET, POST
+3. **[Práce se soubory](03-soubory)**
   * čtení a zápis souborů
-3. **[Objekty v PHP](./03-objekty)**
   * práce s file systémem
+4. **[Objekty v PHP](04-objekty)**
   * definice tříd, rozhraní atd.
   * namespaces
-  * výjimky
-4. **[Objekty v PHP II., validace formulářů](./04-objekty-II-validace)**
+  * trait, enum
+x4. **[Objekty v PHP II., validace formulářů](x04-objekty-II-validace)**
   * class loader
   * magické metody objektů
   * validace formulářů
   * composer
   * praktická aplikace
-5. **[SQL a databáze](./05-sql-databaze)**
+x5. **[SQL a databáze](x05-sql-databaze)**
   * opakování základů SQL
   * MariaDB na serveru eso.vse.cz
   * phpMyAdmin
   * práce s databází z PHP
   * tvorba jednoduché databázové aplikace
-6. **[Opakování práce s databází, session, cookies](./06-session-cookies)**
+x6. **[Opakování práce s databází, session, cookies](x06-session-cookies)**
   * ukázková aplikace na práci s databází
   * cookies
   * session  
   * ukázková aplikace na práci se session a cookies
-7. **[Ukázková aplikace](./07-ukazkova-aplikace)**  
+x7. **[Ukázková aplikace](x07-ukazkova-aplikace)**  
   * ukázka vyřešení domácího úkolu s nástěnkou
   * ukázka rozšíření nástěnky o uživatelské účty
-8. **[Uživatelé, maily](./08-uzivatele-maily)**
+x8. **[Uživatelé, maily](x08-uzivatele-maily)**
   * autorizace, autentizace
   * lokální přihlašování uživatelů
   * posílání e-mailů
-9. **[Uživatelé a DB, JSON, XML](./09-uzivatele-db-json-xml)** 
+x9. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)** 
   * datum a čas
   * víceuživatelský přístup k DB
   * strukturované datové formáty
-10. **[REST API, PDF](./10-rest-api-pdf)**
+x10. **[REST API, PDF](x10-rest-api-pdf)**
   * tvorba API
   * AJAX
   * mPDF 
-11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](./11-oauth-curl)**  
+x11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
   * CURL  
   * zapomenuté heslo
   * OAuth
-12. **[MVC, SEO URL](./12-mvc-seo-url)**   
+x12. **[MVC, SEO URL](x12-mvc-seo-url)**   
   * .htaccess
   * návrhový vzor MVC
   * objektová tvorba aplikací  

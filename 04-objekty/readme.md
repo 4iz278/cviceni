@@ -190,6 +190,41 @@ $mojeTrida->vypis();
 * [příklad traity - jednoduchý s dědičností](04-objekty-traity-2.php)
 * [příklad traity - pokročilý](04-objekty-traity-3.php)
 
+### Enum
+* enum slouží k definici omezené množiny hodnot
+* používáme je tam, kde:
+  * hodnota může nabývat jen několika předem daných stavů
+  * nahrazují konstanty, magic strings i číselné kódy
+* jsou typově bezpečné
+* enum je samostatný typ, nikoli třída
+* buď může jít o konkrétní výčet hodnot, nebo o enum mapovaný na string nebo int (vhodné pro mapování na stavy v databázi)
+* pro práci s enumem s hodnotami lze využívat metody **cases()**, **from()**, **tryFrom()**
+
+```php
+//základní tvar enunu bez mapování na hodnoty
+enum StavUzivatele {
+  case AKTIVNI;
+  case BLOKOVANY;
+  case ZRUSENY;
+}
+
+$stav = StavUzivatele::AKTIVNI;
+if ($stav === StavUzivatele::BLOKOVANY){
+  // ...
+}
+
+//enum s hodnotami (backed enum)
+enum Role: string {
+  case ADMIN = 'admin';
+  case USER = 'user';
+  case GUEST = 'guest';
+}
+$role = Role::ADMIN;
+echo $role->value; // "admin"
+```
+
+* [příklad enum](04-objekty-enum.php)
+
 ### Jmenné prostory (namespaces)
 * jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
 * jedná se o obdobu "balíčků" z Javy či namespaces z C#
