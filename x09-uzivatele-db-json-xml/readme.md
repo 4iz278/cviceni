@@ -183,7 +183,7 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     - chceme exportovat seznam objednávek, stáhnout fakturu, naimportovat kontakty, stáhnout data z cizí aplikace atp.
 - Pro komunikaci se obvykle používají strukturované formáty.
     - nejčastěji tím myslíme [XML](#xml) a [JSON](#json) 
-    - kromě toho ale existují i další formáty - např. CSV, které známe již ze [2. cvičení](../02-retezce-soubory)
+    - kromě toho ale existují i další formáty - např. CSV, které známe již ze [2. cvičení](../02-pole-retezce)
 
 ### JSON
 :point_right:

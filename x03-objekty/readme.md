@@ -1,7 +1,7 @@
 # 3. Objekty v PHP, soubory
 
 ## Práce se souborovým systémem
-* na [minulém cvičení](../02-retezce-soubory) jsme se zabývali prací s obsahem souborů
+* na [minulém cvičení](../02-pole-retezce) jsme se zabývali prací s obsahem souborů
 * PHP samozřejmě disponuje také funkcemi pro práci s celými soubory
 * nejčastěji užívané funkce:
   * **copy($source, $dest)**
