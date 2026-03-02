@@ -9,13 +9,13 @@
      *  Funkce zajišťující výpis na výstup
      *  @param string $type
      */
-    public function vypis($type);
+    public function vypis(string $type):void;
 
     /**
      * Funkce vracející jméno
      * @return string
      */
-    public static function getName();
+    public static function getName():string;
 
   }
 
@@ -30,7 +30,7 @@
      *  Funkce zajišťující výpis na výstup
      * @param string $type
      */
-    public function vypis($type){
+    public function vypis(string $type):void{
       // TODO: Implement vypis() method.
     }
 
@@ -38,7 +38,7 @@
      * Funkce vracející jméno
      * @return string
      */
-    public static function getName(){
+    public static function getName():string{
       // TODO: Implement getName() method.
     }
 
@@ -49,7 +49,7 @@
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize(){
+    function jsonSerialize():mixed{
       // TODO: Implement jsonSerialize() method.
     }
   }

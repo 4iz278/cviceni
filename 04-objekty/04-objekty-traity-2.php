@@ -2,13 +2,13 @@
 /** Příklad k traitům v kombinaci s dědičností - převzatý z PHP manuálu */
 
 class Base {
-  public function sayHello() {
+  public function sayHello():void{
     echo 'Hello ';
   }
 }
 
 trait SayWorld {
-  public function sayHello() {
+  public function sayHello():void{
     parent::sayHello();
     echo 'World!';
   }

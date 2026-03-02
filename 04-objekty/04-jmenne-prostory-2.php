@@ -10,11 +10,11 @@ namespace NS1{
    */
   class Trida1{
 
-    public function test(){
+    public function test():string{
       return 'test';
     }
 
-    public function ukazkaNS(){
+    public function ukazkaNS():void{
       $trida2 = new Trida2();       //třída z jiného jmenného prostoru, která ale byla "importována" pomocí use
       $trida2 = new X\Trida2();     //relativní uvedené jmenného prostoru
       $trida2 = new \NS1\X\Trida2();//
@@ -26,13 +26,13 @@ namespace NS1{
    * Ukázková funkce - je zahrnutá do jmenného prostoru, ačkoliv to není v definici třídy...
    * @param $str
    */
-  function vypis($str){
+  function vypis($str):void{
     echo $str;
   }
   /**
    * @param Trida1 $trida1
    */
-  function vypis2(Trida1 $trida1){
+  function vypis2(Trida1 $trida1):void{
     //funkce s typovaným parametrem...
   }
 
@@ -42,7 +42,7 @@ namespace NS1\X{//jméno jmenného prostoru může být složeno z více část�
 
   use NS1\Trida1 as ZakladniTrida;//chceme používat třídu \NS1\Trida1 pod názvem ZakladniTrida
 
-  use function vypis2; //v PHP 5.6+ je možné importovat také funkce a konstanty
+  use function vypis2; //je možné importovat také funkce a konstanty
 
   /**
    * Class Trida2
@@ -52,7 +52,7 @@ namespace NS1\X{//jméno jmenného prostoru může být složeno z více část�
     /**
      * @return ZakladniTrida
      */
-    public function newTrida1(){
+    public function newTrida1():ZakladniTrida{
       return new ZakladniTrida();
     }
   }

@@ -8,27 +8,23 @@
  * @property string $prijmeni
  */
 class Clovek{
-  public $jmeno;
-  public $prijmeni;
   /** @var string[] $poznamky  */
-  private $poznamky=[]; //private proměnná je přístupná jen v rámci dané třídy (ne v rámci potomků)
+  private array $poznamky=[]; //private proměnná je přístupná jen v rámci dané třídy (ne v rámci potomků)
   /** @var string $id = '' */
-  protected $id = ''; //protected proměnnou nebude možné překrýt v rámci potomka
+  protected string $id = ''; //protected proměnnou nebude možné překrýt v rámci potomka
 
   /**
    * @param string $jmeno=''
    * @param string $prijmeni=''
    */
-  public function __construct($jmeno='', $prijmeni=''){
-    $this->jmeno=$jmeno;
-    $this->prijmeni=$prijmeni;
+  public function __construct(public string $jmeno='', public string $prijmeni=''){
     $this->generateId();
   }
 
   /**
    * Metoda pro vygenerování nového id
    */
-  final private function generateId(){ //pokud u definice metody použijeme klíčové slovo final, nebude ji možné překrýt v rámci potomka
+  final private function generateId():void{ //pokud u definice metody použijeme klíčové slovo final, nebude ji možné překrýt v rámci potomka
     $this->id = uniqid();
   }
 
@@ -36,7 +32,7 @@ class Clovek{
    * Metoda pro výpis daného objektu
    * @return string
    */
-  public function __toString(){
+  public function __toString():string{
     return $this->jmeno.' '.$this->prijmeni;
   }
 

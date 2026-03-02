@@ -4,19 +4,19 @@
    * Trait MujTrait
    */
   trait MujTrait{
-    private $x = 'neco'; //v rámci definice traitu je možné definovat nejen metody, ale také proměnné (properties)
+    private string $x = 'neco'; //v rámci definice traitu je možné definovat nejen metody, ale také proměnné (properties)
 
     /**
      * @return string
      */
-    public function getX(){
+    public function getX():string{
       return $this->x;
     }
 
     /**
      * @return int
      */
-    public function getRandomNumber(){
+    public function getRandomNumber():int{
       return rand(1,10);
     }
   }
@@ -28,7 +28,7 @@
 
     use MujTrait; //pomocí klíčového slova use můžeme načíst příslušný trait
 
-    public function echoX(){
+    public function echoX():void{
       echo $this->x; //proměnná $x byla sice definovaná v traitu jako private, ale je tu normálně dostupná (obsah traitu je "nakopírován" do této třídy)
     }
   }

@@ -7,7 +7,7 @@ class MojeTrida{
   //definice konstanty
   const KONSTANTA = 10;
 
-  //definice properties pro vytvářené objekty
+  //definice properties pro vytvářené objekty - pozor na to, že to jde i bez datových typů
   public $a;      //z důvodu kompatibility se starými verzemi PHP je stejnou konstrukcí zápis s použitím klíčového slova var (misto public)
   protected $b;
   private $c;

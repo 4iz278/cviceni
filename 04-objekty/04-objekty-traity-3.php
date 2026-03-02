@@ -3,25 +3,25 @@
 /** Ukázka kompozice třídy z většího množství traitů za využití možnosti řešení konfliktních názvů */
 
 trait Trait1{
-  public function test(){
+  public function test():void{
     echo 'test 1'.PHP_EOL;
   }
-  public function vypis(){
+  public function vypis():void{
     echo 'vypis 1'.PHP_EOL;
   }
 }
 
 trait Trait2{
-  public function test(){
+  public function test():void{
     echo 'test 2'.PHP_EOL;
   }
-  public function vypis(){
+  public function vypis():void{
     echo 'vypis 2'.PHP_EOL;
   }
 }
 
 trait Trait3{
-  protected function hello(){
+  protected function hello():void{
     echo 'hello'.PHP_EOL;
   }
 }

@@ -12,7 +12,7 @@ namespace TestovaciNamespace;
  */
 class Trida1{
 
-  public function test(){
+  public function test():int{
     $cislo = Trida2::getX();
     //v objektovém programování samozřejmě nezáleží na tom, jak jsou třídy napsané v souboru za sebou
     //ke třídám ve stejném jmenném prostoru přistupujeme stejně, jako kdybychom jmenné prostory vůbec nepoužívali
@@ -26,10 +26,7 @@ class Trida1{
  * @package TestovaciNamespace
  */
 class Trida2{
-  /**
-   * @return int
-   */
-  public static function getX(){
+  public static function getX():int{
     return 10;
   }
 }
