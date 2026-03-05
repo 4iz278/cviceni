@@ -1,6 +1,7 @@
 # 2. Pole, řetězce, vstup od uživatele
 
 ## Pole
+:point_right:
 * pole = v podstatě "tabulka hodnot", ve které jsou jednotlivé buňky označeny buď čísly, nebo názvy
   * číselné indexování začíná *0*
   * pole s položkami označenými názvy označujeme jako *asociativní*
@@ -11,8 +12,9 @@
 * vícedimenzionální (vícenásobné) pole = pole, ve kterém je v každé buňce uloženo další pole
 
 ### Definice nového pole
+:point_right:
 * funkce *array()*
-* v nových verzích PHP je možné využívat definici pomocí *[]*
+* v nových verzích PHP je možné využívat definici pomocí *[]* (reálně to používá většina programátorů)
 ```php
   $pole1 = array();//vytvoří prázdné pole
   $pole2 = []; //vytvoří prázdné pole (zkrácená syntaxe)
@@ -21,6 +23,7 @@
 ```
 
 ### Přidání a odebrání prvku
+:point_right:
 ```php
   $pole[]=$hodnota; //přidá prvek na konec indexovaného pole
   $pole[10]=$hodnota; //přidá prvek pod konkrétní číselný index
@@ -34,6 +37,8 @@
   unset($pole2[1]); // smaže 2. prvek z pole, ale ostatní indexy nezmění - velikost bude 4, ale indexy 0, 2, 3, 4
   var_dump($pole2);
 ```
+
+:point_right:
 * s prvky jde pracovat také pomocí funkcí
   * **array_pop($pole)**
     * odebere poslední prvek z pole, vrací jeho hodnotu
@@ -45,6 +50,7 @@
     * přidá prvek na začátek pole
 
 ### Funkce pro práci s poli
+:point_right:
 * **count($pole)**
   * vrací počet prvků v poli
 
@@ -59,6 +65,7 @@
   * u číslovaných polí se položky přečíslují
   * u asociativních polí se stejně označené položky přepíšou
   * alternativně lze sloučit pomocí **+**, ale v tomto případě se nepřepisují hodnoty a nemění se číselné indexy
+  * k ručnímu rozbalení hodnot pole (bez vazby na klíče) lze použít také *variadic operátor* **...**
 ```php
 $pole1 = [
   "a" => 1,
@@ -72,6 +79,9 @@ $pole2 = [
 
 $sloucene = array_merge($pole1, $pole2); //buňka b je z 2. pole
 $doplnene = $pole1 + $pole2; //buňka b je z 1. pole
+
+//ukázka spojení rozepsáním hodnot, ale jsou předány jen hodnoty (klíče se nepřenáší)
+$vysledek= ['demo', ...$pole2];
 ```
 
 * **sort($pole)**
@@ -91,11 +101,13 @@ $doplnene = $pole1 + $pole2; //buňka b je z 1. pole
 
 * existují i další užitečné funkce, ale zatím se bez nich obejdeme - např. **array_filter()**, **array_reduce()** či **array_map()**
 
+:blue_book:
 * [příklad array](./02-array.php)
 * [příklad array-uasort](./02-array-uasort.php)
 * [w3schools - Array functions](http://www.w3schools.com/php/php_ref_array.asp)
 
 ### Foreach cyklus
+:point_right:
 * cyklus umožňující projití všech prvků v poli (či kolekci)
 ```php
 foreach($pole as $hodnota){
@@ -114,9 +126,12 @@ foreach($pole as &$hodnota){
 }
 ```
 * nepoužívejte ve foreach cyklu *unset* na prvek pole
+
+:blue_book:
 * [příklad foreach](./02-foreach.php)
 
 ## GET, POST, REQUEST
+:point_right:
 * pokud nemá stránka jen něco vypisovat, ve většině případů potřebujeme pracovat se vstupními daty
 * zkusíme trochu zavzpomínat na "sítě"
   * *Jaký je rozdíl mezi metodami GET a POST?*
@@ -131,12 +146,14 @@ http://subdomena.domena.tld/adresar/skript.php?parametr=hodnota&parametr2=hodnot
 * data získáváme od uživatelů nejčastěji z URL adres a pomocí formulářů
   * pokud nevíte jak napsat formulář, zkuste mrknout na [podklady z 4iz268](https://github.com/4iz268/cviceni/tree/master/10-formulare)
 
+:blue_book:
 * [příklad GET request](./02-get.php)
 * [příklad formulář s metodou POST](./02-formular-post.php)
 * [opakování z 4iz268 - Základní formulářové prvky](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-prvky.html)
 * [opakování z 4iz268 - Nové formulářové prvky v HTML 5](https://github.com/4iz268/cviceni/blob/master/10-formulare/10-form-nove-prvky-html5.html)
 
 ## Řetězcové funkce
+:point_right:
 * **strlen($retezec)**
   * funkce vracející počet bajtů aktuálního řetězce
   * u kódování UTF-8 používáme **mb_strlen()** (více u [mb_funkcí](#mb_-funkce))
@@ -228,6 +245,7 @@ echo iconv("UTF-8", "ISO-8859-2//IGNORE", "10 €"); //vypíše 10
 ```
 
 ### mb_ funkce
+:point_right:
 * aplikace dnes často píšeme v UTF-8 - pokud chceme pracovat s řetězci na úrovni znaků, je vhodné použít místo původní funkce její *mb_ alternativu*
 * např.:
 ```php
@@ -239,5 +257,6 @@ $delka = mb_strlen($retezec, "utf-8" );
 mb_internal_encoding("UTF-8");
 ```
 
+:blue_book:
 * [příklad řetězce](./02-retezce.php)
 * [příklad formuláře s jednoduchou kontrolou](./02-retezce-formular-kontrola.php)

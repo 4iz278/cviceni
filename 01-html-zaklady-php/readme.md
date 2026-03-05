@@ -10,6 +10,7 @@
 
 
 ## PHP
+:point_right:
 * interpretovaný programovací jazyk spouštěný na straně serveru
 * aktuálně obvykle využívána řada 8.x
   * pozor na to, že novější verze nejsou vždy plně zpětně kompatibilní se starším kódem
@@ -32,6 +33,7 @@
     * magické funkce
 
 ### Vložení PHP do webových stránek
+:point_right:
 ```php
 <?php
   // vlastní kód
@@ -51,6 +53,7 @@
 
 ### Základní syntaktické konstrukce
 #### Komentáře
+:point_right:
 * pomáhají se vyznat v kódu
 * dokumentační komentáře umožňují napovídání v rámci IDE (popisy proměnných a jejich datové typy)
 ```php
@@ -68,6 +71,7 @@
 ```
 
 #### Proměnné
+:point_right:
 * všechny proměnné jde poznat podle znaku **$**, kterým začíná jejich název
 * proměnné není nutné deklarovat, prostě rovnou přiřadíme do dané proměnné hodnotu
 * **názvy proměnných**
@@ -110,9 +114,11 @@
 declare(strict_types=1); //chceme kontrolu datových typů bez přetypování
 ```
 
+:blue_book:
 * [příklad proměnné](./01-promenne.php)
 
 #### Textové řetězce
+:point_right:
 * řetězce zapisujeme v jednoduchých či dvojitých uvozovkách
   * ve dvojitých uvozovkách jsou vyhledávány
     * proměnné => jsou nahrazeny svojí textovou hodnotou (volitelně je lze oddělit od okolního textu složenými závorkami)
@@ -127,6 +133,8 @@ declare(strict_types=1); //chceme kontrolu datových typů bez přetypování
 
 #### Operátory
 ##### Základní operátory
+:point_right:
+
 | Operátor           | Popis                                               | Příklad                              |
 |--------------------|-----------------------------------------------------|--------------------------------------|
 | =                  | přiřazení hodnoty do proměnné                       | $promenna = "hodnota";               |
@@ -142,6 +150,8 @@ declare(strict_types=1); //chceme kontrolu datových typů bez přetypování
 | --                 | zmenšení hodnoty proměnné o 1                       | $a--; --$b;                          |
 
 ##### Porovnávací a logické operátory
+:point_right:
+
 | Operátor | Popis                                                   | Příklad   |
 |----------|---------------------------------------------------------|-----------|
 | ==       | operátor porovnání                                      | $a == $b  |
@@ -160,6 +170,8 @@ declare(strict_types=1); //chceme kontrolu datových typů bez přetypování
 
 #### Podmínky
 ##### Jednoduchá podmínka
+:point_right:
+
 ```php
 if (podminka){
   //true větev
@@ -170,6 +182,8 @@ if (podminka){
 * pokud má být v dané větvi vykonán jen jeden příkaz, není nutné ho balit do složených závorek
 
 ##### Vícenásobná podmínka
+:point_right:
+
 ```php
 if (podminka1){
   //větev při spojení podmínky 1
@@ -182,6 +196,8 @@ if (podminka1){
 * elseif větví může být zapojeno libovolné množství
 
 ##### Zkrácená podmínka při přiřazení
+:point_right:
+
 * ve výpisech, zapojení příslušné části řetězce atp.
 ```php
 // proměnná = podminka ? true větev : false větev;
@@ -191,6 +207,8 @@ $x = ( $a=="tykani" ? "Ahoj" : "Dobrý den" );
 * [příklad podmínky](./01-podminky.php)
 
 #### Null coalescing operátor
+:point_right:
+
 * operátor **??** umožňuje nastavit výchozí hodnotu proměnné, pokud není definovaná nebo má hodnotu *null*
 * jde o alternativu ke zkrácené podmínce s funkcí *isset* (či případně *empty* - ale pozor, tam by neprošla ani hodnota 0)
 ```php
@@ -203,6 +221,8 @@ $vek = isset($vek) ? $vek : 18;
 
 #### Cykly
 ##### Cyklus s podmínkou na začátku (while)
+:point_right:
+
 * asi nejčastěji využívaný
 * nepoužívejte cykly, které mají na začátku v podmínce napsané jen *true*!!!
 ```php
@@ -210,18 +230,26 @@ while(podmínka){
   //příkazy v cyklu
 }
 ```
+
+:blue_book:
 * [příklad cykly](./01-cykly.php)
 
 ##### Cyklus s podmínkou na konci (do-while)
+:point_right:
+
 * proběhne alespoň jednou
 ```php
 do{
   //příkazy v cyklu
 }while(podmínka);
 ```
+
+:blue_book:
 * [příklad cykly](./01-cykly.php)
 
 ##### Cyklus s daným počtem opakování (for)
+:point_right:
+
 ```php
 for (inicializace iterátoru; podmínka; úprava hodnoty iterátoru){
   //příkazy cyklu
@@ -231,13 +259,19 @@ for($x=10; $x>=1; $x-=2){
   //příkazy cyklu
 }
 ```
+
+:blue_book:
 * [příklad cykly](./01-cykly.php)
 
 ##### Cyklus pro procházení polí a kolekcí (foreach)
+:point_right:
+
 * pro zpracování všech prvků v poli či kolekci
 * bude [vysvětlen společně s problematikou polí](../02-pole-retezce#foreach-cyklus)
 
 ##### Řídící příkazy cyklu
+:point_right:
+
 * **break;** - ukončí cyklus a pokračuje v kódu za ním
 * **continue;** - ukončí aktuální průchod cyklem a přejde na podmínku
 * v PHP lze tyto příkazy doplnit o číselný index umožňující vyskočit z více cyklů najednou
@@ -259,6 +293,8 @@ for($a=0;$a<10;$a++){
 ```
 
 #### Switch
+:point_right:
+
 * pro výběr z více variant kódu dle hodnoty jedné proměnné
 * kód je vykonáván od příslušné shody podmínky a pokračuje až do příkazu *break;* (nebo prostě dál...)
 ```php
@@ -272,9 +308,13 @@ switch ($promenna){
     /*blok kódu*/
 }
 ```
+
+:blue_book:
 * [příklad switch](./01-switch.php)
 
 ### Match
+:point_right:
+
 * pokud chcete vracet hodnotu (např. nějaký řetězec) nebo vybrat funkci k zavolání podle hodnoty zvolené proměnné, je příkaz *match* jednodušší a přehlednější variantou než *switch* (ale nejde o alternativu pro každý switch!)
 * porovnání je striktní (porovnává se s kontrolou datového typu, tj. ===)
 * není potřeba příkaz break - nedojde ke spuštění dalších větví
@@ -293,6 +333,8 @@ echo $text;
 ```
 
 #### Funkce
+:point_right:
+
 * pro pojmenování funkcí platí stejné podmínky, jako pro názvy proměnných (jen *nezačínají znakem $*)
 * funkce nemusejí být zabaleny v žádných třídách
 * u funkcí je podporována typová kontrola parametrů, pokud jimi mají být instance tříd
@@ -323,6 +365,8 @@ function funkce2($a, $b="x"){
   echo 'hodnota A byla '.$a.', hodnota B byla '.$b;
 }
 ```
+
+:point_right:
 * funkce je možné definovat také jako *anonymní* - uložit je do proměnné, nebo je předat jako parametr funkce
 * anonymní funkce je možné zkrátit také do zápisu v podobě tzv. *arrow funkce*
 ```php
@@ -352,8 +396,38 @@ $vysledek = spocitejCenuSDph(
 );
 ```
 
+
+:blue_book:
 * [příklady definice funkcí](./01-funkce.php)
 
+##### Pokročilé možnosti parametrů
+:point_right:
+* PHP podporuje volání funkcí s uvedením jmen parametrů - tzv. *named arguments*
+* pokud při volání uvedeme jména parametrů, nemusíme dodržet jejich pořadí z definice funkce 
+```php
+function ukazka($a=1,int $b=2,int $c=3):int{
+  return $a+$b+$c;
+}
+
+ukazka(b: 10, a: 1); //uvedením názvů parametrů určíme, pro který daná hodnota platí
+ukazka(10, c: 5); //parametry bez uvedení názvu se plní v pořadí dle definice ve funkci, reálně nastavujeme $a=10, $c=5
+```
+
+:point_right:
+* aktuálně PHP podporuje také *variadic operátor* umožňující zadat předat do funkce libovolné množství hodnot, které jsou uvnitř funkce k dispozici jako pole
+* zápis **...** lze použít s uvedením datového typu i bez něj
+```php
+function vypis(string $nadpis, string ...$hodnoty):void{
+  echo '<h2>'.$nadpis.'</h2>';
+  if (!empty($hodnoty)){
+    foreach ($hodnoty as $hodnota){
+      echo $hodnota.'<br/>';
+    }
+  } 
+}
+
+vypis('DEMO', 'a', 'b');
+```
 
 #### Konstanty
 * využíváme pro globální označení konkrétní hodnoty, které jsou využívány na více místech kódu
