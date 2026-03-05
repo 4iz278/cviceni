@@ -196,4 +196,5 @@ if ($file){
 > ```
 > 
 :orange_book:
-* [prezentace s ukázkou řešení](./prezentace-knihanavstev.pptx)
+* [kniha návštěv - prezentace s ukázkou řešení](./prezentace-knihanavstev.pptx)
+* [kniha návštěv - kód dle prezentace](./prezentace-knihanavstev-kod.zip)
