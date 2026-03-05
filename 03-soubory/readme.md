@@ -196,4 +196,4 @@ if ($file){
 > ```
 > 
 :orange_book:
-* [prezetace s ukázkou řešení](./prezentace-knihanavstev.pptx)
+* [prezentace s ukázkou řešení](./prezentace-knihanavstev.pptx)
