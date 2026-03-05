@@ -6,6 +6,7 @@
   * pokud chceme zapisovat do souboru/adresáře, je nutné na většině hostingů upravit dané položce přístupová práva
 
 ## Include, require
+:point_right:
 * PHP nevyžaduje rozdělení aplikace do jednotlivých souborů - i při objektové aplikaci můžeme vše napsat jen do jednoho souboru, ale...
 * pokud se máme v aplikaci vyznat, je vhodné ji rozčlenit na logické celky uložené v samostatných souborech
 * příkazy *include* a *require* jsou jedním z nejjednodušších využití PHP také na statických stránkách - pro oddělení hlavičky a patičky do samostatného souboru
@@ -24,12 +25,14 @@ require_once "connection.inc.php";
 include __DIR__.'/connection.inc.php'; //soubor hledaný v aktuálním adresáři
 ```
 
+:blue_book:
 * [příklad include](03-include/index.php)
 
 ## Načtení/uložení celého souboru
 * celý obsah souboru je možné načíst či uložit pomocí jednoho zavolání funkce
 
 ### file_get_contents
+:point_right:
 * načte celý soubor (pokud by neexistoval, vypíše varování a vrátí false)
 * viz [w3schools - PHP file_get_contents() Function](http://www.w3schools.com/php/func_filesystem_file_get_contents.asp)
   * k čemu jsou dobré další atributy dané funkce?
@@ -49,6 +52,7 @@ if ($soubor!==false){
 ```
 
 ### file_put_contents
+:point_right:
 * uloží celý soubor (pokud neexistuje, je vytvořen)
 * pomocí 3. parametru je možné zapisovat až na konec
 * vhodné pro jednorázový zápis (např. poznámka logu, kde nechceme udržovat odkaz na otevřený soubor)
@@ -56,20 +60,23 @@ if ($soubor!==false){
 ```php
 file_put_contents('soubor.txt',$data,FILE_APPEND);//připojení obsahu na konec souboru
 ```
-
+:blue_book:
 * [příklad file content](../03-soubory/03-file-content.php)
 
 
 ### readfile
+:point_right:
 * funkce pro odeslání obsahu souboru na výstup (např. pro zabezpečené stahování PHP souborů)
   * neobsah souboru jako svoji návratovou hodnotu
   * pokud chceme korektně nabídnout soubor ke stažení, je nutné doplnit odpovídající hlavičky pomocí funkce *header()*
 ```php
 readfile("soubor.txt");
 ```
+:blue_book:
 * [příklad readfile](03-readfile/index.php)
 
 ## Soubory - čtení, zápis
+:point_right:
 * základní postup je
   1. otevření souboru (s příslušným modifikátorem přístupu)
   2. potřebné manipulace s obsahem (čtení, zápis)
@@ -96,6 +103,7 @@ if ($file){
 ```
 
 ### Kontrola existence a zapisovatelnosti souboru
+:point_right:
 * **file_exists($jmenoSouboru)**
   * funkce pro kontrolu, zda daný soubor (nebo adresář) existuje
 
@@ -103,6 +111,7 @@ if ($file){
   * funkce pro kontrolu, zda je možné zapisovat do daného souboru (z PHP)
 
 ### Potřebné funkce
+:point_right:
 * **fopen($jmenoSouboru, $pristup)**
   * modifikátory přístupu *r*, *w*, *a*, *r+*, *w+*, *a+*
     * rozhodují o otevření pro čtení, zápis či připojování na konec
@@ -131,12 +140,13 @@ if ($file){
   * volitelně jde zadat parametr *$whence*
     * *SEEK_CUR* - offset bude počítán od aktuální pozice, offset pak může být i záporný
 
+:point_right:
 * máme i funkce pro přímou práci s CSV soubory
   * *Co je to CSV soubor?*
   * viz [PHP manuál - fgetcsv](http://php.net/manual/en/function.fgetcsv.php)
   * viz [PHP manuál - fputcsv](http://php.net/manual/en/function.fputcsv.php)
 
-
+:blue_book:
 * [příklad čtení souboru](../03-soubory/03-fread.php)
 * [příklad zápisu do souboru](03-fwrite.php)
 * [příklad čtení CSV](03-csv/fgetcsv.php)
@@ -144,6 +154,7 @@ if ($file){
 
 
 ## Práce se souborovým systémem
+:point_right:
 * PHP samozřejmě disponuje také funkcemi pro práci s celými soubory
 * nejčastěji užívané funkce (většina z nich vrací true/false podle toho, zda se operace povedla):
   * **copy($source, $dest)**
@@ -165,6 +176,7 @@ if ($file){
     * funkce pro rozlišení, zda se pod daným názvem skrývá adresář nebo soubor
   * a také funkce, které už jsme zmiňovali dříve - **file_exists()** a **is_writable()**
 
+:blue_book:
 * [příklad kontrola čtení/zápisu](./03-soubory-stav.php)
 * [příklad manipulace se soubory](./03-soubory-manipulace.php)
 * [příklad výpis adresáře](./03-soubory-scandir.php)
@@ -182,3 +194,6 @@ if ($file){
 > ```php
 > $datum = date('d.m.Y H:i:s');
 > ```
+> 
+:orange_book:
+* [prezetace s ukázkou řešení](./prezentace-knihanavstev.pptx)
