@@ -19,7 +19,7 @@
 
 ```php
 class JmenoTridy extends NadrazenaTrida implements Rozhrani1,Rozhrani2 {
-  const string KONSTANTA = "hodnota"; //definice konstanty; pokud neuvedete přístupost, je automaticky public
+  const string KONSTANTA = "hodnota"; //definice konstanty; pokud neuvedete přístupnost, je automaticky public
   private string $x = 'a'; //definice private property s výchozí hodnotou
   public string|int $y;        //veřejně dostupná property typu string či int
   protected $z;     //property přístupná z dané třídy a potomků
@@ -67,7 +67,7 @@ JmenoTridy::statickaFunkce(); //zavolání statické metody
 * **Víte z jiných programovacích jazyků něco o dědičnosti?**
 * **rozhraní** = "šablona" toho, jaké metody musí daná třída obsahovat
   * umožňují jednotný přístup k jednotlivým třídám
-* **abstraktní třída** = třída, ve které nejsou definovány některé metody
+* **abstraktní třída** = třída, která může obsahovat abstraktní (plně nedefinované) metody
   * nelze od ní přímo vytvořit instanci - abstraktní metody jsou dodefinovány v potomkovi
 
 ```php
@@ -191,17 +191,18 @@ $mojeTrida->vypis();
 * [příklad traity - pokročilý](05-objekty-traity-3.php)
 
 ### Enum
+* enum je samostatný typ, nikoli třída
 * enum slouží k definici omezené množiny hodnot
 * používáme je tam, kde:
   * hodnota může nabývat jen několika předem daných stavů
   * nahrazují konstanty, magic strings i číselné kódy
 * jsou typově bezpečné
-* enum je samostatný typ, nikoli třída
 * buď může jít o konkrétní výčet hodnot, nebo o enum mapovaný na string nebo int (vhodné pro mapování na stavy v databázi)
 * pro práci s enumem s hodnotami lze využívat metody **cases()**, **from()**, **tryFrom()**
+* enum může implementovat rozhraní
 
 ```php
-//základní tvar enunu bez mapování na hodnoty
+//základní tvar enumu bez mapování na hodnoty
 enum StavUzivatele {
   case AKTIVNI;
   case BLOKOVANY;
@@ -214,13 +215,35 @@ if ($stav === StavUzivatele::BLOKOVANY){
 }
 
 //enum s hodnotami (backed enum)
-enum Role: string {
+enum Role: string{
   case ADMIN = 'admin';
   case USER = 'user';
   case GUEST = 'guest';
 }
 $role = Role::ADMIN;
+echo $role->name; // "ADMIN"
 echo $role->value; // "admin"
+```
+
+* enum může obsahovat vlastní metody (např. popisky stavů, labely pro UI atp.)
+```php
+//enum s doplněnou ukázkovou metodou volatelnou na jednotlivých hodnotách
+enum Role: string{
+  case ADMIN = 'admin';
+  case USER = 'user';
+  case GUEST = 'guest';
+
+  public function label(): string{
+    return match($this) {
+      self::ADMIN => 'Administrátor',
+      self::USER => 'Uživatel',
+      self::GUEST => 'Host',
+    };
+  }
+}
+
+$role = Role::ADMIN;
+echo $role->label(); // Administrátor
 ```
 
 * [příklad enum](05-objekty-enum.php)
@@ -236,7 +259,7 @@ echo $role->value; // "admin"
 ```php
 namespace MojeAplikace; //všechen následující kód bude ve jmenném prostoru "MojeAplikace"
 
-use MojeAplikace\Model\User; //import třídy User ze jmenného prostoru \MojeAplikace\Model (budeme ji volat jen jako "Users")
+use MojeAplikace\Model\User; //import třídy User ze jmenného prostoru \MojeAplikace\Model (budeme ji volat jen jako "User")
 
 function f1(){
   \PDF\Generator::output();//zavolání statické metody na třídě \PDF\Generator (absolutní cesta)
