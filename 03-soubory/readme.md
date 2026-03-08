@@ -184,6 +184,7 @@ if ($file){
 
 
 # Příklad na procvičení
+:mega:
 > Vytvořte jednoduchou knihu návštěv, která bude mít všechna data uložena v textovém souboru.
 > Chcete trochu napovědět?
 > - stránka bude obsahovat formulář, pomocí kterého uživatel zadá své jméno, text příspěvku a e-mail (volitelný)
