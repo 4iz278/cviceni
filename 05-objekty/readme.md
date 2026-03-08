@@ -61,7 +61,7 @@ JmenoTridy::$a = 1; //přístup k statické proměnné třídy
 JmenoTridy::statickaFunkce(); //zavolání statické metody
 ```
 
-* [příklad objekty - základ](./04-objekty-zaklad.php)
+* [příklad objekty - základ](05-objekty-zaklad.php)
 
 ### Abstraktní třídy, rozhraní, dědičnost
 * **Víte z jiných programovacích jazyků něco o dědičnosti?**
@@ -99,10 +99,10 @@ class Class2 extends Class1 implements X{
   }
 ```
 
-* [příklad objekty - dědičnost](./04-objekty-dedicnost.php)
-* [příklad objekty - interface](./04-objekty-interface.php)
-* [příklad objekty - abstraktní třídy](./04-objekty-abstract-class.php)
-* [příklad objekty - instanceof](./04-objekty-instanceof.php)
+* [příklad objekty - dědičnost](05-objekty-dedicnost.php)
+* [příklad objekty - interface](05-objekty-interface.php)
+* [příklad objekty - abstraktní třídy](05-objekty-abstract-class.php)
+* [příklad objekty - instanceof](05-objekty-instanceof.php)
 
 ### Definice properties v constructoru
 * často používáme konstruktor jen k tomu, abychom zapsali předané hodnoty do properties
@@ -161,8 +161,8 @@ $u = new Uzivatel(1, "Pepa");
 //$u->jmeno = "Karel"; // chyba – readonly property
 ```
 
-* [příklad objekty - readonly](./04-objekty-readonly.php)
-* [příklad objekty - immutable](./04-objekty-immutable.php)
+* [příklad objekty - readonly](05-objekty-readonly.php)
+* [příklad objekty - immutable](05-objekty-immutable.php)
 
 ### Traity
 * trait = v podstatě *kousek definice třídy*
@@ -186,9 +186,9 @@ $mojeTrida = new MojeTrida();
 $mojeTrida->vypis();
 ```
 
-* [příklad traity - jednoduchý](04-objekty-traity-1.php)
-* [příklad traity - jednoduchý s dědičností](04-objekty-traity-2.php)
-* [příklad traity - pokročilý](04-objekty-traity-3.php)
+* [příklad traity - jednoduchý](05-objekty-traity-1.php)
+* [příklad traity - jednoduchý s dědičností](05-objekty-traity-2.php)
+* [příklad traity - pokročilý](05-objekty-traity-3.php)
 
 ### Enum
 * enum slouží k definici omezené množiny hodnot
@@ -223,7 +223,7 @@ $role = Role::ADMIN;
 echo $role->value; // "admin"
 ```
 
-* [příklad enum](04-objekty-enum.php)
+* [příklad enum](05-objekty-enum.php)
 
 ### Jmenné prostory (namespaces)
 * jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
@@ -249,9 +249,9 @@ class TridaX{
 }
 ```
 
-* [příklad jmenné prostory 1](04-jmenne-prostory-1.php)
-* [příklad jmenné prostory 2](04-jmenne-prostory-2.php)
-* [příklad jmenné prostory 3 - více souborů](04-jmenne-prostory-3)
+* [příklad jmenné prostory 1](05-jmenne-prostory-1.php)
+* [příklad jmenné prostory 2](05-jmenne-prostory-2.php)
+* [příklad jmenné prostory 3 - více souborů](05-jmenne-prostory-3)
 * [PHP manuál - vyhodnování jmen v závislosti na jmenných prostorech](http://php.net/manual/en/language.namespaces.rules.php)
 
 ## Příklad na procvičení
