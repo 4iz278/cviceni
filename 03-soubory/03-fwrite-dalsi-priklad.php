@@ -19,5 +19,3 @@ fwrite($to_write, fread(fopen("mustang.jpg", "r"), filesize("mustang.jpg")));
 
 #zavreme otevreny soubor
 fclose($to_write);
-	
-?>
