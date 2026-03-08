@@ -15,7 +15,7 @@
   * v případě neobjektové aplikace je vhodné vkládané soubory oddělit do samostatného adresáře, nebo např. dopsat do jejich názvu *"inc"* => na první pohled je pak zřejmé, že mají být někam vloženy
 * *Jaký je rozdíl mezi "include" a "require"?*
   * Pokud se soubor nepodaří načíst, include vypíše upozornění a skript pokračuje, zatímco require běh skriptu ukončí.
-* v případě uvedení jen názvu souboru je soubor hledán v tzv. *include path*, doporučuji použít absolutní cestu za využití konstanty **__DIR__**
+* v případě uvedení jen názvu souboru je soubor hledán v tzv. *include path*, doporučuji použít absolutní cestu za využití konstanty ```__DIR__```
 ```php
 include "connection.inc.php";
 require "connection.inc.php";
