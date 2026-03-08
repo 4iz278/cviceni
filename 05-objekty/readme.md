@@ -1,6 +1,4 @@
-# 4. Objekty v PHP
-
-## Třídy, rozhraní atd.
+# 4. Objekty v PH
 * základ práce s třídami, rozhraními a dědičností se v PHP vlastně moc neliší od toho, co možná znáte z Javy či např. C#
   * rozdílem je absence datových typů - nejsou povinné, ale je možné je definovat
   * PHP nepodporuje! vícenásobné definice (přetěžování) metod, ale podporuje volitelné parametry (jako např. JavaScript)
@@ -11,7 +9,8 @@
   * v souvislosti s tím PHP neobsahuje standardní mechanismus pro načítání tříd, příslušné zdrojové kódy musí být načteny před použitím objektu
   * je možné definovat vlastní autoload pro načítání požadovaných tříd (viz [4. cvičení](../05-objekty-II#class-loader))
 
-### Definice jednoduché třídy, použití objektů
+## Definice jednoduché třídy, použití objektů
+:point_right:
 * třída může (ale nemusí) rozšiřovat jinou třídu
 * třída může implementovat rozhraní (i větší množství) - **K čemu jsou dobrá rozhraní?**
 * konstruktor definujeme pomocí *__construct()*, ručně ho nevoláme (určitě ne mimo danou třídu), instance vytváříme pomocí *new*
@@ -61,9 +60,11 @@ JmenoTridy::$a = 1; //přístup k statické proměnné třídy
 JmenoTridy::statickaFunkce(); //zavolání statické metody
 ```
 
+:blue_book:
 * [příklad objekty - základ](05-objekty-zaklad.php)
 
-### Abstraktní třídy, rozhraní, dědičnost
+## Abstraktní třídy, rozhraní, dědičnost
+:point_right:
 * **Víte z jiných programovacích jazyků něco o dědičnosti?**
 * **rozhraní** = "šablona" toho, jaké metody musí daná třída obsahovat
   * umožňují jednotný přístup k jednotlivým třídám
@@ -90,6 +91,7 @@ class Class2 extends Class1 implements X{
 }
 ```
 
+:point_right:
 * v PHP samozřejmě existují také možnosti pro ověření, jestli je daný objekt instancí zvolené třídy (i jejího potomka) a zjištění, zda daná třída existuje
   * další užitečné metody jsou **class_exists()**, **property_exists()**, **method_exists()**, **interface_exists()**
 
@@ -99,12 +101,14 @@ class Class2 extends Class1 implements X{
   }
 ```
 
+:blue_book:
 * [příklad objekty - dědičnost](05-objekty-dedicnost.php)
 * [příklad objekty - interface](05-objekty-interface.php)
 * [příklad objekty - abstraktní třídy](05-objekty-abstract-class.php)
 * [příklad objekty - instanceof](05-objekty-instanceof.php)
 
-### Definice properties v constructoru
+## Definice properties v constructoru
+:point_right:
 * často používáme konstruktor jen k tomu, abychom zapsali předané hodnoty do properties
 * pro zjednodušení lze properties definovat rovnou v konstruktoru
 
@@ -141,7 +145,8 @@ class Uzivatel {
 }
 ```
 
-### Readonly properties / class
+## Readonly properties / class
+:point_right:
 * **readonly** property je vlastnost, kterou lze nastavit pouze jednou
   * často nastavujeme hodnotu rovnou v konstruktoru (vhodné pro objekty jen přenášející data)
   * po inicializaci už nelze hodnotu změnit
@@ -161,10 +166,60 @@ $u = new Uzivatel(1, "Pepa");
 //$u->jmeno = "Karel"; // chyba – readonly property
 ```
 
+:blue_book:
 * [příklad objekty - readonly](05-objekty-readonly.php)
 * [příklad objekty - immutable](05-objekty-immutable.php)
 
+### Property hooks (PHP 8.4+)
+> [!TIP]
+> * od PHP 8.4 je možné definovat logiku, která se provede při čtení nebo zápisu property
+>   * není tedy nutné vytvářet a volat vlastní metody typu getXXX / setXXX 
+>   * jde vlastně o stejné chování, jaké má např. C#
+> * umožňuje:
+>   * validaci hodnot 
+>   * automatickou úpravu dat 
+>   * zapouzdření jednoduché logiky bez setterů/getterů
+>   * konverze datového typu property
+> * Property hooks jsou vhodné hlavně pro jednoduchou logiku u properties (např. validaci nebo normalizaci hodnot). Složitější operace je stále lepší  řešit pomocí metod.
+> ```php
+> class Produkt { 
+>   public int $cena {
+>     set {
+>       if ($value < 0) {
+>         throw new InvalidArgumentException("Cena nesmí být záporná");
+>       }
+>       $this->cena = $value;
+>     }
+>   }
+> }
+> 
+> class Udalost {
+>   public DateTimeImmutable $datum {
+>     set(string|DateTime|DateTimeImmutable $value) {
+>       if (is_string($value)) {
+>         $this->datum = new DateTimeImmutable($value);
+>       }elseif($value instanceof DateTime){
+>         $this->datum = DateTimeImmutable::createFromMutable($value);
+>       }else{
+>         $this->datum = $value;
+>       }
+>     }
+>   }
+> }
+> 
+> $p = new Produkt();
+> 
+> $p->cena = 100;   // OK
+> $p->cena = -50; // vyhodí výjimku
+> 
+> $udalost = new Udalost();
+> $udalost->datum='2026-12-24'; //hodnota se automaticky převede na DateTimeImmutable
+> 
+> echo $udalost->datum->format('j.n.Y');
+> ```
+
 ### Traity
+:point_right:
 * trait = v podstatě *kousek definice třídy*
 * umožňují částečně řešit problém nemožnosti vícenásobné dědičnosti
 * umožňují zapojovat do tříd jen ty funkcionality, které daná třída opravdu potřebuje (například v případě tříd controllerů/presenterů v MVC/MVP)
@@ -186,11 +241,13 @@ $mojeTrida = new MojeTrida();
 $mojeTrida->vypis();
 ```
 
+:blue_book:
 * [příklad traity - jednoduchý](05-objekty-traity-1.php)
 * [příklad traity - jednoduchý s dědičností](05-objekty-traity-2.php)
 * [příklad traity - pokročilý](05-objekty-traity-3.php)
 
 ### Enum
+:point_right:
 * enum je samostatný typ, nikoli třída
 * enum slouží k definici omezené množiny hodnot
 * používáme je tam, kde:
@@ -225,6 +282,7 @@ echo $role->name; // "ADMIN"
 echo $role->value; // "admin"
 ```
 
+:point_right:
 * enum může obsahovat vlastní metody (např. popisky stavů, labely pro UI atp.)
 ```php
 //enum s doplněnou ukázkovou metodou volatelnou na jednotlivých hodnotách
@@ -246,9 +304,11 @@ $role = Role::ADMIN;
 echo $role->label(); // Administrátor
 ```
 
+:blue_book:
 * [příklad enum](05-objekty-enum.php)
 
 ### Jmenné prostory (namespaces)
+:point_right:
 * jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
 * jedná se o obdobu "balíčků" z Javy či namespaces z C#
 * umožňují snazší skládání částí kódu např. z různých knihoven
@@ -272,12 +332,14 @@ class TridaX{
 }
 ```
 
+:blue_book:
 * [příklad jmenné prostory 1](05-jmenne-prostory-1.php)
 * [příklad jmenné prostory 2](05-jmenne-prostory-2.php)
 * [příklad jmenné prostory 3 - více souborů](05-jmenne-prostory-3)
 * [PHP manuál - vyhodnování jmen v závislosti na jmenných prostorech](http://php.net/manual/en/language.namespaces.rules.php)
 
 ## Příklad na procvičení
+:mega:
 > Navrhněte základní strukturu objektů pro zachycení cvičení na VŠ
 >  * cvičení absolvuje větší množství studentů
 >  * cvičení má učitele
