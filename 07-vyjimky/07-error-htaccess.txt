@@ -1,0 +1,18 @@
+# Tento soubor by měl být uložen pod jménem .htaccess v příslušné složce
+# Nastavení funguje pouze při použití PHP jako Apache modulu (mod_php)
+# Pokud běží PHP jako PHP-FPM nebo CGI, musí se konfigurace provádět jinak (např. v php.ini nebo .user.ini).
+
+# zapnutí výpisu chyb (vhodné při vývoji)
+php_flag display_errors on
+php_value error_reporting -1
+
+# vypnutí výpisu chyb (vhodné v produkci)
+# php_flag display_errors off
+
+# příklad kompletní konfigurace logování chyb
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag log_errors on
+
+php_value error_reporting -1
+php_value error_log /full/path/to/file/php_errors.log
