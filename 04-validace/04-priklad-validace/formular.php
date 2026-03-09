@@ -55,7 +55,7 @@
       <form method="post">
         <div class="form-group">
           <label for="name">Jméno a příjmení:</label>
-          <input type="text" name="name" id="name" maxlength="100" class="form-control<?php echo (!empty($chyby['name'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars(@$_POST['name'])?>" required />
+          <input type="text" name="name" id="name" maxlength="100" class="form-control<?php echo (!empty($chyby['name'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars($_POST['name'] ?? '')?>" required />
           <?php
             if (!empty($chyby['name'])){
               echo '<div class="invalid-feedback">'.$chyby['name'].'</div>';
@@ -64,7 +64,7 @@
         </div>
         <div class="form-group">
           <label for="email">Jméno a příjmení:</label>
-          <input type="email" name="email" id="email" class="form-control<?php echo (!empty($chyby['email'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars(@$_POST['email'])?>" required />
+          <input type="email" name="email" id="email" class="form-control<?php echo (!empty($chyby['email'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars($_POST['name'] ?? '')?>" required />
           <?php
             if (!empty($chyby['email'])){
               echo '<div class="invalid-feedback">'.$chyby['email'].'</div>';
@@ -73,7 +73,7 @@
         </div>
         <div class="form-group">
           <label for="phone">Telefon:</label>
-          <input type="tel" name="phone" id="phone" class="form-control<?php echo (!empty($chyby['phone'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars(@$_POST['phone'])?>" />
+          <input type="tel" name="phone" id="phone" class="form-control<?php echo (!empty($chyby['phone'])?' is-invalid':''); ?>" value="<?php echo htmlspecialchars($_POST['name'] ?? '')?>" />
           <?php
             if (!empty($chyby['phone'])){
               echo '<div class="invalid-feedback">'.$chyby['phone'].'</div>';
