@@ -31,40 +31,41 @@ Web předmětu: **http://4iz278.github.io**
 7. **[Chyby a výjimky](07-vyjimky)**
   * error vs. exception
   * try-catch
-x5. **[SQL a databáze](x05-sql-databaze)**
-  * opakování základů SQL
-  * MariaDB na serveru eso.vse.cz
-  * phpMyAdmin
-  * práce s databází z PHP
-  * tvorba jednoduché databázové aplikace
-x6. **[Opakování práce s databází, session, cookies](x06-session-cookies)**
-  * ukázková aplikace na práci s databází
-  * cookies
-  * session  
-  * ukázková aplikace na práci se session a cookies
-x7. **[Ukázková aplikace](x07-ukazkova-aplikace)**  
-  * ukázka vyřešení domácího úkolu s nástěnkou
-  * ukázka rozšíření nástěnky o uživatelské účty
-x8. **[Uživatelé, maily](x08-uzivatele-maily)**
-  * autorizace, autentizace
-  * lokální přihlašování uživatelů
-  * posílání e-mailů
-x9. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)** 
-  * datum a čas
-  * víceuživatelský přístup k DB
-  * strukturované datové formáty
-x10. **[REST API, PDF](x10-rest-api-pdf)**
-  * tvorba API
-  * AJAX
-  * mPDF 
-x11. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
-  * CURL  
-  * zapomenuté heslo
-  * OAuth
-x12. **[MVC, SEO URL](x12-mvc-seo-url)**   
-  * .htaccess
-  * návrhový vzor MVC
-  * objektová tvorba aplikací  
+
+> 8. **[SQL a databáze](x05-sql-databaze)**
+>   * opakování základů SQL
+>   * MariaDB na serveru eso.vse.cz
+>   * phpMyAdmin
+>   * práce s databází z PHP
+>   * tvorba jednoduché databázové aplikace
+> 9. **[Opakování práce s databází, session, cookies](x06-session-cookies)**
+>   * ukázková aplikace na práci s databází
+>   * cookies
+>   * session  
+>   * ukázková aplikace na práci se session a cookies
+> 10. **[Ukázková aplikace](x07-ukazkova-aplikace)**  
+>   * ukázka vyřešení domácího úkolu s nástěnkou
+>   * ukázka rozšíření nástěnky o uživatelské účty
+> 11. **[Uživatelé, maily](x08-uzivatele-maily)**
+>   * autorizace, autentizace
+>   * lokální přihlašování uživatelů
+>   * posílání e-mailů
+> 12. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)** 
+>   * datum a čas
+>   * víceuživatelský přístup k DB
+>   * strukturované datové formáty
+> 13. **[REST API, PDF](x10-rest-api-pdf)**
+>   * tvorba API
+>   * AJAX
+>   * mPDF 
+> 14. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
+>   * CURL  
+>   * zapomenuté heslo
+>   * OAuth
+> 15. **[MVC, SEO URL](x12-mvc-seo-url)**   
+>   * .htaccess
+>   * návrhový vzor MVC
+>   * objektová tvorba aplikací  
 
 ## Co naleznete v tomto úložišti?
 
