@@ -19,16 +19,18 @@ Web předmětu: **http://4iz278.github.io**
   * čtení a zápis souborů
   * práce s file systémem
 4. **[Validace formulářů](04-validace)**
+  * validace vstupních hodnot
 5. **[Objekty v PHP](05-objekty)**
   * definice tříd, rozhraní atd.
   * namespaces
   * trait, enum
-x4. **[Objekty v PHP II., validace formulářů](x04-objekty-II-validace)**
-  * class loader
+6. **[Objekty v PHP II.](05-objekty)**
   * magické metody objektů
-  * validace formulářů
+  * class loader
   * composer
-  * praktická aplikace
+7. **[Chyby a výjimky](07-vyjimky)**
+  * error vs. exception
+  * try-catch
 x5. **[SQL a databáze](x05-sql-databaze)**
   * opakování základů SQL
   * MariaDB na serveru eso.vse.cz
