@@ -1,4 +1,5 @@
-# 4. Objekty v PH
+# 4. Objekty v PHP
+:point_right:
 * základ práce s třídami, rozhraními a dědičností se v PHP vlastně moc neliší od toho, co možná znáte z Javy či např. C#
   * rozdílem je absence datových typů - nejsou povinné, ale je možné je definovat
   * PHP nepodporuje! vícenásobné definice (přetěžování) metod, ale podporuje volitelné parametry (jako např. JavaScript)
