@@ -1,6 +1,4 @@
 <?php
-
-
   namespace Skola;
 
   /**
@@ -9,24 +7,21 @@
    * @author Stanislav Vojíř
    */
   class Cviceni{
-    /** @var string $predmet */
-    public $predmet;
-    /** @var Ucebna $ucebna */
-    public $ucebna;
-    /** @var Ucitel $ucitel */
-    public $ucitel;
+    public string $predmet;
+    public ?Ucebna $ucebna;
+    public ?Ucitel $ucitel;
     /** @var Student[] $studenti */
-    private $studenti = [];
+    private array $studenti = [];
 
     /**
      * Cviceni constructor.
      * @param string $predmet
      * @param Ucebna|null $ucebna = null
-     * @param Ucitel|null $ucitel
+     * @param Ucitel|null $ucitel = null
      * @param Student[] $studenti
      * @throws \Exception
      */
-    public function __construct(string $predmet, Ucebna $ucebna=null, Ucitel $ucitel=null,array $studenti = []){
+    public function __construct(string $predmet, ?Ucebna $ucebna=null, ?Ucitel $ucitel=null,array $studenti = []){
       $this->predmet=$predmet;
       $this->ucebna=$ucebna;
       $this->ucitel=$ucitel;
@@ -46,7 +41,7 @@
      * @param Student $student
      * @throws \Exception
      */
-    public function zapsatStudenta(Student $student){
+    public function zapsatStudenta(Student $student):void {
       if (!empty($this->studenti) && isset($this->studenti[$student->xname])){
         throw new \Exception('Student '.$student->xname.' již je v daném cvičení zapsaný!');
       }
@@ -57,7 +52,7 @@
      * Metoda pro odebrání studenta se zadaným xname
      * @param string $xname
      */
-    public function odebratStudentaPodleXname(string $xname){
+    public function odebratStudentaPodleXname(string $xname):void {
       if (isset($this->studenti[$xname])){
         unset($this->studenti[$xname]);
       }

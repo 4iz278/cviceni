@@ -9,7 +9,7 @@
    */
   class Student extends Osoba{
     /** @var string $xname */
-    public $xname;
+    public string $xname;
 
     /**
      * Student constructor.

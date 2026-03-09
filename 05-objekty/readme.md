@@ -347,3 +347,6 @@ class TridaX{
 >  * cvičení má vztah k nějaké učebně
 >  * pro definici tříd Student a Ucitel využijte společnou rodičovskou třídu
 >  * zkuste vytvořit instance daných tříd...
+
+:orange_book:
+* [možné řešení příkladu na procvičení (kód)](./05-reseni-prikladu)
