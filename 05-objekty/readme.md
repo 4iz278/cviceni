@@ -219,7 +219,35 @@ $u = new Uzivatel(1, "Pepa");
 > echo $udalost->datum->format('j.n.Y');
 > ```
 
-### Traity
+## Nullsafe operátor
+:point_right:
+* pro získávání hodnot z objektů, které mohou být null, je výhodné používat tzv. **nullsafe operátor** `?->`
+* pokud je objekt `null`, výraz se nevyhodnotí a vrátí se `null` místo vyhození chyby
+* zjednodušuje zápis kódu a nahrazuje časté kontroly typu `if ($objekt !== null)`
+
+```php
+$uzivatel = $repozitar->najdiUzivatele($id);
+
+// klasický zápis
+if ($uzivatel !== null) {
+  $email = $uzivatel->getEmail();
+}
+
+// nullsafe operátor
+$email = $uzivatel?->getEmail();
+```
+
+:point_right:
+* nullsafe operátor lze také řetězit (podmíněné jsou pak všechny další části výrazu)
+* nullsafe operátor je možné **použít pouze pro čtení hodnot či zavolání metody**, nemůže být na levé straně přiřazení 
+
+```php
+$email = $objednavka?->getUzivatel()?->getEmail();
+
+//$uzivatel?->jmeno = 'Pepa'; // chyba
+```
+
+## Traity
 :point_right:
 * trait = v podstatě *kousek definice třídy*
 * umožňují částečně řešit problém nemožnosti vícenásobné dědičnosti
@@ -247,7 +275,7 @@ $mojeTrida->vypis();
 * [příklad traity - jednoduchý s dědičností](05-objekty-traity-2.php)
 * [příklad traity - pokročilý](05-objekty-traity-3.php)
 
-### Enum
+## Enum
 :point_right:
 * enum je samostatný typ, nikoli třída
 * enum slouží k definici omezené množiny hodnot
@@ -308,7 +336,7 @@ echo $role->label(); // Administrátor
 :blue_book:
 * [příklad enum](05-objekty-enum.php)
 
-### Jmenné prostory (namespaces)
+## Jmenné prostory (namespaces)
 :point_right:
 * jmenné prostory slouží k rozdělení kódu do logických částí, podpora v PHP 5.3+
 * jedná se o obdobu "balíčků" z Javy či namespaces z C#
