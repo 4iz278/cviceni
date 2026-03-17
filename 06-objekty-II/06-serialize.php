@@ -22,7 +22,7 @@
       ];
     }
 
-    public function unserialize(array $serialized): void {
+    public function __unserialize(array $serialized): void {
       $this->jmeno = $serialized['jmeno'];
       $this->prijmeni = $serialized['prijmeni'];
     }
