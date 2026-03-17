@@ -37,7 +37,7 @@ ini_set('display_errors', 0);  // vypnutí výpisu chyb
 * [příklad error - zavináč](07-error-zavinac.php)
 * [příklad error handler](07-error-handler.php)
 * [příklad error_reporting](07-error-reporting.php)
-* [příklad error_reporting](07-error-htaccess.txt)
+* [příklad htaccess](07-error-htaccess.txt)
 
 ## Exceptions
 :point_right:

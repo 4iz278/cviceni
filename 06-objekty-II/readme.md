@@ -115,7 +115,7 @@ spl_autoload_register(function($name){
 
 
 :blue_book:
-* [příklad autoload](../x04-objekty-II-validace/06-autoload)
+* [příklad autoload](./06-autoload)
 * [příklad autoload funkce pracující se jmennými prostory](06-autoload-namespaces)
 
 
