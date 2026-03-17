@@ -1,4 +1,4 @@
-# 4iz268 - cvičení
+# 4iz278 - cvičení
 
 Podklady pro cvičení kurzu **4iz278 - Webové aplikace** na VŠE v Praze.
 
@@ -24,7 +24,7 @@ Web předmětu: **http://4iz278.github.io**
   * definice tříd, rozhraní atd.
   * namespaces
   * trait, enum
-6. **[Objekty v PHP II.](05-objekty)**
+6. **[Objekty v PHP II.](06-objekty-II)**
   * magické metody objektů
   * class loader
   * composer

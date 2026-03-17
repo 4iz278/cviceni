@@ -137,7 +137,6 @@ spl_autoload_register(function($name){
 * Jako správce balíčků se používá [Packagist](https://packagist.org/), nebo GITové úložiště (nejčastěji GitHub)
   * Můžete si definovat vlastní znovupoužitelné komponenty, které jednoduše začleníte do většího množství projektů.
   * Pokud je použitá komponenta závislá na dalších komponentách, composer automaticky vyřeší a stáhne i všechny její závislosti.
-
      
 :point_right:
 
@@ -173,3 +172,5 @@ php composer.phar update
 * [příklad composer](06-composer-example-project)
   * pro spuštění nastavte práva pro složku *tmp* na 777
   * případně koukněte také na [dokumentaci Mpdf](https://mpdf.github.io/)
+* [Composer - A dependency manager for PHP](https://getcomposer.org/)
+* [Packagist - The PHP Package Repository](https://packagist.org/)
