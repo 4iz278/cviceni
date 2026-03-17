@@ -56,7 +56,7 @@
 * v rámci PHP serializace jsou uchovány informace o datových typech proměnných, vnitřní struktuře atp. a např. u řetězců či polí je pro ověření zapsána do serializovaného řetězce i jejich délka    
 * aktuální přístup k serializaci (v PHP 8.x) využívá metody **__serialize()** a **__unserialize()**, které umožňují přesně definovat, jaká data se mají uložit
 * alternativně lze použít starší metody **__sleep()** a **__wakeup()** (jednodušší, historický mechanismus)
-* grey_exclamation: Pozor – funkce unserialize() může být bezpečnostní riziko, pokud zpracovává data od uživatele.
+* :grey_exclamation: Pozor – funkce unserialize() může být bezpečnostní riziko, pokud zpracovává data od uživatele.
 
 :blue_book:
 * [příklad serialize-unserialize](06-serialize.php)
