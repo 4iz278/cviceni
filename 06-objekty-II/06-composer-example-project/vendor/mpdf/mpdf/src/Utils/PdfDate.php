@@ -23,8 +23,8 @@ class PdfDate
 	public static function format($date)
 	{
 		$z = date('O'); // +0200
-		$offset = substr($z, 0, 3)."PdfDate.php". substr($z, 3, 2) . "'"; // +02'00'
-		return PdfDate.phpdate('YmdHis', $date).$offset;
+		$offset = substr($z, 0, 3) . "'" . substr($z, 3, 2) . "'"; // +02'00'
+		return date('YmdHis', $date) . $offset;
 	}
 
 }

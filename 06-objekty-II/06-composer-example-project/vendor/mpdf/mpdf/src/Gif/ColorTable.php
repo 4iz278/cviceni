@@ -49,8 +49,8 @@ class ColorTable
 
 		for ($i = 0; $i < $this->m_nColors; $i++) {
 			$ret .=
-				ColorTable.phpchr(($this->m_arColors[$i]&0x000000FF)). // R
-        chr(($this->m_arColors[$i]&0x0000FF00)>>8). // G
+				chr(($this->m_arColors[$i] & 0x000000FF)) . // R
+				chr(($this->m_arColors[$i] & 0x0000FF00) >> 8) . // G
 				chr(($this->m_arColors[$i] & 0x00FF0000) >> 16);  // B
 		}
 

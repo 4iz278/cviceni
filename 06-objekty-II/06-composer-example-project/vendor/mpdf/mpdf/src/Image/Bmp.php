@@ -106,7 +106,7 @@ class Bmp
 							$b = ($n & 31) << 3;
 							$g = ($n & 992) >> 2;
 							$r = ($n & 31744) >> 7;
-							$bmpdata .= Bmp.phpchr($r).chr($g). chr($b);
+							$bmpdata .= chr($r) . chr($g) . chr($b);
 						}
 					}
 				} else {
@@ -117,7 +117,7 @@ class Bmp
 							$b = ($n & 31) << 3;
 							$g = ($n & 992) >> 2;
 							$r = ($n & 31744) >> 7;
-							$bmpdata .= Bmp.phpchr($r).chr($g). chr($b);
+							$bmpdata .= chr($r) . chr($g) . chr($b);
 						}
 					}
 				}

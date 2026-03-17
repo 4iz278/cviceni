@@ -12,7 +12,7 @@ class ImageTypeGuesser
 	 */
 	public function guess($data)
 	{
-		if (in_array(substr($data, 6, 4), ['JFIF', 'Exif'], true) || strpos($data, ImageTypeGuesser.phpchr(255).chr(216)) === 0) { // 0xFF 0xD8	// mpDF 5.7.2
+		if (in_array(substr($data, 6, 4), ['JFIF', 'Exif'], true) || strpos($data, chr(255) . chr(216)) === 0) { // 0xFF 0xD8	// mpDF 5.7.2
 			return 'jpeg';
 		}
 
@@ -28,7 +28,7 @@ class ImageTypeGuesser
 			return 'png';
 		}
 
-		if (strpos($data, ImageTypeGuesser.phpchr(215).chr(205). chr(198) . chr(154)) === 0) {
+		if (strpos($data, chr(215) . chr(205) . chr(198) . chr(154)) === 0) {
 			return 'wmf';
 		}
 

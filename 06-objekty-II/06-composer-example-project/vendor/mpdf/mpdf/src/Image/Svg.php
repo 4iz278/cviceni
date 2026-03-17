@@ -278,7 +278,7 @@ class Svg
 		$orig_srcpath = '';
 		if (trim($srcpath) != '' && substr($srcpath, 0, 4) == 'var:') {
 			$orig_srcpath = $srcpath;
-			$srcpath = $this->mpdf->GetFullPath($srcpath);
+			$this->mpdf->GetFullPath($srcpath);
 		}
 
 		// Image file (does not allow vector images i.e. WMF/SVG)
@@ -1373,7 +1373,7 @@ class Svg
 				if ($col[0] == 6 && is_numeric($col[5])) {
 					$critere_style['fill-opacity'] = ord($col[5] / 100);
 				} // CMYKa
-				$path_style .=$this->mpdf->SetFColor($col, true).' Svg.php';
+				$path_style .= $this->mpdf->SetFColor($col, true) . ' ';
 				$style .= 'F';
 			}
 		} elseif ($critere_style['fill'] != 'none' && $element != 'line') {
@@ -1385,7 +1385,7 @@ class Svg
 				if ($col[0] == 6 && is_numeric($col[5])) {
 					$critere_style['fill-opacity'] = ord($col[5] / 100);
 				} // CMYKa
-				$path_style .=$this->mpdf->SetFColor($col, true).' Svg.php';
+				$path_style .= $this->mpdf->SetFColor($col, true) . ' ';
 				$style .= 'F';
 			}
 		}
@@ -1414,7 +1414,7 @@ class Svg
 				if ($col[0] == 6 && is_numeric($col[5])) {
 					$critere_style['stroke-opacity'] = ord($col[5] / 100);
 				} // CMYKa
-				$path_style .=$this->mpdf->SetDColor($col, true).' Svg.php';
+				$path_style .= $this->mpdf->SetDColor($col, true) . ' ';
 				$style .= 'D';
 				$lw = $this->ConvertSVGSizePixels($critere_style['stroke-width']);
 				$path_style .= sprintf('%.3F w ', $lw * $this->kp);
@@ -1430,7 +1430,7 @@ class Svg
 				if ($col[0] == 6 && is_numeric($col[5])) {
 					$critere_style['stroke-opacity'] = ord($col[5] / 100);
 				} // CMYKa
-				$path_style .=$this->mpdf->SetDColor($col, true).' Svg.php';
+				$path_style .= $this->mpdf->SetDColor($col, true) . ' ';
 				$style .= 'D';
 				$lw = $this->ConvertSVGSizePixels($critere_style['stroke-width']);
 				$path_style .= sprintf('%.3F w ', $lw * $this->kp);
@@ -2452,7 +2452,7 @@ class Svg
 				if ($stroke_width > 0 && $current_style['stroke'] != 'none') {
 					$scol = $this->colorConverter->convert($current_style['stroke'], $this->mpdf->PDFAXwarnings);
 					if ($scol) {
-						$strokestr .=$this->mpdf->SetDColor($scol, true).' Svg.php';
+						$strokestr .= $this->mpdf->SetDColor($scol, true) . ' ';
 					}
 					$linewidth = $this->ConvertSVGSizePixels($stroke_width);
 					if ($linewidth > 0) {
@@ -2630,7 +2630,7 @@ class Svg
 				$scol = $this->colorConverter->convert($current_style['stroke'], $this->mpdf->PDFAXwarnings);
 
 				if ($scol) {
-					$strokestr .=$this->mpdf->SetDColor($scol, true).' Svg.php';
+					$strokestr .= $this->mpdf->SetDColor($scol, true) . ' ';
 				}
 
 				$linewidth = $this->ConvertSVGSizePixels($current_style['stroke-width']);

@@ -199,7 +199,7 @@ class TTFontFileAnalysis extends TTFontFile
 		if ($ver_maj != 1) {
 			throw new \Mpdf\MpdfException('ERROR - NOT ADDED as Unknown head table version ' . $ver_maj . '.' . $ver_min . " - " . $file);
 		}
-		$this->fontRevision =$this->read_ushort().$this->read_ushort();
+		$this->fontRevision = $this->read_ushort() . $this->read_ushort();
 		$this->skip(4);
 		$magic = $this->read_ulong();
 		if ($magic != 0x5F0F3CF5) {

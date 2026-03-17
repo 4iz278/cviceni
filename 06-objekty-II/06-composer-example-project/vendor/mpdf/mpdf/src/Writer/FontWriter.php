@@ -192,10 +192,10 @@ class FontWriter
 						if ($w !== false) {
 							$widthstring .= $w . ' ';
 						} else {
-							$widthstring .=round($ttf->defaultWidth).' FontWriter.php';
+							$widthstring .= round($ttf->defaultWidth) . ' ';
 						}
 						if ($u > 65535) {
-							$utf8 = FontWriter.phpchr(($u>>18)+240).chr((($u>>12)&63)+128). chr((($u >> 6) & 63) + 128) . chr(($u & 63) + 128);
+							$utf8 = chr(($u >> 18) + 240) . chr((($u >> 12) & 63) + 128) . chr((($u >> 6) & 63) + 128) . chr(($u & 63) + 128);
 							$utf16 = mb_convert_encoding($utf8, 'UTF-16BE', 'UTF-8');
 							$l1 = ord($utf16[0]);
 							$h1 = ord($utf16[1]);

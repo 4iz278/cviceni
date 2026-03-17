@@ -43,14 +43,14 @@ class DecToHebrew
 				if (is_array($additive_glyphs[$t])) {
 					foreach ($additive_glyphs[$t] as $ag) {
 						if ($reverse) {
-							$s =DecToHebrew.phpUtfString::code2utf($ag).$s;
+							$s = UtfString::code2utf($ag) . $s;
 						} else {
 							$s .= UtfString::code2utf($ag);
 						}
 					}
 				} else {
 					if ($reverse) {
-						$s =DecToHebrew.phpUtfString::code2utf($additive_glyphs[$t]).$s;
+						$s = UtfString::code2utf($additive_glyphs[$t]) . $s;
 					} else {
 						$s .= UtfString::code2utf($additive_glyphs[$t]);
 					}

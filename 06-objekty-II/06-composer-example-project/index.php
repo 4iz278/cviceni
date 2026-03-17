@@ -4,10 +4,15 @@
 
   $htmlContent='<!DOCTYPE html><html><head><title>UKAZKA</title></head><body><h1>Ukázka</h1><p>Ukázka jednoduchého pdf výstupu</p></body></html>';
 
+  $pdf = new \Mpdf\Mpdf([
+    'tempDir' => __DIR__.'/tmp',
+    'mode' => 'utf-8',
+    'format' => 'A4',
+    'orientation' => 'P'
+  ]);
 
-  $pdf = new mPDF('c','A4'); //využíváme třídu mPDF bez série requirů :)
   $pdf->WriteHTML($htmlContent);
-  $pdf->Output('file.pdf');
+  $pdf->Output();
 
 
   /*

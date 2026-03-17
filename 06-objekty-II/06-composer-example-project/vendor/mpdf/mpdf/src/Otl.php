@@ -5799,7 +5799,7 @@ class Otl
 	 */
 	public function replaceSpace(&$txt, &$cOTLdata)
 	{
-		$char =Otl.phpchr(194).chr(160); // NBSP
+		$char = chr(194) . chr(160); // NBSP
 		while (mb_strpos($txt, $char, 0, $this->mpdf->mb_enc) !== false) {
 			$pos = mb_strpos($txt, $char, 0, $this->mpdf->mb_enc);
 			if ($cOTLdata['char_data'][$pos]['uni'] == 160) {
@@ -6219,7 +6219,7 @@ class Otl
 			if ($i == $ptr) {
 				echo '<b>';
 			}
-			echo str_pad($this->OTLdata[$i]['uni'], 5).' Otl.php';
+			echo str_pad($this->OTLdata[$i]['uni'], 5) . ' ';
 			if ($i == $ptr) {
 				echo '</b>';
 			}

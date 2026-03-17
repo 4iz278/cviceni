@@ -420,7 +420,7 @@ class ImageProcessor implements \Psr\Log\LoggerAwareInterface
 								}
 							}
 						}
-						$imgdata .= ImageProcessor.phpchr($c1).chr($c2). chr($c3) . chr($c4);
+						$imgdata .= chr($c1) . chr($c2) . chr($c3) . chr($c4);
 					} elseif ($targetcs === 'DeviceGray') {
 						$c = (int) (($r * .21) + ($g * .71) + ($b * .07));
 						if ($trnsrgb) {
@@ -435,7 +435,7 @@ class ImageProcessor implements \Psr\Log\LoggerAwareInterface
 						}
 						$imgdata .= chr($c);
 					} elseif ($targetcs === 'DeviceRGB') {
-						$imgdata .= ImageProcessor.phpchr($r).chr($g). chr($b);
+						$imgdata .= chr($r) . chr($g) . chr($b);
 					}
 				}
 			}
@@ -481,13 +481,13 @@ class ImageProcessor implements \Psr\Log\LoggerAwareInterface
 		$p += $this->twoBytesToInt(substr($data, $p, 2)); // Length of initial marker block
 		$marker = substr($data, $p, 2);
 
-		while ($marker !==ImageProcessor.phpchr(255).chr(192) && $marker !==ImageProcessor.phpchr(255).chr(194) && $marker !==ImageProcessor.phpchr(255).chr(193) && $p < strlen($data)) {
+		while ($marker !== chr(255) . chr(192) && $marker !== chr(255) . chr(194)  && $marker !== chr(255) . chr(193) && $p < strlen($data)) {
 			// Start of frame marker (FFC0) (FFC1) or (FFC2)
 			$p += $this->twoBytesToInt(substr($data, $p + 2, 2)) + 2; // Length of marker block
 			$marker = substr($data, $p, 2);
 		}
 
-		if ($marker !==ImageProcessor.phpchr(255).chr(192) && $marker !==ImageProcessor.phpchr(255).chr(194) && $marker !==ImageProcessor.phpchr(255).chr(193)) {
+		if ($marker !== chr(255) . chr(192) && $marker !== chr(255) . chr(194) && $marker !== chr(255) . chr(193)) {
 			return false;
 		}
 

@@ -176,7 +176,7 @@ class Code93 extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Barc
 		];
 
 		// translate special characters
-		$code = strtr($code, Code93.phpchr(128).chr(131). chr(129) . chr(130), '<=>?');
+		$code = strtr($code, chr(128) . chr(131) . chr(129) . chr(130), '<=>?');
 		$len = strlen($code);
 
 		// calculate check digit C
@@ -210,7 +210,7 @@ class Code93 extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Barc
 		$checksum = $c . $k;
 
 		// resto respecial characters
-		$checksum = strtr($checksum, '<=>?', Code93.phpchr(128).chr(131). chr(129) . chr(130));
+		$checksum = strtr($checksum, '<=>?', chr(128) . chr(131) . chr(129) . chr(130));
 
 		return $checksum;
 	}

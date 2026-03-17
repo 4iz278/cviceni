@@ -332,7 +332,7 @@ class TTFontFile
 				}
 				$xchecksum = $t['checksum'];
 				if ($xchecksum != $checksum) {
-					throw new \Mpdf\Exception\FontException(sprintf('TTF file "%s": invalid checksum %s table: %s (expected %s)', $this->filename, TTFontFile.phpdechex($checksum[0]).dechex($checksum[1]), $t['tag'], dechex($xchecksum[0]) . dechex($xchecksum[1])));
+					throw new \Mpdf\Exception\FontException(sprintf('TTF file "%s": invalid checksum %s table: %s (expected %s)', $this->filename, dechex($checksum[0]) . dechex($checksum[1]), $t['tag'], dechex($xchecksum[0]) . dechex($xchecksum[1])));
 				}
 			}
 		}
@@ -489,7 +489,7 @@ class TTFontFile
 
 	function splice($stream, $offset, $value)
 	{
-		return TTFontFile.phpsubstr($stream, 0, $offset).$value. substr($stream, $offset + strlen($value));
+		return substr($stream, 0, $offset) . $value . substr($stream, $offset + strlen($value));
 	}
 
 	function _set_ushort($stream, $offset, $value)
@@ -794,7 +794,7 @@ class TTFontFile
 			if ($ver_maj != 1) {
 				throw new \Mpdf\Exception\FontException('Error loading font: Unknown head table version ' . $ver_maj . '.' . $ver_min);
 			}
-			$this->fontRevision =$this->read_ushort().$this->read_ushort();
+			$this->fontRevision = $this->read_ushort() . $this->read_ushort();
 
 			$this->skip(4);
 			$magic = $this->read_ulong();
@@ -4210,7 +4210,7 @@ class TTFontFile
 			$os2 = $this->_set_ushort($os2, 64, 0x01); // FirstCharIndex
 			$os2 = $this->_set_ushort($os2, 66, count($subset)); // LastCharIndex
 			// Set PANOSE first bit to 5 for Symbol
-			$os2 = $this->splice($os2, 32, TTFontFile.phpchr(5).chr(0). chr(1) . chr(0) . chr(1) . chr(0) . chr(0) . chr(0) . chr(0) . chr(0));
+			$os2 = $this->splice($os2, 32, chr(5) . chr(0) . chr(1) . chr(0) . chr(1) . chr(0) . chr(0) . chr(0) . chr(0) . chr(0));
 			$this->add('OS/2', $os2);
 		}
 

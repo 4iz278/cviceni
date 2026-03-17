@@ -246,7 +246,7 @@ class Code128 extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Bar
 
 		// Add FNC 1 - which identifies it as EAN-128
 		if ($ean) {
-			$code =Code128.phpchr(102).$code;
+			$code = chr(102) . $code;
 		}
 
 		$clen = strlen($code);
@@ -265,7 +265,7 @@ class Code128 extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Bar
 		$checkdigit = $check;
 
 		// add start, check and stop codes
-		$code = Code128.phpchr($startid).$code. chr($check) . chr(106) . chr(107);
+		$code = chr($startid) . $code . chr($check) . chr(106) . chr(107);
 		$bararray = ['code' => $code, 'maxw' => 0, 'maxh' => 1, 'bcode' => []];
 		$k = 0;
 		$len = strlen($code);

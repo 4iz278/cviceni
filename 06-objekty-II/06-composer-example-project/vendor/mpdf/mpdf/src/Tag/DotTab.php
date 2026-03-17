@@ -11,7 +11,7 @@ class DotTab extends Tag
 	{
 		$objattr = [];
 		$objattr['type'] = 'dottab';
-		$dots =str_repeat('.', 3).'  DotTab.php'; // minimum number of dots
+		$dots = str_repeat('.', 3) . '  '; // minimum number of dots
 		$objattr['width'] = $this->mpdf->GetStringWidth($dots);
 		$objattr['margin_top'] = 0;
 		$objattr['margin_bottom'] = 0;

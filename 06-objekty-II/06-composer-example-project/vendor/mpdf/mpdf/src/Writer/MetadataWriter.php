@@ -54,7 +54,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 		$z = date('O'); // +0200
 		$offset = substr($z, 0, 3) . ':' . substr($z, 3, 2);
 
-		$CreationDate =MetadataWriter.phpdate('Y-m-d\TH:i:s').$offset; // 2006-03-10T10:47:26-05:00 2006-06-19T09:05:17Z
+		$CreationDate = date('Y-m-d\TH:i:s') . $offset; // 2006-03-10T10:47:26-05:00 2006-06-19T09:05:17Z
 
 		$uuid = sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0x0fff) | 0x4000, random_int(0, 0x3fff) | 0x8000, random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff));
 
@@ -232,7 +232,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 			}
 			$s = file_get_contents($this->mpdf->ICCProfile);
 		} else {
-			$s = file_get_contents(__DIR__.'/../../data/iccprofiles/sRGB_IEC61966-2-1.icc');
+			$s = file_get_contents(__DIR__ . '/../../data/iccprofiles/sRGB_IEC61966-2-1.icc');
 		}
 
 		if ($this->mpdf->compress) {
@@ -393,7 +393,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 
 			$names = [];
 			foreach ($this->mpdf->associatedFiles as $file) {
-				$names[] = $this->writer->string($file['name']).' MetadataWriter.php'.$file['_root'] . ' 0 R';
+				$names[] = $this->writer->string($file['name']) . ' ' . $file['_root'] . ' 0 R';
 			}
 			$this->writer->write('/Names << /EmbeddedFiles << /Names [' . implode(' ', $names) .  '] >> >>');
 		}
@@ -801,7 +801,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 			$this->writer->write('/Encrypt ' . $this->mpdf->enc_obj_id . ' 0 R');
 			$this->writer->write('/ID [<' . $this->protection->getUniqid() . '> <' . $this->protection->getUniqid() . '>]');
 		} else {
-			$uniqid = md5(MetadataWriter.phptime().$this->mpdf->buffer);
+			$uniqid = md5(time() . $this->mpdf->buffer->getHash());
 			$this->writer->write('/ID [<' . $uniqid . '> <' . $uniqid . '>]');
 		}
 	}

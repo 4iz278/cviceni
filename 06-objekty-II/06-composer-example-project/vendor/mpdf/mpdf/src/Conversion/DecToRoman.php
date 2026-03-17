@@ -67,7 +67,7 @@ class DecToRoman
 			$digit = $remainder / (10 ** $i);
 
 			$number -= $remainder;
-			$romanNumber =$this->formatDigit($digit, $i).$romanNumber;
+			$romanNumber = $this->formatDigit($digit, $i) . $romanNumber;
 
 			if ($number === 0) {
 				break;

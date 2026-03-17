@@ -169,5 +169,7 @@ php composer.phar update
 * autoload.php vytvořený Composerem zajišťuje načítání tříd jak z externích balíčků, tak v případě správné konfigurace i z vlastního kódu (např. pomocí PSR-4).
 
 :blue_book:
-* [příklad composer](06-composer-example-project)
 * [příklad s načítáním vlastních tříd - PSR4](06-composer-psr4)
+* [příklad composer](06-composer-example-project)
+  * pro spuštění nastavte práva pro složku *tmp* na 777
+  * případně koukněte také na [dokumentaci Mpdf](https://mpdf.github.io/)

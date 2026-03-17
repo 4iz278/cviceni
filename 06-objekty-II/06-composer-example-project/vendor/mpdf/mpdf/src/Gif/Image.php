@@ -176,8 +176,8 @@ class Image
 				$lne = substr($this->m_data, 0, $this->m_gih->m_nWidth);
 				$this->m_data = substr($this->m_data, $this->m_gih->m_nWidth);
 
-				$data = Image.phpsubstr($data, 0, $y*$this->m_gih->m_nWidth).
-          $lne.
+				$data = substr($data, 0, $y * $this->m_gih->m_nWidth) .
+					$lne .
 					substr($data, ($y + 1) * $this->m_gih->m_nWidth);
 			}
 		}

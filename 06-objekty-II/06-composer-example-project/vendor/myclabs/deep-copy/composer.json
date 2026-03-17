@@ -28,7 +28,7 @@
             "DeepCopy\\": "src/DeepCopy/"
         },
         "files": [
-          "src/DeepCopy/deep_copy.php"
+            "src/DeepCopy/deep_copy.php"
         ]
     },
     "autoload-dev": {

@@ -97,7 +97,7 @@ class EanUpc extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Barc
 			$invalidUpce = false;
 			if (($tmp == '000') or ($tmp == '100') or ($tmp == '200')) {
 				// Manufacturer code ends in 000, 100, or 200
-				$upceCode = EanUpc.phpsubstr($code, 2, 2).substr($code, 9, 3). substr($code, 4, 1);
+				$upceCode = substr($code, 2, 2) . substr($code, 9, 3) . substr($code, 4, 1);
 				if ($prodCode > 999) {
 					$invalidUpce = true;
 				}
@@ -105,7 +105,7 @@ class EanUpc extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Barc
 				$tmp = substr($code, 5, 2);
 				if ($tmp == '00') {
 					// Manufacturer code ends in 00
-					$upceCode = EanUpc.phpsubstr($code, 2, 3).substr($code, 10, 2). '3';
+					$upceCode = substr($code, 2, 3) . substr($code, 10, 2) . '3';
 					if ($prodCode > 99) {
 						$invalidUpce = true;
 					}
@@ -113,13 +113,13 @@ class EanUpc extends \Mpdf\Barcode\AbstractBarcode implements \Mpdf\Barcode\Barc
 					$tmp = substr($code, 6, 1);
 					if ($tmp == '0') {
 						// Manufacturer code ends in 0
-						$upceCode = EanUpc.phpsubstr($code, 2, 4).substr($code, 11, 1). '4';
+						$upceCode = substr($code, 2, 4) . substr($code, 11, 1) . '4';
 						if ($prodCode > 9) {
 							$invalidUpce = true;
 						}
 					} else {
 						// Manufacturer code does not end in zero
-						$upceCode =EanUpc.phpsubstr($code, 2, 5).substr($code, 11, 1);
+						$upceCode = substr($code, 2, 5) . substr($code, 11, 1);
 						if ($prodCode > 9) {
 							$invalidUpce = true;
 						}

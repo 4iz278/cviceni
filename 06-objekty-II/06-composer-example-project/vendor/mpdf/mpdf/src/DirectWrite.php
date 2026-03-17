@@ -134,7 +134,7 @@ class DirectWrite
 							// JUSTIFY J using Unicode fonts (Word spacing doesn't work)
 							// WORD SPACING
 							// Change NON_BREAKING SPACE to spaces so they are 'spaced' properly
-							$tmp = str_replace(DirectWrite.phpchr(194).chr(160), chr(32), $tmp);
+							$tmp = str_replace(chr(194) . chr(160), chr(32), $tmp);
 							$len_ligne = $this->mpdf->GetStringWidth($tmp);
 							$nb_carac = mb_strlen($tmp, $this->mpdf->mb_enc);
 							$nb_spaces = mb_substr_count($tmp, ' ', $this->mpdf->mb_enc);
