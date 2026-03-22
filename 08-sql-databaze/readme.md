@@ -360,3 +360,21 @@ Na nástěnce bude možné mít umístěné příspěvky přiřazené do kategor
 
 * [prezentace s komentovaným postupem řešení](08-aplikace-nastenka/prezentace-postup-vyvoje-nastenka.pptx)
 * [vytvořený zdrojový kód včetně exportu databáze](08-aplikace-nastenka/)
+
+
+## Další ukázková aplikace pracující s databází
+- s ohledem na to, že budeme pracovat s databází až do konce předmětu, je vhodné si práci s ní procvičit i na další aplikaci:
+
+:blue_book:
+- postup zprovoznění ukázkové aplikace:
+    1. stáhněte si celou složku aplikace ([08-db-app-clients](./08-db-app-clients)) a nahrajte ji na server
+    2. nahrajte do MariaDB [strukturu databáze](./08-db-app-clients/db-schema.sql)
+    3. nahrajte do MariaDB [ukázková data](./08-db-app-clients/db-data.sql)
+    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./08-db-app-clients/db.php)
+- ukázkové skripty v aplikaci:
+    - [jednoduchý výpis klientů](./08-db-app-clients/index.php)
+    - [výpis klientů se stránkováním](./08-db-app-clients/index_with_pagination.php)
+    - [vytvoření nového klienta](./08-db-app-clients/new_prepare.php)
+    - [vytvoření nového klienta - bez ošetření SQL injection](./08-db-app-clients/new_open.php)
+    - [úprava klienta](./08-db-app-clients/update.php)
+    - [smazání klienta](./08-db-app-clients/delete.php)    

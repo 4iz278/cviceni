@@ -1,25 +1,5 @@
 # 6. Opakování práce s databází, session, cookies
 
-## Opakování práce s databází
-:point_right:
-
-S ohledem na to, že s databází budeme pracovat až do konce semestru, ještě bychom si měli práci s ní procvičit.
-**Projděte si prosím následující okomentované zdrojové kódy.**
-
-:blue_book:
-- postup zprovoznění ukázkové aplikace:
-    1. stáhněte si celou složku aplikace ([06-db-app-clients](./06-db-app-clients)) a nahrajte ji na server
-    2. nahrajte do MariaDB [strukturu databáze](./06-db-app-clients/06-schema.sql)
-    3. nahrajte do MariaDB [ukázková data](./06-db-app-clients/06-data.sql)
-    4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./06-db-app-clients/db.php)
-- ukázkové skripty v aplikaci:
-    - [jednoduchý výpis klientů](./06-db-app-clients/index.php)
-    - [výpis klientů se stránkováním](./06-db-app-clients/index_with_pagination.php)
-    - [vytvoření nového klienta](./06-db-app-clients/new_prepare.php)
-    - [vytvoření nového klienta - bez ošetření SQL injection](./06-db-app-clients/new_open.php)
-    - [úprava klienta](./06-db-app-clients/update.php)
-    - [smazání klienta](./06-db-app-clients/delete.php)    
-
 ## Cookies
 
 :point_right:
