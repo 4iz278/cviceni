@@ -363,7 +363,7 @@ Na nástěnce bude možné mít umístěné příspěvky přiřazené do kategor
 
 
 ## Další ukázková aplikace pracující s databází
-- s ohledem na to, že budeme pracovat s databází až do konce předmětu, je vhodné si práci s ní procvičit i na další aplikaci:
+S ohledem na to, že budeme pracovat s databází až do konce předmětu, je vhodné si práci s ní procvičit i na další aplikaci:
 
 :blue_book:
 - postup zprovoznění ukázkové aplikace:
