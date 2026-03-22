@@ -31,13 +31,13 @@ Web předmětu: **http://4iz278.github.io**
 7. **[Chyby a výjimky](07-vyjimky)**
   * error vs. exception
   * try-catch
+8. **[SQL a databáze](08-sql-databaze)**
+  * opakování základů SQL
+  * MariaDB na serveru eso.vse.cz
+  * phpMyAdmin
+  * práce s databází z PHP
+  * tvorba jednoduché databázové aplikace
 
-> 8. **[SQL a databáze](x05-sql-databaze)**
->   * opakování základů SQL
->   * MariaDB na serveru eso.vse.cz
->   * phpMyAdmin
->   * práce s databází z PHP
->   * tvorba jednoduché databázové aplikace
 > 9. **[Opakování práce s databází, session, cookies](x06-session-cookies)**
 >   * ukázková aplikace na práci s databází
 >   * cookies

@@ -13,7 +13,7 @@ Nejprve si [vyřešíme domácí úkol](#%C5%99e%C5%A1en%C3%AD-dom%C3%A1c%C3%ADh
 ## Aplikace Nástěnka
 :point_right:
 
-Na cvičení [5. SQL a databáze](../x05-sql-databaze) byl zadán domácí úkol, v rámci kterého jste měli rozšířit funkcionalitu nástěnky vytvářené na daném cvičení. Zadání tohoto domácího úkolu naleznete [zde](../x05-sql-databaze#dom%C3%A1c%C3%AD-%C3%BAkol).
+Na cvičení [5. SQL a databáze](../08-sql-databaze) byl zadán domácí úkol, v rámci kterého jste měli rozšířit funkcionalitu nástěnky vytvářené na daném cvičení. Zadání tohoto domácího úkolu naleznete [zde](../08-sql-databaze#dom%C3%A1c%C3%AD-%C3%BAkol).
 
 Ukážeme si vyřešení tohoto domácího úkolu a následně do aplikace doplníme jednoduché přihlašování uživatelů.
 
@@ -23,7 +23,7 @@ Ukážeme si vyřešení tohoto domácího úkolu a následně do aplikace dopln
 V rámci domácího úkolu bylo požadováno doplnění možnosti editace příspěvků a doplnění možnosti zobrazování příspěvků jen ze zvolené kategorie. Pokud máte u domácího úkolu vlastní řešení, určitě můžete pokračovat i v něm či si jej můžete zkontrolovat.
 
 **Nutná příprava:**
-1. stáhněte si [zdrojový kód](../x05-sql-databaze/05-aplikace-nastenka)
+1. stáhněte si [zdrojový kód](../08-sql-databaze/08-aplikace-nastenka)
 2. nahrajte zdrojový kód aplikace na server eso.vse.cz
 3. naimportujte SQL export do databáze
  

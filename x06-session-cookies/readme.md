@@ -1,31 +1,5 @@
 # 6. Opakování práce s databází, session, cookies
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu.**
-Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady.
-
-## Opakování z minulého cvičení
-
-:point_right:
-
-V rámci [minulého cvičení](../x05-sql-databaze) jsme se zabývali vlastnostmi databáze MariaDB. Následně jsme si:
-- [ukázali práci s nástrojem phpMyAdmin](../x05-sql-databaze/05-prezentace-phpmyadmin.pptx),
-- probrali používání databáze pomocí PDO  
-- a [ukázali tvorbu databázové aplikace v rámci komentované prezentace](../x05-sql-databaze#tvorba-aplikace-vyu%C5%BE%C3%ADvaj%C3%ADc%C3%AD-datab%C3%A1zi).
-
-Místo podrobného opakování se rovnou vrhneme na obsah dnešního cvičení, protože se na práci s databází podíváme ještě v dalším komentovaném ukázkovém příkladu. 
-    
----
-
-:point_right:
-
-**Na tomto cvičení nás čeká:**
-- [opakování práce s databází](#opakov%C3%A1n%C3%AD-pr%C3%A1ce-s-datab%C3%A1z%C3%AD) prostřednictvím další ukázkové aplikace  
-- [cookies](#cookies)
-- [session](#session)
-- [vyzkoušení si práce se session](#jednoduch%C3%A9-vyzkou%C5%A1en%C3%AD-pr%C3%A1ce-se-session) 
-- [ukázková aplikace](#uk%C3%A1zkov%C3%A1-aplikace) a na ní navazující [domácí úkol](#dom%C3%A1c%C3%AD-%C3%BAkol)
----      
-
 ## Opakování práce s databází
 :point_right:
 
