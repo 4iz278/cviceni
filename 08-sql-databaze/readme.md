@@ -199,10 +199,10 @@ Pro připojení k databázi stačí vytvořit instanci třídy PDO s příslušn
 ```php
 //připojení do DB na serveru eso.vse.cz - XNAME a HESLO samozřejmě zaktualizujte dle svých vlastních údajů
 //doporučuji do connection stringu rovnou dopsat také údaje o kódování, ve kterém chceme s databází komunikovat
-$pdo = new PDO('mysql:host=127.0.0.1;dbname=XNAME;charset=utf8mb4', 'XNAME', 'VASE HESLO DO MYSQL');
+$db = new PDO('mysql:host=127.0.0.1;dbname=XNAME;charset=utf8mb4', 'XNAME', 'VASE HESLO DO MYSQL');
 
 //následující nastavení zařídí, abychom byla při chybě v SQL vyhozena standardní výjimka (exception)
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ```
 
 - praktický tip - pokud obvykle budete chtít pracovat s výsledky ve formě asociačních polí, jde nastavit připojení k DB i podrobněji (buď pomocí metody setAttribute, nebo rovnou v konstruktoru)
