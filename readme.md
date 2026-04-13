@@ -37,12 +37,13 @@ Web předmětu: **http://4iz278.github.io**
   * phpMyAdmin
   * práce s databází z PHP
   * tvorba jednoduché databázové aplikace
+9. **[Cookies, session](09-cookies-session)**
+  * ukázková aplikace na práci s databází
+  * cookies 
+  * session 
+  * ukázková aplikace na práci se session a cookies
 
-> 9. **[Opakování práce s databází, session, cookies](x06-session-cookies)**
->   * ukázková aplikace na práci s databází
->   * cookies
->   * session  
->   * ukázková aplikace na práci se session a cookies
+> 
 > 10. **[Ukázková aplikace](x07-ukazkova-aplikace)**  
 >   * ukázka vyřešení domácího úkolu s nástěnkou
 >   * ukázka rozšíření nástěnky o uživatelské účty
