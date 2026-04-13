@@ -1,64 +1,6 @@
 # 8. Uživatelé, maily
 
-## Opakování z předchozích cvičení
-
-:point_right:
-
-Ve cvičení 06 jsme se zabývali prací s databází a uložením dat v session a cookies. Tyto znalosti poté byly využity v ukázkovém příkladu ve cvičení 07, ve kterém jsme začali s přihlašováním uživatelů.
-
-:point_right:
-
-Ohledně **session** byste si měli pamatovat:
-- session slouží k uložení dat, která chceme uchovat na serveru mezi jednotlivými požadavky uživatele (např. přihlášení či položky v košíku)
-- pro spuštění session je nutné zavolat funkci ```session_start()```
-- následně máte session data k dispozici v globálním poli ```$_SESSION```
-- do session jde uložit libovolná serializovatelná data (řetězce, čísla, pole, serializovatelné objekty)
-- pro identifikaci konkrétního uživatele se používá kód, který je u uživatel uložen v cookie
-
-:point_right:
-
-Ohledně **uživatelských účtů** jsme zatím nastínili, že:
-- pro přihlašování přímo na daném webu používáme obvykle kombinaci jména či mailu a hesla
-- heslo nikdy neukládáme do databáze v čitelné podobě!
-- k hashování hesel jsme použili funkci ```password_hash``` a pro ověření hesla při přihlášení pak funkci ```password_verify```
-- informaci o přihlášeném uživateli ukládáme v session
-
-### Kontroly formulářů  
-
-:point_right:
-
-Na předchozích cvičeních jsme se zabývali také kontrolami formulářů. S ohledem na opakující se připomínky a následné dotazy k těmto kontrolám si připomeňme, že:
-- tam, kde je to možné, je vhodné do formuláře zapsat kontroly v HTML 5 (a případně v javascriptu),
-- bez ohledu na kontroly uvedené v předchozím bodu je nutné mít kontroly i na straně PHP (a kontrolovat je nutné i např. položky vybírané ze selectu),
-- chybové hlášky musí uživateli konkrétně říct, co má opravit,
-- ve formuláři musí zůstat vyplněná aspoň data, která byla správně (aby je uživatel nemusel vyplňovat znovu).  
-
-:point_right:
-
-Část z vás si stále ještě není jistá, jak ověřit funkčnost kontroly v PHP, když chybu odchytí už prohlížeč. Máme na výběr 2 varianty:
-- pracnější varianta: z formuláře ty kontroly v HTML 5 a javascriptu dočasně odstraníme;
-- rozumnější varianta: dočasně danou stránku upravíte ve formuláři:
-    1. kliknete pravým tlačítkem myši na vybrané pole a zvolíte prozkoumat/inspect
-    2. kontrolu hodnot atp. odstraníme v rámci vývojářské konzole (jde tak např. dopsat i chybnou hodnotu do selectu atp.).  
-
-
-:point_right:
-
-**Na tomto cvičení nás čeká:**
-- [práce s uživatelskými účty](#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty)
-- [oprávnění uživatelů](#opr%C3%A1vn%C4%9Bn%C3%AD-u%C5%BEivatel%C5%AF)
-- [ukázkový e-shop s přihlašováním uživatelů](#uk%C3%A1zkov%C3%A1-aplikace-s-u%C5%BEivatelsk%C3%BDmi-%C3%BA%C4%8Dty)
-- [posílání e-mailů](#pos%C3%ADl%C3%A1n%C3%AD-e-mail%C5%AF)
-- [zadání domácího úkolu](#dom%C3%A1c%C3%AD-%C3%BAkol) (za maximálně 3 body)
-
----
-
 ## Uživatelské účty
-:point_right:
-
-Příklad s uživatelskými účty jsme trochu nakousli už u [aplikace Nástěnka](../x07-ukazkova-aplikace#u%C5%BEivatelsk%C3%A9-%C3%BA%C4%8Dty), ale je nutné, abychom to probrali podrobněji.
-
-Nejprve si projdeme trochu nezbytné teorie a poté se podíváme na praktický příklad.
 
 ### Autentizace vs. autorizace
 :point_right:

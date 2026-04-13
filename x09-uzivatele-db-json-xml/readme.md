@@ -1,45 +1,5 @@
 # 9. Uživatelé a DB, JSON, XML
 
-:grey_exclamation: **Tato složka obsahuje podklady k domácímu studiu ke cvičením 23. a  24. 4. 2020.**
-Oproti běžným podkladům ke cvičením zde naleznete podrobnější vysvětlení dané problematiky a další příklady. 
-
-## Opakování z předchozího cvičení
-:point_right:
-
-Na [předchozím cvičení](../x08-uzivatele-maily) jsme se zabývali autentizací a autorizací uživatelů a zasíláním e-mailů. Na tyto znalosti budeme navazovat jak na dnešním cvičení, tak na [cvičení 11](../x11-oauth-curl). Pojďme si to tedy trochu připomenout.
-
-:point_right:
-
-Ohledně **autentizace a autorizace uživatelů** byste si měli pamatovat:
-- autentizace = autentifikace = zjištění, jaký uživatel se snaží aplikaci používat (tj. ověření totožnosti)
-- autorizace = zjištění, zda může uživatel provádět konkrétní činnosti (např. upravovat záznamy atp.)
-- pro autentizaci byste měli umět využít jednoduchou HTTP autentifikaci a také lokální přihlašování uživatelů s ověřením dle údajů v databázi
-    - hesla vždy ukládáme hashovaně
-    - informaci o přihlášení uživatele ukládáme do ```$_SESSION```
-- autorizaci obvykle řešíme systémem rolí
-    - buď je ověřujeme přímo u jednotlivých činností,
-    - nebo využíváme systém oprávnění k jednotlivým definovaným zdrojům (což je vhodnější pro větší aplikace)
-
-:point_right:
-    
-Ohledně **posílání mailů** byste měli vědět, že:
-- pro jednoduché poslání mailu je možné použít funkci ```mail()```
-- pro posílání složitějších mailů, mailů s přílohami atp. je vhodné použít nějakou knihovnu, např. ```PHPMailer```            
-
----
-
-:point_right:
-
-**Na tomto cvičení nás čeká:**
-- [práce s datem a časem](#pr%C3%A1ce-s-datem-a-%C4%8Dasem)
-- [víceuživatelský přístup k databázi](#v%C3%ADceu%C5%BEivatelsk%C3%BD-p%C5%99%C3%ADstup-k-datab%C3%A1zi)
-- strukturované datové formáty
-    - [JSON](#json)
-    - [XML](#xml)
-- [zadání domácího úkolu](#dom%C3%A1c%C3%AD-%C3%BAkol)
-
----
-
 ## Práce s datem a časem
 :point_right:
 
