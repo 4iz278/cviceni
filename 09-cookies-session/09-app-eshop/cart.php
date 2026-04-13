@@ -28,7 +28,7 @@
   </head>
   <body>
 	
-	  <?php include 'navbar.php' ?>
+	  <?php include __DIR__.'/inc/navbar.php'; ?>
 		
 	  <h1>My shopping cart</h1>
 	
