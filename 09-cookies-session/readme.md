@@ -1,4 +1,4 @@
-# 6. Cookies a session
+# 9. Cookies a session
 
 - Zatím jsme pracovali s PHP zcela bezstavově, ale často je nutné, aby se nějaká data z předchozího požadavku přenášela i do toho dalšího - např. v e-shopu chce uživatel zboží přidávat do košíku, nebo se chce na webu přihlásit...
   - nechceme vždy posílat všechna data v URL či ve formuláři
