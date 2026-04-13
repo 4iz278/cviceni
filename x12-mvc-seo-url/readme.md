@@ -34,7 +34,7 @@ Jenže to nestačí, abychom mohli říct, že umíme psát aplikace v PHP
 - jde o konfigurační soubor pro úpravu nastavení serveru Apache (na kterém je PHP ve většině případů provozováno)
 - ovlivňuje nastavení serveru pro daný adresář a jeho podadresáře
 - v případě spuštění PHP jako modulu v Apache lze v rámci něj měnit i nastavení PHP
-- zatím jsme tento soubor použili pro jednoduchou HTTP autentifikaci - [viz cvičení 08](../x08-uzivatele-maily/08-htpasswd)
+- zatím jsme tento soubor použili pro jednoduchou HTTP autentifikaci - [viz cvičení 08](../10-uzivatele/10-htpasswd)
 - POZOR: Možnosti, které jsou v .htaccessu dostupné, se liší podle konfigurace serveru.
     - Pokud je v něm uvedena direktiva, kterou není možné na daném serveru použít, místo daného webu se nám zobrazí buď chyba v konfiguraci serveru, nebo vůbec nic. Pak je variantou postupně povolovat jednotlivé direktivy až k té, která není funkční.
     - Pokud nemůžeme direktivu měnit, nemůžeme ji v .htaccessu uvést ani v případě, že bychom ji chtěli změnit na hodnotu, kterou už má.  

@@ -98,7 +98,7 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
     - pro využití mimo aplikaci stačí v dané složce umístit soubory **.htaccess** a **.htpasswd**   
     
 :blue_book:    
-- [příklad zabezpečení složky pomocí .htaccess a .htpasswd](./08-htpasswd/)
+- [příklad zabezpečení složky pomocí .htaccess a .htpasswd](../10-uzivatele/10-htpasswd/)
 - [příklad HTTP Basic autentifikace v e-shopu](./08-app-eshop/admin_required.php)
 - [.htpasswd generator](https://www.web2generators.com/apache-tools/htpasswd-generator)
 
@@ -165,7 +165,7 @@ if ($user=$query->fetch(PDO::FETCH_ASSOC)){
 ```
 
 :blue_book:
-- [jednoduchý příklad použití funkcí password_hash() a password_verify()](./password_verify.php)
+- [jednoduchý příklad použití funkcí password_hash() a password_verify()](../10-uzivatele/password_verify.php)
 - [funkce password_hash() v PHP manuálu](https://www.php.net/manual/en/function.password-hash.php)
 - [funkce password_verify() v PHP manuálu](https://www.php.net/manual/en/function.password-verify.php)
 - [funkce hash() v PHP manuálu](http://php.net/manual/en/function.hash.php)

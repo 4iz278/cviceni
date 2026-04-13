@@ -8,12 +8,12 @@
     //pro zjednodušení testování tu máme hesla nešifrovaně, ale to fakt NENÍ BEZPEČNÉ!
     //TODO zvládli byste upravit tento soubor tak, aby tu místo hesel byl uložen jejich hash?
     //TODO zvládli byste zařídit také to, aby aplikace ignorovala velikost písmen v uživatelském jméně?
-    "admin" => "shelby",
-    "jirka"=>"gt"
+    "admin" => "admin",
+    "user"=>"password"
   ];
 
-  $user = @$_SERVER['PHP_AUTH_USER']; //pokud je uživatel přihlášený HTTP autentizací, najdeme jeho jméno i heslo v $_SERVER
-  $password = @$_SERVER['PHP_AUTH_PW'];
+  $user = $_SERVER['PHP_AUTH_USER'] ?? ''; //pokud je uživatel přihlášený HTTP autentizací, najdeme jeho jméno i heslo v $_SERVER
+  $password = $_SERVER['PHP_AUTH_PW'] ?? '';
 
   $validated = (isset($validUsers[$user])) && ($password == $validUsers[$user]);
 

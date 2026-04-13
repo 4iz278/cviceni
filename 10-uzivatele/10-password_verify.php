@@ -1,5 +1,4 @@
 <?php
-
 	/**
 	 * Jednoduchá demonstrace použití funkcí password_hash a password_verify
 	 */
