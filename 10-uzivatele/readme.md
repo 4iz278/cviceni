@@ -108,8 +108,8 @@ Z jednotlivých metod bychom si měli vybrat podle toho, jak moc kritická data 
     - pro využití mimo aplikaci stačí v dané složce umístit soubory **.htaccess** a **.htpasswd**   
     
 :blue_book:    
-- [příklad zabezpečení složky pomocí .htaccess a .htpasswd](./08-htpasswd/)
-- [příklad HTTP Basic autentifikace v e-shopu](./08-app-eshop/admin_required.php)
+- [příklad zabezpečení složky pomocí .htaccess a .htpasswd](10-htpasswd/)
+- [příklad HTTP Basic autentifikace v e-shopu](./10-app-eshop/admin_required.php)
 - [.htpasswd generator](https://www.web2generators.com/apache-tools/htpasswd-generator)
 
 ## Lokální přihlašování uživatelů
