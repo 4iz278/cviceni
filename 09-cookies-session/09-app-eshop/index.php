@@ -1,5 +1,6 @@
 <?php
-  require 'db.php';//připojení k databázi
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';//připojení k databázi
 
   #region zjištění hodnoty offsetu pro stránkování zboží
   if (isset($_GET['offset'])) {
@@ -79,7 +80,7 @@
       <div class="pagination">
         <?php
           for($i=1; $i<=ceil($count/10); $i++){
-            echo '<a class="'.($offset/10+1==$i?'active':'').'" href="index.php?offset='.(($i-1)*10).'">'.$i.'</a>';
+            echo '<a class="'.($offset/10+1==$i?'active':'').'" href="./?offset='.(($i-1)*10).'">'.$i.'</a>';
           }
         ?>
       </div>

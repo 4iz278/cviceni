@@ -1,11 +1,12 @@
 <?php
 
   session_start();//nastartujeme session
-  require 'db.php';//načteme připojení k databázi
+  /** @var PDO $db */
+  require __DIR__.'/inc/db.php';//načteme připojení k databázi
 
-  $ids = @$_SESSION['cart'];//načteme IDčka zboží, které máme v košíku (pročpak je tu asi ten zavináč :-))
+  $ids = $_SESSION['cart'] ?? null;//načteme IDčka zboží, které máme v košíku (pročpak je tu asi ten zavináč :-))
 
-  if (is_array($ids) && count($ids)>0) {
+  if (!empty($ids) && is_array($ids)) {
 
     //vygenerujeme si řetězec s otazníky o takové délce, kolik máme kusů zboží v košíku;pokud mam treba v ids 1,2,3, vrati mi ?,?,?
     $question_marks = str_repeat('?,', count($ids) - 1).'?';
@@ -35,7 +36,7 @@
 	
 	  <br/><br/>
 	
-    <a href="index.php">Back to the goods</a>
+    <a href="./">Back to the goods</a>
 	
 	  <br/><br/>
 

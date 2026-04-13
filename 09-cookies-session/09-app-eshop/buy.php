@@ -1,7 +1,7 @@
 <?php
   session_start();
-
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   #region vytvoření session pole pro košík
   if (!isset($_SESSION['cart'])) {

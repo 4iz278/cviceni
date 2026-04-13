@@ -2,7 +2,8 @@
 
   session_start();//spustíme session
 
-  require 'db.php';//připojení k databázi
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';//připojení k databázi
 
   #region nalezení zboží s daným ID a jeho odebrání z košíku
   $id = $_GET['id'];

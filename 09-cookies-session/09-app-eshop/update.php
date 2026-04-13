@@ -1,5 +1,6 @@
 <?php
-  require 'db.php';//připojíme se k databázi
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';//připojíme se k databázi
 
   $stmt = $db->prepare("SELECT * FROM goods WHERE id=?");//zkontrolujeme, zda se uživatel snaží upravit zboží, které opravdu existuje
   $stmt->execute(array($_GET['id']));
@@ -16,7 +17,7 @@
     $stmt = $db->prepare("UPDATE goods SET name=?, description=?, price=? WHERE id=? LIMIT 1;");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
     $stmt->execute(array($_POST['name'], $_POST['description'], (float)$_POST['price'], $_POST['id']));//naplnění předchozího statementu daty
 
-    header('Location: index.php');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)
+    header('Location: ./');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)
   }
 ?><!DOCTYPE html>
 <html lang="en">

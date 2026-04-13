@@ -1,6 +1,7 @@
 <?php
 
-  require 'db.php';//připojení k databázi
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';//připojení k databázi
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {//kontrolujeme, jestli byl požadavek poslán metodou POST
 
@@ -9,7 +10,7 @@
     $stmt = $db->prepare("INSERT INTO goods(name, description, price) VALUES (?, ?, ?)");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
     $stmt->execute(array($_POST['name'], $_POST['description'], (float)$_POST['price']));//naplnění předchozího statementu daty
 
-    header('Location: index.php');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)
+    header('Location: ./');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)
   }
 
 ?><!DOCTYPE html>
