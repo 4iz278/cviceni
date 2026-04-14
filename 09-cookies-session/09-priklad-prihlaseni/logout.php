@@ -5,4 +5,4 @@
   // alternativně bychom mohli jen smazat info o uživateli, zbytek info v session by zůstal zachovaný
   // unset($_SESSION['user']);
 
-  header('Location: index.php');//přesměrování na homepage
+  header('Location: ./');//přesměrování na homepage

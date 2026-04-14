@@ -10,7 +10,7 @@
     //samotná cookie se posílá do prohlížeče jako HTTP hlavička, tj. musíme ji odeslat před doctypenm
     setcookie("name", $_POST['name'], time()+3600); //teď + 3600 sekund = 1 hodina
 
-    header('Location: index.php');//přesměrujeme uživatele na homepage
+    header('Location: ./');//přesměrujeme uživatele na homepage
   }
 ?><!DOCTYPE html>
 <html lang="en">

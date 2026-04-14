@@ -11,7 +11,7 @@
 
     if (empty($chyby)){
       $_SESSION['user']=$_POST['login'];//uložíme jméno uživatele do session
-      header('Location: index.php');//přesměrujeme uživatele na index
+      header('Location: ./');//přesměrujeme uživatele na index
     }
   }
 
