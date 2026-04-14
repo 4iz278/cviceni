@@ -3,14 +3,14 @@
   session_start();
 
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 	
   if (!empty($_POST)){
-      $email = @$_POST['email'];
-      $password = @$_POST['password'];
+      $email = $_POST['email'] ?? '';
+      $password = $_POST['password'] ?? '';
 
-      # zajimavost: mysql porovnani retezcu je case insensitive, pokud dame select na NECO@DOMENA.COM, najde to i zaznam neco@domena.com
-      # viz http://dev.mysql.com/doc/refman/5.0/en/case-sensitivity.html
+      # zajimavost: mysql porovnani retezcu je při kódování utf8mb4_*_ci case insensitive, pokud dame select na NECO@DOMENA.COM, najde to i zaznam neco@domena.com
 
       $stmt = $db->prepare("SELECT * FROM users WHERE email = ? LIMIT 1"); //limit 1 je tu jen jako vykonnostní optimalizace, 2 stejné maily v DB nebudou
       $stmt->execute([$email]);
@@ -18,7 +18,7 @@
       if (($existingUser=$stmt->fetch(PDO::FETCH_ASSOC)) && password_verify($password, @$existingUser['password'])){
         //povedlo se nám najít daného uživatele v DB a zároveň bylo zadáno platné heslo => uložíme si ID uživatele do SESSION a přesměrujeme ho na homepage
         $_SESSION['user_id'] = $existingUser['id'];
-        header('Location: index.php');
+        header('Location: ./');
       }else{
         //u přihlášení uživatele nezobrazujeme konkrétní chybu (je to jediná výjimka, kdy není vhodné mít u formuláře úplně konkrétní chybu)
         $formError="Invalid user or password!";
@@ -44,7 +44,7 @@
 
     <form method="post">
       <label for="email">Your Email</label><br/>
-      <input type="text" name="email" id="email" value="<?php echo htmlspecialchars(@$_POST['email'])?>"><br/><br/>
+      <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($_POST['email']??'');?>"><br/><br/>
 
       <label for="password">Password</label><br/><!--POZOR: heslo nikdy nepředvyplňujeme! -->
       <input type="password" name="password" id="password" value=""><br/><br/>

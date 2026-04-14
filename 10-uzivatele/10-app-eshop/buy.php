@@ -1,9 +1,10 @@
 <?php
   //připojení k DB
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   //přístup jen pro přihlášeného uživatele
-  require 'user_required.php';
+  require __DIR__.'/inc/user_required.php';
 
   // session pole pro košík (pokud v košíku nic není, definujeme jej jako prázdné pole)
   if (!isset($_SESSION['cart'])) {
@@ -16,7 +17,7 @@
   $goods = $stmt->fetch();
 
   if (!$goods){
-    die("Unable to find goods!");
+    exit("Unable to find goods!");
   }
 
   // pridame id zbozi do session pole (aktuálně můžeme mít v košíku jen 1 kus od každého zboží - ale to už vyřešit umíme, bylo to za domácí úkol)

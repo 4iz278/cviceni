@@ -1,9 +1,10 @@
 <?php
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   //přístup jen pro admina
-  require 'admin_required.php';
+  require __DIR__.'/inc/admin_required.php';
 
   #region načtení zboží k aktualizaci
   $stmt = $db->prepare('SELECT * FROM goods WHERE id=:id');
@@ -41,7 +42,7 @@
       #endregion uložení zboží do DB
 
       //přesměrování na homepage
-      header('Location: index.php');
+      header('Location: ./');
       exit();
     }
   }
@@ -53,7 +54,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-	  <?php include 'navbar.php' ?>
+	  <?php include __DIR__.'/inc/navbar.php' ?>
 	
 	  <h1>Update goods</h1>
 
@@ -77,7 +78,7 @@
 		
 		<input type="hidden" name="id" value="<?php echo $goods['id']; ?>" />
 		
-		<input type="submit" value="Save" /> or <a href="index.php">Cancel</a>
+		<input type="submit" value="Save" /> or <a href="./">Cancel</a>
 		
 	</form>
 

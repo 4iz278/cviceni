@@ -1,9 +1,10 @@
 <?php
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   // přístup jen pro admina
-  require 'admin_required.php';
+  require __DIR__.'/inc/admin_required.php';
 
   //odebrání zboží z DB
   //POZOR: i když aplikaci používá admin, musíme počítat s rizikem útoku a použít prepared statement!
@@ -11,4 +12,4 @@
   $stmt->execute([$_GET['id']]);
 
   //přesměrování na homepage
-  header('Location: index.php');
+  header('Location: ./');

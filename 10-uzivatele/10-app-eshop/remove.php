@@ -1,9 +1,10 @@
 <?php
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   //přístup jen pro přihlášeného uživatele
-  require 'user_required.php';
+  require __DIR__.'/inc/user_required.php';
 
   #region nalezení zboží s daným ID a jeho odebrání z košíku
   $id = $_GET['id'];

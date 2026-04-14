@@ -1,9 +1,10 @@
 <?php
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 
   //přístup jen pro admina
-  require 'admin_required.php';
+  require __DIR__.'/inc/admin_required.php';
 	
   if (!empty($_POST)){
     $formErrors='';
@@ -22,7 +23,7 @@
     }
 
     //přesměrování na homepage
-    header('Location: index.php');
+    header('Location: ./');
     exit();
   }
 ?><!DOCTYPE html>
@@ -33,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-	  <?php include 'navbar.php' ?>
+	  <?php include __DIR__.'/inc/navbar.php' ?>
 	
 	  <h1>New goods</h1>
 	
@@ -45,17 +46,17 @@
 
     <form method="post">
       <label for="name">Name</label><br/>
-      <input type="text" name="name" id="name" value="<?php echo htmlspecialchars(@$_POST['name']);?>" required><br/><br/>
+      <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($_POST['name'] ?? '');?>" required><br/><br/>
 
       <label for="price">Price<br/>
-      <input type="number" min="0" name="price" id="price" required value="<?php echo htmlspecialchars(@$_POST['price'])?>"><br/><br/>
+      <input type="number" min="0" name="price" id="price" required value="<?php echo htmlspecialchars($_POST['price'] ?? '');?>"><br/><br/>
 
       <label for="description">Description</label><br/>
-      <textarea name="description" id="description"><?php echo htmlspecialchars(@$_POST['description'])?></textarea><br/><br/>
+      <textarea name="description" id="description"><?php echo htmlspecialchars($_POST['description'] ?? '')?></textarea><br/><br/>
 
       <br/>
 
-      <input type="submit" value="Save"> or <a href="index.php">Cancel</a>
+      <input type="submit" value="Save"> or <a href="./">Cancel</a>
     </form>
 
   </body>

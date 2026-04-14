@@ -3,12 +3,13 @@
   session_start();
 
   //připojení k databázi
-  require 'db.php';
+  /** @var \PDO $db */
+  require __DIR__.'/inc/db.php';
 	
   if (!empty($_POST)) {
 	
-    $email = @$_POST['email'];
-    $password = @$_POST['password'];
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
 	
   	//TODO tady chybí ověření vyplnění dosud neregistrovaného e-mailu a hesla - zvládli byste to doplnit?
 
@@ -28,7 +29,7 @@
     $_SESSION['user_id'] = (int)$stmt->fetchColumn();
 
 	  //přesměrujeme uživatele na homepage
-  	header('Location: index.php');
+  	header('Location: ./');
   }
 
 ?><!DOCTYPE html>
@@ -53,7 +54,7 @@
 
       <!--TODO tady by bylo vhodné další pole pro potvrzení správnosti hesla -->
 	
-			<input type="submit" value="Create Account"> or <a href="index.php">Cancel</a>
+			<input type="submit" value="Create Account"> or <a href="./">Cancel</a>
 		</form>
 	
   </body>

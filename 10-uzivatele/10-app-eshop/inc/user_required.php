@@ -8,7 +8,7 @@
 	if(!isset($_SESSION["user_id"])){
 		//uživatel není přihlášen => přesměrujeme ho na přihlašovací stránku
 		header('Location: signin.php');
-		die();
+		exit();
 	}
 
 	//v session je user id uživatele, tak ho zkusíme načíst z DB
@@ -21,6 +21,6 @@
   //pokud by v DB z nějakého důvodu uživatel nebyl (třeba byl mezitím smazán), tak smažeme session a přesměrujeme uživatele na homepage
   if (!$currentUser){
     session_destroy();
-    header('Location: index.php');
-    die();
+    header('Location: ./');
+    exit();
   }
