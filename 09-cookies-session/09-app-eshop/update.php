@@ -7,7 +7,7 @@
   $goods = $stmt->fetch();
 
   if (!$goods){
-    die("Unable to find goods!");//TODO místo "umření" stránky by tu asi bylo hezké zobrazit nějaké varování a umožnit uživateli normálně pokračovat např. výpisem zboží
+    exit("Unable to find goods!");//TODO místo "umření" stránky by tu asi bylo hezké zobrazit nějaké varování a umožnit uživateli normálně pokračovat např. výpisem zboží
   }
 
   if ($_SERVER["REQUEST_METHOD"]=="POST") {//kontrolujeme, jestli byl požadavek poslán metodou POST

@@ -15,7 +15,7 @@
   $goods = $stmt->fetch();
 
   if (!$goods){
-    die("Unable to find goods!");//TODO místo ukočení skriptu by tu bylo hezké jen nějaké uložení chybové hlášky
+    exit("Unable to find goods!");//TODO místo ukočení skriptu by tu bylo hezké jen nějaké uložení chybové hlášky
   }
   #endregion kontrola, jestli je zboží v DB
 
