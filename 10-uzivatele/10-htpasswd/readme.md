@@ -13,7 +13,7 @@
 ## Jak to vyzkoušet?
 1. nahrajte tuto složku na server eso.vse.cz
 2. v souboru .htaccess upravte absolutní cestu k souboru s hesly (min. nahraďte xname)
-3. načtěte příslušnou cestu v prohlížeči (tj. něco jako [https://eso.vse.cz/~xname/08-htpasswd/](https://eso.vse.cz/~xname/08-htpasswd/))
+3. načtěte příslušnou cestu v prohlížeči (tj. něco jako [https://eso.vse.cz/~xname/10-htpasswd/](https://eso.vse.cz/~xname/10-htpasswd/))
 4. pro přihlášení jsou tu pak povoleny kombinace:
      - *login:heslo*
      - *test:test*
