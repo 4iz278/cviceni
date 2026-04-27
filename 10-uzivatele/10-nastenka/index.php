@@ -1,15 +1,16 @@
 <?php
   //načteme připojení k databázi
-  require_once 'inc/db.php';
+  /** @var \PDO $db */
+  require_once __DIR__.'/inc/db.php';
 
   //vložíme do stránek hlavičku
-  include 'inc/header.php';
+  include __DIR__.'/inc/header.php';
 
   if (!empty($_GET['category'])){
     #region výběr příspěvků z konkrétní kategorie
     $query = $db->prepare('SELECT
-                           posts.*, users.name AS user_name, users.email, categories.name AS category_name
-                           FROM posts JOIN users USING (user_id) JOIN categories USING (category_id) WHERE posts.category_id=:category ORDER BY updated DESC;');
+                           n_posts.*, n_users.name AS user_name, n_users.email, n_categories.name AS category_name
+                           FROM n_posts JOIN n_users USING (user_id) JOIN n_categories USING (category_id) WHERE n_posts.category_id=:category ORDER BY updated DESC;');
     $query->execute([
       ':category'=>$_GET['category']
     ]);
@@ -17,8 +18,8 @@
   }else{
     #region výběr příspěvků bez ohledu na kategorii
     $query = $db->prepare('SELECT
-                           posts.*, users.name AS user_name, users.email, categories.name AS category_name
-                           FROM posts JOIN users USING (user_id) JOIN categories USING (category_id) ORDER BY updated DESC;');
+                           n_posts.*, n_users.name AS user_name, n_users.email, n_categories.name AS category_name
+                           FROM n_posts JOIN n_users USING (user_id) JOIN n_categories USING (category_id) ORDER BY updated DESC;');
     $query->execute();
     #region výběr příspěvků bez ohledu na kategorii
   }
@@ -29,11 +30,11 @@
           <select name="category" id="category" onchange="document.getElementById(\'categoryFilterForm\').submit();">
             <option value="">--nerozhoduje--</option>';
 
-  $categories=$db->query('SELECT * FROM categories ORDER BY name;')->fetchAll(PDO::FETCH_ASSOC);
+  $categories=$db->query('SELECT * FROM n_categories ORDER BY name;')->fetchAll(PDO::FETCH_ASSOC);
   if (!empty($categories)){
     foreach ($categories as $category){
       echo '<option value="'.$category['category_id'].'"';//u category_id nemusí být ošetření speciálních znaků, protože jde o číslo
-      if ($category['category_id']==@$_GET['category']){
+      if ($category['category_id']==($_GET['category'] ?? '')){
         echo ' selected="selected" ';
       }
       echo '>'.htmlspecialchars($category['name']).'</option>';
@@ -68,8 +69,8 @@
   }
 
   echo '<div class="row my-3">
-          <a href="edit.php?category='.@$_GET['category'].'" class="btn btn-primary">Přidat příspěvek</a>
+          <a href="edit.php?category='.htmlspecialchars($_GET['category']??'').'" class="btn btn-primary">Přidat příspěvek</a>
         </div>';
 
   //vložíme do stránek patičku
-  include 'inc/footer.php';
+  include __DIR__.'/inc/footer.php';

@@ -321,3 +321,16 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
 ### Výzva k zamyšlení
 :point_right:
 - *Zvládli byste předělat aplikaci tak, aby se i administrátoři přihlašovali normálně a ne pomocí HTTP autentifikace? Kam byste ukládali informaci o roli uživatele?*
+
+## Doplnění uživatelských účtů do aplikace Nástěnka
+:point_right:
+
+Pro procvičení tvorby lokálního přihlašování uživatelů máme připraven ještě jeden příklad, tentokrát s nám již známou nástěnkou a komentovaným postupem řešení.
+
+Do aplikace doplníme možnost registrace a přihlašování uživatelů. Nebudeme řešit oprávnění uživatelů, každý z přihlášených uživatelů bude moct přidávat příspěvky a také všechny příspěvky upravovat.
+
+:orange_book:
+- postup zprovoznění ukázkové aplikace:
+  1. stáhněte si celou složku aplikace ([10-nastenka](./10-nastenka)) a nahrajte ji na server
+  2. nahrajte do MariaDB [strukturu databáze nástěnky](10-nastenka/nastenka.sql) - tabulky mají prefix ```n_```, aby nebyly v konfliktu s eshopem z předchozího příkladu
+  4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./10-nastenka/inc/db.php)
