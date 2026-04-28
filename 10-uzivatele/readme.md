@@ -1,4 +1,4 @@
-# 8. Uživatelské účty
+# 10. Uživatelské účty
 U velkého množství aplikací potřebujeme, aby konkrétní požadavky mohli posílat jen uživatelé, které k tomu mají oprávnění. Např. aby nám obsah webu nemohl v administraci přepsat každý, kdo si jej načte.
 
 ## Autentizace vs. autorizace

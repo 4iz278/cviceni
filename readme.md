@@ -42,15 +42,14 @@ Web předmětu: **http://4iz278.github.io**
   * cookies 
   * session 
   * ukázková aplikace na práci se session a cookies
+10. **[Uživatelské účty](10-uzivatele)**
+  * autorizace, autentizace
+  * HTTP autentizace
+  * lokální přihlašování uživatelů
+11. **[Uživatelské účty II., maily](11-uzivatele-II)
+  * posílání mailů
+  * obnova zapomenutého hesla
 
-> 
-> 10. **[Ukázková aplikace](x07-ukazkova-aplikace)**  
->   * ukázka vyřešení domácího úkolu s nástěnkou
->   * ukázka rozšíření nástěnky o uživatelské účty
-> 11. **[Uživatelé, maily](x08-uzivatele-maily)**
->   * autorizace, autentizace
->   * lokální přihlašování uživatelů
->   * posílání e-mailů
 > 12. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)** 
 >   * datum a čas
 >   * víceuživatelský přístup k DB
@@ -61,7 +60,6 @@ Web předmětu: **http://4iz278.github.io**
 >   * mPDF 
 > 14. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
 >   * CURL  
->   * zapomenuté heslo
 >   * OAuth
 > 15. **[MVC, SEO URL](x12-mvc-seo-url)**   
 >   * .htaccess
