@@ -1,0 +1,17 @@
+{
+	"name": "vojir/example-local-login",
+	"description": "Ukázka přihlašování",
+	"type": "project",
+	"require": {
+		"php": ">= 8.3",
+    "phpmailer/phpmailer": "v7.0.2",
+    "league/oauth2-client": "2.9.0",
+    "league/oauth2-google": "5.0.0"
+	},
+	"minimum-stability": "stable",
+	"config": {
+		"platform": {
+			"php": "8.3"
+		}
+	}
+}

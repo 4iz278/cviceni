@@ -56,6 +56,18 @@ Jako příklad přihlášení pomocí externího ověření uživatele protokole
 - Pro realizaci budete potřebovat vlastní uživatelský Google účet. Pokud jej nepoužíváte, velmi podobně by vypadalo přihlášení např. pomocí účtu Facebook, Microsoft atp.
 
 :point_right:
+Pro implementaci OAuth přihlašování v této ukázce použijeme knihovnu league/oauth2-client:
+- Jde o obecnou knihovnu pro práci s OAuth 2.0, která poskytuje jednotné rozhraní pro různé poskytovatele (Google, Facebook, GitHub, Microsoft atd.).
+- Díky tomu můžeme stejný kód snadno použít i pro jiné služby – stačí jen změnit tzv. *provider*.
+  - pro každou službu existuje vlastní provider, ale jejich použití je velmi podobné
+- Knihovna řeší základní OAuth flow (redirect, získání tokenu, práce s API), aniž bychom museli implementovat celý protokol ručně.
+
+Získání balíčků:
+```bash
+composer require league/oauth2-client league/oauth2-google
+```
+
+:point_right:
 
 Řešení přímo navazuje na [předchozí příklad](../11-uzivatele-II/11-local-login) s registrací, přihlašováním a obnovou zapomenutého hesla. 
 Pokud jste tento příklad neprošli či jej nemáte připravený na serveru:
@@ -66,5 +78,5 @@ Pokud jste tento příklad neprošli či jej nemáte připravený na serveru:
 :orange_book:
 
 **Řešení:**
-- [prezentace s komentovaným postupem řešení](./12-google-login/prezentace-postup-vyvoje-google-login)
+- [prezentace s komentovaným postupem řešení](./12-google-login/prezentace-postup-vyvoje-google-login.pptx)
 - [vytvořený zdrojový kód včetně exportu databáze](./12-google-login)
