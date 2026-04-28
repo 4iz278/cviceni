@@ -7,7 +7,7 @@
   require __DIR__.'/inc/admin_required.php';
 
   #region načtení zboží k aktualizaci
-  $stmt = $db->prepare('SELECT * FROM goods WHERE id=:id');
+  $stmt = $db->prepare('SELECT * FROM e_goods WHERE id=:id');
   $stmt->execute([':id'=>@$_REQUEST['id']]);
   $goods = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -32,7 +32,7 @@
 
     if (empty($formErrors)){
       #region uložení zboží do DB
-      $stmt = $db->prepare('UPDATE goods SET name=:name, description=:description, price=:price WHERE id=:id LIMIT 1;');
+      $stmt = $db->prepare('UPDATE e_goods SET name=:name, description=:description, price=:price WHERE id=:id LIMIT 1;');
       $stmt->execute([
         ':name'=> $name,
         ':description'=> $description,

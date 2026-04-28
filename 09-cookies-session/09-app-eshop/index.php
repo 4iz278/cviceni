@@ -11,11 +11,11 @@
   #endregion zjištění hodnoty offsetu pro stránkování zboží
 
   #region zjištění počtu zboží pro stránkování
-  $count = $db->query("SELECT COUNT(id) FROM goods")->fetchColumn(); //všimněte si, že pro zjištění jednoho výsledku to jde i bez pomocné proměnné pro uložení dotazu ;)
+  $count = $db->query("SELECT COUNT(id) FROM e_goods")->fetchColumn(); //všimněte si, že pro zjištění jednoho výsledku to jde i bez pomocné proměnné pro uložení dotazu ;)
   #endregion zjištění počtu zboží pro stránkování
 
   #region načtení zboží pro výpis
-  $stmt = $db->prepare("SELECT * FROM goods ORDER BY id DESC LIMIT 10 OFFSET ?");//načítáme maximálně 10 položek z databáze
+  $stmt = $db->prepare("SELECT * FROM e_goods ORDER BY id DESC LIMIT 10 OFFSET ?");//načítáme maximálně 10 položek z databáze
   $stmt->bindValue(1, $offset, PDO::PARAM_INT); //offset předáváme s uvedením datového typu; s ohledem na to, že ale máme ověřeno, že v proměnné $offset je číslo, mohli bychom ho i přímo připojit do dotazu
   $stmt->execute();
 

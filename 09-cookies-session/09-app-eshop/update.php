@@ -2,7 +2,7 @@
   /** @var \PDO $db */
   require __DIR__.'/inc/db.php';//připojíme se k databázi
 
-  $stmt = $db->prepare("SELECT * FROM goods WHERE id=?");//zkontrolujeme, zda se uživatel snaží upravit zboží, které opravdu existuje
+  $stmt = $db->prepare("SELECT * FROM e_goods WHERE id=?");//zkontrolujeme, zda se uživatel snaží upravit zboží, které opravdu existuje
   $stmt->execute(array($_GET['id']));
   $goods = $stmt->fetch();
 
@@ -14,7 +14,7 @@
 
     //TODO tady by asi měly být nějaké kontroly ;)
 
-    $stmt = $db->prepare("UPDATE goods SET name=?, description=?, price=? WHERE id=? LIMIT 1;");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
+    $stmt = $db->prepare("UPDATE e_goods SET name=?, description=?, price=? WHERE id=? LIMIT 1;");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
     $stmt->execute(array($_POST['name'], $_POST['description'], (float)$_POST['price'], $_POST['id']));//naplnění předchozího statementu daty
 
     header('Location: ./');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)

@@ -12,7 +12,7 @@
   }
 
   //načteme dané zboží z DB - POZOR: ačkoliv očekáváme, že id zboží bude číslo, musíme počítat s rizikem, že se uživatel ve svém požadavku pokusí o sql injection!
-  $stmt = $db->prepare("SELECT * FROM goods WHERE id=?");
+  $stmt = $db->prepare("SELECT * FROM e_goods WHERE id=?");
   $stmt->execute([$_GET['id']]);
   $goods = $stmt->fetch();
 

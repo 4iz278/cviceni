@@ -1,4 +1,4 @@
-CREATE TABLE goods
+CREATE TABLE e_goods
 (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(255),

@@ -4,7 +4,7 @@
   require __DIR__.'/inc/db.php';
 
   //přístup jen pro přihlášené uživatele
-  require 'user_required.php';
+  require __DIR__.'/inc/user_required.php';
 
   $ids = $_SESSION['cart'] ?? [];//načteme IDčka zboží, které máme v košíku (pročpak je tu asi ten zavináč :-))
 
@@ -14,7 +14,7 @@
     $question_marks = str_repeat('?,', count($ids) - 1).'?';
 
     //připravíme si prepared statement pro načtení zboží podle jeho IDček
-    $stmt = $db->prepare("SELECT * FROM goods WHERE id IN ($question_marks) ORDER BY name");
+    $stmt = $db->prepare("SELECT * FROM e_goods WHERE id IN ($question_marks) ORDER BY name");
     //naplníme statement IDčky; funkce array_values vrací hodnoty z pole bez ohledu na jeho původní indexy (výsledkem je pole normálně indexované od 0, což je vyžadováno pro naplnění nepojmenovaných parametrů označených ?)
     $stmt->execute(array_values($ids));
     //všechny produkty načteme

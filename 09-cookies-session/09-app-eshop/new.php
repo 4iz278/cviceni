@@ -7,7 +7,7 @@
 
     //TODO tady by asi měly být nějaké kontroly ;)
 
-    $stmt = $db->prepare("INSERT INTO goods(name, description, price) VALUES (?, ?, ?)");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
+    $stmt = $db->prepare("INSERT INTO e_goods(name, description, price) VALUES (?, ?, ?)");//prepared statement pro uložení dat (tentokrát s anonymními parametry)
     $stmt->execute(array($_POST['name'], $_POST['description'], (float)$_POST['price']));//naplnění předchozího statementu daty
 
     header('Location: ./');//přesměrujeme uživatele na homepage (při přesměrování už se nic dalšího nevykreslí)

@@ -8,7 +8,7 @@
 
   //odebrání zboží z DB
   //POZOR: i když aplikaci používá admin, musíme počítat s rizikem útoku a použít prepared statement!
-  $stmt = $db->prepare("DELETE FROM goods WHERE id=?");
+  $stmt = $db->prepare("DELETE FROM e_goods WHERE id=?");
   $stmt->execute([$_GET['id']]);
 
   //přesměrování na homepage

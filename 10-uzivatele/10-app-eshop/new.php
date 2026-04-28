@@ -13,7 +13,7 @@
 
     if (empty($formErrors)){
       #region uložení zboží do DB
-      $stmt = $db->prepare("INSERT INTO goods(name, description, price) VALUES (:name, :description, :price)");
+      $stmt = $db->prepare("INSERT INTO e_goods(name, description, price) VALUES (:name, :description, :price)");
       $stmt->execute([
         ':name'=>$_POST['name'],
         ':description'=>$_POST['description'],

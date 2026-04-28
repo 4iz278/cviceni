@@ -12,7 +12,7 @@
 
       # zajimavost: mysql porovnani retezcu je při kódování utf8mb4_*_ci case insensitive, pokud dame select na NECO@DOMENA.COM, najde to i zaznam neco@domena.com
 
-      $stmt = $db->prepare("SELECT * FROM users WHERE email = ? LIMIT 1"); //limit 1 je tu jen jako vykonnostní optimalizace, 2 stejné maily v DB nebudou
+      $stmt = $db->prepare("SELECT * FROM e_users WHERE email = ? LIMIT 1"); //limit 1 je tu jen jako vykonnostní optimalizace, 2 stejné maily v DB nebudou
       $stmt->execute([$email]);
 
       if (($existingUser=$stmt->fetch(PDO::FETCH_ASSOC)) && password_verify($password, @$existingUser['password'])){

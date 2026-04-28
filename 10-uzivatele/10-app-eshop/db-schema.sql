@@ -1,4 +1,4 @@
-CREATE TABLE goods
+CREATE TABLE e_goods
 (
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(255),
@@ -9,7 +9,7 @@ CHARACTER SET utf8
 ;
 
 
-CREATE TABLE users
+CREATE TABLE e_users
 (
 	id SERIAL PRIMARY KEY,
 	email VARCHAR(255) NOT NULL,
@@ -18,4 +18,4 @@ CREATE TABLE users
 CHARACTER SET utf8
 ;
 
-CREATE UNIQUE INDEX in_users_email ON users(email);
+CREATE UNIQUE INDEX in_users_email ON e_users(email);

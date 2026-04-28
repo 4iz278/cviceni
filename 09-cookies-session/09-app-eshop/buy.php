@@ -10,7 +10,7 @@
   #endregion vytvoření session pole pro košík
 
   #region kontrola, jestli je zboží v DB
-  $stmt = $db->prepare("SELECT * FROM goods WHERE id=?");
+  $stmt = $db->prepare("SELECT * FROM e_goods WHERE id=?");
   $stmt->execute(array($_GET['id']));
   $goods = $stmt->fetch();
 
