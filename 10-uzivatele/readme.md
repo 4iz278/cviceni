@@ -334,3 +334,5 @@ Do aplikace doplníme možnost registrace a přihlašování uživatelů. Nebude
   1. stáhněte si celou složku aplikace ([10-nastenka](./10-nastenka)) a nahrajte ji na server
   2. nahrajte do MariaDB [strukturu databáze nástěnky](10-nastenka/nastenka.sql) - tabulky mají prefix ```n_```, aby nebyly v konfliktu s eshopem z předchozího příkladu
   4. nastavte vlastní xname a heslo k databázi v souboru [db.php](./10-nastenka/inc/db.php)
+- [prezentace s postupem tvorby lokálního přihlašování](10-nastenka/nastenka-uzivatele-upraveno.zip)
+- [upravený zdrojový kód](10-nastenka/nastenka-uzivatele-upraveno.zip)
