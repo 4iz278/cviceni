@@ -1,9 +1,11 @@
 <?php
-
   /**
    * Ukázka vybraných objektů pro práci s datem a časem
    * (v tomto případě pracujeme s jednou časovou zónou, ale objekt DateTime má i referenci na konkrétní časovou zónu - můžeme jich tedy v aplikaci používat víc najednou)
    */
+
+  //pro práci s datem a časem můžeme ručně definovat časovou zónu, ve které se pohybujeme; pokud to neuděláme, přebere se výchozí konfigurace ze serveru
+  date_default_timezone_set('Europe/Prague');
 
   //vytvoříme instanci aktuálního DateTime
   $date = new DateTime();
@@ -40,19 +42,29 @@
 
   //pro časové posuny a zjištění rozdílů mezi daty slouží instance objektu DateInterval
   //konkrétní DateInterval můžete definovat buď pomocí zápisu v konstruktoru (viz PHP manuál), nebo vytvoříme prázdný DateInterval a požadované hodnoty pro posun nastavíme do properties vytvořeného objektu
-  $interval=new DateInterval('P10D');
+  $interval=new DateInterval('P10D');//P10D = 10 dní (ISO 8601 formát)
 
-  //posuneme datum o daný DateInterval
-  $date->add($interval);
+//posuneme datum o daný DateInterval
+  $date->add($interval); //změníme hodnotu původního datumu (tj. daného objektu)
   echo $date->format(DateTimeInterface::W3C);
   echo '<br />';
 
-  //zjištění rozdílu mezi 2 instancemi DateTime
+  //zjištění rozdílu mezi 2 instancemi DateTime; DateTime umí pracovat i s mikrosekundami
   $d1=new DateTime("2020-03-01 11:14:15.638276");
   $d2=new DateTime("2020-03-05 11:14:15.889342");
-  /** @var DateInterval|false $diff */
-  $diff=$d2->diff($d1);
 
-  //výpis rozdílu ve dnech
+  //rozdíl mezi daty (pořadí ovlivňuje znaménko)
+  /** @var DateInterval $diff */
+  $diff = $d1->diff($d2);
+
+  //celkový počet dnů rozdílu, alternativně lze použít format('%a')
   echo $diff->days;
 
+  //Neměnné (immutable) objekty
+  $dateImmutable = new DateTimeImmutable('2020-01-01');
+  $newDate = $dateImmutable->modify('+1 day');
+
+  //původní se nezměnil
+  echo $dateImmutable->format('d.m.Y');
+  echo '<br />';
+  echo $newDate->format('d.m.Y');

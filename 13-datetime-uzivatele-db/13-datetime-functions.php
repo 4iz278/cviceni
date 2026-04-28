@@ -1,5 +1,4 @@
 <?php
-
   /**
    * Ukázka vybraných funkcí pro práci s datem a časem
    */
@@ -11,7 +10,8 @@
   $time = time();
 
   //funkce date() slouží k naformátování data a času - prvním parametrem je určení formátu, který chceme získat; volitelným druhým parametrem může být timestamp, který chceme naformátovat
-  //vytiskne datum a čas ve formátu W3C; dostupné konstanty a zástupné symboly najdeme v PHP manuálu
+  //vytiskne datum a čas ve formátu W3C (používá se např. v API, RSS, XML)
+  //dostupné konstanty a zástupné symboly najdeme v PHP manuálu
   echo date(DATE_W3C);
   echo '<br />';
 
@@ -23,7 +23,8 @@
   echo date('d.m.Y');
   echo '<br />';
 
-  //vytiskne den v týdnu
+  //vytiskne den v týdnu (anglicky)
+  //pro lokalizaci bychom museli použít např. IntlDateFormatter
   echo date('l');
   echo '<br />';
 
@@ -39,15 +40,17 @@
   echo '<br />';
 
   //ukázka posunu data o 1 týden
-  echo strtotime('+1 week', $timestamp);
+  $timestamp = strtotime('+1 week', $timestamp);
+  echo date('d.m.Y H:i:s', $timestamp);
   echo '<br />';
 
   //nalezení požadovaného dne v týdnu
-  echo strtotime('last Monday');
+  $timestamp = strtotime('last Monday');
+  echo date('d.m.Y H:i:s', $timestamp);
   echo '<br />';
 
-  //zjištění rozdílu mezi 2 daty (tady už na pomezí s používáním objektů)
+  //zjištění rozdílu mezi 2 daty (tady už na pomezí s používáním objektů); pořadí datumů ovlivňuje, zda je rozdíl kladný/záporný
   $a = date_create('2020-04-19');
   $b = date_create('2021-05-06');
-  $interval =  date_diff($b, $a);
+  $interval =  date_diff($a, $b);
   echo date_interval_format($interval, "%a days");
