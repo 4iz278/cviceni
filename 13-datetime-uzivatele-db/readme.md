@@ -40,6 +40,7 @@ echo date('d.m.Y H:i:s', $timestamp);
 ```
 
 :point_right:
+
 **Objektový přístup k datu a času**
 
 - Objekty představující časové údaje používáme zejména v případě, kdy chceme používat kontrolu datových typů u funkcí/metod, nebo používáme objektově-relační mapování při ukládání dat do databáze.
@@ -64,6 +65,7 @@ $date3 = $date2->add(new DateInterval('P1D')); // P1D = 1 day (ISO 8601 formát)
 ```
 
 :grey_exclamation:
+
 **Pozor na časové pásmo (timezone)!**
 - PHP používá výchozí timezone nastavenou na serveru
 - doporučuje se ji explicitně nastavit, např.:
