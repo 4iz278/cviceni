@@ -46,21 +46,23 @@ Web předmětu: **http://4iz278.github.io**
   * autorizace, autentizace
   * HTTP autentizace
   * lokální přihlašování uživatelů
-11. **[Uživatelské účty II., maily](11-uzivatele-II)
+11. **[Uživatelské účty II., maily](11-uzivatele-II)**
   * posílání mailů
   * obnova zapomenutého hesla
+12. **[Uživatelské účty III - OAuth](12-uzivatele-III)**
+  * přihlašování přes OAuth2
+  * praktická ukázka přihlášení Google účtem
+13. **[Datum a čas, víceuživatelský přístup k DB](13-datetime-uzivatele-db)**
+  * datum a čas
+  * víceuživatelský přístup k DB - zamykání záznamů
 
-> 12. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)** 
->   * datum a čas
->   * víceuživatelský přístup k DB
+> 12. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)**
 >   * strukturované datové formáty
-> 13. **[REST API, PDF](x10-rest-api-pdf)**
+> 13. **[REST API](x10-rest-api-pdf)**
 >   * tvorba API
 >   * AJAX
->   * mPDF 
 > 14. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
->   * CURL  
->   * OAuth
+>   * CURL
 > 15. **[MVC, SEO URL](x12-mvc-seo-url)**   
 >   * .htaccess
 >   * návrhový vzor MVC
