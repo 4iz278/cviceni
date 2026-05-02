@@ -43,9 +43,8 @@ Moderní webové aplikace dnes velmi často nepracují jen s vlastní databází
 }
 ```
 
-:point_right:
-
 #### Práce s JSONem z PHP
+:point_right:
 - **json_encode($data, $options)**
     - funkce pro zakódování pole, objektu atd.
     - pomocí ```$options``` jdou ovlivnit vlastnosti konverze - viz [json_encode v PHP manuálu](http://php.net/manual/en/function.json-encode.php)
@@ -104,9 +103,8 @@ $data2=json_decode($json, true); //funkce pro dekódování JSONu (vrací asocia
 </osoby>
 ```
 
-:point_right:
-
 #### Práce s XML z PHP
+:point_right:
 - v PHP máme k dispozici několik parserů, které umí pracovat s XML dokumenty
     - DOM přístup (procházení dat v podobě stromu)
         - [SimpleXML](https://php.net/manual/en/book.simplexml.php)
@@ -142,3 +140,56 @@ if (isset($xml->osoba)){
 - [příklad validace](./14-xml/validace.php)
 - [příklad XSL transformace](./14-xml/transformace.php)
 - [příklad RSS čtečka](./14-xml/rss-reader.php)
+
+## Načítání datových souborů
+:point_right:
+- JSON a XML můžeme mít uložené i ve vlastní databázi, ale často je máme k dispozici v podobě souboru či jako odpověď při volání API
+- pokud máme datové soubory na vlastním serveru
+  - XML můžeme načíst přímo pomocí funkcí ```simplexml_load_file()``` nebo ```DOMDocument::load()```
+  - případně jejich obsah získáme přes ```file_get_contents``` a následně pracujeme i s obsahem (např. JSON, který načteme jako text a následně zpracujeme pomocí ```json_decode()```; alternativně lze ale takto pracovat i s CSV atp.)
+- pokud máme povolený *fopen wrapper* (viz [práce se soubory](../03-soubory)), můžeme stejným způsobem načíst vzdálený soubor
+- alternativně je pro načítání externích dat přes http(s) často využíváno rozšíření **cURL**
+  - umožňuje nastavit hlavičky, autentizaci, timeouty atp.
+  - = vhodný přístup zejména pro práci s API
+  - cURL možná znáte i jako nástroj pro příkazový řádek/konzoli :-)
+
+:grey_exclamation:
+
+Při práci s externími zdroji musíme vždy počítat s tím, že načtení může selhat (např. nedostupný server, chyba sítě)!
+
+:point_right:
+```php
+//jednoduché načtení RSS kanálu (XML) z webu školy - při povoleném fopen wrapperu
+$xml = simplexml_load_file('https://www.vse.cz/feed/'); 
+
+
+//zjednodušené načtení stejných dat pomocí cURL
+$ch = curl_init('https://www.vse.cz/feed/');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+curl_close($ch);
+
+$xml = simplexml_load_string($response); // načtení XML z odpovědi
+```
+
+:point_right:
+- lze využít také knihovny třetích stran (např. **Guzzle**)
+  - moderní HTTP klient - s jednodušším nastavením než CURL
+  - používán ve většině PHP frameworků
+- získáme jej prostřednictvím composeru
+```bash
+composer require guzzlehttp/guzzle
+```
+
+```php
+$client = new \GuzzleHttp\Client();
+$response = $client->get('https://www.vse.cz/feed/');
+$xml = simplexml_load_string($response->getBody()); // načtení XML z odpovědi
+```
+
+:blue_book:
+V těchto příkladech trošku předbíháme - načítají data z API, které si popíšeme v dalším bloku. Stejným způsobem lze však volat i libovolné existující API.
+- [příklad využití REST API pomocí cURL](./14-php-client-curl.php)
+- [příklad využití REST API pomocí file_get_contents() a stream contextu](./14-php-client-file_get_contents.php)
+- [cURL v PHP mamuálu](https://www.php.net/manual/en/book.curl.php)
+- [Guzzle HTTP Client Documentation](https://docs.guzzlephp.org/en/stable/)

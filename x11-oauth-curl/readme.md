@@ -23,10 +23,6 @@ Pokud potřebujeme větší kontrolu nad odesláním požadavku, nebo máme na s
 
 Pro vyzkoušení volání můžete využít [API z minulého cvičení](../x10-rest-api-pdf#tvorba-rest-api).
 
-:blue_book:
-- [příklad využití REST API pomocí CURL](./11-php-client-curl.php)
-- [příklad využití REST API pomocí file_get_contents()](./11-php-client-file_get_contents.php)  
-
 :point_right:
 
 *K zamyšlení: Zvládli byste vytvořit PHP skript s formulářem pro přidání nové osoby do adresáře, který využíváme přes API?*
