@@ -2,7 +2,7 @@
 
 $arr1 = ['abc','ábč','893'];
 echo json_encode($arr1).'<br />';
-echo json_encode($arr1, JSON_UNESCAPED_UNICODE + JSON_PRETTY_PRINT).'<br />';
+echo json_encode($arr1, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT).'<br />'; //svislítko je znak pro bitový součet, případně lze použít +
 //pomocí konstant jde ovlivnit způsob serializace (doporučuji JSON_UNESCAPED_UNICODE, nebudou zakódovány české znaky)
 
 
@@ -18,3 +18,9 @@ var_dump($decoded2);
 
 $decoded2=json_decode( '{"a":"aaa","b":"bbb","c":"ccc"}', true );//pokud je 2. parametr true, chceme vrátit asociační pole
 var_dump($decoded2);
+
+//co když data nejsou dekódovatelná?
+$data = json_decode('invalid json');
+if ($data === null) {
+  echo json_last_error_msg();
+}

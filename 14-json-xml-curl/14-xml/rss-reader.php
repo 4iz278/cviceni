@@ -14,7 +14,7 @@
             echo '<p>Soubor: <a href="'.htmlspecialchars($file).'">'.htmlspecialchars($file).'</a></p>';
 
             $xml=simplexml_load_file($file);//načteme soubor ze vzdáleného zdroje (za využití fopen wrapperu)
-            if (!empty($xml->channel)){//zjistíme, jestli v kořenovém elementu existují podelementy "channel"; na elementy v hlavním jmenném prostoru se ptáme jednoduše bez jmenného prostoru...
+            if ($xml!==false && !empty($xml->channel)){//zjistíme, jestli v kořenovém elementu existují podelementy "channel"; na elementy v hlavním jmenném prostoru se ptáme jednoduše bez jmenného prostoru...
                 foreach ($xml->channel as $channel){
                     echo '<h2>'.htmlspecialchars((string)$channel->title).'</h2>';
                     if (!empty($channel->link)){

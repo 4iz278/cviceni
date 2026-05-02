@@ -1,12 +1,14 @@
 <?php
+  //nastavení zachytávání chyb
+  libxml_use_internal_errors(true);
 
-  // načtení dokumentu XML
-  $xml = new DomDocument();
-  $xml->load("objednavka.xml");
+// načtení dokumentu XML
+  $xml = new DOMDocument();
+  $xml->load(__DIR__.'/objednavka.xml');
 
   // načtení XSL transformace
-  $xslt = new DomDocument();
-  $xslt->load("objednavka.xslt");
+  $xslt = new DOMDocument();
+  $xslt->load(__DIR__.'/objednavka.xslt');
 
   //vytvoříme instanci XSLT procesoru
   $xsltProcessor = new XSLTProcessor();
@@ -15,12 +17,20 @@
   $xsltProcessor->importStylesheet($xslt);
 
   //spustíme transformaci (transformovat lze DomDocument, nebo SimpleXMLElement)
-  echo $xsltProcessor->transformToXml($xml);
+  $result = $xsltProcessor->transformToXml($xml);
 
+  if ($result === false) {
+    echo 'Chyba při transformaci';
+  } else {
+    echo $result;
+  }
   //--------------------------------------------------------------------------------
 
   //v případě potřeby s dokumentem dál pracovat je možné výstup získat v DOM stromu
   //(je to efektivnější, než získat výstup v řetězci a ten znovu parsovat)
   $resultDomDocument=$xsltProcessor->transformToDoc($xml);
+
   //a dál je to klidně možné převést na simpleXML
-  $simpleXml=simplexml_import_dom($resultDomDocument);
+  if ($resultDomDocument !== false) {
+    $simpleXml = simplexml_import_dom($resultDomDocument);
+  }

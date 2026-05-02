@@ -1,9 +1,21 @@
 <?php
 
+//nastavení zachytávání chyb
+libxml_use_internal_errors(true);
+
 echo '<!DOCTYPE html><html lang="cs"><head><title>DOMDocument</title><meta charset="UTF-8"/></head><body>';
 
-/** @var SimpleXMLElement $xml */
-$xml=simplexml_load_file('objednavka.xml');
+$xml=simplexml_load_file(__DIR__.'/objednavka.xml');
+
+if ($xml === false) {
+  echo 'Chyba při načítání XML<br>';
+  //náš pracovní výpis chyb
+  foreach (libxml_get_errors() as $error) {
+    echo $error->message . '<br>';
+  }
+  libxml_clear_errors();
+  exit;
+}
 
 /** @var SimpleXMLElement $polozky - všechny uzly jsou pořád instancemi třídy SimpleXMLElement*/
 $polozky=$xml->polozky;
@@ -19,8 +31,8 @@ if (count($polozky->polozka)>0){
         $mena=(string)$polozka->cena['mena'];//dotaz na hodnotu atributu
 
         echo '<tr>';
-        echo '<td>'.$nazev.'</td>';
-        echo '<td>'.$cena.' '.$mena.'</td>';
+        echo '<td>'.htmlspecialchars($nazev).'</td>';
+        echo '<td>'.htmlspecialchars($cena.' '.$mena).'</td>';
         echo '</tr>';
     }
     echo '</table>';
