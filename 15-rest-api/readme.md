@@ -75,10 +75,8 @@ Další zdroje informací:
     Access-Control-Allow-Origin: *
     ```
 
-:point_right:
-
 ### Autentifikace uživatele API
-
+:point_right:
 - **REST API je bezstavové**
     - nemůžeme spoléhat na běžné přihlášení uživatele uložené v ```$_SESSION```
     - každý požadavek musí obsahovat informaci o identitě uživatele
