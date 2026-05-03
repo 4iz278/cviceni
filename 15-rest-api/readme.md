@@ -102,8 +102,8 @@ V rámci ukázkového příkladu si vytvoříme velmi jednoduchý adresář, kte
 - v aplikaci jsou ukázány všechny základní HTTP metody (tj. GET, POST, PUT i DELETE)
 
 :orange_book:
-- [prezentace s komentovaným postupem tvorby API](./10-api-persons/prezentace-postup-vyvoje-rest-api.pptx)
-- [vytvořený zdrojový kód včetně exportu databáze](./10-api-persons)
+- [prezentace s komentovaným postupem tvorby API](./15-api-persons/prezentace-postup-vyvoje-rest-api.pptx)
+- [vytvořený zdrojový kód včetně exportu databáze](./15-api-persons)
 
 :point_right:
 

@@ -1,11 +1,6 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.5
 -- https://www.phpmyadmin.net/
 --
--- Počítač: localhost
--- Vytvořeno: Pon 20. dub 2020, 15:55
--- Verze serveru: 10.3.22-MariaDB-log
--- Verze PHP: 7.3.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -18,17 +13,13 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
---
--- Databáze: `xvojs03`
---
-
 -- --------------------------------------------------------
 
 --
--- Struktura tabulky `persons`
+-- Struktura tabulky `api_persons`
 --
 
-CREATE TABLE `persons` (
+CREATE TABLE `api_persons` (
   `person_id` int(11) NOT NULL,
   `name` varchar(100) COLLATE utf8mb4_czech_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_czech_ci NOT NULL,
@@ -36,10 +27,10 @@ CREATE TABLE `persons` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
 --
--- Vypisuji data pro tabulku `persons`
+-- Vypisuji data pro tabulku `api_persons`
 --
 
-INSERT INTO `persons` (`person_id`, `name`, `email`, `phone`) VALUES
+INSERT INTO `api_persons` (`person_id`, `name`, `email`, `phone`) VALUES
 (1, 'Eva Nová', '', '+420123456789');
 
 --
@@ -47,9 +38,9 @@ INSERT INTO `persons` (`person_id`, `name`, `email`, `phone`) VALUES
 --
 
 --
--- Klíče pro tabulku `persons`
+-- Klíče pro tabulku `api_persons`
 --
-ALTER TABLE `persons`
+ALTER TABLE `api_persons`
   ADD PRIMARY KEY (`person_id`);
 
 --
@@ -57,9 +48,9 @@ ALTER TABLE `persons`
 --
 
 --
--- AUTO_INCREMENT pro tabulku `persons`
+-- AUTO_INCREMENT pro tabulku `api_persons`
 --
-ALTER TABLE `persons`
+ALTER TABLE `api_persons`
   MODIFY `person_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
