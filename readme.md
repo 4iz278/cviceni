@@ -64,11 +64,12 @@ Web předmětu: **http://4iz278.github.io**
   * využití GraphQL API
   * malá ukázka AJAX aplikace
 16. **[htaccess](16-htaccess)**
-
-> 15. **[MVC, SEO URL](x12-mvc-seo-url)**   
->   * .htaccess
->   * návrhový vzor MVC
->   * objektová tvorba aplikací  
+  * mod rewrite, SEO URL
+  * vlastní chybové dokumenty
+  * úprava dalších nastavení
+17. **[MVC, objektově psané aplikace](17-mvc)**
+  * návrhový vzor MVC
+  * objektová tvorba aplikací  
 
 ## Co naleznete v tomto úložišti?
 
