@@ -3,6 +3,10 @@
  * REST API pro práci s osobami
  */
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-HTTP-Method-Override");
+
 #region načtení závislostí
 require_once __DIR__.'/../inc/functions.php';//načtení souboru s pomocnými funkcemi
 try{
@@ -13,7 +17,8 @@ try{
 }
 #endregion načtení závislostí
 
-switch ($_SERVER['REQUEST_METHOD']){
+$requestMethod = $_SERVER["HTTP_X_HTTP_METHOD_OVERRIDE"] ?? $_SERVER["REQUEST_METHOD"];
+switch ($requestMethod){
   case 'GET':
     //načtení jedné či několika osob
     if (!empty($_GET['id'])){
@@ -33,6 +38,8 @@ switch ($_SERVER['REQUEST_METHOD']){
   case 'DELETE':
     //smazání osoby
     deletePerson($db);
+    break;
+  case 'OPTIONS':
     break;
   default:
     //chybný požadavek
@@ -149,7 +156,7 @@ function updatePerson(PDO $db):void{
 //nejprve musíme data zkontrolovat!
   $errors=[];
 
-  $existingPersonQuery=$db->prepare('SELECT * FROM persons WHERE person_id=:id LIMIT 1;');
+  $existingPersonQuery=$db->prepare('SELECT * FROM api_persons WHERE person_id=:id LIMIT 1;');
   $existingPersonQuery->execute([':id'=>$_GET['id']]);
   $existingPerson=$existingPersonQuery->fetch(PDO::FETCH_ASSOC);
   if (!$existingPerson){

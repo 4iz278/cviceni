@@ -55,14 +55,16 @@ Web předmětu: **http://4iz278.github.io**
 13. **[Datum a čas, víceuživatelský přístup k DB](13-datetime-uzivatele-db)**
   * datum a čas
   * víceuživatelský přístup k DB - zamykání záznamů
+14. **[JSON, XML a práce s externími daty](14-json-xml-curl)**
+  * práce s JSON a XML
+  * načítání externích dat, CURL
+15. **[REST API](15-rest-api)**
+  * základní typy API
+  * tvorba vlastního REST API
+  * využití GraphQL API
+  * malá ukázka AJAX aplikace
+16. **[htaccess](16-htaccess)**
 
-> 12. **[Uživatelé a DB, JSON, XML](x09-uzivatele-db-json-xml)**
->   * strukturované datové formáty
-> 13. **[REST API](x10-rest-api-pdf)**
->   * tvorba API
->   * AJAX
-> 14. **[Přihlašování přes OAuth, zapomenuté heslo, CURL](x11-oauth-curl)**  
->   * CURL
 > 15. **[MVC, SEO URL](x12-mvc-seo-url)**   
 >   * .htaccess
 >   * návrhový vzor MVC

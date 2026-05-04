@@ -48,8 +48,11 @@ Pro rozlišení typu požadované operace využíváme různé typy HTTP metod:
 - **GET** = požadavek pro načtení konkrétního záznamu či seznamu záznamů
 - **POST** = požadavek na vytvoření a uložení nového záznamu
 - **PUT** = požadavek na úpravu (nahrazení) již existujícího záznamu
-- **DELETE** = požadavek na smazání konkrétního záznamu  
+- **DELETE** = požadavek na smazání konkrétního záznamu   
 - **PATCH** = částečná úprava existujícího záznamu (méně časté než PUT, ale pokud jej API poskytuje, tak často vhodné)
+
+Drobnost k metodě DELETE:
+- pokud je tato HTTP metoda na serveru zakázána, obvykle se to obchází hlavičkou ```X-HTTP-Method-Override```, nebo proměnnou poslanou v GET
 
 :blue_book:
 
