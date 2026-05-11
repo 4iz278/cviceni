@@ -67,7 +67,7 @@ Web předmětu: **http://4iz278.github.io**
   * mod rewrite, SEO URL
   * vlastní chybové dokumenty
   * úprava dalších nastavení
-17. **[MVC, objektově psané aplikace](17-mvc)**
+17. **[Objektový vývoj aplikací, MVC](17-mvc)**
   * návrhový vzor MVC
   * objektová tvorba aplikací  
 

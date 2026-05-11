@@ -1,0 +1,20 @@
+{
+	"name": "vojir/example-blog-mvc",
+	"description": "Ukázkový jednoduchý blog",
+	"type": "project",
+	"require": {
+		"php": ">= 8.3",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "application/"
+    }
+  },
+	"minimum-stability": "stable",
+	"config": {
+		"platform": {
+			"php": "8.3"
+		}
+	}
+}

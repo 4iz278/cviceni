@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Model;
+
+abstract class BaseModel{
+  protected static ?\PDO $pdo = null;
+
+  /**
+   * BaseModel constructor - zajišťuje připojení k DB
+   */
+  public function __construct(){
+    if (!self::$pdo instanceof \PDO){
+      self::$pdo= new \PDO(DB_CONNECTION_STRING,DB_USERNAME,DB_PASSWORD);
+    }
+  }
+
+}

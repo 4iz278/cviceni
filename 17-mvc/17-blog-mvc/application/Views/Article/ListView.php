@@ -1,0 +1,43 @@
+<?php
+
+namespace Blog\Views\Article;
+use Blog\Library\CurrentUser;
+use Blog\Library\View;
+use Blog\Model\Entities\Article;
+use Blog\Model\Entities\Category;
+
+/**
+ * Class ListView - view pro zobrazení přehledu článků
+ * @package Blog\Views\Article
+ */
+class ListView extends View{
+  public Category $category;
+  /** @var Article[] $articles */
+  public array $articles;
+
+  /**
+   * Funkce pro zobrazení view
+   */
+  public function display():void {
+    /** @var CurrentUser $currentUser */
+    $currentUser=CurrentUser::getInstance();
+    echo '<h1>'.htmlspecialchars($this->category->name).'</h1>';
+
+    if ($currentUser->hasAccess('article','add')){
+      echo '<a href="'.BASE_URL.'/article/add?category='.$this->category->id.'">přidat článek...</a>';
+    }
+
+    if (!empty($this->articles)){
+      foreach($this->articles as $article){
+        echo '<article>
+                <h2><a href="'.BASE_URL.'/article/show?id='.$article->id.'">'.htmlspecialchars($article->title).'</a></h2>
+                '.$article->perex.'
+              </article>';
+      }
+    }else{
+      echo '<p>Nebyly nalezeny žádné články</p>';
+    }
+
+  }
+
+}
