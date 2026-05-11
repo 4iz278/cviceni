@@ -127,8 +127,8 @@ Kód obou implementací je záměrně napsán tak, aby si byly co nejvíce podob
 - aplikace obsahuje autentizaci a autorizaci uživatelů
 - jsou využívány definované entitní třídy pro články, kategorie, uživatele atd.
 - pro vyzkoušení této aplikace jsou k dispozici uživatelské účty:
-    - e-mail "xadmin@vse.cz", heslo "xadmin"
-    - e-mail "xname@vse.cz", heslo "xname"
+    - e-mail `xadmin@vse.cz`, heslo `xadmin`
+    - e-mail `xname@vse.cz`, heslo `xname`
 
 :blue_book:
 - [aplikace Blog implementovaná v MVC bez použití frameworku](./17-blog-mvc)
