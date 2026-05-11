@@ -1,0 +1,29 @@
+{
+	"name": "vojir/example-blog-nette",
+	"description": "Ukázkový jednoduchý blog",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Stanislav Vojíř"
+		}
+	],
+	"require": {
+		"nette/application": "^3.2",
+		"nette/bootstrap": "^3.2",
+		"nette/caching": "^3.4",
+		"nette/di": "^3.2",
+		"nette/forms": "^3.2",
+		"nette/http": "^3.3",
+		"nette/mail": "^4.1",
+		"nette/utils": "^4.1",
+		"latte/latte": "^3.1",
+		"tracy/tracy": "^2.12",
+    "ext-pdo": "*",
+		"nette/security": "^3.2"
+  },
+	"config": {
+		"platform": {
+			"php": "8.3"
+		}
+	}
+}

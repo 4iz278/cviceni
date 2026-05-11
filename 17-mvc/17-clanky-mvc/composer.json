@@ -1,6 +1,6 @@
 {
-	"name": "vojir/example-blog-mvc",
-	"description": "Ukázkový jednoduchý blog",
+	"name": "vojir/example-clanky-mvc",
+	"description": "Ukázková aplikace s výpisem článků",
 	"type": "project",
 	"require": {
 		"php": ">= 8.3",
