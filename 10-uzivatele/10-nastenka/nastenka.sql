@@ -22,7 +22,7 @@ SET time_zone = "+00:00";
 -- Struktura tabulky `categories`
 --
 
-CREATE TABLE `n_categories` (
+CREATE TABLE `categories` (
   `category_id` smallint(6) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_czech_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci COMMENT='Tabulka s přehledem kategorií';
@@ -31,7 +31,7 @@ CREATE TABLE `n_categories` (
 -- Vypisuji data pro tabulku `categories`
 --
 
-INSERT INTO `n_categories` (`category_id`, `name`) VALUES
+INSERT INTO `categories` (`category_id`, `name`) VALUES
 (1, 'Novinky');
 
 -- --------------------------------------------------------
@@ -40,7 +40,7 @@ INSERT INTO `n_categories` (`category_id`, `name`) VALUES
 -- Struktura tabulky `posts`
 --
 
-CREATE TABLE `n_posts` (
+CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `category_id` smallint(6) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE `n_posts` (
 -- Vypisuji data pro tabulku `posts`
 --
 
-INSERT INTO `n_posts` (`post_id`, `user_id`, `category_id`, `text`, `updated`) VALUES
+INSERT INTO `posts` (`post_id`, `user_id`, `category_id`, `text`, `updated`) VALUES
 (1, 1, 1, 'Testovací příspěvek', '2020-03-21 00:54:12');
 
 -- --------------------------------------------------------
@@ -61,7 +61,7 @@ INSERT INTO `n_posts` (`post_id`, `user_id`, `category_id`, `text`, `updated`) V
 -- Struktura tabulky `users`
 --
 
-CREATE TABLE `n_users` (
+CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_czech_ci NOT NULL,
   `email` varchar(200) COLLATE utf8mb4_czech_ci NOT NULL
@@ -71,7 +71,7 @@ CREATE TABLE `n_users` (
 -- Vypisuji data pro tabulku `users`
 --
 
-INSERT INTO `n_users` (`user_id`, `name`, `email`) VALUES
+INSERT INTO `users` (`user_id`, `name`, `email`) VALUES
 (1, 'Adam', 'adam@domena.tld'),
 (2, 'Eva', 'eva@domena.tld');
 
@@ -82,13 +82,13 @@ INSERT INTO `n_users` (`user_id`, `name`, `email`) VALUES
 --
 -- Klíče pro tabulku `categories`
 --
-ALTER TABLE `n_categories`
+ALTER TABLE `categories`
   ADD PRIMARY KEY (`category_id`);
 
 --
 -- Klíče pro tabulku `posts`
 --
-ALTER TABLE `n_posts`
+ALTER TABLE `posts`
   ADD PRIMARY KEY (`post_id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `category_id` (`category_id`);
@@ -96,7 +96,7 @@ ALTER TABLE `n_posts`
 --
 -- Klíče pro tabulku `users`
 --
-ALTER TABLE `n_users`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
 
 --
@@ -106,19 +106,19 @@ ALTER TABLE `n_users`
 --
 -- AUTO_INCREMENT pro tabulku `categories`
 --
-ALTER TABLE `n_categories`
+ALTER TABLE `categories`
   MODIFY `category_id` smallint(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `posts`
 --
-ALTER TABLE `n_posts`
+ALTER TABLE `posts`
   MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pro tabulku `users`
 --
-ALTER TABLE `n_users`
+ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
@@ -128,9 +128,9 @@ ALTER TABLE `n_users`
 --
 -- Omezení pro tabulku `posts`
 --
-ALTER TABLE `n_posts`
-  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `n_categories` (`category_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `n_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `posts_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

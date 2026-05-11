@@ -11,7 +11,7 @@
 
   #region načtení existujícího příspěvku z DB
   if (!empty($_REQUEST['id'])){
-    $postQuery=$db->prepare('SELECT * FROM n_posts WHERE post_id=:id LIMIT 1;');
+    $postQuery=$db->prepare('SELECT * FROM posts WHERE post_id=:id LIMIT 1;');
     $postQuery->execute([':id'=>$_REQUEST['id']]);
     if ($post=$postQuery->fetch(PDO::FETCH_ASSOC)){
       //naplníme pomocné proměnné daty příspěvku
@@ -30,7 +30,7 @@
     #region kontrola kategorie
     if (!empty($_POST['category'])){
 
-      $categoryQuery=$db->prepare('SELECT * FROM n_categories WHERE category_id=:category LIMIT 1;');
+      $categoryQuery=$db->prepare('SELECT * FROM categories WHERE category_id=:category LIMIT 1;');
       $categoryQuery->execute([
         ':category'=>$_POST['category']
       ]);
@@ -57,7 +57,7 @@
 
       if ($postId){
         #region aktualizace existujícího příspěvku
-        $saveQuery=$db->prepare('UPDATE n_posts SET category_id=:category, text=:text WHERE post_id=:id LIMIT 1;');
+        $saveQuery=$db->prepare('UPDATE posts SET category_id=:category, text=:text WHERE post_id=:id LIMIT 1;');
         $saveQuery->execute([
           ':category'=>$postCategory,
           ':text'=>$postText,
@@ -66,7 +66,7 @@
         #endregion aktualizace existujícího příspěvku
       }else{
         #region uložení nového příspěvku
-        $saveQuery=$db->prepare('INSERT INTO n_posts (user_id, category_id, text) VALUES (:user, :category, :text);');
+        $saveQuery=$db->prepare('INSERT INTO posts (user_id, category_id, text) VALUES (:user, :category, :text);');
         $saveQuery->execute([
           ':user'=>1, //zatím uživatele nijak neřešíme (to bude předmětem dalšího cvičení)
           ':category'=>$postCategory,
@@ -102,7 +102,7 @@
       <select name="category" id="category" required class="form-control <?php echo (!empty($errors['category'])?'is-invalid':''); ?>">
         <option value="">--vyberte--</option>
         <?php
-          $categoryQuery=$db->prepare('SELECT * FROM n_categories ORDER BY name;');
+          $categoryQuery=$db->prepare('SELECT * FROM categories ORDER BY name;');
           $categoryQuery->execute();
           $categories=$categoryQuery->fetchAll(PDO::FETCH_ASSOC);
           if (!empty($categories)){
