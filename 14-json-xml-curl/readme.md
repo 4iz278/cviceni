@@ -174,7 +174,7 @@ $xml = simplexml_load_string($response); // načtení XML z odpovědi
 
 :point_right:
 - lze využít také knihovny třetích stran (např. **Guzzle**)
-  - moderní HTTP klient - s jednodušším nastavením než CURL
+  - moderní HTTP klient - s jednodušším nastavením než cURL
   - používán ve většině PHP frameworků
 - získáme jej prostřednictvím composeru
 ```bash
@@ -191,5 +191,5 @@ $xml = simplexml_load_string($response->getBody()); // načtení XML z odpovědi
 V těchto příkladech trošku předbíháme - načítají data z API, které si popíšeme v dalším bloku. Stejným způsobem lze však volat i libovolné existující API.
 - [příklad využití REST API pomocí cURL](./14-php-client-curl.php)
 - [příklad využití REST API pomocí file_get_contents() a stream contextu](./14-php-client-file_get_contents.php)
-- [cURL v PHP mamuálu](https://www.php.net/manual/en/book.curl.php)
+- [cURL v PHP manuálu](https://www.php.net/manual/en/book.curl.php)
 - [Guzzle HTTP Client Documentation](https://docs.guzzlephp.org/en/stable/)
