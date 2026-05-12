@@ -157,8 +157,8 @@ Zkuste si tuto aplikaci spustit a projděte si okomentované zdrojové kódy.
     - [user required.php](./13-app-eshop/inc/user_required.php) - soubor pro require, vynucení přihlášení uživatele, autentizace uložená v SESSION
     - [admin required.php](./13-app-eshop/inc/admin_required.php) - soubor pro require, **ověřuje, zda je přihlášený uživatel v roli "admin" uloženou v databázi** (jde vlastně o rozšíření souboru user_required.pph)    
 - upravená část pro administátora:
-    - [update_optimistic.php](./09-app-eshop/update_optimistic.php) - **úprava zboží v e-shopu s optimistickým zamykáním záznamů**
-    - [update_pessimistic.php](./09-app-eshop/update_pessimistic.php) - **úprava zboží v e-shopu s pesimistickým zamykáním záznamů** 
+    - [update_optimistic.php](./13-app-eshop/update_optimistic.php) - **úprava zboží v e-shopu s optimistickým zamykáním záznamů**
+    - [update_pessimistic.php](./13-app-eshop/update_pessimistic.php) - **úprava zboží v e-shopu s pesimistickým zamykáním záznamů** 
 
 :point_right:
 *Otázky k zamyšlení:*
